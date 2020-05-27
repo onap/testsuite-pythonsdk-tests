@@ -1,0 +1,3 @@
+# UUID                                                                                    	Group Name
+#
+ldap:cn=onap-gerrit-testsuite-pythonsdk-tests-committers,ou=Groups,dc=freestandards,dc=org	ldap/onap-gerrit-testsuite-pythonsdk-tests-committers
