@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "14a88a27_9a9a988d",
+        "filename": "INFO.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 481
+      },
+      "writtenOn": "2020-06-03T17:30:34Z",
+      "side": 1,
+      "message": "Thanks for your quick reply Morgan. \n\nWhat I meant was the actual name of the hook. I meant it probably should match the name of your repo and not \"releng\" making reference to release engineering. \n\nIs not a big problem is just aesthetics. If you want to use this hook name to match how the other repos have it, is ok.. \n\nLet me know if I can go ahead and merge https://gerrit.onap.org/r/c/testsuite/pythonsdk-tests/+/108740",
+      "parentUuid": "661d9964_8eff79ce",
+      "range": {
+        "startLine": 6,
+        "startChar": 15,
+        "endLine": 6,
+        "endChar": 30
+      },
+      "revId": "f46416c1031ebd16613c06d8112d377f09216af0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "402e2103_7672ade5",
         "filename": "INFO.yaml",
         "patchSetId": 3
