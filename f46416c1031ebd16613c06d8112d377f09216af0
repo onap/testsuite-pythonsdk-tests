@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bfaa29a_026d0c2c",
+        "filename": "INFO.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 481
+      },
+      "writtenOn": "2020-06-03T14:26:07Z",
+      "side": 1,
+      "message": "This should be testsuite_pythonsdk_tests_ptl not onap_releng_ptl",
+      "range": {
+        "startLine": 6,
+        "startChar": 15,
+        "endLine": 6,
+        "endChar": 30
+      },
+      "revId": "f46416c1031ebd16613c06d8112d377f09216af0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "402e2103_7672ade5",
+        "filename": "INFO.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 481
+      },
+      "writtenOn": "2020-06-03T14:26:07Z",
+      "side": 1,
+      "message": "This should be testsuite_pythonsdk_tests_ptl not onap_releng_ptl",
+      "range": {
+        "startLine": 12,
+        "startChar": 18,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "f46416c1031ebd16613c06d8112d377f09216af0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13e938de_4d04856a",
+        "filename": "INFO.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 481
+      },
+      "writtenOn": "2020-06-03T14:26:07Z",
+      "side": 1,
+      "message": "This is TEST, right? not INT",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 14
+      },
+      "revId": "f46416c1031ebd16613c06d8112d377f09216af0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db2a2dce_ec655911",
+        "filename": "INFO.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 481
+      },
+      "writtenOn": "2020-06-03T14:26:07Z",
+      "side": 1,
+      "message": "This should be testsuite_pythonsdk_tests_ptl not onap_releng_ptl",
+      "range": {
+        "startLine": 33,
+        "startChar": 11,
+        "endLine": 33,
+        "endChar": 26
+      },
+      "revId": "f46416c1031ebd16613c06d8112d377f09216af0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
