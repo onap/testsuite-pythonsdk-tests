@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd5227e7_025f94df",
+        "filename": "tox.ini",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-06-03T08:13:56Z",
+      "side": 1,
+      "message": "Fail here with \n\nERROR: rst: could not install deps [-r./docs/requirements-docs.txt]",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 38
+      },
+      "revId": "9a90af4c617ff80b48254441d7eb286264acfb41",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
