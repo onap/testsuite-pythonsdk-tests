@@ -12,8 +12,8 @@ project_lead: &onap_releng_ptl
 primary_contact: *onap_releng_ptl
 issue_tracking:
     type: 'jira'
-    url: 'https://jira.onap.org/projects/INT'
-    key: 'INT'
+    url: 'https://jira.onap.org/projects/TEST'
+    key: 'TEST'
 mailing_list:
     type: 'groups.io'
     url: 'lists.onap.org'
