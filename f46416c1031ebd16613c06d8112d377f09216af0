@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "661d9964_8eff79ce",
+        "filename": "INFO.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-06-03T15:24:17Z",
+      "side": 1,
+      "message": "this repo is under Integration team responsability\nthat is why I use the same project_lead than for integration\n\ntestsuite repository is also usin onap_releng_ptl...since the beginning I think\n\nthere is no specific PTL for this repo",
+      "parentUuid": "7bfaa29a_026d0c2c",
+      "range": {
+        "startLine": 6,
+        "startChar": 15,
+        "endLine": 6,
+        "endChar": 30
+      },
+      "revId": "f46416c1031ebd16613c06d8112d377f09216af0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "402e2103_7672ade5",
         "filename": "INFO.yaml",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2020-06-03T14:26:07Z",
       "side": 1,
       "message": "This should be testsuite_pythonsdk_tests_ptl not onap_releng_ptl",
+      "range": {
+        "startLine": 12,
+        "startChar": 18,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "f46416c1031ebd16613c06d8112d377f09216af0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10bc3cc6_4258baf3",
+        "filename": "INFO.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-06-03T15:24:17Z",
+      "side": 1,
+      "message": "same comment as above",
+      "parentUuid": "402e2103_7672ade5",
       "range": {
         "startLine": 12,
         "startChar": 18,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2031ec72_90301d6d",
+        "filename": "INFO.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-06-03T15:24:17Z",
+      "side": 1,
+      "message": "integration/**\ntestsuite/**\ndemo/**\n\nare all repositories under Integration responsability\n\nbut you are right testsuite mentions TEST (https://jira.onap.org/projects/TEST/issues/TEST-233?filter\u003dallopenissues), not INT\nIt is not very active (233 JIRAs since the creation) but it could be a way to split the topics\nI can change that if you want.\n\nFrom an Integration PTL, I prefer to have only 1 project..it is easier from a JIRA perspective and there are less risks to forget\nfor instance I was not aware of any of the TEST JIRA..",
+      "parentUuid": "13e938de_4d04856a",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 14
+      },
+      "revId": "f46416c1031ebd16613c06d8112d377f09216af0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db2a2dce_ec655911",
         "filename": "INFO.yaml",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2020-06-03T14:26:07Z",
       "side": 1,
       "message": "This should be testsuite_pythonsdk_tests_ptl not onap_releng_ptl",
+      "range": {
+        "startLine": 33,
+        "startChar": 11,
+        "endLine": 33,
+        "endChar": 26
+      },
+      "revId": "f46416c1031ebd16613c06d8112d377f09216af0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c5162f_2db83cc0",
+        "filename": "INFO.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-06-03T15:24:17Z",
+      "side": 1,
+      "message": "same as above",
+      "parentUuid": "db2a2dce_ec655911",
       "range": {
         "startLine": 33,
         "startChar": 11,
