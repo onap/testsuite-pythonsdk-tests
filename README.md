@@ -1,4 +1,5 @@
 # pythonsdk-tests
+
 This project is a wrapper to use onapsdk toolkit to onboard and instantiate services on ONAP
 
 ## Temporary help section
@@ -22,7 +23,7 @@ See ubuntu16test as example
 * Clone the project
 
 ```shell
-git clone git@gitlab.com:Orange-OpenSource/lfn/onap/pythonsdk-tests.git
+git clone https://git.onap.org/testsuite/pythonsdk-tests
 ```
 
 * virtualenv onboard
