@@ -10,7 +10,7 @@
 import os
 import logging
 import oyaml as yaml
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 from onapsdk.aai.business import Customer
 
 class Common():
@@ -83,10 +83,13 @@ class Common():
         except IndexError:
             parameter = service_type
         try:
+            '''
             local_path = os.path.dirname(os.path.abspath(__file__))
             yaml_ = local_path.replace("src/onaptests/actions",
                                        "templates/vnf-services/" +
                                        service_type + "-service.yaml")
+            '''
+            yaml_ = settings.TEMPLATES_PATH + '/vnf-services/' +service_type + "-service.yaml"
             return cls.get_parameter_from_yaml(parameter, yaml_)
         except FileNotFoundError:
             raise ValueError("Vnf Service file not found")

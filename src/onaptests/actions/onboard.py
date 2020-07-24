@@ -19,7 +19,7 @@ from onapsdk.sdc.service import Service
 from onapsdk.sdc.vendor import Vendor
 from onapsdk.sdc.vf import Vf
 from onapsdk.sdc.vsp import Vsp
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 
 from onaptests.actions.common import Common
 
@@ -46,10 +46,13 @@ class Onboard(Common):
         service_params = self.get_service_custom_config(self.service_name)
         if "vnfs" in service_params:
             for vnf in service_params['vnfs']:
+                '''
                 local_path = os.path.dirname(os.path.abspath(__file__))
                 vsp_filepath = local_path.replace("src/onaptests/actions",
                                                   "templates/heat_files/" +
                                                   vnf['heat_files_to_upload'])
+                '''
+                vsp_filepath = settings.TEMPLATES_PATH + '/heat_files/' + vnf['heat_files_to_upload']
                 vsp = Vsp(name=vnf['vnf_name'] + "VSP",
                           vendor=vendor,
                           package=open(vsp_filepath, "rb"))
