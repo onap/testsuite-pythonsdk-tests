@@ -1,0 +1,1 @@
+-e git+https://gitlab.com/Orange-OpenSource/lfn/onap/python-onapsdk.git@34-clamp-cl#egg=pythonsdk-tests
