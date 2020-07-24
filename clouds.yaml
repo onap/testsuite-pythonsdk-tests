@@ -1,0 +1,26 @@
+clouds:
+    onap-master-daily-vnfs-ci:
+        auth:
+            auth_url: https://vim.pod4.opnfv.fr:5000
+            password: 5gu9lWUKOvywcheJeOhtKhJ7PTeobYkm
+            project_name: onap-master-daily-vnfs
+            user_domain_name: Default
+            username: onap-master-daily-vnfs-ci
+        compute_api_version: '2.15'
+        identity_api_version: '3'
+        interface: public
+        project_domain_name: Default
+        region_name: RegionOne
+
+    onap-frankfurt-daily-vnfs-ci:
+        auth:
+            auth_url: https://vim.pod4.opnfv.fr:5000
+            password: Cv5lt2308qqm3wdSgAlYMMQqsNggwb1y
+            project_name: onap-frankfurt-daily-vnfs
+            user_domain_name: Default
+            username: onap-frankfurt-daily-vnfs-ci
+        compute_api_version: '2.15'
+        identity_api_version: '3'
+        interface: public
+        project_domain_name: Default
+        region_name: RegionOne
