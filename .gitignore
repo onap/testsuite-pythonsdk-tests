@@ -31,3 +31,21 @@ csit/
 *.csar
 benchmark/
 .tox/
+
+# Bite compiled
+__pycache__/
+
+# Distribution / packaging
+onaptests.egg-info/
+
+# Unit test / coverage reports
+.coverage
+.cache
+*.cover
+coverage.xml
+
+# tests
+pytest-unit.xml
+
+#project dependencies
+python-onapsdk/

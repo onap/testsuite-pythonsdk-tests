@@ -1,4 +1,4 @@
-"""Speciifc settings module."""  # pylint: disable=bad-whitespace
+"""Specific settings module."""  # pylint: disable=bad-whitespace
 
 ######################
 #                    #
