@@ -1,0 +1,1 @@
+git+git://gitlab.com/Orange-OpenSource/lfn/onap/python-onapsdk@34-clamp-cl#egg=package-one
