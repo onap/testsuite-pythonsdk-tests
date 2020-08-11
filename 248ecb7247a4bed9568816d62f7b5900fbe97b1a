@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61fe81ff_68c3fbb0",
+        "filename": "README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-08-11T16:29:38Z",
+      "side": 1,
+      "message": "this README is related to the patch suggested by Thierry\nregarding the refactoring it is no more accurate.\n\nAs we are in the first step, the dev view and the tester view are maybe confusing.\nA good documentation for tester will be needed, which is different from the doc for developers.\nA README is enough to bootstrap\nwe need to have at least a way to test the structure through existing tests (even before merge)\n\nI like the idea to keep an example/sample dir\nas we need to replace the existing tests done in onap_tests, as samples we need to have\n- basic_vm\n- freeradius_nbi\n- clearwater_vims\n\nI suggest to add\n- vfw (as it is an illustration of the python SDK)\n- basic_network\n\nthe existing examples that were in the initial patch were\nrun_onboard.py \u003d\u003e basic_vm_onboard\nrun_instantiate.py \u003d\u003e basic_vm_instantiate\nrun_delete.py \u003d\u003e delete resources\nrun_e2e.py \u003d\u003e run_onboard.py + run_instantiate.py + run_delete.py",
+      "revId": "248ecb7247a4bed9568816d62f7b5900fbe97b1a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e877bc_c4b0ed56",
+        "filename": "src/onaptests/actions/__init__.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-08-11T16:29:38Z",
+      "side": 1,
+      "message": "scenario or action package?",
+      "revId": "248ecb7247a4bed9568816d62f7b5900fbe97b1a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4e196ed_a153f7fe",
+        "filename": "src/onaptests/actions/cloudresources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-08-11T16:29:38Z",
+      "side": 1,
+      "message": "how would we manage resources that we would need to create in a cloud prior to the test.\nE..g in vFW creation of 2 private networks.\nThe methods are all related to the AAI, not to high level scenario\n\nduring a setup I assume for a given scenario\nfor sure I will need to perform all the AAI actions\n\nscenario.declare_aai_region()\nscenario.declare_owning_entity() \nscenario.add_cloud_resources()\n\nbut I could imagine thinks like\nvfw_scenario.create_openstack_network(network_def)\nbasic_cnf.create_k8s_namespace(namespace)\n\nshall it be par of this cloudResources class?",
+      "revId": "248ecb7247a4bed9568816d62f7b5900fbe97b1a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86893a0e_d8329c85",
+        "filename": "src/onaptests/components/base.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-08-11T16:29:38Z",
+      "side": 1,
+      "message": "trailing spaces",
+      "revId": "248ecb7247a4bed9568816d62f7b5900fbe97b1a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f855c82_5183734c",
+        "filename": "src/onaptests/components/base.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-08-11T16:29:38Z",
+      "side": 1,
+      "message": "As far as I understand, this is the abstract class dealing with scenario\non such abstraction you define only 3 methods\n- add_subcomponent\n- action\n- cleanup\n\nshall we understand subcomponent as a scenario step?\n\nsubcomponent sounds more like AAI, SO, CDS,..",
+      "revId": "248ecb7247a4bed9568816d62f7b5900fbe97b1a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a68ca8ed_cdee433e",
+        "filename": "src/onaptests/configuration/demo_settings.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-08-11T16:29:38Z",
+      "side": 1,
+      "message": "for this part I think using ht openstack python client to retrieved the data directly from the clouds.yaml is better (no data duplication)",
+      "revId": "248ecb7247a4bed9568816d62f7b5900fbe97b1a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
