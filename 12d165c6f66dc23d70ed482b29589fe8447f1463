@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "684d1997_4613d7a2",
+        "filename": "README.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-08-24T13:33:06Z",
+      "side": 1,
+      "message": "to be removed or cleaned\nI  created a JIRA to create the doc\nI could reuse the README but the current README correspond to Thierry\u0027s first draft",
+      "revId": "12d165c6f66dc23d70ed482b29589fe8447f1463",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad01b643_ab7a706d",
+        "filename": "requirements.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-08-24T13:33:06Z",
+      "side": 1,
+      "message": "we will need to release a 1.1.0 (or 1.0.1) I think\nthe test I made on Friday was OK but it was based on develop branch, I am not sure it can work with the current 1.0.0\nand for sure all the clamp stuff (for Amine) is not included in 1.0.0",
+      "revId": "12d165c6f66dc23d70ed482b29589fe8447f1463",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75a013f7_746af46b",
+        "filename": "src/onaptests/configuration/settings.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-08-24T13:33:06Z",
+      "side": 1,
+      "message": "nit: speciifc \u003d\u003e specific",
+      "revId": "12d165c6f66dc23d70ed482b29589fe8447f1463",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7f738f_713e1bcf",
+        "filename": "src/onaptests/scenario.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-08-24T13:33:06Z",
+      "side": 1,
+      "message": "to be removed",
+      "revId": "12d165c6f66dc23d70ed482b29589fe8447f1463",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d141d749_38d2f703",
+        "filename": "src/onaptests/steps/base.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-08-24T13:33:06Z",
+      "side": 1,
+      "message": "trailing spaces",
+      "revId": "12d165c6f66dc23d70ed482b29589fe8447f1463",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24447a1a_fe91d04c",
+        "filename": "src/onaptests/steps/cloud/customer_service_subscription_create.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-08-24T13:33:06Z",
+      "side": 1,
+      "message": "fine with version 1.0.0\nbut not with develop branch",
+      "revId": "12d165c6f66dc23d70ed482b29589fe8447f1463",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
