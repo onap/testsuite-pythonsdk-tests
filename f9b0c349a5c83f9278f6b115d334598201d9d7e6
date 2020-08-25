@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d80df239_4536c3be",
+        "filename": "requirements.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-08-25T06:36:32Z",
+      "side": 1,
+      "message": "until we got a new version, it is the best solution",
+      "revId": "f9b0c349a5c83f9278f6b115d334598201d9d7e6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e35a7ab_7d197a48",
+        "filename": "setup.cfg",
+        "patchSetId": 14
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-08-25T06:36:32Z",
+      "side": 1,
+      "message": "we are not 100% clear on the name\nbut onaptests is fine for me, there is no such python package so far\nit is probably better than pythonsdk-tests.. :)",
+      "revId": "f9b0c349a5c83f9278f6b115d334598201d9d7e6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
