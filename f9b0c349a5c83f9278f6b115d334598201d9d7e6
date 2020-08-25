@@ -33,6 +33,23 @@
       "revId": "f9b0c349a5c83f9278f6b115d334598201d9d7e6",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e24594b2_db1940a8",
+        "filename": "setup.cfg",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5622
+      },
+      "writtenOn": "2020-08-25T07:18:08Z",
+      "side": 1,
+      "message": "url to be updated",
+      "revId": "f9b0c349a5c83f9278f6b115d334598201d9d7e6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
