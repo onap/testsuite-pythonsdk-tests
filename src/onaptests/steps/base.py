@@ -1,9 +1,21 @@
+import logging
 from abc import ABC, abstractmethod
 from typing import List
-
+from onapsdk.configuration import settings
 
 class BaseStep(ABC):
     """Base step class."""
+
+    _logger: logging.Logger = logging.getLogger(__qualname__)
+
+    def __init_subclass__(cls):
+        """Subclass initialization.
+
+        Add _logger property for any OnapService with it's class name as a logger name
+        """
+        super().__init_subclass__()
+        cls._logger: logging.Logger = logging.getLogger(cls.__qualname__)
+        cls.set_logger(cls)
 
     def __init__(self, cleanup: bool = False) -> None:
         """Step initialization.
@@ -15,6 +27,28 @@ class BaseStep(ABC):
         self._steps: List["BaseStep"] = []
         self._cleanup: bool = cleanup
         self._parent: "BaseStep" = None
+        # self._logger.propagate = False
+        # self.set_logger()
+
+    def set_logger(cls) -> None:
+        """Set logger.
+        By default, initialize stream logs
+        """
+        # self.logger = logging.getLogger("")
+
+        cls._logger.setLevel(settings.LOG_LEVEL)
+        fh_formatter = logging.Formatter(
+            '%(asctime)s %(levelname)s %(lineno)d:%(filename)s(%(process)d) - %(message)s')
+        # The file log handler is set only if it is requested in settings
+        if settings.LOG_FILE_NAME:
+            logname = settings.LOG_FILE_NAME
+            file_handler = logging.FileHandler(logname)
+            file_handler.setFormatter(fh_formatter)
+            cls._logger.addHandler(file_handler)
+        # Set a default terminal log handler
+        terminal_handler = logging.StreamHandler()
+        terminal_handler.setFormatter(fh_formatter)
+        cls._logger.addHandler(terminal_handler)
 
     def add_step(self, step: "BaseStep") -> None:
         """Add substep.
