@@ -1,9 +1,23 @@
+import logging
+import logging.config
+
 from abc import ABC, abstractmethod
 from typing import List
-
+from onapsdk.configuration import settings
 
 class BaseStep(ABC):
     """Base step class."""
+
+    _logger: logging.Logger = logging.getLogger("")
+
+    def __init_subclass__(cls):
+        """Subclass initialization.
+
+        Add _logger property for any BaseStep subclass
+        """
+        super().__init_subclass__()
+        cls._logger: logging.Logger = logging.getLogger("")
+        logging.config.dictConfig(settings.LOG_CONFIG)
 
     def __init__(self, cleanup: bool = False) -> None:
         """Step initialization.
@@ -15,6 +29,8 @@ class BaseStep(ABC):
         self._steps: List["BaseStep"] = []
         self._cleanup: bool = cleanup
         self._parent: "BaseStep" = None
+
+
 
     def add_step(self, step: "BaseStep") -> None:
         """Add substep.

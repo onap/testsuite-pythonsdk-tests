@@ -1,19 +1,13 @@
-import logging
+import logging.config
+from onapsdk.configuration import settings
+from onaptests.steps.instantiate.service_ala_carte import ServiceAlaCarteInstantiateStep
 
-from onaptests.steps.instantiate.vf_module_ala_carte import YamlTemplateVfModuleAlaCarteInstantiateStep
-
-
-# Configure logging
-logger = logging.getLogger("")
-logger.setLevel(logging.INFO)
-fh = logging.StreamHandler()
-fh_formatter = logging.Formatter(
-    "%(asctime)s %(levelname)s %(name)s %(lineno)d:%(filename)s(%(process)d) - %(message)s"
-)
-fh.setFormatter(fh_formatter)
-logger.addHandler(fh)
 
 
 if __name__ == "__main__":
-    vf_module_inst = YamlTemplateVfModuleAlaCarteInstantiateStep()
-    vf_module_inst.execute()
+    # logging configuration for onapsdk, it is not requested for onaptests
+    # Correction requested in onapsdk to avoid having this duplicate code
+    logging.config.dictConfig(settings.LOG_CONFIG)
+
+    service_inst = ServiceAlaCarteInstantiateStep()
+    service_inst.execute()
