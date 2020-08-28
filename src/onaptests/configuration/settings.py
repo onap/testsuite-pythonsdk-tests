@@ -6,6 +6,12 @@
 #                    #
 ######################
 
+
+# Variables to set logger information
+# Possible values for LOG_LEVEL in onapsdk: INFO, DEBUG , WARNING, ERROR  
+LOG_LEVEL = "DEBUG"
+LOG_FILE_NAME = "./debug.log"
+
 VENDOR_NAME = "sdktests_vendor"
 VSP_NAME = "sdktests_vsp"
 VSP_FILE_PATH = "vfw.zip"
