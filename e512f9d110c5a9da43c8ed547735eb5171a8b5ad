@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab744579_20e3d742",
+        "filename": "src/onaptests/configuration/settings.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2319
+      },
+      "writtenOn": "2020-08-28T09:55:12Z",
+      "side": 1,
+      "message": "whitespace",
+      "revId": "e512f9d110c5a9da43c8ed547735eb5171a8b5ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae505d67_e310c514",
+        "filename": "src/onaptests/steps/base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 2319
+      },
+      "writtenOn": "2020-08-28T09:55:12Z",
+      "side": 1,
+      "message": "whitespace",
+      "revId": "e512f9d110c5a9da43c8ed547735eb5171a8b5ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291f20ee_6d6ce9fb",
+        "filename": "src/onaptests/steps/base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 2319
+      },
+      "writtenOn": "2020-08-28T09:55:12Z",
+      "side": 1,
+      "message": "whitespace",
+      "revId": "e512f9d110c5a9da43c8ed547735eb5171a8b5ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c4b735_1300a70a",
+        "filename": "src/onaptests/steps/base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 2319
+      },
+      "writtenOn": "2020-08-28T09:55:12Z",
+      "side": 1,
+      "message": "whitespace",
+      "revId": "e512f9d110c5a9da43c8ed547735eb5171a8b5ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
