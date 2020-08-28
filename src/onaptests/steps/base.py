@@ -39,13 +39,13 @@ class BaseStep(ABC):
         cls._logger.setLevel(settings.LOG_LEVEL)
         fh_formatter = logging.Formatter(
             '%(asctime)s %(levelname)s %(lineno)d:%(filename)s(%(process)d) - %(message)s')
-        # The file log handler is set only if it is requested in settings    
-        if settings.LOG_FILE_NAME: 
+        # The file log handler is set only if it is requested in settings
+        if settings.LOG_FILE_NAME:
             logname = settings.LOG_FILE_NAME
             file_handler = logging.FileHandler(logname)
             file_handler.setFormatter(fh_formatter)
             cls._logger.addHandler(file_handler)
-        # Set a default terminal log handler    
+        # Set a default terminal log handler
         terminal_handler = logging.StreamHandler()
         terminal_handler.setFormatter(fh_formatter)
         cls._logger.addHandler(terminal_handler)

@@ -2,7 +2,7 @@ import logging
 from onaptests.steps.instantiate.service_ala_carte import ServiceAlaCarteInstantiateStep
 
 # logging configuration for onapsdk, it is not requested for onaptests
-# Correction requested in onapsdk to avoid having this duplicate code 
+# Correction requested in onapsdk to avoid having this duplicate code
 # This code is set based on settings in base.py
 logger = logging.getLogger("")
 logger.setLevel(logging.DEBUG)

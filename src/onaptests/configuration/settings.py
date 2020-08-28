@@ -8,7 +8,7 @@
 
 
 # Variables to set logger information
-# Possible values for LOG_LEVEL in onapsdk: INFO, DEBUG , WARNING, ERROR  
+# Possible values for LOG_LEVEL in onapsdk: INFO, DEBUG , WARNING, ERROR
 LOG_LEVEL = "DEBUG"
 LOG_FILE_NAME = "./debug.log"
 
