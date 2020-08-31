@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "31cb7a53_dc973e0d",
+        "filename": "run.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5622
+      },
+      "writtenOn": "2020-08-31T11:45:51Z",
+      "side": 1,
+      "message": "No, the debug file is created only if it is specified in settings.\nThe log level and the file depends on the LOG level defined in settings\nIn new patchset, the configuration will be clearer and i will add comments",
+      "parentUuid": "2684b66e_3b25fca8",
+      "revId": "aba268884b31a1ba7cb2ed0f75036585e9608c05",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45460a3d_52a76851",
         "filename": "run.py",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2020-08-31T08:38:57Z",
       "side": 1,
       "message": "I would rather set pythonsdk.debug.log to identify that it is coming from pythonsdk",
+      "revId": "aba268884b31a1ba7cb2ed0f75036585e9608c05",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc53b6f4_714d62ae",
+        "filename": "run.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 5622
+      },
+      "writtenOn": "2020-08-31T11:45:51Z",
+      "side": 1,
+      "message": "The user will be able to set what he wants in the new patchset.",
+      "parentUuid": "45460a3d_52a76851",
       "revId": "aba268884b31a1ba7cb2ed0f75036585e9608c05",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
