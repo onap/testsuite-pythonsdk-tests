@@ -50,6 +50,46 @@
       "revId": "aba268884b31a1ba7cb2ed0f75036585e9608c05",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cce9f09_98653e4c",
+        "filename": "src/onaptests/steps/base.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2020-08-31T09:39:33Z",
+      "side": 1,
+      "message": "BaseStep subclass",
+      "range": {
+        "startLine": 14,
+        "startChar": 37,
+        "endLine": 14,
+        "endChar": 49
+      },
+      "revId": "aba268884b31a1ba7cb2ed0f75036585e9608c05",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "726acb4d_7a3c7b8b",
+        "filename": "src/onaptests/steps/base.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2020-08-31T09:39:33Z",
+      "side": 1,
+      "message": "Should be\n@classmethod\ndef set_logger(cls) -\u003e None\nAnd then if you want to call it use\ncls.set_logger()",
+      "revId": "aba268884b31a1ba7cb2ed0f75036585e9608c05",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
