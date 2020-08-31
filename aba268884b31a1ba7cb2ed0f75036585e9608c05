@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2684b66e_3b25fca8",
+        "filename": "run.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-08-31T08:38:57Z",
+      "side": 1,
+      "message": "maybe add a comment here\nfor pythonsdk we systematically create a DEBUG file\nwe do nto use the log level var from settings as we want a debug file",
+      "revId": "aba268884b31a1ba7cb2ed0f75036585e9608c05",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45460a3d_52a76851",
+        "filename": "run.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-08-31T08:38:57Z",
+      "side": 1,
+      "message": "I would rather set pythonsdk.debug.log to identify that it is coming from pythonsdk",
+      "revId": "aba268884b31a1ba7cb2ed0f75036585e9608c05",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03ae4dbd_f5571ced",
+        "filename": "src/onaptests/configuration/settings.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-08-31T08:38:57Z",
+      "side": 1,
+      "message": "pythonsdk.debug.log (same remark)\n\nI assume the log from pythonsdk and onapsdk are in the same files, right?",
+      "revId": "aba268884b31a1ba7cb2ed0f75036585e9608c05",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
