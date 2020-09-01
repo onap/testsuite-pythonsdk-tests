@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "741f770c_12b63ba9",
+        "filename": "src/onaptests/steps/base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5622
+      },
+      "writtenOn": "2020-09-01T10:33:44Z",
+      "side": 1,
+      "message": "I wonder if calling set_proxy from here will not have the consequences to set it for each step that will be added to the scenario. \u003d\u003e To call from init_subclass",
+      "revId": "12049b7f61e3ff1d818ead0f6a0f1137841fe45c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c15fb85f_8a63cff9",
+        "filename": "src/onaptests/steps/base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5622
+      },
+      "writtenOn": "2020-09-01T10:33:44Z",
+      "side": 1,
+      "message": "To define as a classmethod if called from init_subclass using cls",
+      "revId": "12049b7f61e3ff1d818ead0f6a0f1137841fe45c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
