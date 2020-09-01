@@ -4,6 +4,7 @@ import logging.config
 from abc import ABC, abstractmethod
 from typing import List
 from onapsdk.configuration import settings
+from onapsdk.aai.business import Customer
 
 class BaseStep(ABC):
     """Base step class."""
@@ -18,6 +19,12 @@ class BaseStep(ABC):
         super().__init_subclass__()
         cls._logger: logging.Logger = logging.getLogger("")
         logging.config.dictConfig(settings.LOG_CONFIG)
+        # Setup Proxy if SOCK_HTTP is defined in settings
+        try:
+            cls.set_proxy(settings.SOCK_HTTP)
+        except AttributeError:
+            pass
+
 
     def __init__(self, cleanup: bool = False) -> None:
         """Step initialization.
@@ -29,8 +36,6 @@ class BaseStep(ABC):
         self._steps: List["BaseStep"] = []
         self._cleanup: bool = cleanup
         self._parent: "BaseStep" = None
-
-
 
     def add_step(self, step: "BaseStep") -> None:
         """Add substep.
@@ -82,6 +87,14 @@ class BaseStep(ABC):
         if self._cleanup:
             for step in self._steps:
                 step.cleanup()
+
+    @classmethod
+    def set_proxy(cls, sock_http):
+        """Set sock proxy."""
+        onap_proxy = {}
+        onap_proxy['http'] = sock_http
+        onap_proxy['https'] = sock_http
+        Customer.set_proxy(onap_proxy)
 
 
 class YamlTemplateBaseStep(BaseStep, ABC):
