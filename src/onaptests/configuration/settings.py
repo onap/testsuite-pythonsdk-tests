@@ -68,3 +68,5 @@ PLATFORM = "sdktests_platform"
 SERVICE_INSTANCE_NAME = "sdktests_service_instance_name"
 
 SERVICE_YAML_TEMPLATE = "templates/vnf-services/ubuntu16test-service.yaml"
+
+# SOCK_HTTP = "socks5h://127.0.0.1:8080"
