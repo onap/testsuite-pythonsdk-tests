@@ -54,7 +54,7 @@ class YamlTemplateVfOnboardStep(YamlTemplateBaseStep):
             dict: YAML template
 
         """
-        return self.parent.yaml_template[self.parent.name]
+        return self.parent.yaml_template[self.parent.service_name]
 
     def execute(self):
         """Onboard Vfs from YAML template."""
