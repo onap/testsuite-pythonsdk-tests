@@ -84,5 +84,5 @@ class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
         super().execute()
         service: Service = Service(name=self.service_name,
                                    resources=[Vf(name=vnf["vnf_name"]) \
-                                                for vnf in self.yaml_template[self.name]["vnfs"]])
+                                                for vnf in self.yaml_template[self.service_name]["vnfs"]])
         service.onboard()
