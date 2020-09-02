@@ -5,7 +5,7 @@ ubuntu16test:
     subscription_type: "ubuntu16test"
     vnfs:
         - vnf_name: ubuntu16test
-          heat_files_to_upload: ubuntu16/ubuntu16.zip
+          heat_files_to_upload: templates/heat_files/ubuntu16/ubuntu16.zip
           vnf_parameters: [
               {"name": "ubuntu16_image_name",
                "value": "ubuntu-16.04-daily"
