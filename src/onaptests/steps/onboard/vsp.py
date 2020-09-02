@@ -33,7 +33,7 @@ class VspOnboardStep(BaseStep):
         vsp.onboard()
 
 
-class YamlTemplateVspOnboardStep(VspOnboardStep, YamlTemplateBaseStep):
+class YamlTemplateVspOnboardStep(YamlTemplateBaseStep):
     """Vsp onboard using YAML template step."""
 
     @property
