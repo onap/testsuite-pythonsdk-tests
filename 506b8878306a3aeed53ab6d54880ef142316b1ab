@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0a02482_b523b21e",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5622
+      },
+      "writtenOn": "2020-09-03T06:56:52Z",
+      "side": 1,
+      "message": "To indicate that the log file name and path are defined in settings file",
+      "revId": "506b8878306a3aeed53ab6d54880ef142316b1ab",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a40986ed_b518baa0",
+        "filename": "templates/heat_files/ubuntu16/base_ubuntu16.env",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5622
+      },
+      "writtenOn": "2020-09-03T06:56:52Z",
+      "side": 1,
+      "message": "The ENV file is not required as already included in zip file. Same remark for corresponding yaml file",
+      "revId": "506b8878306a3aeed53ab6d54880ef142316b1ab",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0d71334_7580775b",
+        "filename": "templates/heat_files/vFW/base_vfw.env",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5622
+      },
+      "writtenOn": "2020-09-03T06:56:52Z",
+      "side": 1,
+      "message": "Do we really need to add multiple examples in this repository? At the end it will depend where we define the DockerFile for each test?\nAnd this is the zip file that is required.",
+      "revId": "506b8878306a3aeed53ab6d54880ef142316b1ab",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
