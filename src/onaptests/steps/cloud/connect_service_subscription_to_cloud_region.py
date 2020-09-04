@@ -42,5 +42,18 @@ class ConnectServiceSubToCloudRegionStep(BaseStep):
             cloud_owner=settings.CLOUD_REGION_CLOUD_OWNER,
             cloud_region_id=settings.CLOUD_REGION_ID,
         )
-        tenant: Tenant = cloud_region.get_tenant(settings.TENANT_ID)
+
+        try:
+            tenant: Tenant = cloud_region.get_tenant(settings.TENANT_ID)
+        except ValueError:
+            self._logger.warning("Impossible to retrieve the Specificed Tenant")
+            self._logger.debug("If no multicloud selected, add the tenant")
+            cloud_region.add_tenant(
+                tenant_id=settings.TENANT_ID,
+                tenant_name=settings.TENANT_NAME)
+            cloud_region.add_availability_zone(
+                settings.AVAILABILITY_ZONE_NAME,
+                settings.AVAILABILITY_ZONE_TYPE)
+            tenant: Tenant = cloud_region.get_tenant(settings.TENANT_ID)
+
         service_subscription.link_to_cloud_region_and_tenant(cloud_region=cloud_region, tenant=tenant)
