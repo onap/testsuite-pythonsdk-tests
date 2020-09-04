@@ -36,11 +36,38 @@ class ConnectServiceSubToCloudRegionStep(BaseStep):
 
         """
         super().execute()
-        customer: Customer = Customer.get_by_global_customer_id(settings.GLOBAL_CUSTOMER_ID)
-        service_subscription: ServiceSubscription = customer.get_service_subscription_by_service_type(settings.SERVICE_NAME)
+        customer: Customer = Customer.get_by_global_customer_id(
+            settings.GLOBAL_CUSTOMER_ID)
+        service_subscription: ServiceSubscription = customer.get_service_subscription_by_service_type(
+            settings.SERVICE_NAME)
         cloud_region: CloudRegion = CloudRegion.get_by_id(
             cloud_owner=settings.CLOUD_REGION_CLOUD_OWNER,
             cloud_region_id=settings.CLOUD_REGION_ID,
         )
+
+        # Retrieve the tenant
+        # if it does not exist, create it
+        try:
+            tenant: Tenant = cloud_region.get_tenant(settings.TENANT_ID)
+        except ValueError:
+            self._logger.warning("Impossible to retrieve the Specificed Tenant")
+            self._logger.debug("If no multicloud selected, add the tenant")
+            cloud_region.add_tenant(
+                tenant_id=settings.TENANT_ID,
+                tenant_name=settings.TENANT_NAME)
+
+        # be sure that an availability zone has been created
+        # if not, create it
+        try:
+            cloud_region.get_availability_zone_by_name(
+                settings.AVAILABILITY_ZONE_NAME)
+        except ValueError:
+            cloud_region.add_availability_zone(
+                settings.AVAILABILITY_ZONE_NAME,
+                settings.AVAILABILITY_ZONE_TYPE)
+
+        # retrieve tenant
+        # for which we are sure that an availability zone has been created
         tenant: Tenant = cloud_region.get_tenant(settings.TENANT_ID)
+
         service_subscription.link_to_cloud_region_and_tenant(cloud_region=cloud_region, tenant=tenant)
