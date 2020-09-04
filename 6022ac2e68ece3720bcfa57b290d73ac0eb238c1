@@ -1,0 +1,8 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Thierry Hardy <thierry.hardy@orange.com>
+Code-Review+2: Andreas Geissler <andreas-geissler@telekom.de>
+Submitted-by: Andreas Geissler <andreas-geissler@telekom.de>
+Submitted-at: Fri, 04 Sep 2020 12:30:12 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/testsuite/pythonsdk-tests/+/111944
+Project: testsuite/pythonsdk-tests
+Branch: refs/heads/master
