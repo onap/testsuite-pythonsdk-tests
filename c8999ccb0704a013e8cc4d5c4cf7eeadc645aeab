@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0260df1_1c037051",
+        "filename": "src/onaptests/steps/cloud/connect_service_subscription_to_cloud_region.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5622
+      },
+      "writtenOn": "2020-09-04T16:07:09Z",
+      "side": 1,
+      "message": "The tenant must be created if not found even if multicloud is used",
+      "revId": "c8999ccb0704a013e8cc4d5c4cf7eeadc645aeab",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
