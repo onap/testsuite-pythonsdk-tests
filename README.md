@@ -39,6 +39,15 @@ See ubuntu16test as example
   including the dynamic forwarding port for ssh tunnel in
   src/onaptests/configuration/settings.py
 
+- Set OpenStack configuration: there are 2 ways to provide the cloud information
+  If you got the clouds.yaml, you need to reference your cloud with the env
+  variable OS_TEST_CLOUD
+  ```shell
+  export OS_TEST_CLOUD="cloud-name-referenced-in-the-cloud-configuration"
+  ```
+  If you do not have access to the cloud config, you must precise all the
+  parameters manually
+
 - Export the setting file in a environment variable
   ```shell
   export ONAP_PYTHON_SDK_SETTINGS="onaptests.configuration.ubuntu16_multicloud_yaml_settings"
@@ -57,7 +66,7 @@ environment and configuration.
   that the templates files for your service are defined, start to run
   the different steps:
   ```shell
-  python run.py
+  python run_basicvm_nomulticloud.py
   ```
 
 - By default, all the logs are stored in the file pythonsdk.debug.log.
