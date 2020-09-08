@@ -1,8 +1,6 @@
-# pylint: disable=unused-import
-from .settings import *
+from .settings import * # pylint: disable=W0614e
 
 """ Specific ubuntu16 with multicloud and yaml config scenario."""
-# pylint: disable=bad-whitespace
 
 USE_MULTICLOUD = True
 
