@@ -2,7 +2,7 @@
 from .settings import *
 
 """ Specific ubuntu16 with multicloud and yaml config scenario."""
-# pylint: disable=bad-whitespace
+# pylint: disable=W0614e
 
 USE_MULTICLOUD = True
 
