@@ -22,6 +22,7 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
         """
         super().__init__(cleanup=cleanup)
         self._yaml_template: dict = None
+        self._service_instance_name: str = None
         self.add_step(YamlTemplateServiceAlaCarteInstantiateStep(cleanup))
 
     @property
@@ -67,7 +68,9 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
 
         """
         if self.is_root:
-            return f"{self.service_name}-{str(uuid4())}"
+            if not self._service_instance_name:
+                self._service_instance_name: str = f"{self.service_name}-{str(uuid4())}"
+            return self._service_instance_name
         return self.parent.service_instance_name
 
     def execute(self):
@@ -88,7 +91,7 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
         service_instance: ServiceInstance = service_subscription.get_service_instance_by_name(self.service_instance_name)
         line_of_business: LineOfBusiness = LineOfBusiness(settings.LINE_OF_BUSINESS)
         platform: Platform = Platform(settings.PLATFORM)
-        for idx, vnf in service.vnfs:
+        for idx, vnf in enumerate(service.vnfs):
             vnf_instantiation = service_instance.add_vnf(vnf, line_of_business, platform, f"{self.service_instance_name}_vnf_{idx}")
             while not vnf_instantiation.finished:
                 time.sleep(10)

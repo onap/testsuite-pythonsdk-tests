@@ -36,6 +36,15 @@ class VspOnboardStep(BaseStep):
 class YamlTemplateVspOnboardStep(YamlTemplateBaseStep):
     """Vsp onboard using YAML template step."""
 
+    def __init__(self, cleanup=False):
+        """Initialize step.
+
+        Substeps:
+            - VendorOnboardStep.
+        """
+        super().__init__(cleanup=cleanup)
+        self.add_step(VendorOnboardStep(cleanup=cleanup))
+
     @property
     def yaml_template(self) -> dict:
         """YAML template.
