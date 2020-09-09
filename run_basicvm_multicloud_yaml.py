@@ -1,6 +1,6 @@
 import logging.config
 from onapsdk.configuration import settings
-from onaptests.steps.instantiate.service_ala_carte import YamlTemplateServiceAlaCarteInstantiateStep
+from onaptests.steps.instantiate.vf_module_ala_carte import YamlTemplateVfModuleAlaCarteInstantiateStep
 
 
 
@@ -9,6 +9,5 @@ if __name__ == "__main__":
     # Correction requested in onapsdk to avoid having this duplicate code
     logging.config.dictConfig(settings.LOG_CONFIG)
 
-    service_inst = YamlTemplateServiceAlaCarteInstantiateStep()
-    #service_inst = ServiceAlaCarteInstantiateStep()
-    service_inst.execute()
+    basic_vm_instantiate = YamlTemplateVfModuleAlaCarteInstantiateStep()
+    basic_vm_instantiate.execute()
