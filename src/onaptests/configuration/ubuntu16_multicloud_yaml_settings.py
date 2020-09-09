@@ -5,13 +5,10 @@ from .settings import * # pylint: disable=W0614
 USE_MULTICLOUD = True
 
 VENDOR_NAME = "sdktests_vendor"
-VSP_NAME = "sdktests_vsp"
-VSP_FILE_PATH = "vfw.zip"
-SERVICE_NAME = "sdktests-service"
-VF_NAME = "sdktests_vf"
+SERVICE_NAME = "ubuntu16test" # must be the same as in YAML
 
-CLOUD_REGION_CLOUD_OWNER = "sdktests_cloud_region_owner"
-CLOUD_REGION_ID = "sdktests_cloud_region_id"
+CLOUD_REGION_CLOUD_OWNER = "sdktestsOwner" # must not contain _
+CLOUD_REGION_ID = "RegionOne" # should be valid, as otherwise MultiCloud fails
 CLOUD_REGION_TYPE = "openstack"
 CLOUD_REGION_VERSION = "titanium_cloud"
 CLOUD_DOMAIN = "Default"
@@ -21,6 +18,9 @@ COMPLEX_DATA_CENTER_CODE = "sdktests_complex_data_center_code"
 
 GLOBAL_CUSTOMER_ID = "sdktests_global_customer_id"
 TENANT_ID = ""  # Fill me in your custom settings
+TENANT_NAME= "" # Fill me in your custom settings
+AVAILABILITY_ZONE_NAME = "" # Fill me in your custom settings
+AVAILABILITY_ZONE_TYPE = "nova"
 
 VIM_USERNAME = ""  # Fill me in your custom settings
 VIM_PASSWORD = ""  # Fill me in your custom settings

@@ -1,3 +1,4 @@
+import time
 from uuid import uuid4
 
 from onapsdk.aai.cloud_infrastructure import CloudRegion
@@ -25,11 +26,11 @@ class RegisterCloudRegionToMulticloudStep(BaseStep):
         Use settings values:
          - CLOUD_REGION_CLOUD_OWNER,
          - CLOUD_REGION_ID,
-         - CLOUD_REGION_TYPE,
          - CLOUD_DOMAIN,
          - VIM_USERNAME,
          - VIM_PASSWORD,
-         - VIM_SERVICE_URL.
+         - VIM_SERVICE_URL,
+         - TENANT_NAME.
         """
         super().execute()
         cloud_region = CloudRegion.get_by_id(
@@ -40,8 +41,21 @@ class RegisterCloudRegionToMulticloudStep(BaseStep):
             esr_system_info_id=str(uuid4()),
             user_name=settings.VIM_USERNAME,
             password=settings.VIM_PASSWORD,
-            system_type=settings.CLOUD_REGION_TYPE,
+            system_type="VIM",
             service_url=settings.VIM_SERVICE_URL,
-            cloud_domain=settings.CLOUD_DOMAIN
+            ssl_insecure=False,
+            system_status="active",
+            cloud_domain=settings.CLOUD_DOMAIN,
+            default_tenant=settings.TENANT_NAME
         )
         cloud_region.register_to_multicloud()
+
+        time.sleep(20)
+        nb_try = 0
+        nb_try_max = 3
+        while nb_try < nb_try_max:
+            if len(cloud_region.tenants) == 0:
+                time.sleep(20)
+            else:
+                break
+            nb_try += 1
