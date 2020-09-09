@@ -155,7 +155,12 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
             cloud_region_id=settings.CLOUD_REGION_ID,
         )
         tenant: Tenant = cloud_region.get_tenant(settings.TENANT_ID)
-        owning_entity = AaiOwningEntity.get_by_owning_entity_name(settings.OWNING_ENTITY)
+        try:
+            owning_entity = AaiOwningEntity.get_by_owning_entity_name(
+                settings.OWNING_ENTITY)
+        except ValueError:
+            self._logger.info("Owning entity not found, create it")
+            owning_entity = AaiOwningEntity.create(settings.OWNING_ENTITY)
         vid_project = Project.create(settings.PROJECT)
 
         service_instantiation = ServiceInstantiation.instantiate_so_ala_carte(
