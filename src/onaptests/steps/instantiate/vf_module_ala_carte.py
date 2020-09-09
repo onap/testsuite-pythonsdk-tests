@@ -22,6 +22,7 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
         """
         super().__init__(cleanup=cleanup)
         self._yaml_template: dict = None
+        self._service_instance_name: str = None
         self.add_step(YamlTemplateVnfAlaCarteInstantiateStep(cleanup))
 
     @property
@@ -67,7 +68,9 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
 
         """
         if self.is_root:
-            return f"{self.service_name}-{str(uuid4())}"
+            if not self._service_instance_name:
+                self._service_instance_name: str = f"{self.service_name}-{str(uuid4())}"
+            return self._service_instance_name
         return self.parent.service_instance_name
 
     def get_vnf_parameters(self, vnf_name: str) -> Iterable[VnfParameter]:
@@ -80,6 +83,9 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
             Iterator[Iterable[VnfParameter]]: VNF parameter
 
         """
+
+        # workaround, as VNF name differs from model name (added " 0")
+        vnf_name=vnf_name.split()[0]
         for vnf in self.yaml_template[self.service_name]["vnfs"]:
             if vnf["vnf_name"] == vnf_name:
                 for vnf_parameter in vnf["vnf_parameters"]:
@@ -87,7 +93,7 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
                         name=vnf_parameter["name"],
                         value=vnf_parameter["value"]
                     )
-
+        
     def execute(self) -> None:
         """Instantiate Vf module.
 
@@ -105,7 +111,7 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
         for vnf_instance in service_instance.vnf_instances:
             vf_module_instantiation = vnf_instance.add_vf_module(
                 vnf_instance.vnf.vf_module,
-                vnf_parameters= self.get_vnf_parameters(vnf_instance.vnf.vnf_name))
+                vnf_parameters= self.get_vnf_parameters(vnf_instance.vnf.name))
             while not vf_module_instantiation.finished:
                 time.sleep(10)
             if vf_module_instantiation.failed:
