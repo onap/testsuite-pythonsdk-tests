@@ -83,6 +83,7 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         """
         super().__init__(cleanup=cleanup)
         self._yaml_template: dict = None
+        self._service_instance_name: str = None
         self.add_step(YamlTemplateServiceOnboardStep(cleanup))
         self.add_step(ConnectServiceSubToCloudRegionStep(cleanup))
 
@@ -129,7 +130,9 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
 
         """
         if self.is_root:
-            return f"{self.service_name}-{str(uuid4())}"
+            if not self._service_instance_name:
+                self._service_instance_name: str = f"{self.service_name}-{str(uuid4())}"
+            return self._service_instance_name
         return self.parent.service_instance_name
 
     def execute(self):
@@ -155,9 +158,13 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
             cloud_region_id=settings.CLOUD_REGION_ID,
         )
         tenant: Tenant = cloud_region.get_tenant(settings.TENANT_ID)
-        owning_entity = AaiOwningEntity.get_by_owning_entity_name(settings.OWNING_ENTITY)
+        try:
+            owning_entity = AaiOwningEntity.get_by_owning_entity_name(
+                settings.OWNING_ENTITY)
+        except ValueError:
+            self._logger.info("Owning entity not found, create it")
+            owning_entity = AaiOwningEntity.create(settings.OWNING_ENTITY)
         vid_project = Project.create(settings.PROJECT)
-
         service_instantiation = ServiceInstantiation.instantiate_so_ala_carte(
             service,
             cloud_region,
