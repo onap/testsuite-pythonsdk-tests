@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f08376a_084420c6",
+        "filename": "src/onaptests/configuration/ubuntu16_multicloud_yaml_settings.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-09-10T13:28:19Z",
+      "side": 1,
+      "message": "do we need it\ncan we not set it directly based on yaml file as we do for the other parameters (to avoid risk of error?)",
+      "revId": "38faee81a5ccfe00b1a383e4fc60a21a7a87cfef",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "108f62ca_2972f576",
+        "filename": "src/onaptests/steps/instantiate/service_ala_carte.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-09-10T13:28:19Z",
+      "side": 1,
+      "message": "if we consider that yaml file is mandatory for service instancaitaiton, we could maybe in the future simplify to avoid having almost the same code twic one for yaml one for non yaml",
+      "revId": "38faee81a5ccfe00b1a383e4fc60a21a7a87cfef",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
