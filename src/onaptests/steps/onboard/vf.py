@@ -59,7 +59,9 @@ class YamlTemplateVfOnboardStep(YamlTemplateBaseStep):
     def execute(self):
         """Onboard Vfs from YAML template."""
         super().execute()
-        for vnf in self.yaml_template["vnfs"]:
-            vsp: Vsp = Vsp(name=f"{vnf['vnf_name']}_VSP")
-            vf: Vf = Vf(name=vnf['vnf_name'], vsp=vsp)
-            vf.onboard()
+
+        if "vnfs" in self.yaml_template:
+            for vnf in self.yaml_template["vnfs"]:
+                vsp: Vsp = Vsp(name=f"{vnf['vnf_name']}_VSP")
+                vf: Vf = Vf(name=vnf['vnf_name'], vsp=vsp)
+                vf.onboard()
