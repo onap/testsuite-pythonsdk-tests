@@ -178,3 +178,25 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
             time.sleep(10)
         if service_instantiation.failed:
             raise Exception("Service instantiation failed")
+
+    def cleanup(self) -> None:
+        """Cleanup Service.
+
+        Raises:
+            Exception: Service cleaning failed
+
+        """
+        super().cleanup()
+
+        service_deletion = service_instance.delete()
+        nb_try = 0
+        nb_try_max = 30
+        while not service_deletion.finished and nb_try < nb_try_max:
+            self.logger.info("Wait for Service deletion")
+            nb_try += 1
+            time.sleep(15)
+        if service_deletion.finished:
+            self.logger.info("Service %s deleted", service_instance.name)
+        else:
+            self.logger.error("Service deletion %s failed", service_instance.name)
+            raise Exception("Service cleanup failed")

@@ -97,3 +97,27 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
                 time.sleep(10)
             if vnf_instantiation.failed:
                 raise Exception("Vnf instantiation failed")
+
+    def cleanup(self) -> None:
+        """Cleanup VNF.
+
+        Raises:
+            Exception: VNF cleaning failed
+
+        """
+        super().cleanup()
+
+        for vnf_instance in service_instance.vnf_instances:
+            vnf_deletion = vnf_instance.delete()
+            nb_try = 0
+            nb_try_max = 30
+
+            while not vnf_deletion.finished and nb_try < nb_try_max:
+                self._logger.info("Wait for vnf deletion")
+                nb_try += 1
+                time.sleep(15)
+            if vnf_deletion.finished:
+                self._logger.info("VNF %s deleted", vnf_instance.name)
+            else:
+                self._logger.error("VNF deletion %s failed", vnf_instance.name)
+                raise Exception("VNF Cleanup failed")

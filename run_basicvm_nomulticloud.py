@@ -9,5 +9,5 @@ if __name__ == "__main__":
     # Correction requested in onapsdk to avoid having this duplicate code
     logging.config.dictConfig(settings.LOG_CONFIG)
 
-    basic_vm_instantiate = YamlTemplateVfModuleAlaCarteInstantiateStep()
+    basic_vm_instantiate = YamlTemplateVfModuleAlaCarteInstantiateStep(cleanup=True)
     basic_vm_instantiate.execute()

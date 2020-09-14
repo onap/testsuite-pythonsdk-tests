@@ -21,6 +21,10 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
             - YamlTemplateVnfAlaCarteInstantiateStep.
         """
         super().__init__(cleanup=cleanup)
+        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+        print(cleanup)
+        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+        
         self._yaml_template: dict = None
         self._service_instance_name: str = None
         self.add_step(YamlTemplateVnfAlaCarteInstantiateStep(cleanup))
@@ -116,3 +120,33 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
                 time.sleep(10)
             if vf_module_instantiation.failed:
                 raise Exception("Vf module instantiation failed")
+
+
+    def cleanup(self) -> None:
+        """Cleanup Vf module.
+
+        Raises:
+            Exception: Vf module cleaning failed
+
+        """
+        super().cleanup()
+        for vnf_instance in service_instance.vnf_instances:
+            self._logger.debug("VNF instance %s found in Service Instance ",
+                               vnf_instance.name)
+            self._logger.info("******** Get VF Modules *******")
+            for vf_module in vnf_instance.vf_modules:
+                self._logger.info("******** Delete VF Module %s *******",
+                                  vf_module.name)
+                vf_module_deletion = vf_module.delete()
+                nb_try = 0
+                nb_try_max = 30
+
+                while not vf_module_deletion.finished and nb_try < nb_try_max:
+                    self._logger.info("Wait for vf module deletion")
+                    nb_try += 1
+                    time.sleep(20)
+                if vf_module_deletion.finished:
+                    self._logger.info("VfModule %s deleted", vf_module.name)
+                else:
+                    self._logger.error("VfModule deletion %s failed", vf_module.name)
+                    raise Exception("Vf module cleanup failed")

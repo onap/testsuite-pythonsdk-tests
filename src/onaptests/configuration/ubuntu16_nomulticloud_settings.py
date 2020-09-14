@@ -12,6 +12,8 @@ USE_MULTICLOUD = False
 SERVICE_YAML_TEMPLATE = "templates/vnf-services/ubuntu16test-service.yaml"
 
 VENDOR_NAME = "basicvm_vendor"
+
+VF_NAME = "basicvm_ubuntu_vf"
 VSP_NAME = "basicvm_ubuntu_vsp"
 try:
     # Try to retrieve the SERVICE NAME from the yaml file
@@ -20,8 +22,6 @@ try:
         SERVICE_NAME = next(iter(yaml_config_file.keys()))
 except ValueError:
     SERVICE_NAME = "" # Fill me
-
-VF_NAME = "basicvm_ubuntu_vf"
 
 CLOUD_REGION_CLOUD_OWNER = "basicvm-cloud-owner"
 CLOUD_REGION_TYPE = "openstack"
@@ -39,7 +39,7 @@ PROJECT = "basicvm-project"
 LINE_OF_BUSINESS = "basicvm-lob"
 PLATFORM = "basicvm-platform"
 
-SERVICE_INSTANCE_NAME = "basicvm_ubuntu16_service_instance_3"
+SERVICE_INSTANCE_NAME = "basicvm_ubuntu16_service_instance_6"
 
 VSP_FILE_PATH = "templates/heat_files/ubuntu16/ubuntu16.zip"
 
