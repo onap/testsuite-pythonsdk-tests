@@ -1,24 +1,13 @@
-# import logging
+import logging.config
+from onapsdk.configuration import settings
+from onaptests.steps.instantiate.vf_module_ala_carte import YamlTemplateVfModuleAlaCarteInstantiateStep
 
-from onaptests.steps.instantiate.module import ModuleInstantiateStep
-
-# from onapsdk.sdc.vendor import Vendor
-
-
-# Configure logging
-# logger = logging.getLogger("")
-# logger.setLevel(logging.INFO)
-# fh = logging.StreamHandler()
-# fh_formatter = logging.Formatter(
-#     "%(asctime)s %(levelname)s %(name)s %(lineno)d:%(filename)s(%(process)d) - %(message)s"
-# )
-# fh.setFormatter(fh_formatter)
-# logger.addHandler(fh)
-# Vendor.set_proxy({ 'http': 'socks5h://127.0.0.1:8083', 'https': 'socks5h://127.0.0.1:8083'})
 
 
 if __name__ == "__main__":
-    basic_vm_instantiate = ModuleInstantiateStep()
+    # logging configuration for onapsdk, it is not requested for onaptests
+    # Correction requested in onapsdk to avoid having this duplicate code
+    logging.config.dictConfig(settings.LOG_CONFIG)
+
+    basic_vm_instantiate = YamlTemplateVfModuleAlaCarteInstantiateStep()
     basic_vm_instantiate.execute()
-    # service_onboard = YamlTemplateServiceOnboardStep()
-    # service_onboard.execute()

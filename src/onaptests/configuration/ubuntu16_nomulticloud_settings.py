@@ -1,5 +1,6 @@
 import os
 import openstack
+from yaml import load
 
 from .settings import * # pylint: disable=W0614
 
@@ -8,10 +9,18 @@ from .settings import * # pylint: disable=W0614
 # pylint: disable=bad-whitespace
 # The ONAP part
 USE_MULTICLOUD = False
+SERVICE_YAML_TEMPLATE = "templates/vnf-services/ubuntu16test-service.yaml"
 
 VENDOR_NAME = "basicvm_vendor"
 VSP_NAME = "basicvm_ubuntu_vsp"
-SERVICE_NAME = "basicvm-ubuntu-service"
+try:
+    # Try to retrieve the SERVICE NAME from the yaml file
+    with open(SERVICE_YAML_TEMPLATE, "r") as yaml_template:
+        yaml_config_file = load(yaml_template)
+        SERVICE_NAME = next(iter(yaml_config_file.keys()))
+except ValueError:
+    SERVICE_NAME = "" # Fill me
+
 VF_NAME = "basicvm_ubuntu_vf"
 
 CLOUD_REGION_CLOUD_OWNER = "basicvm-cloud-owner"
@@ -30,9 +39,10 @@ PROJECT = "basicvm-project"
 LINE_OF_BUSINESS = "basicvm-lob"
 PLATFORM = "basicvm-platform"
 
-SERVICE_INSTANCE_NAME = "basicvm_ubuntu16_service_instance"
+SERVICE_INSTANCE_NAME = "basicvm_ubuntu16_service_instance_3"
 
 VSP_FILE_PATH = "templates/heat_files/ubuntu16/ubuntu16.zip"
+
 
 # The cloud Part
 # Assuming a cloud.yaml is available, use the openstack client
