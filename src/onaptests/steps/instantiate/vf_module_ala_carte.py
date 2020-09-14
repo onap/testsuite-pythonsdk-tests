@@ -10,7 +10,6 @@ from onapsdk.so.instantiation import VnfParameter
 from ..base import YamlTemplateBaseStep
 from .vnf_ala_carte import YamlTemplateVnfAlaCarteInstantiateStep
 
-
 class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
     """Instantiate vf module a'la carte using YAML template."""
 
@@ -21,8 +20,10 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
             - YamlTemplateVnfAlaCarteInstantiateStep.
         """
         super().__init__(cleanup=cleanup)
+
         self._yaml_template: dict = None
         self._service_instance_name: str = None
+        self._service_instance: ServiceInstance = None
         self.add_step(YamlTemplateVnfAlaCarteInstantiateStep(cleanup))
 
     @property
@@ -107,8 +108,8 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
         super().execute()
         customer: Customer = Customer.get_by_global_customer_id(settings.GLOBAL_CUSTOMER_ID)
         service_subscription: ServiceSubscription = customer.get_service_subscription_by_service_type(self.service_name)
-        service_instance: ServiceInstance = service_subscription.get_service_instance_by_name(self.service_instance_name)
-        for vnf_instance in service_instance.vnf_instances:
+        self._service_instance: ServiceInstance = service_subscription.get_service_instance_by_name(self.service_instance_name)
+        for vnf_instance in self._service_instance.vnf_instances:
             vf_module_instantiation = vnf_instance.add_vf_module(
                 vnf_instance.vnf.vf_module,
                 vnf_parameters= self.get_vnf_parameters(vnf_instance.vnf.name))
@@ -116,3 +117,33 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
                 time.sleep(10)
             if vf_module_instantiation.failed:
                 raise Exception("Vf module instantiation failed")
+
+
+    def cleanup(self) -> None:
+        """Cleanup Vf module.
+
+        Raises:
+            Exception: Vf module cleaning failed
+
+        """
+        super().cleanup()
+        for vnf_instance in self._service_instance.vnf_instances:
+            self._logger.debug("VNF instance %s found in Service Instance ",
+                               vnf_instance.name)
+            self._logger.info("Get VF Modules")
+            for vf_module in vnf_instance.vf_modules:
+                self._logger.info("Delete VF Module %s",
+                                  vf_module.name)
+                vf_module_deletion = vf_module.delete()
+                nb_try = 0
+                nb_try_max = 30
+
+                while not vf_module_deletion.finished and nb_try < nb_try_max:
+                    self._logger.info("Wait for vf module deletion")
+                    nb_try += 1
+                    time.sleep(20)
+                if vf_module_deletion.finished:
+                    self._logger.info("VfModule %s deleted", vf_module.name)
+                else:
+                    self._logger.error("VfModule deletion %s failed", vf_module.name)
+                    raise Exception("Vf module cleanup failed")
