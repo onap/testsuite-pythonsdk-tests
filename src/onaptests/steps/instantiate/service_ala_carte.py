@@ -3,7 +3,7 @@ from uuid import uuid4
 from yaml import load
 
 from onapsdk.aai.cloud_infrastructure import CloudRegion, Tenant
-from onapsdk.aai.business import Customer
+from onapsdk.aai.business import Customer, ServiceInstance, ServiceSubscription
 from onapsdk.aai.business.owning_entity import OwningEntity as AaiOwningEntity
 from onapsdk.configuration import settings
 from onapsdk.sdc.service import Service
@@ -84,6 +84,8 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         super().__init__(cleanup=cleanup)
         self._yaml_template: dict = None
         self._service_instance_name: str = None
+        self._service_instance: str = None
+
         self.add_step(YamlTemplateServiceOnboardStep(cleanup))
         self.add_step(ConnectServiceSubToCloudRegionStep(cleanup))
 
@@ -178,3 +180,28 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
             time.sleep(10)
         if service_instantiation.failed:
             raise Exception("Service instantiation failed")
+        else:
+            service_subscription: ServiceSubscription = customer.get_service_subscription_by_service_type(self.service_name)
+            self._service_instance: ServiceInstance = service_subscription.get_service_instance_by_name(self.service_instance_name)
+
+
+    def cleanup(self) -> None:
+        """Cleanup Service.
+
+        Raises:
+            Exception: Service cleaning failed
+
+        """
+        super().cleanup()
+        service_deletion = self._service_instance.delete()
+        nb_try = 0
+        nb_try_max = 30
+        while not service_deletion.finished and nb_try < nb_try_max:
+            self._logger.info("Wait for Service deletion")
+            nb_try += 1
+            time.sleep(15)
+        if service_deletion.finished:
+            self._logger.info("Service %s deleted", self._service_instance_name)
+        else:
+            self._logger.error("Service deletion %s failed", self._service_instance_name)
+            raise Exception("Service cleanup failed")

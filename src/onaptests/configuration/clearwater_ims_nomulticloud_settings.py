@@ -4,18 +4,18 @@ from yaml import load
 
 from .settings import * # pylint: disable=W0614
 
-""" Specific ubuntu16 without multicloud."""
+""" Specific clearwater IMS without multicloud."""
 
 # pylint: disable=bad-whitespace
 # The ONAP part
 USE_MULTICLOUD = False
-SERVICE_YAML_TEMPLATE = "templates/vnf-services/ubuntu16test-service.yaml"
+SERVICE_YAML_TEMPLATE = "templates/vnf-services/clearwater-ims-service.yaml"
 CLEANUP_FLAG = True
-CLEANUP_ACTIVITY_TIMER = 10  # nb of seconds before cleanup in case cleanup option is set
-VENDOR_NAME = "basicvm_vendor"
+CLEANUP_ACTIVITY_TIMER = 60  # nb of seconds before cleanup in case cleanup option is set
+VENDOR_NAME = "clearwater-ims_vendor"
 
-VF_NAME = "basicvm_ubuntu_vf"
-VSP_NAME = "basicvm_ubuntu_vsp"
+VF_NAME = "clearwater-ims_ubuntu_vf"
+VSP_NAME = "clearwater-ims_ubuntu_vsp"
 try:
     # Try to retrieve the SERVICE NAME from the yaml file
     with open(SERVICE_YAML_TEMPLATE, "r") as yaml_template:
@@ -24,25 +24,25 @@ try:
 except ValueError:
     SERVICE_NAME = "" # Fill me
 
-CLOUD_REGION_CLOUD_OWNER = "basicvm-cloud-owner"
+CLOUD_REGION_CLOUD_OWNER = "clearwater-ims-cloud-owner"
 CLOUD_REGION_TYPE = "openstack"
 CLOUD_REGION_VERSION = "openstack"
 
-AVAILABILITY_ZONE_NAME = "basicvm-availability-zone"
+AVAILABILITY_ZONE_NAME = "clearwater-ims-availability-zone"
 AVAILABILITY_ZONE_TYPE = "nova"
 COMPLEX_PHYSICAL_LOCATION_ID = "lannion"
 COMPLEX_DATA_CENTER_CODE = "1234-5"
 
-GLOBAL_CUSTOMER_ID = "basicvm-customer"
+GLOBAL_CUSTOMER_ID = "clearwater-ims-customer"
 
-OWNING_ENTITY = "basicvm-oe"
-PROJECT = "basicvm-project"
-LINE_OF_BUSINESS = "basicvm-lob"
-PLATFORM = "basicvm-platform"
+OWNING_ENTITY = "clearwater-ims-oe"
+PROJECT = "clearwater-ims-project"
+LINE_OF_BUSINESS = "clearwater-ims-lob"
+PLATFORM = "clearwater-ims-platform"
 
-SERVICE_INSTANCE_NAME = "basicvm_ubuntu16_service_instance"
+SERVICE_INSTANCE_NAME = "clearwater-ims_service_instance_7"
 
-VSP_FILE_PATH = "templates/heat_files/ubuntu16/ubuntu16.zip"
+VSP_FILE_PATH = "templates/heat_files/clearwater_ims/clearwater_ims.zip"
 
 
 # The cloud Part
