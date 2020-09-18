@@ -1,2 +1,0 @@
-openstacksdk
--e git+https://gitlab.com/Orange-OpenSource/lfn/onap/python-onapsdk.git@develop#egg=onapsdk

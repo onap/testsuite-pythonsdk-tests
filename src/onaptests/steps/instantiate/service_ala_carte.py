@@ -26,8 +26,9 @@ class ServiceAlaCarteInstantiateStep(BaseStep):
             - ConnectServiceSubToCloudRegionStep.
         """
         super().__init__(cleanup=cleanup)
-        self.add_step(ServiceOnboardStep(cleanup))
-        self.add_step(ConnectServiceSubToCloudRegionStep(cleanup))
+        if not settings.ONLY_INSTANTIATE:
+            self.add_step(ServiceOnboardStep(cleanup))
+            self.add_step(ConnectServiceSubToCloudRegionStep(cleanup))
 
     def execute(self):
         """Instantiate service.
@@ -85,9 +86,9 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         self._yaml_template: dict = None
         self._service_instance_name: str = None
         self._service_instance: str = None
-
-        self.add_step(YamlTemplateServiceOnboardStep(cleanup))
-        self.add_step(ConnectServiceSubToCloudRegionStep(cleanup))
+        if not settings.ONLY_INSTANTIATE:
+            self.add_step(YamlTemplateServiceOnboardStep(cleanup))
+            self.add_step(ConnectServiceSubToCloudRegionStep(cleanup))
 
     @property
     def yaml_template(self) -> dict:

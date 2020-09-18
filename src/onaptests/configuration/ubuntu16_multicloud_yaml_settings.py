@@ -3,7 +3,9 @@ from .settings import * # pylint: disable=W0614
 """ Specific ubuntu16 with multicloud and yaml config scenario."""
 
 USE_MULTICLOUD = True
-
+# Set ONLY_INSTANTIATE to true to run an instantiation without repeating
+# onboarding and related AAI configuration (Cloud config)
+ONLY_INSTANTIATE= False
 VENDOR_NAME = "sdktests_vendor"
 SERVICE_NAME = "ubuntu16test" # must be the same as in YAML
 
