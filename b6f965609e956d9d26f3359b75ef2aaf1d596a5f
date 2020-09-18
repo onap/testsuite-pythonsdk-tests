@@ -1,0 +1,10 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Michał Jagiełło <michal.jagiello@t-mobile.pl>
+Code-Review+1: Christophe Closset <christophe.closset@intl.att.com>
+Code-Review+1: Morgan Richomme <morgan.richomme@orange.com>
+Code-Review+2: Marcin Przybysz <marcin.przybysz@nokia.com>
+Submitted-by: Marcin Przybysz <marcin.przybysz@nokia.com>
+Submitted-at: Fri, 18 Sep 2020 06:31:56 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/testsuite/pythonsdk-tests/+/112627
+Project: testsuite/pythonsdk-tests
+Branch: refs/heads/master
