@@ -9,6 +9,9 @@ from .settings import * # pylint: disable=W0614
 # pylint: disable=bad-whitespace
 # The ONAP part
 USE_MULTICLOUD = False
+# Set ONLY_INSTANTIATE to true to run an instantiation without repeating
+# onboarding and related AAI configuration (Cloud config)
+ONLY_INSTANTIATE= False
 SERVICE_YAML_TEMPLATE = "templates/vnf-services/ubuntu16test-service.yaml"
 CLEANUP_FLAG = True
 CLEANUP_ACTIVITY_TIMER = 10  # nb of seconds before cleanup in case cleanup option is set
