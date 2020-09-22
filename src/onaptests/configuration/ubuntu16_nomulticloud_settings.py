@@ -12,7 +12,7 @@ USE_MULTICLOUD = False
 # Set ONLY_INSTANTIATE to true to run an instantiation without repeating
 # onboarding and related AAI configuration (Cloud config)
 ONLY_INSTANTIATE= False
-SERVICE_YAML_TEMPLATE = "templates/vnf-services/ubuntu16test-service.yaml"
+SERVICE_YAML_TEMPLATE = "src/onaptests/templates/vnf-services/ubuntu16test-service.yaml"
 CLEANUP_FLAG = True
 CLEANUP_ACTIVITY_TIMER = 10  # nb of seconds before cleanup in case cleanup option is set
 VENDOR_NAME = "basicvm_vendor"
@@ -45,7 +45,7 @@ PLATFORM = "basicvm-platform"
 
 SERVICE_INSTANCE_NAME = "basicvm_ubuntu16_service_instance"
 
-VSP_FILE_PATH = "templates/heat_files/ubuntu16/ubuntu16.zip"
+VSP_FILE_PATH = "src/onaptests/templates/templates/heat_files/ubuntu16/ubuntu16.zip"
 
 
 # The cloud Part
