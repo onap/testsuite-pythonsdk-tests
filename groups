@@ -2,4 +2,3 @@
 #
 82e9c99862286fc860d4415ed0bf0be3032b0f27                                                  	saml/onap-gerrit-testsuite-pythonsdk-tests-committers
 daebbf523be390041a1a9c0e340a6d833aae5043                                                  	GitHub Replication
-ldap:cn=onap-gerrit-testsuite-pythonsdk-tests-committers,ou=Groups,dc=freestandards,dc=org	ldap/onap-gerrit-testsuite-pythonsdk-tests-committers
