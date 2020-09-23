@@ -71,11 +71,6 @@ committers:
       company: 'nokia'
       id: 'mprzybys'
       timezone: 'Poland/Warsaw'
-    - name: 'Eric Multanen'
-      email: 'eric.w.multanen@intel.com'
-      company: 'intel'
-      id: 'ewmulta'
-      timezone: 'America/Los_Angeles'
     - name: 'Krzysztof Kuzmicki'
       email: 'krzysztof.kuzmicki@nokia.com'
       company: 'nokia'
@@ -106,6 +101,16 @@ committers:
       company: 'Orange'
       id: 'sdesbure'
       timezone: 'Paris/France'
+    - name: 'Lukasz Rajewski'
+      email: 'lukasz.rajewski@orange.com'
+      company: 'Orange'
+      id: 'rajewluk'
+      timezone: 'Europe/Warsaw'
+
 tsc:
     # yamllint disable rule:line-length
     approval: 'https://lists.onap.org/g/onap-tsc/message/6408?p=,,,20,0,0,0::relevance,,new+repository+for+integration+team+testsuite%2Fpythonsdk-tests,20,2,0,74178111'
+    changes:
+        - type: 'Addition'
+          name: 'Lukasz Rajewski'
+          link: 'https://lists.onap.org/g/onap-tsc/message/7102'
