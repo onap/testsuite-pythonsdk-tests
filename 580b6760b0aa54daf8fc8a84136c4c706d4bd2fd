@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6abba3eb_ffeb3e1a",
+        "filename": "src/onaptests/steps/cloud/register_cloud.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2020-09-24T10:18:04Z",
+      "side": 1,
+      "message": "nit: if there are no substeps you don\u0027t need to overwrite __init__, it\u0027s done in BaseStep class, can be removed",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 41
+      },
+      "revId": "580b6760b0aa54daf8fc8a84136c4c706d4bd2fd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "157c4fd0_0d0d156a",
+        "filename": "src/onaptests/steps/cloud/register_cloud.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2020-09-24T10:18:04Z",
+      "side": 1,
+      "message": "nit: it",
+      "range": {
+        "startLine": 75,
+        "startChar": 43,
+        "endLine": 75,
+        "endChar": 44
+      },
+      "revId": "580b6760b0aa54daf8fc8a84136c4c706d4bd2fd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
