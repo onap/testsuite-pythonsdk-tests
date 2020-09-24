@@ -2,7 +2,6 @@ from onapsdk.aai.cloud_infrastructure import CloudRegion, Complex
 from onapsdk.configuration import settings
 
 from ..base import BaseStep
-from .cloud_region_create import CloudRegionCreateStep
 from .complex_create import ComplexCreateStep
 
 
@@ -18,7 +17,6 @@ class LinkCloudRegionToComplexStep(BaseStep):
         """
         super().__init__(cleanup=cleanup)
         self.add_step(ComplexCreateStep(cleanup=cleanup))
-        self.add_step(CloudRegionCreateStep(cleanup=cleanup))
 
     def execute(self):
         """Link cloud region to complex.
