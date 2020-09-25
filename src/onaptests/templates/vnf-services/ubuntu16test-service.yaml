@@ -2,7 +2,6 @@
 ubuntu16test:
     tosca_file_from_SDC: service-Ubuntu16tha-template
     version: "1.0"
-    subscription_type: "ubuntu16test"
     vnfs:
         - vnf_name: ubuntu16test
           heat_files_to_upload: src/onaptests/templates/heat_files/ubuntu16/ubuntu16.zip

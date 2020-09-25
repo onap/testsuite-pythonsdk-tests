@@ -168,6 +168,30 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
             self._logger.info("Owning entity not found, create it")
             owning_entity = AaiOwningEntity.create(settings.OWNING_ENTITY)
         vid_project = Project.create(settings.PROJECT)
+
+        # Before instantiating, be sure that the service has been distributed
+        self._logger.info("******** Check Service Distribution *******")
+        distribution_completed = False
+        nb_try = 0
+        nb_try_max = 10
+        while distribution_completed is False and nb_try < nb_try_max:
+            distribution_completed = service.distributed
+            if distribution_completed is True:
+               self._logger.info(
+                "Service Distribution for %s is sucessfully finished",
+                service.name)
+               break
+            self._logger.info(
+                "Service Distribution for %s ongoing, Wait for 60 s",
+                service.name)
+            time.sleep(60)
+            nb_try += 1
+
+        if distribution_completed is False:
+            self._logger.error(
+                "Service Distribution for %s failed !!",service.name)
+            exit(1)
+
         service_instantiation = ServiceInstantiation.instantiate_so_ala_carte(
             service,
             cloud_region,
