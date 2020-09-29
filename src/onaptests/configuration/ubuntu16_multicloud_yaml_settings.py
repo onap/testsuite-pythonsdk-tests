@@ -1,3 +1,4 @@
+import sys
 from .settings import * # pylint: disable=W0614
 
 """ Specific ubuntu16 with multicloud and yaml config scenario."""
@@ -35,4 +36,4 @@ PLATFORM = "sdktests_platform"
 
 SERVICE_INSTANCE_NAME = "sdktests_service_instance_name"
 
-SERVICE_YAML_TEMPLATE = "templates/vnf-services/ubuntu16test-service.yaml"
+SERVICE_YAML_TEMPLATE = sys.path[-1] + "/onaptests/templates/vnf-services/ubuntu16test-service.yaml"
