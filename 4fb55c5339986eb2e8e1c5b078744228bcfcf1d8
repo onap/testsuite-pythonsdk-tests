@@ -34,6 +34,24 @@
       "revId": "4fb55c5339986eb2e8e1c5b078744228bcfcf1d8",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df64eb57_8759954d",
+        "filename": "src/onaptests/configuration/ubuntu16_nomulticloud_settings.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5622
+      },
+      "writtenOn": "2020-09-29T12:27:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "658f0d72_7f675b88",
+      "revId": "4fb55c5339986eb2e8e1c5b078744228bcfcf1d8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
