@@ -43,14 +43,14 @@ See ubuntu16test as example
   If you got the clouds.yaml, you need to reference your cloud with the env
   variable OS_TEST_CLOUD
   ```shell
-  export OS_TEST_CLOUD="cloud-name-referenced-in-the-cloud-configuration"
+  export OS_TEST_CLOUD=cloud-name-referenced-in-the-cloud-configuration
   ```
   If you do not have access to the cloud config, you must precise all the
   parameters manually
 
 - Export the setting file in a environment variable
   ```shell
-  export ONAP_PYTHON_SDK_SETTINGS="onaptests.configuration.ubuntu16_multicloud_yaml_settings"
+  export ONAP_PYTHON_SDK_SETTINGS=onaptests.configuration.ubuntu16_multicloud_yaml_settings
   ```
 
 Note each "use case" may have its own settings corresponding to the test

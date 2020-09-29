@@ -1,3 +1,4 @@
+import sys
 from onapsdk.configuration import settings
 from onapsdk.sdc.vendor import Vendor
 from onapsdk.sdc.vsp import Vsp
@@ -66,6 +67,9 @@ class YamlTemplateVspOnboardStep(YamlTemplateBaseStep):
         super().execute()
         vendor: Vendor = Vendor(name=settings.VENDOR_NAME)
         for vnf in self.yaml_template["vnfs"]:
-            with open(vnf["heat_files_to_upload"], "rb") as package:
-                vsp: Vsp = Vsp(name=f"{vnf['vnf_name']}_VSP", vendor=vendor, package=package)
+            with open(
+                sys.path[-1] + "/" + vnf["heat_files_to_upload"], "rb") as package:
+                vsp: Vsp = Vsp(name=f"{vnf['vnf_name']}_VSP",
+                               vendor=vendor,
+                               package=package)
                 vsp.onboard()

@@ -1,4 +1,5 @@
 import os
+import sys
 import openstack
 from yaml import load
 
@@ -9,13 +10,17 @@ from .settings import * # pylint: disable=W0614
 # pylint: disable=bad-whitespace
 # The ONAP part
 USE_MULTICLOUD = False
-SERVICE_YAML_TEMPLATE = "templates/vnf-services/clearwater-ims-service.yaml"
 CLEANUP_FLAG = True
 CLEANUP_ACTIVITY_TIMER = 60  # nb of seconds before cleanup in case cleanup option is set
 VENDOR_NAME = "clearwater-ims_vendor"
 
 VF_NAME = "clearwater-ims_ubuntu_vf"
 VSP_NAME = "clearwater-ims_ubuntu_vsp"
+# if a yaml file is define, retrieve info from this yaml files
+# if not declare the parameters in the settings
+SERVICE_YAML_TEMPLATE = (sys.path[-1] + "/onaptests/templates/vnf-services/" +
+                         "clearwater-ims-service.yaml")
+
 try:
     # Try to retrieve the SERVICE NAME from the yaml file
     with open(SERVICE_YAML_TEMPLATE, "r") as yaml_template:
@@ -23,6 +28,7 @@ try:
         SERVICE_NAME = next(iter(yaml_config_file.keys()))
 except ValueError:
     SERVICE_NAME = "" # Fill me
+    VSP_FILE_PATH = "" # Fill me
 
 CLOUD_REGION_CLOUD_OWNER = "clearwater-ims-cloud-owner"
 CLOUD_REGION_TYPE = "openstack"
@@ -40,10 +46,7 @@ PROJECT = "clearwater-ims-project"
 LINE_OF_BUSINESS = "clearwater-ims-lob"
 PLATFORM = "clearwater-ims-platform"
 
-SERVICE_INSTANCE_NAME = "clearwater-ims_service_instance_7"
-
-VSP_FILE_PATH = "templates/heat_files/clearwater_ims/clearwater_ims.zip"
-
+SERVICE_INSTANCE_NAME = "clearwater-ims_service_instance"
 
 # The cloud Part
 # Assuming a cloud.yaml is available, use the openstack client

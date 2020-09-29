@@ -1,5 +1,6 @@
 import os
 import openstack
+import sys
 from yaml import load
 
 from .settings import * # pylint: disable=W0614
@@ -12,13 +13,12 @@ USE_MULTICLOUD = False
 # Set ONLY_INSTANTIATE to true to run an instantiation without repeating
 # onboarding and related AAI configuration (Cloud config)
 ONLY_INSTANTIATE= False
-SERVICE_YAML_TEMPLATE = "src/onaptests/templates/vnf-services/ubuntu16test-service.yaml"
-CLEANUP_FLAG = True
-CLEANUP_ACTIVITY_TIMER = 10  # nb of seconds before cleanup in case cleanup option is set
-VENDOR_NAME = "basicvm_vendor"
 
-VF_NAME = "basicvm_ubuntu_vf"
-VSP_NAME = "basicvm_ubuntu_vsp"
+# if a yaml file is define, retrieve info from this yaml files
+# if not declare the parameters in the settings
+SERVICE_YAML_TEMPLATE = (sys.path[-1] + "/onaptests/templates/vnf-services/" +
+                         "ubuntu16test-service.yaml")
+
 try:
     # Try to retrieve the SERVICE NAME from the yaml file
     with open(SERVICE_YAML_TEMPLATE, "r") as yaml_template:
@@ -26,6 +26,13 @@ try:
         SERVICE_NAME = next(iter(yaml_config_file.keys()))
 except ValueError:
     SERVICE_NAME = "" # Fill me
+
+CLEANUP_FLAG = True
+CLEANUP_ACTIVITY_TIMER = 10  # nb of seconds before cleanup in case cleanup option is set
+VENDOR_NAME = "basicvm_vendor"
+
+VF_NAME = "basicvm_ubuntu_vf"
+VSP_NAME = "basicvm_ubuntu_vsp"
 
 CLOUD_REGION_CLOUD_OWNER = "basicvm-cloud-owner"
 CLOUD_REGION_TYPE = "openstack"
@@ -44,9 +51,6 @@ LINE_OF_BUSINESS = "basicvm-lob"
 PLATFORM = "basicvm-platform"
 
 SERVICE_INSTANCE_NAME = "basicvm_ubuntu16_service_instance"
-
-VSP_FILE_PATH = "src/onaptests/templates/templates/heat-files/ubuntu16/ubuntu16.zip"
-
 
 # The cloud Part
 # Assuming a cloud.yaml is available, use the openstack client
