@@ -4,7 +4,7 @@ ubuntu16test:
     version: "1.0"
     vnfs:
         - vnf_name: ubuntu16test
-          heat_files_to_upload: src/onaptests/templates/heat_files/ubuntu16/ubuntu16.zip
+          heat_files_to_upload: src/onaptests/templates/heat-files/ubuntu16/ubuntu16.zip
           vnf_parameters: [
               {"name": "ubuntu16_image_name",
                "value": "ubuntu-16.04-daily"
