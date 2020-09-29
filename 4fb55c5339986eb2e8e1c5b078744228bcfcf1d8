@@ -16,6 +16,24 @@
       "revId": "4fb55c5339986eb2e8e1c5b078744228bcfcf1d8",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "658f0d72_7f675b88",
+        "filename": "src/onaptests/configuration/ubuntu16_nomulticloud_settings.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-09-29T12:08:52Z",
+      "side": 1,
+      "message": "good catch\ni think there is something to do on the path\nwe have path in the settings and in the yaml..for CI it would be good it could be found in the path to avoid overwrite the config in xtesting-onap.\nI will do tests this afternoon",
+      "parentUuid": "3d7b9d4d_cea03c5e",
+      "revId": "4fb55c5339986eb2e8e1c5b078744228bcfcf1d8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
