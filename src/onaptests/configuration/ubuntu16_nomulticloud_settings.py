@@ -45,7 +45,7 @@ PLATFORM = "basicvm-platform"
 
 SERVICE_INSTANCE_NAME = "basicvm_ubuntu16_service_instance"
 
-VSP_FILE_PATH = "src/onaptests/templates/templates/heat_files/ubuntu16/ubuntu16.zip"
+VSP_FILE_PATH = "src/onaptests/templates/templates/heat-files/ubuntu16/ubuntu16.zip"
 
 
 # The cloud Part
