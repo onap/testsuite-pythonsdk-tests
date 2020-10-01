@@ -8,7 +8,7 @@ from onapsdk.configuration import settings
 from onaptests.steps.instantiate.vf_module_ala_carte import YamlTemplateVfModuleAlaCarteInstantiateStep
 
 class BasicVm(testcase.TestCase):
-    """Onboard then instantiate a simple VM though ONAP."""
+    """Onboard then instantiate a simple VM with ONAP."""
 
     __logger = logging.getLogger(__name__)
 
@@ -31,19 +31,18 @@ class BasicVm(testcase.TestCase):
         self.__logger.debug("start time")
         self.test.execute()
         self.__logger.info("VNF basic_vm successfully created")
-        if not settings.CLEANUP_FLAG:
+        self.stop_time = time.time()
+        # The cleanup is part of the test, not only a teardown action
+        if settings.CLEANUP_FLAG:
+            self.__logger.info("VNF basic_vm cleanup called")
+            time.sleep(settings.CLEANUP_ACTIVITY_TIMER)
+            self.test.cleanup()
             self.result = 100
-            self.stop_time = time.time()
-            return testcase.TestCase.EX_OK
+        else:
+            self.__logger.info("No cleanup requested. Test completed.")
+            self.result = 100
+
 
     def clean(self):
-        """Clean VNF."""
-        if settings.CLEANUP_FLAG:
-            time.sleep(settings.CLEANUP_ACTIVITY_TIMER)
-        try:
-            self.test.cleanup()
-        except ValueError as error:
-            self.__logger.info("service instance deleted as expected {0}".format(error))
-            self.result = 100
-            self.stop_time = time.time()
-            return testcase.TestCase.EX_OK
+        """Clean Additional resources if needed."""
+        pass
