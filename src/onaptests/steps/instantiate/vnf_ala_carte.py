@@ -118,8 +118,6 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
             Exception: VNF cleaning failed
 
         """
-        super().cleanup()
-
         for vnf_instance in self._service_instance.vnf_instances:
             vnf_deletion = vnf_instance.delete()
             nb_try = 0
@@ -134,3 +132,4 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
             else:
                 self._logger.error("VNF deletion %s failed", vnf_instance.name)
                 raise Exception("VNF Cleanup failed")
+        super().cleanup()

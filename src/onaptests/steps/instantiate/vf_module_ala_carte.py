@@ -7,6 +7,7 @@ from onapsdk.aai.cloud_infrastructure import CloudRegion, Tenant
 from onapsdk.aai.business import Customer, ServiceInstance, ServiceSubscription
 from onapsdk.configuration import settings
 from onapsdk.so.instantiation import VnfParameter
+from onapsdk.msb.k8s import Definition
 
 from ..base import YamlTemplateBaseStep
 from .vnf_ala_carte import YamlTemplateVnfAlaCarteInstantiateStep
@@ -119,6 +120,22 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
         for vnf_instance in self._service_instance.vnf_instances:
             # possible to have several moduels for 1 VNF
             for vf_module in vnf_instance.vnf.vf_modules:
+                if settings.CLOUD_REGION_TYPE == "k8s":
+                    # Define rb_profile
+                    rbdef_name = vf_module.metadata["vfModuleModelInvariantUUID"]
+                    rbdef_version = vf_module.metadata["vfModuleModelUUID"]
+                    rbdef = Definition.get_definition_by_name_version(rbdef_name, rbdef_version)
+                    ######## Check profile for Definition ###################################
+                    try:
+                        rbdef.get_profile_by_name(settings.K8S_PROFILE_NAME)
+                    except ValueError:
+                        ######## Create profile for Definition ###################################
+                        profile = rbdef.create_profile(settings.K8S_PROFILE_NAME,
+                                                       settings.K8S_PROFILE_NAMESPACE,
+                                                       settings.K8S_PROFILE_K8S_VERSION)
+                        ####### Upload artifact for created profile ##############################
+                        profile.upload_artifact(open(settings.K8S_PROFILE_ARTIFACT_PATH, 'rb').read())
+
                 vf_module_instantiation = vnf_instance.add_vf_module(
                     vf_module,
                     cloud_region,
@@ -138,7 +155,6 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
             Exception: Vf module cleaning failed
 
         """
-        super().cleanup()
         for vnf_instance in self._service_instance.vnf_instances:
             self._logger.debug("VNF instance %s found in Service Instance ",
                                vnf_instance.name)
@@ -159,3 +175,4 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
                 else:
                     self._logger.error("VfModule deletion %s failed", vf_module.name)
                     raise Exception("Vf module cleanup failed")
+        super().cleanup()
