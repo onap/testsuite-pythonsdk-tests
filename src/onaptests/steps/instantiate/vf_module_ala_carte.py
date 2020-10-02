@@ -1,3 +1,5 @@
+import os
+import sys
 import time
 from typing import Iterable
 from uuid import uuid4
@@ -7,6 +9,7 @@ from onapsdk.aai.cloud_infrastructure import CloudRegion, Tenant
 from onapsdk.aai.business import Customer, ServiceInstance, ServiceSubscription
 from onapsdk.configuration import settings
 from onapsdk.so.instantiation import VnfParameter
+from onapsdk.msb.k8s import Definition
 
 from ..base import YamlTemplateBaseStep
 from .vnf_ala_carte import YamlTemplateVnfAlaCarteInstantiateStep
@@ -119,6 +122,22 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
         for vnf_instance in self._service_instance.vnf_instances:
             # possible to have several moduels for 1 VNF
             for vf_module in vnf_instance.vnf.vf_modules:
+                if settings.K8S_PROFILE_NAME:
+                    # Define rb_profile
+                    rbdef_name = vf_module.metadata["vfModuleModelInvariantUUID"]
+                    rbdef_version = vf_module.metadata["vfModuleModelUUID"]
+                    rbdef = Definition.get_definition_by_name_version(rbdef_name, rbdef_version)
+                    ######## Check profile for Definition ###################################
+                    try:
+                        rbdef.get_profile_by_name(settings.K8S_PROFILE_NAME)
+                    except ValueError:
+                        ######## Create profile for Definition ###################################
+                        profile = rbdef.create_profile(settings.K8S_PROFILE_NAME,
+                                                       settings.K8S_PROFILE_NAMESPACE,
+                                                       settings.K8S_PROFILE_K8S_VERSION)
+                        ####### Upload artifact for created profile ##############################
+                        profile.upload_artifact(open(settings.K8S_PROFILE_ARTIFACT_PATH, 'rb').read())
+
                 vf_module_instantiation = vnf_instance.add_vf_module(
                     vf_module,
                     cloud_region,
