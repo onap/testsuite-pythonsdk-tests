@@ -217,7 +217,6 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
             Exception: Service cleaning failed
 
         """
-        super().cleanup()
         service_deletion = self._service_instance.delete()
         nb_try = 0
         nb_try_max = 30
@@ -230,3 +229,4 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         else:
             self._logger.error("Service deletion %s failed", self._service_instance_name)
             raise Exception("Service cleanup failed")
+        super().cleanup()
