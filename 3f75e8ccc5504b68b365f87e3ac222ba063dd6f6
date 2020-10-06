@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14a9ad3d_c6d7adf2",
+        "filename": "src/onaptests/configuration/basic_cnf_yaml_settings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2020-10-06T07:51:53Z",
+      "side": 1,
+      "message": "what is difference. can you elaborate a little bit more description?",
+      "revId": "3f75e8ccc5504b68b365f87e3ac222ba063dd6f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a369d142_fe50c28c",
+        "filename": "src/onaptests/configuration/basic_cnf_yaml_settings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2020-10-06T07:51:53Z",
+      "side": 1,
+      "message": "what this url is for? Is it hardcoded IP address for local environment?",
+      "revId": "3f75e8ccc5504b68b365f87e3ac222ba063dd6f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "041e001f_ebf0d517",
+        "filename": "src/onaptests/scenario/basic_cnf.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2020-10-06T07:51:53Z",
+      "side": 1,
+      "message": "do I understrand correctly that you instantiate VM on some cloud? Isn\u0027t creating pod inside k8s? does method YamlTemplateVfModuleAlaCarteInstantiateStep supports making new pod in k8s?",
+      "revId": "3f75e8ccc5504b68b365f87e3ac222ba063dd6f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f7aaee_e27f0d61",
+        "filename": "src/onaptests/scenario/basic_cnf.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2020-10-06T07:51:53Z",
+      "side": 1,
+      "message": "how do you know that CNF is created, where is it check and how criteria of checking looks like?",
+      "revId": "3f75e8ccc5504b68b365f87e3ac222ba063dd6f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b35bc89f_5cbd814c",
+        "filename": "src/onaptests/steps/instantiate/vf_module_ala_carte.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 4543
+      },
+      "writtenOn": "2020-10-06T07:51:53Z",
+      "side": 1,
+      "message": "[general comment] can we use variable names which describes better function of variable? I mean currently there name is \"rbdef\" but what does it mean?",
+      "revId": "3f75e8ccc5504b68b365f87e3ac222ba063dd6f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
