@@ -10,6 +10,7 @@ from ..base import BaseStep
 class RegisterCloudRegionStep(BaseStep):
     """Cloud region registration step."""
 
+    @BaseStep.store_state
     def execute(self):
         """Register cloud region
 

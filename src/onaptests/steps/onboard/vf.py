@@ -18,6 +18,7 @@ class VfOnboardStep(BaseStep):
         super().__init__(cleanup=cleanup)
         self.add_step(VspOnboardStep(cleanup=cleanup))
 
+    @BaseStep.store_state
     def execute(self):
         """Onboard Vf.
 
@@ -56,6 +57,7 @@ class YamlTemplateVfOnboardStep(YamlTemplateBaseStep):
         """
         return self.parent.yaml_template[self.parent.service_name]
 
+    @YamlTemplateBaseStep.store_state
     def execute(self):
         """Onboard Vfs from YAML template."""
         super().execute()

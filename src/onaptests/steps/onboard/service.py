@@ -20,6 +20,7 @@ class ServiceOnboardStep(BaseStep):
         super().__init__(cleanup=cleanup)
         self.add_step(VfOnboardStep(cleanup=cleanup))
 
+    @BaseStep.store_state
     def execute(self):
         """Onboard service.
 
@@ -79,6 +80,7 @@ class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
         else:
             return self.parent.service_name
 
+    @YamlTemplateBaseStep.store_state
     def execute(self):
         """Onboard service."""
         super().execute()

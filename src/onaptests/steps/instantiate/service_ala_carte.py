@@ -30,6 +30,7 @@ class ServiceAlaCarteInstantiateStep(BaseStep):
             self.add_step(ServiceOnboardStep(cleanup))
             self.add_step(ConnectServiceSubToCloudRegionStep(cleanup))
 
+    @BaseStep.store_state
     def execute(self):
         """Instantiate service.
 
@@ -138,6 +139,7 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
             return self._service_instance_name
         return self.parent.service_instance_name
 
+    @YamlTemplateBaseStep.store_state
     def execute(self):
         """Instantiate service.
 

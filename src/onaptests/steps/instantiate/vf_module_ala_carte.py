@@ -96,6 +96,7 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
                         value=vnf_parameter["value"]
                     )
 
+    @YamlTemplateBaseStep.store_state
     def execute(self) -> None:
         """Instantiate Vf module.
 

@@ -7,6 +7,7 @@ from ..base import BaseStep
 class CustomerCreateStep(BaseStep):
     """Customer creation step."""
 
+    @BaseStep.store_state
     def execute(self):
         """Create cutomer.
 
