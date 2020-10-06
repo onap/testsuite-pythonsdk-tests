@@ -19,6 +19,7 @@ class VspOnboardStep(BaseStep):
         super().__init__(cleanup=cleanup)
         self.add_step(VendorOnboardStep(cleanup=cleanup))
 
+    @BaseStep.store_state
     def execute(self):
         """Onboard Vsp.
 
@@ -58,6 +59,7 @@ class YamlTemplateVspOnboardStep(YamlTemplateBaseStep):
         """
         return self.parent.yaml_template
 
+    @YamlTemplateBaseStep.store_state
     def execute(self):
         """Onboard Vsps from YAML template.
 
