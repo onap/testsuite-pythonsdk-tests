@@ -25,6 +25,7 @@ class ConnectServiceSubToCloudRegionStep(BaseStep):
         self.add_step(LinkCloudRegionToComplexStep(cleanup=cleanup))
         self.add_step(CustomerServiceSubscriptionCreateStep(cleanup=cleanup))
 
+    @BaseStep.store_state
     def execute(self):
         """Connect service subsription to cloud region and tenant.
 

@@ -6,6 +6,9 @@ from typing import List
 from onapsdk.configuration import settings
 from onapsdk.aai.business import Customer
 
+from .reports_collection import ReportsCollection
+
+
 class BaseStep(ABC):
     """Base step class."""
 
@@ -36,6 +39,7 @@ class BaseStep(ABC):
         self._steps: List["BaseStep"] = []
         self._cleanup: bool = cleanup
         self._parent: "BaseStep" = None
+        self._reports_collection: ReportsCollection = None
 
     def add_step(self, step: "BaseStep") -> None:
         """Add substep.
@@ -67,6 +71,39 @@ class BaseStep(ABC):
 
         """
         return self._parent is None
+
+    @property
+    def reports_collection(self) -> ReportsCollection:
+        """Collection to store step reports.
+
+        Store there if step result is "PASS" or "FAIL"
+
+        Returns:
+            Queue: Thread safe collection to store reports
+
+        """
+        if not self.is_root:
+            return self.parent.reports_collection
+        if not self._reports_collection:
+            self._reports_collection = ReportsCollection()
+        return self._reports_collection
+
+    @property
+    def name(self) -> str:
+        """Step name."""
+        return self.__class__.__name__
+
+    @classmethod
+    def store_state(cls, fun):
+        def wrapper(self, *args, **kwargs):
+            try:
+                ret = fun(self, *args, **kwargs)
+                self.reports_collection.put({self.name: "PASS"})
+                return ret
+            except Exception:
+                self.reports_collection.put({self.name: "FAIL"})
+                raise
+        return wrapper
 
     def execute(self) -> None:
         """Step's action.

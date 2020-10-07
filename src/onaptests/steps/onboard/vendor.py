@@ -7,6 +7,7 @@ from ..base import BaseStep
 class VendorOnboardStep(BaseStep):
     """Vendor onboard step."""
 
+    @BaseStep.store_state
     def execute(self):
         """Onboard vendor.
 

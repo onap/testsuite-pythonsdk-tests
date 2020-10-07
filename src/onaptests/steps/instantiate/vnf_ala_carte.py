@@ -75,6 +75,7 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
             return self._service_instance_name
         return self.parent.service_instance_name
 
+    @YamlTemplateBaseStep.store_state
     def execute(self):
         """Instantiate vnf.
 

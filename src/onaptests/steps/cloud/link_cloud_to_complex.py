@@ -18,6 +18,7 @@ class LinkCloudRegionToComplexStep(BaseStep):
         super().__init__(cleanup=cleanup)
         self.add_step(ComplexCreateStep(cleanup=cleanup))
 
+    @BaseStep.store_state
     def execute(self):
         """Link cloud region to complex.
 

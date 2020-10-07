@@ -18,6 +18,7 @@ class CustomerServiceSubscriptionCreateStep(BaseStep):
         super().__init__(cleanup=cleanup)
         self.add_step(CustomerCreateStep(cleanup=cleanup))
 
+    @BaseStep.store_state
     def execute(self):
         """Create customer service subsription.
 
