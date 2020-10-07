@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f6362425_e6bed255",
+        "filename": "src/onaptests/configuration/basic_cnf_yaml_settings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 5622
+      },
+      "writtenOn": "2020-10-07T15:59:38Z",
+      "side": 1,
+      "message": "multicloud is composed on different plugins: multicloud, multicloud-windriver, multicloud-starlingx, multicloud-pike. The kubernetes plugin is multicloud-k8s and this is the one that is used in this use case.",
+      "parentUuid": "14a9ad3d_c6d7adf2",
+      "revId": "3f75e8ccc5504b68b365f87e3ac222ba063dd6f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a369d142_fe50c28c",
         "filename": "src/onaptests/configuration/basic_cnf_yaml_settings.py",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2020-10-06T07:51:53Z",
       "side": 1,
       "message": "what this url is for? Is it hardcoded IP address for local environment?",
+      "revId": "3f75e8ccc5504b68b365f87e3ac222ba063dd6f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d98d6c32_b15d7b75",
+        "filename": "src/onaptests/configuration/basic_cnf_yaml_settings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5622
+      },
+      "writtenOn": "2020-10-07T15:59:38Z",
+      "side": 1,
+      "message": "all this part defining the tenant are just dummy values because the tenant information is not used. But this tenant information is requested by SO",
+      "parentUuid": "a369d142_fe50c28c",
       "revId": "3f75e8ccc5504b68b365f87e3ac222ba063dd6f6",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4ac5f7eb_3fca6c3d",
+        "filename": "src/onaptests/scenario/basic_cnf.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 5622
+      },
+      "writtenOn": "2020-10-07T15:59:38Z",
+      "side": 1,
+      "message": "No it is a typo corrected in the last patchset. Thank you for your review",
+      "parentUuid": "041e001f_ebf0d517",
+      "revId": "3f75e8ccc5504b68b365f87e3ac222ba063dd6f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82f7aaee_e27f0d61",
         "filename": "src/onaptests/scenario/basic_cnf.py",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3c8e9e1e_ab17846a",
+        "filename": "src/onaptests/scenario/basic_cnf.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5622
+      },
+      "writtenOn": "2020-10-07T15:59:38Z",
+      "side": 1,
+      "message": "self.test.execute() runs the execute function of vf_module_ala_carte.py where there is an exception that is raised in case of failure:\nwhile not vf_module_instantiation.finished:\n                time.sleep(10)\n            if vf_module_instantiation.failed:\n                raise Exception(\"Vf module instantiation failed\")",
+      "parentUuid": "82f7aaee_e27f0d61",
+      "revId": "3f75e8ccc5504b68b365f87e3ac222ba063dd6f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b35bc89f_5cbd814c",
         "filename": "src/onaptests/steps/instantiate/vf_module_ala_carte.py",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2020-10-06T07:51:53Z",
       "side": 1,
       "message": "[general comment] can we use variable names which describes better function of variable? I mean currently there name is \"rbdef\" but what does it mean?",
+      "revId": "3f75e8ccc5504b68b365f87e3ac222ba063dd6f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1719057d_8dbd0a39",
+        "filename": "src/onaptests/steps/instantiate/vf_module_ala_carte.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5622
+      },
+      "writtenOn": "2020-10-07T15:59:38Z",
+      "side": 1,
+      "message": "rbdef means resource bundle definition. Once the CSAR package is distributed, the created resource in multicloud-k8s is identified by this resource bundle definition. This is at least my understanding. I will a add a comment to explain this variable",
+      "parentUuid": "b35bc89f_5cbd814c",
       "revId": "3f75e8ccc5504b68b365f87e3ac222ba063dd6f6",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true

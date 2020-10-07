@@ -34,6 +34,24 @@
       "revId": "8cc07205067a18e8e360639a8b7d22967ff41a1e",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75264dc6_8e1643e7",
+        "filename": "src/onaptests/steps/instantiate/vf_module_ala_carte.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5622
+      },
+      "writtenOn": "2020-10-07T15:59:38Z",
+      "side": 1,
+      "message": "Step added in last patchset (at least 7)",
+      "parentUuid": "0d6505fa_893579f0",
+      "revId": "8cc07205067a18e8e360639a8b7d22967ff41a1e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
