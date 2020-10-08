@@ -20,3 +20,4 @@ if __name__ == "__main__":
             basic_vm_instantiate.cleanup()
         except ValueError as error:
             logger.info("service instance deleted as expected {0}".format(error))
+    basic_vm_instantiate.reports_collection.generate_report()

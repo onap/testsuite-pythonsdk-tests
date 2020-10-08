@@ -38,4 +38,5 @@ LOG_CONFIG = {
     }
 }
 
+REPORTING_FILE_PATH = "/tmp/reporting.html"
 # SOCK_HTTP = "socks5h://127.0.0.1:8080"
