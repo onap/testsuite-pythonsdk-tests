@@ -1,0 +1,43 @@
+{% extends "base.html.j2" %}
+{% block title %}Summary{% endblock %}
+{% block content %}
+    {{ summary('Results', "", [
+      { 'title': 'Pythonsdk Tests', 'failing': (failing_steps | length), 'total': (steps | length)},
+      ])
+    }}
+
+  <section class="section">
+    <div class="container">
+      <h1 class="title is-1">
+        {{ usecase }}
+      </h1>
+        Description: {{ details }}
+        <br>
+        Components: {{ components }}
+        <br>
+        <a href="{{ log_path }}"> Logs</a>
+      <!-- Pythonsdk steps table -->
+      <div id="helms" class="table-container">
+        <table class="table is-fullwidth is-striped is-hoverable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for step,value in steps.items() %}
+            <tr {% if  value == 'FAIL' %} class="has-background-danger"  {% else %} class="has-background-success-light" {% endif %}>
+            <td>
+            {{ step }}
+            </td>
+            <td>
+            {{ value }}
+            </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+{% endblock %}

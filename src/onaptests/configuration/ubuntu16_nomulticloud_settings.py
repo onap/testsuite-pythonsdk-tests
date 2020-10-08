@@ -9,6 +9,8 @@ from .settings import * # pylint: disable=W0614
 
 # pylint: disable=bad-whitespace
 # The ONAP part
+SERVICE_DETAILS="Onboarding, distribution and instanitation of an Ubuntu VM using à la carte"
+SERVICE_COMPONENTS="SDC, DMAAP, AAI, SO, SDNC"
 USE_MULTICLOUD = False
 # Set ONLY_INSTANTIATE to true to run an instantiation without repeating
 # onboarding and related AAI configuration (Cloud config)

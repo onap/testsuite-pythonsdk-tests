@@ -42,7 +42,7 @@ class BasicVm(testcase.TestCase):
             self.__logger.info("No cleanup requested. Test completed.")
             self.result = 100
 
-
     def clean(self):
         """Clean Additional resources if needed."""
-        pass
+        self.__logger.info("Generate Test report")
+        self.test.reports_collection.generate_report()
