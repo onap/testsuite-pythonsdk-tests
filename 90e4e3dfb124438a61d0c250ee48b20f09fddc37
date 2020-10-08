@@ -16,6 +16,24 @@
       "revId": "90e4e3dfb124438a61d0c250ee48b20f09fddc37",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "948c947b_9f138a30",
+        "filename": "src/onaptests/steps/reports_collection.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-10-08T13:47:30Z",
+      "side": 1,
+      "message": "oops, in patchset 2",
+      "parentUuid": "87930c12_88585615",
+      "revId": "90e4e3dfb124438a61d0c250ee48b20f09fddc37",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
