@@ -1,0 +1,18 @@
+---
+basic_network:
+    tosca_file_from_SDC: service-basic_network-template
+    version: "1.0"
+    subscription_type: "net"
+    networks:
+        - network_name: net_internal
+          vl_name: "Generic NeutronNet"
+          subnets: [
+              {
+                  "subnet-name": "net_internal-subnet",
+                  "start-address": "10.200.0.0",
+                  "cidr-mask": "24",
+                  "ip-version": "4",
+                  "dhcp-enabled": False,
+                  "gateway-address": "10.200.0.1",
+              }
+          ]
