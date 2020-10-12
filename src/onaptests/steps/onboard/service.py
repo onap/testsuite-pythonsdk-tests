@@ -3,6 +3,7 @@ from yaml import load
 from onapsdk.configuration import settings
 from onapsdk.sdc.service import Service
 from onapsdk.sdc.vf import Vf
+from onapsdk.sdc.vl import Vl
 
 from ..base import BaseStep, YamlTemplateBaseStep
 from .vf import VfOnboardStep, YamlTemplateVfOnboardStep
@@ -25,13 +26,21 @@ class ServiceOnboardStep(BaseStep):
         """Onboard service.
 
         Use settings values:
+         - VL_NAME,
          - VF_NAME,
          - SERVICE_NAME.
 
         """
         super().execute()
-        vf: Vf = Vf(name=settings.VF_NAME)
-        service: Service = Service(name=settings.SERVICE_NAME, resources=[vf])
+        service: Service = Service(name=settings.SERVICE_NAME)
+        service.create()
+        if settings.VL_NAME != "":
+            vl: Vl = Vl(name=settings.VL_NAME)
+            service.add_resource(vl)
+        if settings.VF_NAME != "":
+            vf: Vf = Vf(name=settings.VF_NAME)
+            service.add_resource(vf)
+        service.checkin()
         service.onboard()
 
 
@@ -84,7 +93,15 @@ class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
     def execute(self):
         """Onboard service."""
         super().execute()
-        service: Service = Service(name=self.service_name,
-                                   resources=[Vf(name=vnf["vnf_name"]) \
-                                                for vnf in self.yaml_template[self.service_name]["vnfs"]])
+        service: Service = Service(name=settings.SERVICE_NAME)
+        service.create()
+        if "networks" in self.yaml_template[self.service_name]:
+            for net in self.yaml_template[self.service_name]["networks"]:
+                vl: Vl = Vl(name=net['vl_name'])
+                service.add_resource(vl)
+        if "vnfs" in self.yaml_template[self.service_name]:
+            for vnf in self.yaml_template[self.service_name]["vnfs"]:
+                vf: Vf = Vf(name=vnf["vnf_name"])
+                service.add_resource(vf)
+        service.checkin()
         service.onboard()
