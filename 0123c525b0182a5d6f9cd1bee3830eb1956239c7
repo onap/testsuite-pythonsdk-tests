@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fa3b3aa_e863d36b",
+        "filename": "src/onaptests/configuration/basic_cnf_yaml_settings.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2020-10-12T09:16:41Z",
+      "side": 1,
+      "message": "It can be done using `dict` `get` method instead of keep it in `try... except..` block. Consider to change it into:\n    VIM_USERNAME \u003d cloud.config.auth.get(\u0027username\u0027, \u0027dummy\u0027)\n    VIM_PASSWORD \u003d cloud.config.auth.get(\u0027password\u0027, \u0027dummy123\u0027)\n    VIM_SERVICE_URL \u003d cloud.config.auth.get(\u0027auth_url\u0027, \u0027http://10.12.25.2:5000/v3\u0027)\n    TENANT_ID \u003d cloud.config.auth.get(\u0027project_id\u0027, \u0027123456\u0027)\n    TENANT_NAME \u003d cloud.config.auth.get(\u0027project_name\u0027, \u0027dummy_test\u0027)",
+      "revId": "0123c525b0182a5d6f9cd1bee3830eb1956239c7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "159e3b08_c5ccb5f5",
+        "filename": "src/onaptests/steps/cloud/register_cloud.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2020-10-12T09:16:41Z",
+      "side": 1,
+      "message": "Nit: remove that commented out line",
+      "range": {
+        "startLine": 47,
+        "startChar": 16,
+        "endLine": 47,
+        "endChar": 60
+      },
+      "revId": "0123c525b0182a5d6f9cd1bee3830eb1956239c7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
