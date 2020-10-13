@@ -192,7 +192,7 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         if distribution_completed is False:
             self._logger.error(
                 "Service Distribution for %s failed !!",service.name)
-            exit(1)
+            raise Exception("Service not properly distributed")
 
         service_instantiation = ServiceInstantiation.instantiate_so_ala_carte(
             service,
