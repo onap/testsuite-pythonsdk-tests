@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41f93d66_b19f3fcc",
+        "filename": "run_basicnw_nomulticloud.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 5622
+      },
+      "writtenOn": "2020-10-13T11:02:38Z",
+      "side": 1,
+      "message": "Log to update for a network",
+      "revId": "3c68246ba0f6e8c15674245fad6f549c4e7db434",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef29c8fb_9dc585c9",
+        "filename": "src/onaptests/configuration/basic_network_nomulticloud_settings.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5622
+      },
+      "writtenOn": "2020-10-13T11:02:38Z",
+      "side": 1,
+      "message": "Same remark, comment to adapt in this specific file",
+      "revId": "3c68246ba0f6e8c15674245fad6f549c4e7db434",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba0df2b0_b9fb1808",
+        "filename": "src/onaptests/steps/instantiate/vl_ala_carte.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5622
+      },
+      "writtenOn": "2020-10-13T11:02:38Z",
+      "side": 1,
+      "message": "To set a log instead of this print",
+      "revId": "3c68246ba0f6e8c15674245fad6f549c4e7db434",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46abc0da_bda8bdb9",
+        "filename": "src/onaptests/steps/instantiate/vl_ala_carte.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5622
+      },
+      "writtenOn": "2020-10-13T11:02:38Z",
+      "side": 1,
+      "message": "Comment to remove",
+      "revId": "3c68246ba0f6e8c15674245fad6f549c4e7db434",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
