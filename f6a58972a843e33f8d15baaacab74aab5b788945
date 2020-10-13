@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae31602c_0d5d660b",
+        "filename": "src/onaptests/steps/instantiate/vl_ala_carte.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2020-10-13T06:52:01Z",
+      "side": 1,
+      "message": "add @YamlTemplateBaseStep.store_state decorator",
+      "range": {
+        "startLine": 105,
+        "startChar": 8,
+        "endLine": 105,
+        "endChar": 15
+      },
+      "revId": "f6a58972a843e33f8d15baaacab74aab5b788945",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
