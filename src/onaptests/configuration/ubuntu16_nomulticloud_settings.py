@@ -3,6 +3,7 @@ import openstack
 import sys
 from yaml import load
 
+import onaptests.utils.exceptions as onap_test_exceptions
 from .settings import * # pylint: disable=W0614
 
 """ Specific ubuntu16 without multicloud."""
@@ -11,6 +12,7 @@ from .settings import * # pylint: disable=W0614
 # The ONAP part
 SERVICE_DETAILS="Onboarding, distribution and instanitation of an Ubuntu VM using à la carte"
 SERVICE_COMPONENTS="SDC, DMAAP, AAI, SO, SDNC"
+
 USE_MULTICLOUD = False
 # Set ONLY_INSTANTIATE to true to run an instantiation without repeating
 # onboarding and related AAI configuration (Cloud config)
@@ -26,8 +28,8 @@ try:
     with open(SERVICE_YAML_TEMPLATE, "r") as yaml_template:
         yaml_config_file = load(yaml_template)
         SERVICE_NAME = next(iter(yaml_config_file.keys()))
-except ValueError:
-    SERVICE_NAME = "" # Fill me
+except (FileNotFoundError, ValueError):
+    raise onap_test_exceptions.TestConfigurationException
 
 CLEANUP_FLAG = True
 CLEANUP_ACTIVITY_TIMER = 10  # nb of seconds before cleanup in case cleanup option is set
@@ -58,26 +60,12 @@ SERVICE_INSTANCE_NAME = "basicvm_ubuntu16_service_instance"
 # Assuming a cloud.yaml is available, use the openstack client
 # to retrieve cloud info and avoid data duplication
 TEST_CLOUD = os.getenv('OS_TEST_CLOUD')
-try:
-    if TEST_CLOUD is not None:
-        cloud = openstack.connect(cloud=TEST_CLOUD)
-        VIM_USERNAME = cloud.config.auth['username']
-        VIM_PASSWORD = cloud.config.auth['password']
-        VIM_SERVICE_URL = cloud.config.auth['auth_url']
-        TENANT_ID = cloud.config.auth['project_id']
-        TENANT_NAME = cloud.config.auth['project_name']
-        CLOUD_REGION_ID = cloud.config.region_name
-        CLOUD_DOMAIN = cloud.config.auth['project_domain_name']
-    else:
-        raise KeyError
-except KeyError:
-    # If you do not use the cloud.yaml as imput for your openstack
-    # put the input data here
-    # Note if 1 parameter is missing in the clouds.yaml, we fallback here
-    TENANT_ID = "" # Fill me
-    TENANT_NAME = "" # Fill me
-    VIM_USERNAME = ""  # Fill me
-    VIM_PASSWORD = ""  # Fill me
-    VIM_SERVICE_URL = ""  # Fill me
-    CLOUD_REGION_ID = "RegionOne" # Update me if needed
-    CLOUD_DOMAIN = "Default" # Update me if needed
+TEST_CLOUD = os.getenv('OS_TEST_CLOUD')
+cloud = openstack.connect(cloud=TEST_CLOUD)
+VIM_USERNAME = cloud.config.auth.get('username','Fill me')
+VIM_PASSWORD = cloud.config.auth.get('password','Fill me')
+VIM_SERVICE_URL = cloud.config.auth.get('auth_url','Fill me')
+TENANT_ID = cloud.config.auth.get('project_id','Fill me')
+TENANT_NAME = cloud.config.auth.get('project_name','Fill me')
+CLOUD_REGION_ID = cloud.config.auth.get('region_name','RegionOne')
+CLOUD_DOMAIN = cloud.config.auth.get('project_domain_name','Default')

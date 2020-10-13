@@ -43,12 +43,14 @@ class ReportsCollection:
         usecase = settings.SERVICE_NAME
         try:
             details = settings.SERVICE_DETAILS
-        except:
+        except NameError:
             details = ""
+
         try:
             components = settings.SERVICE_COMPONENTS
-        except:
+        except NameError:
             components = ""
+
         log_path = settings.LOG_CONFIG['handlers']['file']['filename']
         jinja_env = Environment(
             autoescape=select_autoescape(['html']),

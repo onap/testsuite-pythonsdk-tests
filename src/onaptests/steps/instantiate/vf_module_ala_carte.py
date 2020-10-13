@@ -8,6 +8,7 @@ from onapsdk.aai.business import Customer, ServiceInstance, ServiceSubscription
 from onapsdk.configuration import settings
 from onapsdk.so.instantiation import VnfParameter
 
+import onaptests.utils.exceptions as onap_test_exceptions
 from ..base import YamlTemplateBaseStep
 from .vnf_ala_carte import YamlTemplateVnfAlaCarteInstantiateStep
 
@@ -129,7 +130,7 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
             while not vf_module_instantiation.finished:
                 time.sleep(10)
             if vf_module_instantiation.failed:
-                raise Exception("Vf module instantiation failed")
+                raise onap_test_exceptions.VfModuleInstantiateException
 
 
     def cleanup(self) -> None:
@@ -159,4 +160,4 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
                     self._logger.info("VfModule %s deleted", vf_module.name)
                 else:
                     self._logger.error("VfModule deletion %s failed", vf_module.name)
-                    raise Exception("Vf module cleanup failed")
+                    raise onap_test_exceptions.VfModuleCleanupException

@@ -8,6 +8,7 @@ from onapsdk.configuration import settings
 from onapsdk.sdc.service import Service
 from onapsdk.vid import LineOfBusiness, Platform
 
+import onaptests.utils.exceptions as onap_test_exceptions
 from ..base import YamlTemplateBaseStep
 from .service_ala_carte import YamlTemplateServiceAlaCarteInstantiateStep
 
@@ -110,7 +111,7 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
             while not vnf_instantiation.finished:
                 time.sleep(10)
             if vnf_instantiation.failed:
-                raise Exception("Vnf instantiation failed")
+                raise onap_test_exceptions.VnfInstantiateException
 
     def cleanup(self) -> None:
         """Cleanup VNF.
@@ -134,4 +135,4 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
                 self._logger.info("VNF %s deleted", vnf_instance.name)
             else:
                 self._logger.error("VNF deletion %s failed", vnf_instance.name)
-                raise Exception("VNF Cleanup failed")
+                raise onap_test_exceptions.VnfCleanupException

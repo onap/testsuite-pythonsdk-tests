@@ -10,6 +10,7 @@ from onapsdk.sdc.service import Service
 from onapsdk.so.instantiation import ServiceInstantiation
 from onapsdk.vid import Project
 
+import onaptests.utils.exceptions as onap_test_exceptions
 from ..base import BaseStep, YamlTemplateBaseStep
 from ..cloud.connect_service_subscription_to_cloud_region import ConnectServiceSubToCloudRegionStep
 from ..onboard.service import ServiceOnboardStep, YamlTemplateServiceOnboardStep
@@ -192,7 +193,7 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         if distribution_completed is False:
             self._logger.error(
                 "Service Distribution for %s failed !!",service.name)
-            exit(1)
+            raise onap_test_exceptions.ServiceDistributionException
 
         service_instantiation = ServiceInstantiation.instantiate_so_ala_carte(
             service,
@@ -206,7 +207,7 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         while not service_instantiation.finished:
             time.sleep(10)
         if service_instantiation.failed:
-            raise Exception("Service instantiation failed")
+            raise onap_test_exceptions.ServiceInstantiateException
         else:
             service_subscription: ServiceSubscription = customer.get_service_subscription_by_service_type(self.service_name)
             self._service_instance: ServiceInstance = service_subscription.get_service_instance_by_name(self.service_instance_name)
@@ -231,4 +232,4 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
             self._logger.info("Service %s deleted", self._service_instance_name)
         else:
             self._logger.error("Service deletion %s failed", self._service_instance_name)
-            raise Exception("Service cleanup failed")
+            raise onap_test_exceptions.ServiceCleanupException
