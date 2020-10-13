@@ -84,6 +84,23 @@
       "revId": "3c68246ba0f6e8c15674245fad6f549c4e7db434",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e8f510_8a78c405",
+        "filename": "src/onaptests/steps/instantiate/vl_ala_carte.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-10-13T13:40:20Z",
+      "side": 1,
+      "message": "error on cleaning + missing condition\n\n1) add a condition on the settings if settings.CLEANUP_FLAG\n2) first test on my lab lead to an error\n  File \"run_basicnw_nomulticloud.py\", line 20, in \u003cmodule\u003e\n    basic_network_instantiate.cleanup()\n  File \"/home/morgan/Dev/ONAP/pythonsdk-tests-reporting/venv_reporting/lib/python3.8/site-packages/onaptests/steps/instantiate/vl_ala_carte.py\", line 142, in cleanup\n    for net_instance in self._service_instance.network_instances:\nAttributeError: \u0027YamlTemplateVlAlaCarteInstantiateStep\u0027 object has no attribute \u0027_service_instance\u0027",
+      "revId": "3c68246ba0f6e8c15674245fad6f549c4e7db434",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
