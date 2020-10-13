@@ -18,9 +18,6 @@ class RegisterCloudRegionStep(BaseStep):
          - CLOUD_REGION_CLOUD_OWNER,
          - CLOUD_REGION_ID,
          - CLOUD_DOMAIN,
-         - CLOUD_REGION_VERSION,
-         - CLOUD_OWNER_DEFINED_TYPE,
-         - COMPLEX_PHYSICAL_LOCATION_ID,
          - VIM_USERNAME,
          - VIM_PASSWORD,
          - VIM_SERVICE_URL,
@@ -41,10 +38,7 @@ class RegisterCloudRegionStep(BaseStep):
                 orchestration_disabled=False,
                 in_maint=False,
                 cloud_type=settings.CLOUD_REGION_TYPE,
-                cloud_region_version=settings.CLOUD_REGION_VERSION,
-                owner_defined_type=settings.CLOUD_OWNER_DEFINED_TYPE,
-                complex_name=settings.COMPLEX_PHYSICAL_LOCATION_ID
-                # cloud_extra_info=settings.CLOUD_EXTRA_INFO
+                cloud_region_version=settings.CLOUD_REGION_VERSION
             )
             cloud_region.add_esr_system_info(
                 esr_system_info_id=str(uuid4()),

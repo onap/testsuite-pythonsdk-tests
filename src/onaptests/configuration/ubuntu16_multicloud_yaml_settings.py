@@ -16,7 +16,6 @@ SERVICE_NAME = "ubuntu16test" # must be the same as in YAML
 CLOUD_REGION_CLOUD_OWNER = "sdktestsOwner" # must not contain _
 CLOUD_REGION_ID = "RegionOne" # should be valid, as otherwise MultiCloud fails
 CLOUD_REGION_TYPE = "openstack"
-CLOUD_OWNER_DEFINED_TYPE = "N/A"
 CLOUD_REGION_VERSION = "titanium_cloud"
 CLOUD_DOMAIN = "Default"
 

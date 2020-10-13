@@ -39,7 +39,6 @@ VSP_NAME = "basicvm_ubuntu_vsp"
 CLOUD_REGION_CLOUD_OWNER = "basicvm-cloud-owner"
 CLOUD_REGION_TYPE = "openstack"
 CLOUD_REGION_VERSION = "openstack"
-CLOUD_OWNER_DEFINED_TYPE = "N/A"
 
 AVAILABILITY_ZONE_NAME = "basicvm-availability-zone"
 AVAILABILITY_ZONE_TYPE = "nova"
