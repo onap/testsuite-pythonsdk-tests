@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4eb66643_9752539e",
+        "filename": "src/onaptests/scenario/basic_network.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 2319
+      },
+      "writtenOn": "2020-10-14T07:26:27Z",
+      "side": 1,
+      "message": "maybe we shouldn\u0027t catch all Exception but only the one that could be raised by testcase",
+      "revId": "65343de94d9988d097aa23b2139a0a6af0fecd74",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d55ce1e_46f7b426",
+        "filename": "src/onaptests/scenario/basic_network.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 2319
+      },
+      "writtenOn": "2020-10-14T07:26:27Z",
+      "side": 1,
+      "message": "We shouldn\u0027t catch all Exception but only the one that could be raised by collection generation",
+      "revId": "65343de94d9988d097aa23b2139a0a6af0fecd74",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
