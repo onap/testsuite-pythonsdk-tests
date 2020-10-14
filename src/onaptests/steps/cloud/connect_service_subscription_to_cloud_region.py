@@ -6,6 +6,7 @@ from ..base import BaseStep
 from .customer_service_subscription_create import CustomerServiceSubscriptionCreateStep
 from .link_cloud_to_complex import LinkCloudRegionToComplexStep
 from .register_cloud import RegisterCloudRegionStep
+from .k8s_connectivity_info_create import K8SConnectivityInfoStep
 
 
 class ConnectServiceSubToCloudRegionStep(BaseStep):
@@ -21,6 +22,8 @@ class ConnectServiceSubToCloudRegionStep(BaseStep):
 
         """
         super().__init__(cleanup=cleanup)
+        if settings.CLOUD_REGION_TYPE == settings.K8S_REGION_TYPE:
+            self.add_step(K8SConnectivityInfoStep(cleanup=cleanup))
         self.add_step(RegisterCloudRegionStep(cleanup=cleanup))
         self.add_step(LinkCloudRegionToComplexStep(cleanup=cleanup))
         self.add_step(CustomerServiceSubscriptionCreateStep(cleanup=cleanup))

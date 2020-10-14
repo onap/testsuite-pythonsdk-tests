@@ -49,3 +49,9 @@ class NetworkInstantiateException(Exception):
 
 class NetworkCleanupException(Exception):
     """Network cannot be cleaned."""
+
+class ProfileInformationException(Exception):
+    """Missing k8s profile information."""
+
+class ProfileCleanupException(Exception):
+    """K8s profile cannot be cleaned."""
