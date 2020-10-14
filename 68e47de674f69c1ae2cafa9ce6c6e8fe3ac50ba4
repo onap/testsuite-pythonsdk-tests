@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3c6057a0_edb68980",
+        "filename": "src/onaptests/scenario/basic_vm.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-10-14T08:15:16Z",
+      "side": 1,
+      "message": "OK but it means that I need to know all the exceptions potentially raised by pythonsdk-test but also the external lib used such as pythonsdk\nI will create an exception class in pythonsdk-test to properly managed that",
+      "parentUuid": "7bbabe52_66771cda",
+      "revId": "68e47de674f69c1ae2cafa9ce6c6e8fe3ac50ba4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d417b4b_6736355e",
         "filename": "src/onaptests/scenario/basic_vm.py",
         "patchSetId": 1
