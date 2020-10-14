@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7853cec_b3736450",
+        "filename": "src/onaptests/scenario/basic_network.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-10-14T09:32:39Z",
+      "side": 1,
+      "message": "yep new patch provided to include an exception class: https://gerrit.onap.org/r/c/testsuite/pythonsdk-tests/+/113828\nwill rebase on top of it",
+      "parentUuid": "4eb66643_9752539e",
+      "revId": "65343de94d9988d097aa23b2139a0a6af0fecd74",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d55ce1e_46f7b426",
         "filename": "src/onaptests/scenario/basic_network.py",
         "patchSetId": 6
