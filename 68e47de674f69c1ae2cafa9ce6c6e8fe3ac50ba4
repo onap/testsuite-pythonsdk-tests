@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bbabe52_66771cda",
+        "filename": "src/onaptests/scenario/basic_vm.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 2319
+      },
+      "writtenOn": "2020-10-14T07:22:21Z",
+      "side": 1,
+      "message": "catching all exception is a bit too much no?",
+      "revId": "68e47de674f69c1ae2cafa9ce6c6e8fe3ac50ba4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d417b4b_6736355e",
+        "filename": "src/onaptests/scenario/basic_vm.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 2319
+      },
+      "writtenOn": "2020-10-14T07:22:21Z",
+      "side": 1,
+      "message": "same",
+      "revId": "68e47de674f69c1ae2cafa9ce6c6e8fe3ac50ba4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e60619d8_845b0094",
+        "filename": "src/onaptests/steps/instantiate/service_ala_carte.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 2319
+      },
+      "writtenOn": "2020-10-14T07:22:21Z",
+      "side": 1,
+      "message": "maybe you should create/choose a more specific exception no?",
+      "revId": "68e47de674f69c1ae2cafa9ce6c6e8fe3ac50ba4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
