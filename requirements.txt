@@ -1,4 +1,4 @@
 xtesting
 openstacksdk
-onapsdk>=7.0.0
+onapsdk>=7.0.1
 jinja2

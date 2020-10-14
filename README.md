@@ -37,7 +37,9 @@ See ubuntu16test as example
 
 - Set global settings configuration files with all required input datas
   including the dynamic forwarding port for ssh tunnel in
-  src/onaptests/configuration/settings.py
+  src/onaptests/configuration/settings.py. You can customize the path for your
+  logs and reporting the page. Note that the reporting page assumes that the
+  logs are put in the same directory than the html page (relative path).
 
 - Set OpenStack configuration: there are 2 ways to provide the cloud information
   If you got the clouds.yaml, you need to reference your cloud with the env
