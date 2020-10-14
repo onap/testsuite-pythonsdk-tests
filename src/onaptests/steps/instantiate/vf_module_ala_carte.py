@@ -11,6 +11,7 @@ from onapsdk.so.instantiation import VnfParameter
 import onaptests.utils.exceptions as onap_test_exceptions
 from ..base import YamlTemplateBaseStep
 from .vnf_ala_carte import YamlTemplateVnfAlaCarteInstantiateStep
+from .k8s_profile_create import K8SProfileStep
 
 class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
     """Instantiate vf module a'la carte using YAML template."""
@@ -26,7 +27,14 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
         self._yaml_template: dict = None
         self._service_instance_name: str = None
         self._service_instance: ServiceInstance = None
-        self.add_step(YamlTemplateVnfAlaCarteInstantiateStep(cleanup))
+        if settings.CLOUD_REGION_TYPE == settings.K8S_REGION_TYPE:
+            # K8SProfileStep creates the requested profile and then calls
+            # YamlTemplateVnfAlaCarteInstantiateStep step
+            self.add_step(K8SProfileStep(cleanup))
+        else:
+            self.add_step(YamlTemplateVnfAlaCarteInstantiateStep(cleanup))
+
+
 
     @property
     def yaml_template(self) -> dict:
@@ -88,7 +96,7 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
         """
 
         # workaround, as VNF name differs from model name (added " 0")
-        vnf_name=vnf_name.split()[0]
+        vnf_name = vnf_name.split()[0]
         for vnf in self.yaml_template[self.service_name]["vnfs"]:
             if vnf["vnf_name"] == vnf_name:
                 for vnf_parameter in vnf["vnf_parameters"]:
@@ -126,7 +134,7 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
                     cloud_region,
                     tenant,
                     self._service_instance_name,
-                    vnf_parameters= self.get_vnf_parameters(vnf_instance.vnf.name))
+                    vnf_parameters=self.get_vnf_parameters(vnf_instance.vnf.name))
             while not vf_module_instantiation.finished:
                 time.sleep(10)
             if vf_module_instantiation.failed:
@@ -140,7 +148,6 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
             Exception: Vf module cleaning failed
 
         """
-        super().cleanup()
         for vnf_instance in self._service_instance.vnf_instances:
             self._logger.debug("VNF instance %s found in Service Instance ",
                                vnf_instance.name)
@@ -161,3 +168,4 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
                 else:
                     self._logger.error("VfModule deletion %s failed", vf_module.name)
                     raise onap_test_exceptions.VfModuleCleanupException
+        super.cleanup()

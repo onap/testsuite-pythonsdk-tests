@@ -39,4 +39,5 @@ LOG_CONFIG = {
 }
 
 REPORTING_FILE_PATH = "/tmp/reporting.html"
+K8S_REGION_TYPE = "k8s"
 # SOCK_HTTP = "socks5h://127.0.0.1:8080"
