@@ -5,12 +5,10 @@ from yaml import load
 
 from .settings import * # pylint: disable=W0614
 
-""" Specific ubuntu16 without multicloud."""
+""" Specific basic_cnf with multicloud-k8s and yaml config scenario."""
 
-# pylint: disable=bad-whitespace
-# The ONAP part
-SERVICE_DETAILS="Onboarding, distribution and instanitation of an Ubuntu VM using à la carte"
-SERVICE_COMPONENTS="SDC, DMAAP, AAI, SO, SDNC"
+# This scenario uses multicloud-k8s and not multicloud
+# (no registration requested)
 USE_MULTICLOUD = False
 # Set ONLY_INSTANTIATE to true to run an instantiation without repeating
 # onboarding and related AAI configuration (Cloud config)
@@ -19,7 +17,7 @@ ONLY_INSTANTIATE= False
 # if a yaml file is define, retrieve info from this yaml files
 # if not declare the parameters in the settings
 SERVICE_YAML_TEMPLATE = (sys.path[-1] + "/onaptests/templates/vnf-services/" +
-                         "ubuntu16test-service.yaml")
+                         "basic_cnf-service.yaml")
 
 try:
     # Try to retrieve the SERVICE NAME from the yaml file
@@ -30,30 +28,40 @@ except ValueError:
     SERVICE_NAME = "" # Fill me
 
 CLEANUP_FLAG = True
-CLEANUP_ACTIVITY_TIMER = 10  # nb of seconds before cleanup in case cleanup option is set
-VENDOR_NAME = "basicvm_vendor"
+# nb of seconds before cleanup in case cleanup option is set
+CLEANUP_ACTIVITY_TIMER = 10
 
-VF_NAME = "basicvm_ubuntu_vf"
-VSP_NAME = "basicvm_ubuntu_vsp"
+# Definition of k8s profile version
+K8S_PROFILE_K8S_VERSION = "1.0"
+# Relative path to k8s profile artifact in the python package (so under /src)
+K8S_PROFILE_ARTIFACT_PATH = (sys.path[-1] +
+                             "/onaptests/templates/artifacts/k8sprof.tar.gz")
+# Relative path to config file to set k8s connectivity information
+K8S_KUBECONFIG_FILE = (sys.path[-1] +
+                       "/onaptests/templates/artifacts/config")
 
-CLOUD_REGION_CLOUD_OWNER = "basicvm-cloud-owner"
-CLOUD_REGION_TYPE = "openstack"
-CLOUD_REGION_VERSION = "openstack"
-CLOUD_OWNER_DEFINED_TYPE = "N/A"
+VENDOR_NAME = "basicnf_vendor"
 
-AVAILABILITY_ZONE_NAME = "basicvm-availability-zone"
-AVAILABILITY_ZONE_TYPE = "nova"
+CLOUD_REGION_CLOUD_OWNER = "basicnf-owner" # must not contain _
+CLOUD_REGION_ID = "k8sregion"
+CLOUD_REGION_TYPE = "k8s"
+CLOUD_REGION_VERSION = "1.0"
+CLOUD_DOMAIN = "Default"
+CLOUD_OWNER_DEFINED_TYPE = "t1"
+
 COMPLEX_PHYSICAL_LOCATION_ID = "lannion"
 COMPLEX_DATA_CENTER_CODE = "1234-5"
+AVAILABILITY_ZONE_NAME = "basicnf-availability-zone"
+AVAILABILITY_ZONE_TYPE = "nova"
 
-GLOBAL_CUSTOMER_ID = "basicvm-customer"
+GLOBAL_CUSTOMER_ID = "basicnf-customer"
 
-OWNING_ENTITY = "basicvm-oe"
-PROJECT = "basicvm-project"
-LINE_OF_BUSINESS = "basicvm-lob"
-PLATFORM = "basicvm-platform"
+OWNING_ENTITY = "basicnf_owning_entity"
+PROJECT = "basicnf_project"
+LINE_OF_BUSINESS = "basicnf_lob"
+PLATFORM = "basicnf_platform"
 
-SERVICE_INSTANCE_NAME = "basicvm_ubuntu16_service_instance"
+SERVICE_INSTANCE_NAME = "basic_cnf_service_instance"
 
 # The cloud Part
 # Assuming a cloud.yaml is available, use the openstack client
@@ -67,18 +75,15 @@ try:
         VIM_SERVICE_URL = cloud.config.auth['auth_url']
         TENANT_ID = cloud.config.auth['project_id']
         TENANT_NAME = cloud.config.auth['project_name']
-        CLOUD_REGION_ID = cloud.config.region_name
-        CLOUD_DOMAIN = cloud.config.auth['project_domain_name']
     else:
         raise KeyError
 except KeyError:
     # If you do not use the cloud.yaml as imput for your openstack
     # put the input data here
     # Note if 1 parameter is missing in the clouds.yaml, we fallback here
-    TENANT_ID = "" # Fill me
-    TENANT_NAME = "" # Fill me
-    VIM_USERNAME = ""  # Fill me
-    VIM_PASSWORD = ""  # Fill me
-    VIM_SERVICE_URL = ""  # Fill me
-    CLOUD_REGION_ID = "RegionOne" # Update me if needed
-    CLOUD_DOMAIN = "Default" # Update me if needed
+    "Dummy definition - not used"
+    TENANT_ID = "123456"
+    TENANT_NAME = "dummy_test"
+    VIM_USERNAME = "dummy"
+    VIM_PASSWORD = "dummy123"
+    VIM_SERVICE_URL = "http://10.12.25.2:5000/v3"  # Fill me
