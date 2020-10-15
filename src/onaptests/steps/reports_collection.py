@@ -36,7 +36,7 @@ class ReportsCollection:
 
     def generate_report(self) -> None:
         step_list = self.report
-        failing_steps = []
+        failing_steps = {}
         for step,status in step_list.items():
             if 'FAIL' in status:
                 failing_steps[step] = status
@@ -51,7 +51,6 @@ class ReportsCollection:
         except NameError:
             components = ""
 
-        log_path = settings.LOG_CONFIG['handlers']['file']['filename']
         jinja_env = Environment(
             autoescape=select_autoescape(['html']),
             loader=FileSystemLoader(sys.path[-1] + '/onaptests/templates/reporting'))
@@ -62,5 +61,5 @@ class ReportsCollection:
             usecase=usecase,
             details=details,
             components=components,
-            log_path=log_path).dump(
+            log_path="./pythonsdk.debug.log").dump(
             settings.REPORTING_FILE_PATH)
