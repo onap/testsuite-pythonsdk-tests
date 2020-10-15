@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3526fc67_a6ded4cd",
+        "filename": "src/onaptests/configuration/settings.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5622
+      },
+      "writtenOn": "2020-10-15T13:26:31Z",
+      "side": 1,
+      "message": "It is ok for automatic tests but for a manual usage, it will have to be indicated in readme that the log in the /tmp directory",
+      "revId": "5d91fce4fc4e78f479bcaf75f05386b512157a47",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c59526d_3de183f6",
+        "filename": "src/onaptests/steps/reports_collection.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5622
+      },
+      "writtenOn": "2020-10-15T13:26:31Z",
+      "side": 1,
+      "message": "It is not /tmp/pythonsdk.debug.log ?",
+      "revId": "5d91fce4fc4e78f479bcaf75f05386b512157a47",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
