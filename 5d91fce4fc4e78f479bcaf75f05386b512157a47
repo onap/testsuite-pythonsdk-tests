@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87b3d65e_cb9c2fd1",
+        "filename": "src/onaptests/configuration/settings.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-10-15T14:31:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3526fc67_a6ded4cd",
+      "revId": "5d91fce4fc4e78f479bcaf75f05386b512157a47",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c59526d_3de183f6",
         "filename": "src/onaptests/steps/reports_collection.py",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2020-10-15T13:26:31Z",
       "side": 1,
       "message": "It is not /tmp/pythonsdk.debug.log ?",
+      "revId": "5d91fce4fc4e78f479bcaf75f05386b512157a47",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a3716d3_1d5609d6",
+        "filename": "src/onaptests/steps/reports_collection.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-10-15T14:31:56Z",
+      "side": 1,
+      "message": "well it is the link from the generated page \u003d\u003e /tmp/reporting.html\nto the logs \u003d\u003e /tmp/pythonsdk.reporting.log\n\nso if you are in /tmp/reporting.yaml, assuming that the logs are in the same folder than the hrml page, the relative path will be OK and you have only to precise it in the setting file.\nIf you put /tmp/pythonsdk.debug.log here, you are hardcoding the path in a second config file..\n\nI prefer to have only 1 file (the settings.py).\n\nin xtesting/CI the log and the html page are in /usr/lib/xtesting/results directory in the docker\nthen they are copied and pushed but they are always together.\n\nThe only issue I see if your log and your html are not in the same folder, the html page will be generated but the link will not be valid",
+      "parentUuid": "0c59526d_3de183f6",
       "revId": "5d91fce4fc4e78f479bcaf75f05386b512157a47",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
