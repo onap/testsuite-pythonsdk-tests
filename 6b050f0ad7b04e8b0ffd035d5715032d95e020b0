@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "9a0a9258_ac5135a8",
+        "filename": "src/onaptests/configuration/basic_network_nomulticloud_settings.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-10-16T07:32:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f7ac2b06_cf3f2d47",
+      "revId": "6b050f0ad7b04e8b0ffd035d5715032d95e020b0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb2231b6_6b0cab11",
         "filename": "src/onaptests/configuration/basic_network_nomulticloud_settings.py",
         "patchSetId": 8
@@ -50,6 +68,24 @@
       "revId": "6b050f0ad7b04e8b0ffd035d5715032d95e020b0",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aca14d53_c6ea1aba",
+        "filename": "src/onaptests/configuration/basic_network_nomulticloud_settings.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-10-16T07:32:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eb2231b6_6b0cab11",
+      "revId": "6b050f0ad7b04e8b0ffd035d5715032d95e020b0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "f1ad2f53_8c996c2f",
+        "filename": "src/onaptests/scenario/basic_network.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-10-16T07:32:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d247dfe0_4402cd96",
+      "revId": "6b050f0ad7b04e8b0ffd035d5715032d95e020b0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97116e45_a68a910d",
         "filename": "src/onaptests/steps/instantiate/vl_ala_carte.py",
         "patchSetId": 8
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "8c0f4b6a_0341468c",
+        "filename": "src/onaptests/steps/instantiate/vl_ala_carte.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-10-16T07:32:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "97116e45_a68a910d",
+      "revId": "6b050f0ad7b04e8b0ffd035d5715032d95e020b0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9385df87_f204d061",
         "filename": "src/onaptests/steps/instantiate/vl_ala_carte.py",
         "patchSetId": 8
@@ -98,6 +170,24 @@
       "writtenOn": "2020-10-16T06:55:38Z",
       "side": 1,
       "message": "Where is the exception?",
+      "revId": "6b050f0ad7b04e8b0ffd035d5715032d95e020b0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "869e177d_b5e673c6",
+        "filename": "src/onaptests/steps/instantiate/vl_ala_carte.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-10-16T07:32:56Z",
+      "side": 1,
+      "message": "added in case timeout seen",
+      "parentUuid": "9385df87_f204d061",
       "revId": "6b050f0ad7b04e8b0ffd035d5715032d95e020b0",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
