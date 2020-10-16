@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0b7d8a9d_da0c77b5",
+        "filename": "run_basic_network_nomulticloud.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 2319
+      },
+      "writtenOn": "2020-10-16T06:55:41Z",
+      "side": 1,
+      "message": "not sure to understand the pattern here: it\u0027s expected to have such exception?",
+      "revId": "6b050f0ad7b04e8b0ffd035d5715032d95e020b0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7ac2b06_cf3f2d47",
         "filename": "src/onaptests/configuration/basic_network_nomulticloud_settings.py",
         "patchSetId": 8
@@ -19,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "eb2231b6_6b0cab11",
+        "filename": "src/onaptests/configuration/basic_network_nomulticloud_settings.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 2319
+      },
+      "writtenOn": "2020-10-16T06:55:41Z",
+      "side": 1,
+      "message": "the way Morgan did on another config (.auth.get with default value) seems better no?",
+      "revId": "6b050f0ad7b04e8b0ffd035d5715032d95e020b0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d247dfe0_4402cd96",
         "filename": "src/onaptests/scenario/basic_network.py",
         "patchSetId": 8
@@ -30,6 +64,23 @@
       "writtenOn": "2020-10-16T06:55:38Z",
       "side": 1,
       "message": "Some exceptions are missing:\nServiceInstantiateException\nServiceCleanupException",
+      "revId": "6b050f0ad7b04e8b0ffd035d5715032d95e020b0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97116e45_a68a910d",
+        "filename": "src/onaptests/steps/instantiate/vl_ala_carte.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 2319
+      },
+      "writtenOn": "2020-10-16T06:55:41Z",
+      "side": 1,
+      "message": "I think Morgan has created new exception classes, could be good to use them",
       "revId": "6b050f0ad7b04e8b0ffd035d5715032d95e020b0",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
