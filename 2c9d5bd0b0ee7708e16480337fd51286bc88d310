@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "42a40caa_358114bb",
+        "filename": "requirements.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2020-10-16T14:48:28Z",
+      "side": 1,
+      "message": "the newest version of onapsdk is 7.1.0",
+      "parentUuid": "2ee69861_d72a69ab",
+      "revId": "2c9d5bd0b0ee7708e16480337fd51286bc88d310",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a92a1c4_ed095542",
         "filename": "setup.cfg",
         "patchSetId": 5
