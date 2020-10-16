@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acb5c667_18f1808c",
+        "filename": "requirements.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-10-16T08:38:16Z",
+      "side": 1,
+      "message": "As far as I Know with \u003e\u003d 7.0.0, it will take the last one available so the 7.0.1\nbut it is better to indicate 7.0.1 as it will not work with 7.0.0",
+      "revId": "2c9d5bd0b0ee7708e16480337fd51286bc88d310",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a92a1c4_ed095542",
+        "filename": "setup.cfg",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-10-16T08:38:16Z",
+      "side": 1,
+      "message": "BasicVm BasicCNF \nWoudl it not better to have either\nBasicVM and BasicCNF\nor\nBasicVm and BasicCnf\nbut not a mix?",
+      "revId": "2c9d5bd0b0ee7708e16480337fd51286bc88d310",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a855b4ce_27ce0cfb",
+        "filename": "src/onaptests/steps/cloud/connect_service_subscription_to_cloud_region.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-10-16T08:38:16Z",
+      "side": 1,
+      "message": "could be nice to declare the possible REGION_TYPE in the settings.py just as constant",
+      "revId": "2c9d5bd0b0ee7708e16480337fd51286bc88d310",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32d274e5_9ac9a834",
+        "filename": "src/onaptests/steps/cloud/k8s_connectivity_info_create.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-10-16T08:38:16Z",
+      "side": 1,
+      "message": "syntax \u003d\u003e *Clean?\nmaybe a log also for the creation would be nice",
+      "revId": "2c9d5bd0b0ee7708e16480337fd51286bc88d310",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e51f5624_f0e1a28a",
+        "filename": "src/onaptests/steps/instantiate/k8s_profile_create.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-10-16T08:38:16Z",
+      "side": 1,
+      "message": "add exception in the exception class",
+      "revId": "2c9d5bd0b0ee7708e16480337fd51286bc88d310",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc47371_09a1731e",
+        "filename": "src/onaptests/steps/instantiate/k8s_profile_create.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-10-16T08:38:16Z",
+      "side": 1,
+      "message": "*Clean ?",
+      "revId": "2c9d5bd0b0ee7708e16480337fd51286bc88d310",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82d1c90b_f1e30302",
+        "filename": "src/onaptests/steps/instantiate/k8s_profile_create.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-10-16T08:38:16Z",
+      "side": 1,
+      "message": "add exception in the exception class",
+      "revId": "2c9d5bd0b0ee7708e16480337fd51286bc88d310",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b6b308_209988c6",
+        "filename": "src/onaptests/steps/instantiate/k8s_profile_create.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-10-16T08:38:16Z",
+      "side": 1,
+      "message": "create new exception in the exception class",
+      "revId": "2c9d5bd0b0ee7708e16480337fd51286bc88d310",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "969a371e_02a9333c",
+        "filename": "src/onaptests/steps/instantiate/vf_module_ala_carte.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-10-16T08:38:16Z",
+      "side": 1,
+      "message": "maybe add a comment to indicate that the K8SProfileStep include the VnfAlaCarte\nit is not K8SProfileStep or YamlTemplateVnfAlaCarteInstantiateStep\nbut K8SProfileStep\u003eYamlTemplateVnfAlaCarteInstantiateStep or YamlTemplateVnfAlaCarteInstantiateStep\n\nso maybe the step name is a bit misleading..\n YamlTemplateK8sVnfAlaCarteInstantiatestep would be more self explicit",
+      "revId": "2c9d5bd0b0ee7708e16480337fd51286bc88d310",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
