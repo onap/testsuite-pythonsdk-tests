@@ -168,4 +168,4 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
                 else:
                     self._logger.error("VfModule deletion %s failed", vf_module.name)
                     raise onap_test_exceptions.VfModuleCleanupException
-        super.cleanup()
+        super().cleanup()
