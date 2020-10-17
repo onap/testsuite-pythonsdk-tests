@@ -43,12 +43,12 @@ class ReportsCollection:
         usecase = settings.SERVICE_NAME
         try:
             details = settings.SERVICE_DETAILS
-        except NameError:
+        except (KeyError, NameError):
             details = ""
 
         try:
             components = settings.SERVICE_COMPONENTS
-        except NameError:
+        except (KeyError, NameError):
             components = ""
 
         jinja_env = Environment(
