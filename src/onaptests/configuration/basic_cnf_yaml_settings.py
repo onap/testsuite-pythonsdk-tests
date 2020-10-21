@@ -7,7 +7,9 @@ import onaptests.utils.exceptions as onap_test_exceptions
 from .settings import * # pylint: disable=W0614
 
 """ Specific basic_cnf with multicloud-k8s and yaml config scenario."""
-
+SERVICE_DETAILS = ("Onboarding, distribution and instantiation of a CNF" +
+                   "using à la carte and Multicloud K8S module")
+SERVICE_COMPONENTS="SDC, DMAAP, AAI, SO, SDNC, Multicloud K8S"
 # This scenario uses multicloud-k8s and not multicloud
 # (no registration requested)
 USE_MULTICLOUD = False

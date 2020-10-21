@@ -232,4 +232,4 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         else:
             self._logger.error("Service deletion %s failed", self._service_instance_name)
             raise onap_test_exceptions.ServiceCleanupException
-        super.cleanup()
+        super().cleanup()

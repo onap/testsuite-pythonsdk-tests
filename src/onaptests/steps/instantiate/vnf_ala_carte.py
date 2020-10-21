@@ -134,4 +134,4 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
             else:
                 self._logger.error("VNF deletion %s failed", vnf_instance.name)
                 raise onap_test_exceptions.VnfCleanupException
-        super.cleanup()
+        super().cleanup()
