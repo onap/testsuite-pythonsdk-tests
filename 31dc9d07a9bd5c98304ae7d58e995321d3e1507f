@@ -1,0 +1,7 @@
+Code-Review+2: Andreas Geissler <andreas-geissler@telekom.de>
+Verified+1: Andreas Geissler <andreas-geissler@telekom.de>
+Submitted-by: Andreas Geissler <andreas-geissler@telekom.de>
+Submitted-at: Wed, 28 Oct 2020 13:10:11 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/testsuite/pythonsdk-tests/+/114356
+Project: testsuite/pythonsdk-tests
+Branch: refs/heads/master
