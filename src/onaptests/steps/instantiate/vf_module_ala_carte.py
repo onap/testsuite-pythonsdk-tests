@@ -34,7 +34,10 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
         else:
             self.add_step(YamlTemplateVnfAlaCarteInstantiateStep(cleanup))
 
-
+    @property
+    def description(self) -> str:
+        """Step description."""
+        return "Instantiate VF module described in YAML using SO a'la carte method."
 
     @property
     def yaml_template(self) -> dict:
