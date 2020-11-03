@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d032fa9_d4886892",
+        "filename": "src/onaptests/steps/instantiate/service_ala_carte.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-11-03T21:17:31Z",
+      "side": 1,
+      "message": "2 descriptions here?",
+      "revId": "f6c4125898a6c42f18a9b925d6a7a98992f2048d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
