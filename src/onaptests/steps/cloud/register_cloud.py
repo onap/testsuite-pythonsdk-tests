@@ -10,6 +10,16 @@ from ..base import BaseStep
 class RegisterCloudRegionStep(BaseStep):
     """Cloud region registration step."""
 
+    @property
+    def description(self) -> str:
+        """Step description."""
+        return "Register cloud region."
+
+    @property
+    def component(self) -> str:
+        """Component name."""
+        return "AAI"
+
     @BaseStep.store_state
     def execute(self):
         """Register cloud region

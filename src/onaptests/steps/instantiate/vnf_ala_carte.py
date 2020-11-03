@@ -29,6 +29,16 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
         self.add_step(YamlTemplateServiceAlaCarteInstantiateStep(cleanup))
 
     @property
+    def description(self) -> str:
+        """Step description."""
+        return "Instantiate vnf described in YAML using SO a'la carte method."
+
+    @property
+    def component(self) -> str:
+        """Component name."""
+        return "SO"
+
+    @property
     def yaml_template(self) -> dict:
         """Step YAML template.
 

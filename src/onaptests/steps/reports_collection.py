@@ -1,7 +1,24 @@
 import sys
-from typing import Dict
+from dataclasses import dataclass
+from enum import Enum
+from typing import List
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from onapsdk.configuration import settings
+
+
+class ReportStepStatus(Enum):
+    """Enum which stores steps execution statuses."""
+    PASS = "PASS"
+    FAIL = "FAIL"
+
+
+@dataclass
+class Report:
+    """Step execution report."""
+    step_description: str
+    step_execution_status: ReportStepStatus
+    step_execution_duration: float
+
 
 class ReportsCollection:
     """Collection to store steps execution statuses."""
@@ -10,36 +27,39 @@ class ReportsCollection:
         """Initialize collection."""
         self._collection: list = []
 
-    def put(self, item: Dict[str, str]) -> None:
+    def put(self, item: Report) -> None:
         """Put execution status dictionary.
 
         Args:
-            item (Dict[str, str]): Step name with status dictionary
+            item (Report): Step report
 
         """
-        self._collection.append(item)
+        self._collection.insert(0, item)
 
     @property
-    def report(self) -> Dict[str, str]:
+    def report(self) -> List[Report]:
         """Get report.
 
         Build a dictionary with execution statuses.
 
         Returns:
-            Dict[str, str]: Steps name with status dictionary
+            List[str, str]: Steps name with status dictionary
 
         """
-        report: Dict[str, str] = {}
-        for element in self._collection[::-1]:
-            report.update(element)
-        return report
+        return self._collection
+
+    @property
+    def failed_steps_num(self) -> int:
+        """Number of failed steps in report.
+
+        Returns:
+            int: How many steps failed
+
+        """
+        return sum((1 for step_report in self.report if \
+            step_report.step_execution_status == ReportStepStatus.FAIL))
 
     def generate_report(self) -> None:
-        step_list = self.report
-        failing_steps = {}
-        for step,status in step_list.items():
-            if 'FAIL' in status:
-                failing_steps[step] = status
         usecase = settings.SERVICE_NAME
         try:
             details = settings.SERVICE_DETAILS
@@ -56,8 +76,7 @@ class ReportsCollection:
             loader=FileSystemLoader(sys.path[-1] + '/onaptests/templates/reporting'))
 
         jinja_env.get_template('reporting.html.j2').stream(
-            failing_steps=failing_steps,
-            steps=step_list,
+            report=self,
             usecase=usecase,
             details=details,
             components=components,

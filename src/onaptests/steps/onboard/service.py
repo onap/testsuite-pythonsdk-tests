@@ -21,6 +21,16 @@ class ServiceOnboardStep(BaseStep):
         super().__init__(cleanup=cleanup)
         self.add_step(VfOnboardStep(cleanup=cleanup))
 
+    @property
+    def description(self) -> str:
+        """Step description."""
+        return "Onboard service in SDC."
+
+    @property
+    def component(self) -> str:
+        """Component name."""
+        return "SDC"
+
     @BaseStep.store_state
     def execute(self):
         """Onboard service.
@@ -56,6 +66,16 @@ class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
         super().__init__(cleanup=cleanup)
         self._yaml_template: dict = None
         self.add_step(YamlTemplateVfOnboardStep(cleanup=cleanup))
+
+    @property
+    def description(self) -> str:
+        """Step description."""
+        return "Onboard service described in YAML file in SDC."
+
+    @property
+    def component(self) -> str:
+        """Component name."""
+        return "SDC"
 
     @property
     def yaml_template(self) -> dict:

@@ -7,6 +7,16 @@ from ..base import BaseStep
 class VendorOnboardStep(BaseStep):
     """Vendor onboard step."""
 
+    @property
+    def description(self) -> str:
+        """Step description."""
+        return "Onboard vendor in SDC."
+
+    @property
+    def component(self) -> str:
+        """Component name."""
+        return "SDC"
+
     @BaseStep.store_state
     def execute(self):
         """Onboard vendor.
