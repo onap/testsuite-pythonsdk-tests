@@ -7,6 +7,11 @@ from ..base import BaseStep
 class ComplexCreateStep(BaseStep):
     """Complex creation step."""
 
+    @property
+    def description(self) -> str:
+        """Step description."""
+        return "Create complex."
+
     @BaseStep.store_state
     def execute(self):
         """Create complex.

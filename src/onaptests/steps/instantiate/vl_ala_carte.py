@@ -31,6 +31,11 @@ class YamlTemplateVlAlaCarteInstantiateStep(YamlTemplateBaseStep):
         self.add_step(YamlTemplateServiceAlaCarteInstantiateStep(cleanup))
 
     @property
+    def description(self) -> str:
+        """Step description."""
+        return "Instantiate network link described in YAML using SO a'la carte method."
+
+    @property
     def yaml_template(self) -> dict:
         """Step YAML template.
 

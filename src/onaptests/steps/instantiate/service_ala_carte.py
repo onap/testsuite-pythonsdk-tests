@@ -31,6 +31,11 @@ class ServiceAlaCarteInstantiateStep(BaseStep):
             self.add_step(ServiceOnboardStep(cleanup))
             self.add_step(ConnectServiceSubToCloudRegionStep(cleanup))
 
+    @property
+    def description(self) -> str:
+        """Step description."""
+        return "Instantiate service using SO a'la carte method."
+
     @BaseStep.store_state
     def execute(self):
         """Instantiate service.
@@ -91,6 +96,11 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         if not settings.ONLY_INSTANTIATE:
             self.add_step(YamlTemplateServiceOnboardStep(cleanup))
             self.add_step(ConnectServiceSubToCloudRegionStep(cleanup))
+
+    @property
+    def description(self) -> str:
+        """Step description."""
+        return "Instantiate service described in YAML using SO a'la carte method."
 
     @property
     def yaml_template(self) -> dict:
