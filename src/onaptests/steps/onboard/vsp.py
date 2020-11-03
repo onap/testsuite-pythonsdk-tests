@@ -19,6 +19,11 @@ class VspOnboardStep(BaseStep):
         super().__init__(cleanup=cleanup)
         self.add_step(VendorOnboardStep(cleanup=cleanup))
 
+    @property
+    def description(self) -> str:
+        """Step description."""
+        return "Onboard vsp in SDC."
+
     @BaseStep.store_state
     def execute(self):
         """Onboard Vsp.
@@ -46,6 +51,11 @@ class YamlTemplateVspOnboardStep(YamlTemplateBaseStep):
         """
         super().__init__(cleanup=cleanup)
         self.add_step(VendorOnboardStep(cleanup=cleanup))
+
+    @property
+    def description(self) -> str:
+        """Step description."""
+        return "Onboard vsp described in YAML file in SDC."
 
     @property
     def yaml_template(self) -> dict:

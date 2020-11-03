@@ -6,6 +6,11 @@ from ..base import BaseStep
 class K8SConnectivityInfoStep(BaseStep):
     """CreateConnnectivityInfoStep."""
 
+    @property
+    def description(self) -> str:
+        """Step description."""
+        return "Create K8S connectivity info."
+
     @BaseStep.store_state
     def execute(self):
         """Creation k8s connectivity information

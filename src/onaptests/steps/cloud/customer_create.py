@@ -7,6 +7,11 @@ from ..base import BaseStep
 class CustomerCreateStep(BaseStep):
     """Customer creation step."""
 
+    @property
+    def description(self) -> str:
+        """Step description."""
+        return "Create customer."
+
     @BaseStep.store_state
     def execute(self):
         """Create cutomer.

@@ -25,6 +25,11 @@ class K8SProfileStep(BaseStep):
         self.add_step(YamlTemplateVnfAlaCarteInstantiateStep(cleanup))
 
     @property
+    def description(self) -> str:
+        """Step description."""
+        return "Create K8S profile."
+
+    @property
     def yaml_template(self) -> dict:
         """Step YAML template.
 

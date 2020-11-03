@@ -2,7 +2,7 @@
 {% block title %}Summary{% endblock %}
 {% block content %}
     {{ summary('Results', "", [
-      { 'title': 'Pythonsdk Tests', 'failing': (failing_steps | length), 'total': (steps | length)},
+      { 'title': 'Pythonsdk Tests', 'failing': report.failed_steps_num, 'total': (report.report | length)},
       ])
     }}
 
@@ -23,16 +23,20 @@
             <tr>
               <th>Name</th>
               <th>Status</th>
+              <th>Duration (seconds)</th>
             </tr>
           </thead>
           <tbody>
-          {% for step,value in steps.items() %}
-            <tr {% if  value == 'FAIL' %} class="has-background-danger"  {% else %} class="has-background-success-light" {% endif %}>
+          {% for step_report in report.report %}
+            <tr {% if  step_report.step_execution_status.value == 'FAIL' %} class="has-background-danger"  {% else %} class="has-background-success-light" {% endif %}>
             <td>
-            {{ step }}
+            {{ step_report.step_description }}
             </td>
             <td>
-            {{ value }}
+            {{ step_report.step_execution_status.value }}
+            </td>
+            <td>
+            {{ step_report.step_execution_duration | round(2) }}
             </td>
             </tr>
           {% endfor %}

@@ -1,12 +1,13 @@
 import logging
 import logging.config
+import time
 
 from abc import ABC, abstractmethod
 from typing import List
 from onapsdk.configuration import settings
 from onapsdk.aai.business import Customer
 
-from .reports_collection import ReportsCollection
+from .reports_collection import Report, ReportsCollection, ReportStepStatus
 
 
 class BaseStep(ABC):
@@ -93,16 +94,37 @@ class BaseStep(ABC):
         """Step name."""
         return self.__class__.__name__
 
+    @property
+    @abstractmethod
+    def description(self) -> str:
+        """Step description.
+
+        Used for reports
+
+        Returns:
+            str: Step description
+
+        """
+
     @classmethod
     def store_state(cls, fun):
         def wrapper(self, *args, **kwargs):
             try:
+                start_time: float = time.time()
                 ret = fun(self, *args, **kwargs)
-                self.reports_collection.put({self.name: "PASS"})
+                execution_status: ReportStepStatus = ReportStepStatus.PASS
                 return ret
             except Exception:
-                self.reports_collection.put({self.name: "FAIL"})
+                execution_status: ReportStepStatus = ReportStepStatus.FAIL
                 raise
+            finally:
+                self.reports_collection.put(
+                    Report(
+                        step_description=f"{self.name}: {self.description}",
+                        step_execution_status=execution_status,
+                        step_execution_duration=time.time() - start_time
+                    )
+                )
         return wrapper
 
     def execute(self) -> None:
