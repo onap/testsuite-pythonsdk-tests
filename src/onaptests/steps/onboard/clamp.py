@@ -27,6 +27,16 @@ class OnboardClampStep(YamlTemplateBaseStep):
         # self.set_logger()
 
     @property
+    def description(self) -> str:
+        """Step description."""
+        return "Onboard service in SDC including a TCA blueprint for CLAMP."
+
+    @property
+    def component(self) -> str:
+        """Component name."""
+        return "SDC"
+
+    @property
     def yaml_template(self) -> dict:
         """Step YAML template.
 

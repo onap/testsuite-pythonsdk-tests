@@ -32,6 +32,16 @@ class ClampStep(YamlTemplateBaseStep):
         self.loop_instance = None
 
     @property
+    def description(self) -> str:
+        """Step description."""
+        return "Retrieve TCA, Policy then create a loop"
+
+    @property
+    def component(self) -> str:
+        """Component name."""
+        return "CLAMP"
+
+    @property
     def yaml_template(self) -> dict:
         """Step YAML template.
 
