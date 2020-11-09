@@ -78,12 +78,12 @@ class OnboardClampStep(YamlTemplateBaseStep):
 
         # we add the artifact to the first VNF
         self._logger.info("Try to add blueprint to %s", vf.name)
-        payload_file = open(settings.CONFIGURATION_PATH + 'clampnode.yaml', 'rb')
+        payload_file = open(settings.CONFIGURATION_PATH + 'tca-microservice.yaml', 'rb')
         data = payload_file.read()
         self._logger.info("DCAE INVENTORY BLUEPRINT file retrieved")
         service.add_artifact_to_vf(vnf_name=vf.name,
                                    artifact_type="DCAE_INVENTORY_BLUEPRINT",
-                                   artifact_name="clampnode.yaml",
+                                   artifact_name="tca-microservice.yaml",
                                    artifact=data)
         payload_file.close()
         service.checkin()
