@@ -1,0 +1,3 @@
+[submodule "src/onaptests/integration"]
+	path = src/onaptests/integration
+	url = https://gerrit.onap.org/r/integration
