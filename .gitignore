@@ -31,3 +31,5 @@ csit/
 benchmark/
 .tox/
 **/__pycache__/
+venv/
+.vscode/
