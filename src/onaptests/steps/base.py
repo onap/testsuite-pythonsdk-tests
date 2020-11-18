@@ -29,7 +29,6 @@ class BaseStep(ABC):
         except AttributeError:
             pass
 
-
     def __init__(self, cleanup: bool = False) -> None:
         """Step initialization.
 
