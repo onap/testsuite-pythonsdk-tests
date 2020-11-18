@@ -1,7 +1,7 @@
 from yaml import load
 
 from onapsdk.configuration import settings
-from onapsdk.sdc.service import Service
+from onapsdk.sdc.service import Pnf, Service
 from onapsdk.sdc.vf import Vf
 from onapsdk.sdc.vl import Vl
 
@@ -38,6 +38,7 @@ class ServiceOnboardStep(BaseStep):
         Use settings values:
          - VL_NAME,
          - VF_NAME,
+         - PNF_NAME,
          - SERVICE_NAME.
 
         """
@@ -50,6 +51,9 @@ class ServiceOnboardStep(BaseStep):
         if settings.VF_NAME != "":
             vf: Vf = Vf(name=settings.VF_NAME)
             service.add_resource(vf)
+        if settings.PNF_NAME != "":
+            pnf: Pnf = Pnf(name=settings.PNF_NAME)
+            service.add_resource(pnf)
         service.checkin()
         service.onboard()
 
@@ -123,5 +127,9 @@ class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
             for vnf in self.yaml_template[self.service_name]["vnfs"]:
                 vf: Vf = Vf(name=vnf["vnf_name"])
                 service.add_resource(vf)
+        if "pnfs" in self.yaml_template[self.service_name]:
+            for pnf in self.yaml_template[self.service_name]["pnfs"]:
+                pnf: Pnf = Pnf(name=pnf["pnf_name"])
+                service.add_resource(pnf)
         service.checkin()
         service.onboard()
