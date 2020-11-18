@@ -1,4 +1,5 @@
 xtesting
 openstacksdk
-onapsdk>=7.1.0
+-e git+https://gitlab.com/Orange-OpenSource/lfn/onap/python-onapsdk.git@develop#egg=onapsdk
 jinja2
+kubernetes
