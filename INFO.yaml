@@ -106,7 +106,11 @@ committers:
       company: 'Orange'
       id: 'rajewluk'
       timezone: 'Europe/Warsaw'
-
+    - name: 'Lasse Kaihlavirta'
+      email: 'l.kaihlavirt@partner.samsung.com'
+      company: 'samsung'
+      id: 'kaihlavi'
+      timezone: 'Europe/Helsinki'
 tsc:
     # yamllint disable rule:line-length
     approval: 'https://lists.onap.org/g/onap-tsc/message/6408?p=,,,20,0,0,0::relevance,,new+repository+for+integration+team+testsuite%2Fpythonsdk-tests,20,2,0,74178111'
@@ -114,3 +118,6 @@ tsc:
         - type: 'Addition'
           name: 'Lukasz Rajewski'
           link: 'https://lists.onap.org/g/onap-tsc/message/7102'
+        - type: 'Addition'
+          name: 'Lasse Kaihlavirta'
+          link: 'https://lists.onap.org/g/onap-tsc/message/7280'
