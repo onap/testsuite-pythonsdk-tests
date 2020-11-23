@@ -16,6 +16,24 @@
       "revId": "8ba329d6dea3bf21b87b45c80fd83c62879c6822",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "645eee1e_888c6770",
+        "filename": "src/onaptests/configuration/settings.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5622
+      },
+      "writtenOn": "2020-11-23T10:34:15Z",
+      "side": 1,
+      "message": "K8S_REGION_TYPE is used to define the cloud region in AAI. This is the value of the type (not linked to namespace)\nThe namespace is defined in the vnf service file",
+      "parentUuid": "e4adc2b9_975fd3f1",
+      "revId": "8ba329d6dea3bf21b87b45c80fd83c62879c6822",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
