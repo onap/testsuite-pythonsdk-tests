@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fa3780c_78810520",
+        "filename": "requirements.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-11-23T10:26:26Z",
+      "side": 0,
+      "message": "Ok so we assume that \n master \u003d\u003e develop\nand when we branch we set up a fixed release version?\n*we have a also a develop branch on pythonsdk-tests",
+      "revId": "1186e5a639393cb90c73dd9b1c7bcd503fb2af3b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
