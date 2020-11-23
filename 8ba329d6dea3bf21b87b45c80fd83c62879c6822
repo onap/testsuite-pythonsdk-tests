@@ -34,6 +34,24 @@
       "revId": "8ba329d6dea3bf21b87b45c80fd83c62879c6822",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31bebe7d_4b23a7a2",
+        "filename": "src/onaptests/configuration/settings.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-11-23T11:32:32Z",
+      "side": 1,
+      "message": "OK\nso we just need to pay attention to avoid duplication of the parameters\nK8S_NAMESPACE in settings and the namespace declared in the service definition\ne.g. for basic_cnf, k8s-rb-profile-namespace https://github.com/onap/testsuite-pythonsdk-tests/blob/master/src/onaptests/templates/vnf-services/basic_cnf-service.yaml",
+      "parentUuid": "645eee1e_888c6770",
+      "revId": "8ba329d6dea3bf21b87b45c80fd83c62879c6822",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
