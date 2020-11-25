@@ -1,0 +1,7 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-by: Thierry Hardy <thierry.hardy@orange.com>
+Submitted-at: Wed, 25 Nov 2020 07:50:37 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/testsuite/pythonsdk-tests/+/115041
+Project: testsuite/pythonsdk-tests
+Branch: refs/heads/master
