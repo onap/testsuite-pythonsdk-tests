@@ -133,7 +133,7 @@ class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
                 self.yaml_template[self.service_name]["instantiation_type"])
         else:
             instantiation_type: ServiceInstantiationType = ServiceInstantiationType.A_LA_CARTE
-        service: Service = Service(name=settings.SERVICE_NAME, instantiation_type=instantiation_type)
+        service: Service = Service(name=self.service_name, instantiation_type=instantiation_type)
         service.create()
         self.declare_resources(service)
         self.assign_properties(service)

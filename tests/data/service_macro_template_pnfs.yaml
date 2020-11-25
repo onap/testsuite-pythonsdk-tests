@@ -1,0 +1,4 @@
+---
+test_pnfs:
+    pnfs:
+        - pnf_name: pnf
