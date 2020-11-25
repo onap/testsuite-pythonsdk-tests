@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffbde04c_c284b359",
+        "filename": ".gitmodules",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2020-11-25T12:37:40Z",
+      "side": 1,
+      "message": "Please don\u0027t hardcode repo url, use relative path:\n\nurl \u003d ../integration\n\nThis way submodule will be checked out with same protocol as original repo (testsuite/pythonsdk-tests). Besides LF doesn\u0027t like https checkouts from gerrit, it used to apply bans for it. If you need to checkout ONAP repo somewhere without auth please use git.onap.org remote.",
+      "revId": "0e590a451d1656b5a69cf44c236738db6237ae98",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
