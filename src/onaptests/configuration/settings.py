@@ -39,6 +39,26 @@ LOG_CONFIG = {
 }
 CLEANUP_FLAG = False
 
+PNF_VES_CONFIG = dict(
+            count=1,
+            vesprotocol="http",
+            vesip="172.17.0.1",
+            vesport="30417",
+            vesresource="eventListener",
+            vesversion="v7",
+            ipstart="10.11.0.16",
+            user="",
+            password="",
+            ipfileserver="127.0.0.1",
+            typefileserver="sftp",
+)
+PNF_CUSTOM_DATA = dict(
+    commonEventHeaderParams=dict(
+        sourceName="masspnfsim-000",
+        reportingEntityName="masspnfsim-000"
+    )
+)
+
 REPORTING_FILE_PATH = "/tmp/reporting.html"
 K8S_REGION_TYPE = "k8s"
 K8S_CONFIG = None  # None means it will use default config (~/.kube/config)
