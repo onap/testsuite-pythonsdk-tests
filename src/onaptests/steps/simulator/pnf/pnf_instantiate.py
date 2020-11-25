@@ -22,7 +22,6 @@ class PNFInstanceStep(BaseStep):
         utils.bootstrap_simulator()
         utils.run_container()
 
-    @BaseStep.store_state
     def cleanup(self) -> None:
         """Remove containers and images."""
         utils.stop_container()
