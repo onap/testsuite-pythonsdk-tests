@@ -31,3 +31,4 @@ csit/
 benchmark/
 .tox/
 **/__pycache__/
+*.pyc
