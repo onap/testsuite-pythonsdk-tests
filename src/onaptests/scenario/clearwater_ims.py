@@ -5,6 +5,8 @@ import time
 
 from xtesting.core import testcase
 from onapsdk.configuration import settings
+
+import onaptests.utils.exceptions as onap_test_exceptions
 from onaptests.steps.instantiate.vf_module_ala_carte import YamlTemplateVfModuleAlaCarteInstantiateStep
 
 class ClearwaterIms(testcase.TestCase):
@@ -42,9 +44,10 @@ class ClearwaterIms(testcase.TestCase):
                 self.__logger.info("No cleanup requested. Test completed.")
                 self.result = 100
             self.stop_time = time.time()
-        except:
-            self.__logger.error("Clearwater IMS test case failed.")
+        except onap_test_exceptions.OnapTestException as exc:
             self.result = 0
+            self.__logger.error(exc.error_message)
+        finally:
             self.stop_time = time.time()
 
     def clean(self):
