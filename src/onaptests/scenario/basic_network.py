@@ -46,18 +46,9 @@ class BasicNetwork(testcase.TestCase):
             else:
                 self.__logger.info("No cleanup requested. Test completed.")
                 self.result = 100
-        except onap_test_exceptions.ServiceInstantiateException:
-            self.__logger.error("Basic network service instantiation failed.")
+        except onap_test_exceptions.OnapTestException as exc:
             self.result = 0
-        except onap_test_exceptions.ServiceInstantiateException:
-            self.__logger.error("Basic network service cleanup failed.")
-            self.result = 0
-        except onap_test_exceptions.NetworkInstantiateException:
-            self.__logger.error("Basic network VL instantiation failed.")
-            self.result = 0
-        except onap_test_exceptions.NetworkCleanupException:
-            self.__logger.error("Basic network VL cleanup failed.")
-            self.result = 0
+            self.__logger.error(exc.error_message)
         finally:
             self.stop_time = time.time()
 

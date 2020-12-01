@@ -5,6 +5,7 @@ import time
 
 from xtesting.core import testcase
 from onapsdk.configuration import settings
+
 import onaptests.utils.exceptions as onap_test_exceptions
 from onaptests.steps.instantiate.vf_module_ala_carte import YamlTemplateVfModuleAlaCarteInstantiateStep
 
@@ -42,27 +43,9 @@ class BasicVm(testcase.TestCase):
             else:
                 self.__logger.info("No cleanup requested. Test completed.")
                 self.result = 100
-        except onap_test_exceptions.TestConfigurationException:
+        except onap_test_exceptions.OnapTestException as exc:
             self.result = 0
-            self.__logger.error("Basic VM configuration error")
-        except onap_test_exceptions.ServiceInstantiateException:
-            self.result = 0
-            self.__logger.error("Basic VM instantiation error")
-        except onap_test_exceptions.ServiceCleanupException:
-            self.result = 0
-            self.__logger.error("Basic VM instance cleanup error")
-        except onap_test_exceptions.VnfInstantiateException:
-            self.result = 0
-            self.__logger.error("Basic VM Vnf instantiation error")
-        except onap_test_exceptions.VnfCleanupException:
-            self.result = 0
-            self.__logger.error("Basic VM Vnf instance cleanup error")
-        except onap_test_exceptions.VfModuleInstantiateException:
-            self.result = 0
-            self.__logger.error("Basic VM Module instantiation error")
-        except onap_test_exceptions.VfModuleCleanupException:
-            self.__logger.error("Basic VM Module cleanup failed.")
-            self.result = 0
+            self.__logger.error(exc.error_message)
         finally:
             self.stop_time = time.time()
 
