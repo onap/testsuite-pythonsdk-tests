@@ -13,7 +13,7 @@ class  OnapTestException(Exception):
     error_message='Generic OnapTest exception'
 
 class TestConfigurationException(OnapTestException):
-    """Raise when configutation of the use cases is not complete or buggy."""
+    """Raise when configuration of the use case is incomplete or buggy."""
     error_message='Configuration error'
 
 class ServiceDistributionException(OnapTestException):
@@ -52,7 +52,7 @@ class VfModuleCleanupException(OnapTestException):
 
 
 class NetworkInstantiateException(OnapTestException):
-    """Network cannot be instantiate."""
+    """Network cannot be instantiated."""
     error_message='Network instantiation error'
 
 
@@ -62,7 +62,7 @@ class NetworkCleanupException(OnapTestException):
 
 class ProfileInformationException(OnapTestException):
     """Missing k8s profile information."""
-    error_message='"Missing k8s profile information'
+    error_message='Missing k8s profile information'
 
 class ProfileCleanupException(OnapTestException):
     """K8s profile cannot be cleaned."""
