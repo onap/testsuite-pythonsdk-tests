@@ -1,0 +1,7 @@
+Code-Review+2: Sylvain Desbureaux <sylvain.desbureaux@orange.com>
+Verified+1: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Wed, 02 Dec 2020 09:50:21 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/testsuite/pythonsdk-tests/+/115530
+Project: testsuite/pythonsdk-tests
+Branch: refs/heads/guilin
