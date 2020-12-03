@@ -1,0 +1,8 @@
+Code-Review+2: Thierry Hardy <thierry.hardy@orange.com>
+Code-Review+1: Michal Jagiello <michal.jagiello@t-mobile.pl>
+Verified+1: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-by: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-at: Thu, 03 Dec 2020 16:55:35 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/testsuite/pythonsdk-tests/+/116030
+Project: testsuite/pythonsdk-tests
+Branch: refs/heads/master
