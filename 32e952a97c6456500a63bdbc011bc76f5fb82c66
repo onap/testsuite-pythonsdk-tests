@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62b38c46_0e4a289d",
+        "filename": "src/onaptests/steps/pnf/utils.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-12-07T09:34:02Z",
+      "side": 1,
+      "message": "as this class deals with simulator, would it make sense to create a simualtor dir\n\nonaptests/steps/simulator/pnf/utils.py to host all possible future simulator stuff?",
+      "revId": "32e952a97c6456500a63bdbc011bc76f5fb82c66",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
