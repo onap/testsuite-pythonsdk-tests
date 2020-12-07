@@ -16,6 +16,24 @@
       "revId": "32e952a97c6456500a63bdbc011bc76f5fb82c66",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "436cb3ea_75b6bffd",
+        "filename": "src/onaptests/steps/pnf/utils.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6868
+      },
+      "writtenOn": "2020-12-07T13:46:40Z",
+      "side": 1,
+      "message": "Makes sense to me, then we\u0027d be able to place different simulation steps under this folder!",
+      "parentUuid": "62b38c46_0e4a289d",
+      "revId": "32e952a97c6456500a63bdbc011bc76f5fb82c66",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
