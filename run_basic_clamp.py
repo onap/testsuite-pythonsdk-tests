@@ -14,3 +14,4 @@ if __name__ == "__main__":
     basic_clamp = ClampStep(
         cleanup=settings.CLEANUP_FLAG)
     basic_clamp.execute()
+    basic_clamp.reports_collection.generate_report()

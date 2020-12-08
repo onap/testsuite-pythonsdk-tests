@@ -12,6 +12,7 @@ import time
 from onapsdk.clamp.clamp_element import Clamp
 from onapsdk.sdc.service import Service
 
+import onaptests.utils.exceptions as onap_test_exceptions
 from onapsdk.configuration import settings
 from onaptests.steps.onboard.clamp import OnboardClampStep
 from onaptests.steps.loop.instantiate_loop import InstantiateLoop
@@ -108,6 +109,31 @@ class ClampStep(YamlTemplateBaseStep):
     @YamlTemplateBaseStep.store_state
     def execute(self):
         super().execute() # TODO work only the 1st time, not if already onboarded
+
+        # Before instantiating, be sure that the service has been distributed
+        service = Service(self.service_name)
+        self._logger.info("******** Check Service Distribution *******")
+        distribution_completed = False
+        nb_try = 0
+        nb_try_max = 10
+        while distribution_completed is False and nb_try < nb_try_max:
+            distribution_completed = service.distributed
+            if distribution_completed is True:
+                self._logger.info(
+                "Service Distribution for %s is sucessfully finished",
+                service.name)
+                break
+            self._logger.info(
+                "Service Distribution for %s ongoing, Wait for 60 s",
+                service.name)
+            time.sleep(60)
+            nb_try += 1
+
+        if distribution_completed is False:
+            self._logger.error(
+                "Service Distribution for %s failed !!",service.name)
+            raise onap_test_exceptions.ServiceDistributionException
+
         # time to wait for template load in CLAMP
         self._logger.info("Wait a little bit to give a chance to the distribution")
         time.sleep(settings.CLAMP_DISTRIBUTION_TIMER)
