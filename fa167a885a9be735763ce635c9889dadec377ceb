@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d830aee9_1e1148c4",
+        "filename": "src/onaptests/configuration/settings.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-12-09T12:50:34Z",
+      "side": 1,
+      "message": "as the settings.py is a configuration for ALL the use cases, I would suggest to remove it from here and integrate in the settings corresponding to the use case it will be used for\ne.g. pnf_settings.yaml",
+      "revId": "fa167a885a9be735763ce635c9889dadec377ceb",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
