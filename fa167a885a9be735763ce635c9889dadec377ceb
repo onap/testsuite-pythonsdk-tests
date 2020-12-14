@@ -16,6 +16,24 @@
       "revId": "fa167a885a9be735763ce635c9889dadec377ceb",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01e90c3d_31b818c8",
+        "filename": "src/onaptests/configuration/settings.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6868
+      },
+      "writtenOn": "2020-12-14T15:19:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d830aee9_1e1148c4",
+      "revId": "fa167a885a9be735763ce635c9889dadec377ceb",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
