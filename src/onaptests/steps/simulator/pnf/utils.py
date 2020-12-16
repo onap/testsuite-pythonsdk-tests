@@ -7,7 +7,7 @@ from ipaddress import ip_address
 from typing import Dict, Optional
 from decorator import decorator
 import docker
-from onaptests.integration.test.mocks.masspnfsim.MassPnfSim import (
+from onaptests.masspnfsimulator.MassPnfSim import (
     MassPnfSim, get_parser
 )
 
