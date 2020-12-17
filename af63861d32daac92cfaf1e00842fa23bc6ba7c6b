@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acbdf32a_7dcd4a45",
+        "filename": "src/onaptests/steps/onboard/service.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2020-12-17T18:16:21Z",
+      "side": 1,
+      "message": "we keep settings.SERVICE_NAME here?\nnot sure we use stuff without Yamlconfig",
+      "revId": "af63861d32daac92cfaf1e00842fa23bc6ba7c6b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
