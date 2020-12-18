@@ -1,5 +1,4 @@
-"""Specific settings module."""  # pylint: disable=bad-whitespace
-
+"""Global settings module."""  # pylint: disable=bad-whitespace
 ######################
 #                    #
 # ONAP INPUTS DATAS  #

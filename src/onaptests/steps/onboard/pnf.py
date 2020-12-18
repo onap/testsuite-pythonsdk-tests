@@ -1,6 +1,6 @@
 """PNF onboarding step module."""
 
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 from onapsdk.sdc.pnf import Pnf
 from onapsdk.sdc.vendor import Vendor
 from ..base import BaseStep, YamlTemplateBaseStep

@@ -5,7 +5,7 @@ from yaml import load
 from onapsdk.sdc.service import Service
 from onapsdk.sdc.vf import Vf
 
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 
 from ..base import YamlTemplateBaseStep
 from .service import YamlTemplateVfOnboardStep

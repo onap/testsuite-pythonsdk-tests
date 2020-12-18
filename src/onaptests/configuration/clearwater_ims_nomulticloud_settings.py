@@ -3,7 +3,7 @@ import sys
 import openstack
 from yaml import load
 
-from .settings import * # pylint: disable=W0614
+from .global_settings import * # pylint: disable=W0614
 
 """ Specific clearwater IMS without multicloud."""
 

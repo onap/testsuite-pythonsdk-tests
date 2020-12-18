@@ -1,7 +1,7 @@
 from typing import Any, Dict
 from yaml import load
 
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 from onapsdk.sdc.component import Component
 from onapsdk.sdc.pnf import Pnf
 from onapsdk.sdc.properties import ComponentProperty

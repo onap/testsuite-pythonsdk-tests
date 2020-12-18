@@ -1,5 +1,5 @@
 from onapsdk.aai.cloud_infrastructure import CloudRegion, Complex
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 
 from ..base import BaseStep
 from .complex_create import ComplexCreateStep

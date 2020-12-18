@@ -1,7 +1,7 @@
 import logging.config
 import time
 import onaptests.utils.exceptions as onap_test_exceptions
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 from onaptests.steps.instantiate.vf_module_ala_carte import YamlTemplateVfModuleAlaCarteInstantiateStep
 
 

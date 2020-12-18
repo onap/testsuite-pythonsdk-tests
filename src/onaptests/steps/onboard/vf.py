@@ -1,4 +1,4 @@
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 from onapsdk.sdc.vf import Vf
 from onapsdk.sdc.vsp import Vsp
 

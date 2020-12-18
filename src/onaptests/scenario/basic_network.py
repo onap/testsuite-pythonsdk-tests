@@ -4,7 +4,7 @@ import logging
 import time
 
 from xtesting.core import testcase
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 
 import onaptests.utils.exceptions as onap_test_exceptions
 from onaptests.steps.instantiate.vl_ala_carte import YamlTemplateVlAlaCarteInstantiateStep

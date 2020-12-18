@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from .settings import *  # pylint: disable=W0614
+from .global_settings import *  # pylint: disable=W0614
 
 SERVICE_NAME = "CDS blueprint enrichment"
 

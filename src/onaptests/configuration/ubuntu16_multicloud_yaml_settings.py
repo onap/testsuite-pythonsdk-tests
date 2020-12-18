@@ -1,5 +1,5 @@
 import sys
-from .settings import * # pylint: disable=W0614
+from .global_settings import * # pylint: disable=W0614
 
 """ Specific ubuntu16 with multicloud and yaml config scenario."""
 SERVICE_DETAILS = ("Onboarding, distribution and instantiation of a VM" +

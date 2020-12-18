@@ -2,7 +2,7 @@ import time
 from uuid import uuid4
 
 from onapsdk.aai.cloud_infrastructure import CloudRegion
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 
 from ..base import BaseStep
 

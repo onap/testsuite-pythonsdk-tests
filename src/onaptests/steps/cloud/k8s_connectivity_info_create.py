@@ -1,4 +1,4 @@
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 from onapsdk.msb.k8s import ConnectivityInfo
 
 from ..base import BaseStep

@@ -7,7 +7,7 @@ from pathlib import Path
 from kubernetes import client, config
 from onapsdk.cds import Blueprint, DataDictionarySet
 from onapsdk.cds.blueprint_processor import Blueprintprocessor
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 
 from ..base import BaseStep
 

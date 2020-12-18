@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #
 import logging.config
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 from onaptests.steps.loop.clamp import ClampStep
 
 

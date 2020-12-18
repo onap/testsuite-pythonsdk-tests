@@ -5,7 +5,7 @@ import logging
 import logging.config
 
 from onapsdk.clamp.loop_instance import LoopInstance
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 
 
 class InstantiateLoop():

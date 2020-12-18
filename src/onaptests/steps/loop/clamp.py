@@ -12,7 +12,7 @@ import time
 from onapsdk.clamp.clamp_element import Clamp
 from onapsdk.sdc.service import Service
 
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 from onaptests.steps.onboard.clamp import OnboardClampStep
 from onaptests.steps.loop.instantiate_loop import InstantiateLoop
 
