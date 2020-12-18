@@ -5,7 +5,7 @@ from yaml import load
 from onapsdk.aai.cloud_infrastructure import CloudRegion, Tenant
 from onapsdk.aai.business import Customer, ServiceInstance, ServiceSubscription
 from onapsdk.aai.business.owning_entity import OwningEntity as AaiOwningEntity
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 from onapsdk.sdc.service import Service
 from onapsdk.so.instantiation import ServiceInstantiation
 from onapsdk.vid import Project

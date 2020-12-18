@@ -3,7 +3,7 @@ from yaml import load
 
 from pathlib import Path
 
-from .settings import * # pylint: disable=W0614
+from .global_settings import * # pylint: disable=W0614
 
 """ Specific Basic clamp settings."""
 CLEANUP_FLAG = False

@@ -5,7 +5,7 @@ from uuid import uuid4
 from yaml import load
 
 from onapsdk.aai.business import Customer, ServiceInstance, ServiceSubscription
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 from onapsdk.so.instantiation import Subnet
 from onapsdk.sdc.service import Service
 from onapsdk.vid import LineOfBusiness, Platform

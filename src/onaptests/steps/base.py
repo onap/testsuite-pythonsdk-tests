@@ -4,7 +4,7 @@ import time
 
 from abc import ABC, abstractmethod
 from typing import List
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 from onapsdk.aai.business import Customer
 
 from .reports_collection import Report, ReportsCollection, ReportStepStatus

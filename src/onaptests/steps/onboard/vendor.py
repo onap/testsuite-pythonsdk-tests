@@ -1,4 +1,4 @@
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 from onapsdk.sdc.vendor import Vendor
 
 from ..base import BaseStep

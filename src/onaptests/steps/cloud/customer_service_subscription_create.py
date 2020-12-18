@@ -1,6 +1,6 @@
 from onapsdk.aai.business import Customer
 from onapsdk.sdc.service import Service
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 
 from ..base import BaseStep
 from .customer_create import CustomerCreateStep

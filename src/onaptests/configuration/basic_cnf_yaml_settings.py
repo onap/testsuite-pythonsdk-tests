@@ -4,7 +4,7 @@ import sys
 from yaml import load
 
 import onaptests.utils.exceptions as onap_test_exceptions
-from .settings import * # pylint: disable=W0614
+from .global_settings import * # pylint: disable=W0614
 
 """ Specific basic_cnf with multicloud-k8s and yaml config scenario."""
 SERVICE_DETAILS = ("Onboarding, distribution and instantiation of a CNF" +

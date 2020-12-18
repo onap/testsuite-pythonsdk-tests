@@ -1,5 +1,5 @@
 from onapsdk.aai.business import Customer
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 
 from ..base import BaseStep
 

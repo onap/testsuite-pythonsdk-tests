@@ -4,7 +4,7 @@
 import logging
 import time
 
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 from xtesting.core import testcase
 
 from onaptests.steps.onboard.cds import CbaEnrichStep

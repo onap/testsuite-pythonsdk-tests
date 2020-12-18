@@ -1,6 +1,6 @@
 from onapsdk.aai.business import Customer, ServiceSubscription
 from onapsdk.aai.cloud_infrastructure import CloudRegion, Tenant
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 
 from ..base import BaseStep
 from .customer_service_subscription_create import CustomerServiceSubscriptionCreateStep

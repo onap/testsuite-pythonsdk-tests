@@ -1,5 +1,5 @@
 from onapsdk.aai.cloud_infrastructure import Complex
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 
 from ..base import BaseStep
 

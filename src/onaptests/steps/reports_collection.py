@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import List
 from jinja2 import Environment, FileSystemLoader, select_autoescape
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 
 
 class ReportStepStatus(Enum):

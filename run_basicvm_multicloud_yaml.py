@@ -1,5 +1,5 @@
 import logging.config
-from onapsdk.configuration import settings
+from onaptests.configuration import settings
 from onaptests.steps.instantiate.vf_module_ala_carte import YamlTemplateVfModuleAlaCarteInstantiateStep
 
 
