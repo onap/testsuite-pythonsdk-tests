@@ -16,6 +16,24 @@
       "revId": "af63861d32daac92cfaf1e00842fa23bc6ba7c6b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a5a7e6_0f49fede",
+        "filename": "src/onaptests/steps/onboard/service.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2020-12-21T11:36:26Z",
+      "side": 1,
+      "message": "Yes, that\u0027s because that class (ServiceOnboardStep) in not using YAML file. YAML file is used by (YamlTemplateServiceOnboardStep)",
+      "parentUuid": "acbdf32a_7dcd4a45",
+      "revId": "af63861d32daac92cfaf1e00842fa23bc6ba7c6b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
