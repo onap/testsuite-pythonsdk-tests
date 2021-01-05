@@ -1,0 +1,6 @@
+---
+test_vnfs:
+    vnfs:
+        - vnf_name: vnf
+    pnfs:
+        - pnf_name: pnf

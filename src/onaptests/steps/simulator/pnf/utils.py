@@ -2,11 +2,14 @@
 import os
 import sys
 import time
+import urllib.parse
 import yaml
 from ipaddress import ip_address
 from typing import Dict, Optional
 from decorator import decorator
 import docker
+
+from onapsdk.configuration import settings
 from onaptests.masspnfsimulator.MassPnfSim import (
     MassPnfSim, get_parser
 )
@@ -88,8 +91,9 @@ def bootstrap_simulator() -> None:
 
     # collect settings that will be placed in the simulator directory
     vesprotocol = config["setup"].get('vesprotocol', "http")
-    vesip = config["setup"].get('vesip', "")
-    vesport = config["setup"].get('vesport', "")
+    ves_url = urllib.parse.urlparse(settings.VES_URL)
+    vesip = ves_url.hostname
+    vesport = ves_url.port
     vesresource = config["setup"].get('vesresource', "")
     vesversion = config["setup"].get('vesversion', "")
 
