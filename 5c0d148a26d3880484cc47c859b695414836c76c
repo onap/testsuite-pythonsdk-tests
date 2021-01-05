@@ -1,0 +1,9 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Lasse Kaihlavirta <l.kaihlavirt@partner.samsung.com>
+Code-Review+1: S�bastien Determe <sebastien.determe@intl.att.com>
+Code-Review+2: Catherine Lefevre <cl664y@att.com>
+Submitted-by: Catherine Lefevre <cl664y@att.com>
+Submitted-at: Tue, 05 Jan 2021 11:31:58 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/testsuite/pythonsdk-tests/+/116227
+Project: testsuite/pythonsdk-tests
+Branch: refs/heads/master
