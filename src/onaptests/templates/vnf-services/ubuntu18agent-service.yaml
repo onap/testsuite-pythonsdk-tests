@@ -1,7 +1,7 @@
 ---
-basicclamp-1:
+basicclamp:
     vnfs:
-        - vnf_name: basicclamp-1
+        - vnf_name: basicclamp
           heat_files_to_upload: onaptests/templates/heat-files/ubuntu18/ubuntu18agent.zip
           vnf_parameters: [
               {"name": "ubuntu18_image_name",
