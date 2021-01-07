@@ -1,5 +1,4 @@
 """Base step that runs a PNF simulator."""
-from onaptests.steps.simulator.pnf import utils
 from onaptests.steps.base import BaseStep
 from onaptests.steps.simulator.pnf.pnf_instantiate import PNFInstanceStep
 
@@ -30,7 +29,6 @@ class PNFRegisterStep(BaseStep):
     def execute(self) -> None:
         """Register with VES."""
         super().execute()
-        utils.register()
 
     @BaseStep.store_state
     def cleanup(self) -> None:
