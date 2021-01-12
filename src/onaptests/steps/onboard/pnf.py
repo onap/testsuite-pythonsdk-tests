@@ -46,6 +46,7 @@ class PnfOnboardStep(BaseStep):
          - PNF_ARTIFACT_FILE_PATH
 
         """
+        super().execute()
         vendor: Vendor = Vendor(name=settings.VENDOR_NAME)
         pnf: Pnf = Pnf(name=settings.PNF_NAME, vendor=vendor)
         pnf.create()

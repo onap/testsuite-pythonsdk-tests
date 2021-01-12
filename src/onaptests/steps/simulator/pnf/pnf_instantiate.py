@@ -18,6 +18,7 @@ class PNFInstanceStep(BaseStep):
     @BaseStep.store_state
     def execute(self) -> None:
         """Run PNF simulator containers."""
+        super().execute()
         utils.build_image()
         utils.bootstrap_simulator()
         utils.run_container()

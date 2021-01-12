@@ -40,6 +40,7 @@ class BaseStep(ABC):
         self._cleanup: bool = cleanup
         self._parent: "BaseStep" = None
         self._reports_collection: ReportsCollection = None
+        self._start_time: float = None
 
     def add_step(self, step: "BaseStep") -> None:
         """Add substep.
@@ -122,7 +123,6 @@ class BaseStep(ABC):
     def store_state(cls, fun):
         def wrapper(self, *args, **kwargs):
             try:
-                start_time: float = time.time()
                 ret = fun(self, *args, **kwargs)
                 execution_status: ReportStepStatus = ReportStepStatus.PASS
                 return ret
@@ -130,24 +130,29 @@ class BaseStep(ABC):
                 execution_status: ReportStepStatus = ReportStepStatus.FAIL
                 raise
             finally:
+                if not self._start_time:
+                    self._logger.error("No execution start time saved for %s step. Fix it by call `super.execute()` "
+                                       "in step class `execute()` method definition")
+                    self._start_time = time.time()
                 self.reports_collection.put(
                     Report(
                         step_description=f"[{self.component}] {self.name}: {self.description}",
                         step_execution_status=execution_status,
-                        step_execution_duration=time.time() - start_time
+                        step_execution_duration=time.time() - self._start_time
                     )
                 )
         return wrapper
 
     def execute(self) -> None:
-        """Step's action.
+        """Step's action execution.
 
         Run all substeps action before it's own action.
-        Override this method and remember to call `super().action()` before.
+        Override this method and remember to call `super().execute()` before.
 
         """
         for step in self._steps:
             step.execute()
+        self._start_time = time.time()
 
     def cleanup(self) -> None:
         """Step's cleanup.

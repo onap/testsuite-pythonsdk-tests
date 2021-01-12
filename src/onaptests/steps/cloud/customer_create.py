@@ -24,4 +24,5 @@ class CustomerCreateStep(BaseStep):
         Use settings values:
          - GLOBAL_CUSTOMER_ID.
         """
+        super().execute()
         Customer.create(settings.GLOBAL_CUSTOMER_ID, settings.GLOBAL_CUSTOMER_ID, "INFRA")
