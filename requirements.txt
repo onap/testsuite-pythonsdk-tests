@@ -3,4 +3,4 @@ openstacksdk
 onapsdk>=7.1.0
 jinja2
 kubernetes
-docker
+docker==4.4.1
