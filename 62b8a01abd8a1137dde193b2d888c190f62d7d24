@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "447b2f41_5a0cce5d",
+        "filename": "run_basic_onboard.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-13T16:54:53Z",
+      "side": 1,
+      "message": "as there are no cleanup, you can remove line 19-21",
+      "revId": "62b8a01abd8a1137dde193b2d888c190f62d7d24",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "892f79fe_491431ac",
+        "filename": "src/onaptests/configuration/basic_onboard_settings.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-13T16:54:53Z",
+      "side": 1,
+      "message": "can be deleted no multicloud",
+      "revId": "62b8a01abd8a1137dde193b2d888c190f62d7d24",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c26d8330_4c5ebb1d",
+        "filename": "src/onaptests/configuration/basic_onboard_settings.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-13T16:54:53Z",
+      "side": 1,
+      "message": "can be remove, we do not instantiate",
+      "revId": "62b8a01abd8a1137dde193b2d888c190f62d7d24",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e6ad3c7_577ecff3",
+        "filename": "src/onaptests/configuration/basic_onboard_settings.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-13T16:54:53Z",
+      "side": 1,
+      "message": "CLEANUP param (64-65) can be removed if removed in the previous file",
+      "revId": "62b8a01abd8a1137dde193b2d888c190f62d7d24",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c50c910d_e29961d8",
+        "filename": "src/onaptests/configuration/basic_onboard_settings.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-13T16:54:53Z",
+      "side": 1,
+      "message": "could you give a try with a settings file without the line 71-101\nI am pretty sure that these parameters (71-101) are used only for instantiation so they could be removed from the settings for basic onboard.",
+      "revId": "62b8a01abd8a1137dde193b2d888c190f62d7d24",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43fd05b8_485fdbb6",
+        "filename": "src/onaptests/scenario/basic_onboard.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-13T16:54:53Z",
+      "side": 1,
+      "message": "no need to specify cleanup",
+      "revId": "62b8a01abd8a1137dde193b2d888c190f62d7d24",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77843bb5_c8d52449",
+        "filename": "src/onaptests/templates/vnf-services/basic_onboard-service.yaml.j2",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-13T16:54:53Z",
+      "side": 1,
+      "message": "param not useful\nsee https://git.onap.org/testsuite/pythonsdk-tests/tree/src/onaptests/templates/vnf-services/ubuntu18agent-service.yaml to get the exampel sued for basic clamp\nyou can simplify accordingly",
+      "revId": "62b8a01abd8a1137dde193b2d888c190f62d7d24",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
