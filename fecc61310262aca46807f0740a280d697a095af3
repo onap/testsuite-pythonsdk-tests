@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "873bc2f2_3e6b42f4",
+        "filename": "run_basic_onboard.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-13T11:19:10Z",
+      "side": 1,
+      "message": "you can remove without multicloud\nmulticloud is used or not for the instantiation\nno need to specify it here",
+      "revId": "fecc61310262aca46807f0740a280d697a095af3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c3c1464_ff9dc9c1",
+        "filename": "run_basic_onboard.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-13T11:19:10Z",
+      "side": 1,
+      "message": "copy paste of basic vm\nthere is no instantiation in this use case so no risk of (Service|Vnf/Module)(Instantiation|Cleanup)Exception,\nyou can remove all the useless exceptions only the onboard related exceptions may happen",
+      "revId": "fecc61310262aca46807f0740a280d697a095af3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79a0c5ae_f2f1ab17",
+        "filename": "src/onaptests/configuration/basic_onboard_settings.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-13T11:19:10Z",
+      "side": 1,
+      "message": "replace basic_vm by basic_onboard + spaces around + (pylint)",
+      "revId": "fecc61310262aca46807f0740a280d697a095af3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12034367_dfeeb8e4",
+        "filename": "src/onaptests/configuration/basic_onboard_settings.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-13T11:19:10Z",
+      "side": 1,
+      "message": "remove Multicloud\nyou need a docstring but the one you put is not very clear\n\"\"\"Basic onboard service to only onboard a service in SDC\"\"\"",
+      "revId": "fecc61310262aca46807f0740a280d697a095af3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7935b88_adf7768b",
+        "filename": "src/onaptests/configuration/basic_onboard_settings.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-13T11:19:10Z",
+      "side": 1,
+      "message": "you can remove à la carte it is a BPMN of the SO for instantiation.\nHere you just want to create a new model in SDC (Onboard)",
+      "revId": "fecc61310262aca46807f0740a280d697a095af3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49271820_49c8fb05",
+        "filename": "src/onaptests/configuration/basic_onboard_settings.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-13T11:19:10Z",
+      "side": 1,
+      "message": "Keep only SDC",
+      "revId": "fecc61310262aca46807f0740a280d697a095af3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b883e985_e4b1a849",
+        "filename": "src/onaptests/configuration/basic_onboard_settings.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-13T11:19:10Z",
+      "side": 1,
+      "message": "rename basicvm by basic_onboard \nno need also to specify ubuntu in the name",
+      "revId": "fecc61310262aca46807f0740a280d697a095af3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ab0eb9_99380285",
+        "filename": "src/onaptests/configuration/basic_onboard_settings.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-13T11:19:10Z",
+      "side": 1,
+      "message": "duplicate line",
+      "revId": "fecc61310262aca46807f0740a280d697a095af3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "465b6c79_dd01a1a3",
+        "filename": "src/onaptests/configuration/basic_onboard_settings.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-13T11:19:10Z",
+      "side": 1,
+      "message": "not sure we need to set the Openstack param, they are needed for instantiation but not for onboarding except if we customize a model with an infra value.\nYou can give a try by removing all the vars from CLOUD_REGION to the end ..and check that the onbaording is still fine",
+      "revId": "fecc61310262aca46807f0740a280d697a095af3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e77dc0e9_a5d6ebbf",
+        "filename": "src/onaptests/scenario/basic_onboard.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-13T11:19:10Z",
+      "side": 1,
+      "message": "\"\"\"Run basic_onboard and onboard a simple serve\"\"\"",
+      "revId": "fecc61310262aca46807f0740a280d697a095af3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18311ad8_b5906f96",
+        "filename": "src/onaptests/scenario/basic_onboard.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-13T11:19:10Z",
+      "side": 1,
+      "message": "bad log\nBasic service successfully onboarded",
+      "revId": "fecc61310262aca46807f0740a280d697a095af3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a5ea50_ad6430bc",
+        "filename": "src/onaptests/scenario/basic_onboard.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-13T11:19:10Z",
+      "side": 1,
+      "message": "there is no cleanup related to onboarding (not possible to remove resources in SDC, you can delete this section which is valid for basic_vm - we can destroy the VM or the pods created from the model but not the model",
+      "revId": "fecc61310262aca46807f0740a280d697a095af3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dba07ed_c7591ce3",
+        "filename": "src/onaptests/templates/vnf-services/basic-onboard-service.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-13T11:19:10Z",
+      "side": 1,
+      "message": "delete this file from the patch\nit is generated dynamically through your jinja2 processing..a new one will be created for each test. No need to host it in the repo",
+      "revId": "fecc61310262aca46807f0740a280d697a095af3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac433dc9_095eab80",
+        "filename": "src/onaptests/templates/vnf-services/basic_onboard-service.yaml.j2",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-13T11:19:10Z",
+      "side": 1,
+      "message": "you may use the ubuntu18..instead of the ubuntu16 see basic_clamp",
+      "revId": "fecc61310262aca46807f0740a280d697a095af3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
