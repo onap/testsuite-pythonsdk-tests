@@ -87,6 +87,23 @@
     },
     {
       "key": {
+        "uuid": "9ac51702_638b5cd2",
+        "filename": "src/onaptests/scenario/basic_onboard.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-14T15:41:17Z",
+      "side": 1,
+      "message": "As you are creating a scenario - it means an entry point for xtesting. You must declare this entry point of your python package. Please amend also the file setup.cfg to indicate this new possible scenario as a package entry point\njust add\nbasic_onboard \u003d onaptests.scenario.basic_onboard:BasicOnboard\nThe Entry in the test DB is created and the modification in the xtesting docker is under review in https://gerrit.onap.org/r/c/integration/xtesting/+/116878",
+      "revId": "62b8a01abd8a1137dde193b2d888c190f62d7d24",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43fd05b8_485fdbb6",
         "filename": "src/onaptests/scenario/basic_onboard.py",
         "patchSetId": 5
