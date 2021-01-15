@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac30bab_fd91457f",
+        "filename": "src/onaptests/configuration/settings.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-15T09:51:15Z",
+      "side": 1,
+      "message": "you need the proxy for your tests...but when committing should you comment and push a version without your specific proxy",
+      "revId": "52b1ee6d776e9598e090bb9fc4810e854f1635ac",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
