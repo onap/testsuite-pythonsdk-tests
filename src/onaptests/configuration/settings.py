@@ -43,4 +43,4 @@ REPORTING_FILE_PATH = "/tmp/reporting.html"
 K8S_REGION_TYPE = "k8s"
 K8S_CONFIG = None  # None means it will use default config (~/.kube/config)
 K8S_NAMESPACE = "onap"  # Kubernetes namespace
-# SOCK_HTTP = "socks5h://127.0.0.1:8083"
+#SOCK_HTTP = "socks5h://127.0.0.1:8091"
