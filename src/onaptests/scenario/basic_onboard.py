@@ -1,12 +1,12 @@
-
 #!/usr/bin/env python
 """Basic Onboard test case."""
 import logging
 import time
 from xtesting.core import testcase
-#from onapsdk.configuration import settings
-import onaptests.utils.exceptions as onap_test_exceptions
-#from onaptests.steps.onboard.service import YamlTemplateServiceOnboardStep
+from onapsdk.configuration import settings
+from onapsdk.exceptions import SDKException
+from onaptests.steps.onboard.service import YamlTemplateServiceOnboardStep
+from onaptests.utils.exceptions import OnapTestException
 
 class BasicOnboard(testcase.TestCase):
     """Onboard a simple VM with ONAP."""
@@ -20,6 +20,8 @@ class BasicOnboard(testcase.TestCase):
             kwargs["case_name"] = 'basic_onboard'
         super(BasicOnboard, self).__init__(**kwargs)
         self.__logger.debug("BasicOnboard init started")
+        self.test = YamlTemplateServiceOnboardStep(
+            cleanup=settings.CLEANUP_FLAG)
         self.start_time = None
         self.stop_time = None
         self.result = 0
@@ -31,9 +33,13 @@ class BasicOnboard(testcase.TestCase):
         try:
             self.test.execute()
             self.__logger.info("VNF basic_vm successfully onboarded")
-        except onap_test_exceptions.OnapTestException as exc:
+            self.result = 100
+        except OnapTestException as exc:
             self.result = 0
             self.__logger.error(exc.error_message)
+        except SDKException:
+            self.result = 0
+            self.__logger.error("SDK Exception")
         finally:
             self.stop_time = time.time()
 
@@ -41,3 +47,4 @@ class BasicOnboard(testcase.TestCase):
         """Clean Additional resources if needed."""
         self.__logger.info("Generate Test report")
         self.test.reports_collection.generate_report()
+
