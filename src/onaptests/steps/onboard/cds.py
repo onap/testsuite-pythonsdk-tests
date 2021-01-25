@@ -52,6 +52,11 @@ class BootstrapBlueprintprocessor(CDSBaseStep):
     """Bootstrap blueprintsprocessor."""
 
     def __init__(self, cleanup: bool = False) -> None:
+        """Initialize step.
+
+        Substeps:
+            - ExposeCDSBlueprintprocessorNodePortStep.
+        """
         super().__init__(cleanup=cleanup)
         self.add_step(ExposeCDSBlueprintprocessorNodePortStep(cleanup=cleanup))
 
@@ -62,7 +67,7 @@ class BootstrapBlueprintprocessor(CDSBaseStep):
 
     @BaseStep.store_state
     def execute(self) -> None:
-        """Bootsrap CDS blueprintprocessor"""
+        """Bootsrap CDS blueprintprocessor."""
         super().execute()
         Blueprintprocessor.bootstrap()
 
@@ -126,4 +131,4 @@ class CbaEnrichStep(CDSBaseStep):
 
         """
         super().cleanup()
-        Path(settings.CDA_CBA_ENRICHED).unlink()
+        Path(settings.CDS_CBA_ENRICHED).unlink()

@@ -6,7 +6,7 @@ from onapsdk.configuration import settings
 
 from onaptests.steps.base import YamlTemplateBaseStep
 from onaptests.steps.onboard.cds import CbaEnrichStep
-from onaptests.steps.simulator.pnf.pnf_register import PNFRegisterStep
+from onaptests.steps.simulator.pnf_simulator_cnf.pnf_register import PnfSimulatorCnfRegisterStep
 from onaptests.steps.instantiate.service_macro import YamlTemplateServiceMacroInstantiateStep
 
 
@@ -21,7 +21,7 @@ class PnfMacroScenarioStep(YamlTemplateBaseStep):
         """
         super().__init__(cleanup=cleanup)
         self._yaml_template: dict = None
-        self.add_step(PNFRegisterStep(
+        self.add_step(PnfSimulatorCnfRegisterStep(
             cleanup=settings.CLEANUP_FLAG
         ))
         self.add_step(CbaEnrichStep(

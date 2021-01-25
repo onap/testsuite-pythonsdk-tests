@@ -40,8 +40,8 @@ K8S_PROFILE_K8S_VERSION = "1.0"
 K8S_PROFILE_ARTIFACT_PATH = (sys.path[-1] +
                              "/onaptests/templates/artifacts/k8sprof.tar.gz")
 # Relative path to config file to set k8s connectivity information
-K8S_KUBECONFIG_FILE = (sys.path[-1] +
-                       "/onaptests/templates/artifacts/config")
+K8S_CONFIG = (sys.path[-1] +
+              "/onaptests/templates/artifacts/config")
 
 VENDOR_NAME = "basicnf_vendor"
 

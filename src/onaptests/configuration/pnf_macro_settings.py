@@ -1,4 +1,5 @@
 from pathlib import Path
+from uuid import uuid4
 
 from .settings import *  # pylint: disable=W0614
 
@@ -8,12 +9,21 @@ CLEANUP_FLAG = True
 VENDOR_NAME = "pnf_macro_vendor"
 SERVICE_NAME = "test_pnf_macro"
 SERVICE_INSTANCE_NAME = "TestPNFMacroInstantiation"
-SERVICE_YAML_TEMPLATE = Path(Path(__file__).parent.parent, "templates/vnf-services/pnf-service.yaml")
+SERVICE_YAML_TEMPLATE = Path(Path(__file__).parent.parent,
+                             "templates/vnf-services/pnf-service.yaml")
 
-CDS_DD_FILE = Path(Path(__file__).parent.parent, "templates/artifacts/dd.json")
-CDS_CBA_UNENRICHED = Path(Path(__file__).parent.parent, "templates/artifacts/PNF_DEMO.zip")
+CDS_DD_FILE = Path(Path(__file__).parent.parent,
+                   "templates/artifacts/dd.json")
+CDS_CBA_UNENRICHED = Path(Path(__file__).parent.parent,
+                          "templates/artifacts/PNF_DEMO.zip")
 CDS_CBA_ENRICHED = "/tmp/PNF_DEMO_enriched.zip"
 
+CLOUD_REGION_CLOUD_OWNER = "basicnf-owner" # must not contain _
+CLOUD_REGION_ID = "k8sregion"
+CLOUD_REGION_TYPE = "k8s"
+CLOUD_REGION_VERSION = "1.0"
+CLOUD_OWNER_DEFINED_TYPE = "N/A"
+COMPLEX_PHYSICAL_LOCATION_ID = "sdktests"
 GLOBAL_CUSTOMER_ID = "pnf_macrocustomer"
 OWNING_ENTITY = "pnf_macro_owning_entity"
 PROJECT = "pnf_macro_project"
@@ -22,22 +32,14 @@ PLATFORM = "pnf_macro_platform"
 
 INSTANTIATION_TIMEOUT = 600
 
-PNF_VES_CONFIG = dict(
-            count=1,
-            vesprotocol="https",
-            vesip="",  # Due to it's not possible to get these value from SDK settings now it's going to be updated later
-            vesport="",  # Due to it's not possible to get these value from SDK settings now it's going to be updated later
-            vesresource="eventListener",
-            vesversion="v7",
-            ipstart="10.11.0.16",
-            user="sample1",
-            password="sample1",
-            ipfileserver="127.0.0.1",
-            typefileserver="sftp",
-)
-PNF_CUSTOM_DATA = dict(
-    commonEventHeaderParams=dict(
-        sourceName=SERVICE_INSTANCE_NAME,
-        reportingEntityName=SERVICE_INSTANCE_NAME
-    )
-)
+PNF_DEFINITION_ATRIFACT_FILE_PATH = Path(Path(__file__).parent.parent,
+                                         "templates/artifacts/pnf-simulator.tar.gz")
+PNF_RB_NAME = f"pnf-cnf-rb-{str(uuid4())}"
+PNF_RB_VERSION = "v1"
+PNF_PROFILE_ARTIFACT_FILE_PATH = Path(Path(__file__).parent.parent,
+                                      "templates/artifacts/profile.tar.gz")
+PNF_PROFILE_NAME = f"pnf-cnf-profile-{str(uuid4())}"
+K8S_VERSION = "1.0"
+K8S_CONFIG = Path(Path(__file__).parent.parent, "templates/artifacts/config")
+
+SERVICE_INSTANCE_NAME = "TestPNFMacroInstantiation"

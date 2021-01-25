@@ -67,3 +67,7 @@ class ProfileInformationException(OnapTestException):
 class ProfileCleanupException(OnapTestException):
     """K8s profile cannot be cleaned."""
     error_message="Profile can't be cleaned"
+
+class EnvironmentPreparationException(OnapTestException):
+    """Test environment preparation exception."""
+    error_message="Test can't be run properly due to preparation error"
