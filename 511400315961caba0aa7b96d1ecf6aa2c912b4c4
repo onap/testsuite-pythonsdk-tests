@@ -51,6 +51,24 @@
       "revId": "511400315961caba0aa7b96d1ecf6aa2c912b4c4",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9c5df8d_58502a8c",
+        "filename": "src/onaptests/steps/cloud/register_cloud.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2021-01-26T18:21:52Z",
+      "side": 0,
+      "message": "I\u0027ve added \"CloudRegionCreateStep\" step and add it as this step substep, so it\u0027s going to be called before that part so we can be sure that Cloud region exists",
+      "parentUuid": "d8c28ef5_8e172a21",
+      "revId": "511400315961caba0aa7b96d1ecf6aa2c912b4c4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
