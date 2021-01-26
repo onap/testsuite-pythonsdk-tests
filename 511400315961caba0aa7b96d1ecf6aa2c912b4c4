@@ -34,6 +34,23 @@
       "revId": "511400315961caba0aa7b96d1ecf6aa2c912b4c4",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d8c28ef5_8e172a21",
+        "filename": "src/onaptests/steps/cloud/register_cloud.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5622
+      },
+      "writtenOn": "2021-01-26T17:06:24Z",
+      "side": 0,
+      "message": "Why do you remove this part? What happens if the cloud reginon does not exist",
+      "revId": "511400315961caba0aa7b96d1ecf6aa2c912b4c4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
