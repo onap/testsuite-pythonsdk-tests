@@ -16,6 +16,24 @@
       "revId": "511400315961caba0aa7b96d1ecf6aa2c912b4c4",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edcd074c_edd2202a",
+        "filename": "src/onaptests/configuration/basic_cnf_yaml_settings.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2021-01-26T12:48:44Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "ea5e6d6f_5d6f2f4e",
+      "revId": "511400315961caba0aa7b96d1ecf6aa2c912b4c4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }

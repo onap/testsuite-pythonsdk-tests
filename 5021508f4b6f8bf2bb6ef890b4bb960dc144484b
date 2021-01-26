@@ -16,6 +16,24 @@
       "revId": "5021508f4b6f8bf2bb6ef890b4bb960dc144484b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab80197_92f527b9",
+        "filename": "src/onaptests/steps/cloud/cloud_region_create.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2021-01-26T12:48:44Z",
+      "side": 1,
+      "message": "I\u0027ve added this step as a substep of \"RegisterCloudRegionStep\". I did it for simple reason - CloudRegion used for CNF instantiation doesn\u0027t need data like Tenant or availbility zone, so to make it simpler (don\u0027t provide more conditional statements in RegisterCloudRegionStep) I just moved cloud region creation to separate step",
+      "parentUuid": "9f37b261_aee49d1f",
+      "revId": "5021508f4b6f8bf2bb6ef890b4bb960dc144484b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
