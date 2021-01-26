@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f37b261_aee49d1f",
+        "filename": "src/onaptests/steps/cloud/cloud_region_create.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-26T09:34:19Z",
+      "side": 1,
+      "message": "hum..potentially some refactoring needed on other use case, as the cloud region creation was also included in several basic_* (vm, network, cnf)",
+      "revId": "5021508f4b6f8bf2bb6ef890b4bb960dc144484b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}

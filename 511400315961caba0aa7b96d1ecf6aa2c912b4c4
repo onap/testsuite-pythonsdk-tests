@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea5e6d6f_5d6f2f4e",
+        "filename": "src/onaptests/configuration/basic_cnf_yaml_settings.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-01-26T09:34:19Z",
+      "side": 0,
+      "message": "ok just be careful with possible side effects on xtesting-onap used in CI\nno problem here as it is not in settings.py but if you need in CI to retrieve dynamically some parameters (existing cluster name,..)\nThe k8s config file is provided to the docker at run start",
+      "revId": "511400315961caba0aa7b96d1ecf6aa2c912b4c4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
