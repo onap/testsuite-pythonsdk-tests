@@ -4,3 +4,4 @@ onapsdk==7.4.0
 jinja2
 kubernetes
 docker
+avionix==0.4.4

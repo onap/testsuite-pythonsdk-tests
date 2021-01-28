@@ -74,3 +74,7 @@ class EnvironmentPreparationException(OnapTestException):
 
 class SubstepExecutionException(OnapTestException):
     """Exception raised if substep execution fails."""
+
+class EnvironmentCleanupException(OnapTestException):
+    """Test environment cleanup exception."""
+    error_message="Test couldn't finish a cleanup"
