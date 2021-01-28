@@ -71,3 +71,7 @@ class ProfileCleanupException(OnapTestException):
 class EnvironmentPreparationException(OnapTestException):
     """Test environment preparation exception."""
     error_message="Test can't be run properly due to preparation error"
+
+class EnvironmentCleanupException(OnapTestException):
+    """Test environment cleanup exception."""
+    error_message="Test couldn't finish a cleanup"
