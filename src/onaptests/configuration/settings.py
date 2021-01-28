@@ -1,5 +1,7 @@
 """Specific settings module."""  # pylint: disable=bad-whitespace
 
+from pathlib import Path
+
 ######################
 #                    #
 # ONAP INPUTS DATAS  #
@@ -39,8 +41,10 @@ LOG_CONFIG = {
 }
 CLEANUP_FLAG = False
 
+CWD = Path.cwd()
 REPORTING_FILE_PATH = "/tmp/reporting.html"
 K8S_REGION_TYPE = "k8s"
+TILLER_HOST = "localhost"
 K8S_CONFIG = None  # None means it will use default config (~/.kube/config)
 K8S_NAMESPACE = "onap"  # Kubernetes namespace
 #SOCK_HTTP = "socks5h://127.0.0.1:8091"
