@@ -4,3 +4,4 @@ onapsdk>=7.1.0
 jinja2
 kubernetes
 docker
+pyhelm==2.14.5
