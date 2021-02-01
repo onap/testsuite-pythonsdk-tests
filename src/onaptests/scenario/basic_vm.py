@@ -16,7 +16,6 @@ class BasicVm(testcase.TestCase):
 
     def __init__(self, **kwargs):
         """Init BasicVM."""
-        # import ubuntu16_nomulticloud_settings needed
         if "case_name" not in kwargs:
             kwargs["case_name"] = 'basic_vm'
         super(BasicVm, self).__init__(**kwargs)
@@ -28,7 +27,7 @@ class BasicVm(testcase.TestCase):
         self.result = 0
 
     def run(self):
-        """Run onap_tests with ubuntu16 VM."""
+        """Run Basic VM onap test."""
         self.start_time = time.time()
         self.__logger.debug("start time")
         try:

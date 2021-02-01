@@ -6,7 +6,7 @@ from yaml import load
 import onaptests.utils.exceptions as onap_test_exceptions
 from .settings import * # pylint: disable=W0614
 
-""" Specific ubuntu16 without multicloud."""
+""" Specific basic_vm without multicloud."""
 
 # pylint: disable=bad-whitespace
 # The ONAP part
@@ -21,7 +21,7 @@ ONLY_INSTANTIATE= False
 # if a yaml file is define, retrieve info from this yaml files
 # if not declare the parameters in the settings
 SERVICE_YAML_TEMPLATE = (sys.path[-1] + "/onaptests/templates/vnf-services/" +
-                         "ubuntu16test-service.yaml")
+                         "basic_vm-service.yaml")
 
 try:
     # Try to retrieve the SERVICE NAME from the yaml file
@@ -55,7 +55,7 @@ PROJECT = "basicvm-project"
 LINE_OF_BUSINESS = "basicvm-lob"
 PLATFORM = "basicvm-platform"
 
-SERVICE_INSTANCE_NAME = "basicvm_ubuntu16_service_instance"
+SERVICE_INSTANCE_NAME = "basic_vm_service_instance"
 
 # The cloud Part
 # Assuming a cloud.yaml is available, use the openstack client
