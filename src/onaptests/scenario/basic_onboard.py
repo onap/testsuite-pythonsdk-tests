@@ -47,4 +47,3 @@ class BasicOnboard(testcase.TestCase):
         """Clean Additional resources if needed."""
         self.__logger.info("Generate Test report")
         self.test.reports_collection.generate_report()
-
