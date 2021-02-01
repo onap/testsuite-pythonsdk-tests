@@ -6,11 +6,11 @@ from yaml import load
 import onaptests.utils.exceptions as onap_test_exceptions
 from .settings import * # pylint: disable=W0614
 
-""" Specific ubuntu16 without multicloud."""
+""" Specific Basic Network without multicloud."""
 
 # pylint: disable=bad-whitespace
 # The ONAP part
-SERVICE_DETAILS="Onboarding, distribution and instanitation of asic Network using à la carte"
+SERVICE_DETAILS="Onboarding, distribution and instantiation of Basic Network using à la carte"
 SERVICE_COMPONENTS="SDC, DMAAP, AAI, SO, SDNC"
 USE_MULTICLOUD = False
 # Set ONLY_INSTANTIATE to true to run an instantiation without repeating
