@@ -14,7 +14,6 @@ adapted to your environment.
 
 In addition you must define your service in directory templates/vnf-services
 and create zip file for heat template templates/heat_files.
-See ubuntu16test as example
 
 ### Prepare your environment and run tests
 
@@ -52,7 +51,7 @@ See ubuntu16test as example
 
 - Export the setting file in a environment variable
   ```shell
-  export ONAP_PYTHON_SDK_SETTINGS=onaptests.configuration.ubuntu16_multicloud_yaml_settings
+  export ONAP_PYTHON_SDK_SETTINGS=onaptests.configuration.basic_vm_multicloud_yaml_settings
   ```
 
 Note each "use case" may have its own settings corresponding to the test
@@ -64,7 +63,7 @@ environment and configuration.
   ssh user@onap.pod4.opnfv.fr -D 1080
   ```
 
-- Once the different input datas are updated in run\_\*.py files and
+- Once the different input datas are updated in run_\*.py files and
   that the templates files for your service are defined, start to run
   the different steps:
   ```shell

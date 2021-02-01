@@ -1,18 +1,16 @@
 ---
-ubuntu16test:
-    tosca_file_from_SDC: service-Ubuntu16tha-template
-    version: "1.0"
+basic_vm:
     vnfs:
-        - vnf_name: ubuntu16test
-          heat_files_to_upload: onaptests/templates/heat-files/ubuntu16/ubuntu16.zip
+        - vnf_name: basic_vm
+          heat_files_to_upload: onaptests/templates/heat-files/ubuntu20/ubuntu20agent.zip
           vnf_parameters: [
-              {"name": "ubuntu16_image_name",
-               "value": "ubuntu-16.04-daily"
+              {"name": "ubuntu20_image_name",
+               "value": "ubuntu-agent"
               },
-              {"name": "ubuntu16_key_name",
+              {"name": "ubuntu20_key_name",
                "value": "cleouverte"
               },
-              {"name": "ubuntu16_pub_key",
+              {"name": "ubuntu20_pub_key",
                "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAA\
 BAQDY15cdBmIs2XOpe4EiFCsaY6bmUmK/GysMoLl4UG51JCfJwvwoWCoA+6mDIbymZxhxq9IGx\
 ilp/yTA6WQ9s/5pBag1cUMJmFuda9PjOkXl04jgqh5tR6I+GZ97AvCg93KAECis5ubSqw1xOCj4\
@@ -20,20 +18,20 @@ utfEUtPoF1OuzqM/lE5mY4N6VKXn+fT7pCD6cifBEs6JHhVNvs5OLLp/tO8Pa3kKYQOdyS0xc3r\
 h+t2lrzvKUSWGZbX+dLiFiEpjsUL3tDqzkEMNUn4pdv69OJuzWHCxRWPfdrY9Wg0j3mJesP29EBh\
 t+w+EC9/kBKq+1VKdmsXUXAcjEvjovVL8l1BrX3BY0R8D imported-openssh-key"
               },
-              {"name": "ubuntu16_flavor_name",
-               "value": "m1.small"
+              {"name": "ubuntu20_flavor_name",
+               "value": "m1.smaller"
               },
               {"name": "VM_name",
-               "value": "ubuntu16test-VM-01"
+               "value": "ubuntu20agent-VM-01"
               },
               {"name": "vnf_id",
-               "value": "ubuntu16test-VNF-instance"
+               "value": "ubuntu20agent-VNF-instance"
               },
               {"name": "vf_module_id",
-               "value": "ubuntu16test-vfmodule-instance"
+               "value": "ubuntu20agent-vfmodule-instance"
               },
               {"name": "vnf_name",
-               "value": "ubuntu16test-VNF"
+               "value": "ubuntu20agent-VNF"
               },
               {"name": "admin_plane_net_name",
                "value": "admin"
