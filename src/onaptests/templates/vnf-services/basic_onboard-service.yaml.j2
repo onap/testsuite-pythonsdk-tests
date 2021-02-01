@@ -1,17 +1,19 @@
+<<<<<<< HEAD   (fcb7ff Merge "Nodeport cleanup in basic_cds test" into guilin)
+=======
 ---
-basicclamp-1:
+{{ service_name }}:
     vnfs:
-        - vnf_name: basicclamp-1
+        - vnf_name: {{ service_name }}
           heat_files_to_upload: onaptests/templates/heat-files/ubuntu18/ubuntu18agent.zip
           vnf_parameters: [
               {"name": "ubuntu18_image_name",
-               "value": "ubuntu-agent"
+              "value": "ubuntu-agent"
               },
               {"name": "ubuntu18_key_name",
-               "value": "cleouverte"
+              "value": "cleouverte"
               },
               {"name": "ubuntu18_pub_key",
-               "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAA\
+              "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAA\
 BAQDY15cdBmIs2XOpe4EiFCsaY6bmUmK/GysMoLl4UG51JCfJwvwoWCoA+6mDIbymZxhxq9IGx\
 ilp/yTA6WQ9s/5pBag1cUMJmFuda9PjOkXl04jgqh5tR6I+GZ97AvCg93KAECis5ubSqw1xOCj4\
 utfEUtPoF1OuzqM/lE5mY4N6VKXn+fT7pCD6cifBEs6JHhVNvs5OLLp/tO8Pa3kKYQOdyS0xc3r\
@@ -19,21 +21,22 @@ h+t2lrzvKUSWGZbX+dLiFiEpjsUL3tDqzkEMNUn4pdv69OJuzWHCxRWPfdrY9Wg0j3mJesP29EBh\
 t+w+EC9/kBKq+1VKdmsXUXAcjEvjovVL8l1BrX3BY0R8D imported-openssh-key"
               },
               {"name": "ubuntu18_flavor_name",
-               "value": "m1.smaller"
+              "value": "m1.smaller"
               },
               {"name": "VM_name",
-               "value": "ubuntu18agent-VM-01"
+              "value": "ubuntu18agent-VM-01"
               },
               {"name": "vnf_id",
-               "value": "ubuntu18agent-VNF-instance"
+              "value": "ubuntu18agent-VNF-instance"
               },
               {"name": "vf_module_id",
-               "value": "ubuntu18agent-vfmodule-instance"
+              "value": "ubuntu18agent-vfmodule-instance"
               },
               {"name": "vnf_name",
-               "value": "ubuntu18agent-VNF"
+              "value": "ubuntu18agent-VNF"
               },
               {"name": "admin_plane_net_name",
-               "value": "admin"
+              "value": "admin"
               }
           ]
+>>>>>>> CHANGE (ba1faa [TESTS] cleanup tests and remove reference to ubuntu16)

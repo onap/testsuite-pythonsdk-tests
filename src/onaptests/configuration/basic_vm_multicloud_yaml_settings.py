@@ -1,7 +1,7 @@
 import sys
 from .settings import * # pylint: disable=W0614
 
-""" Specific ubuntu16 with multicloud and yaml config scenario."""
+""" Specific Basic VM with multicloud and yaml config scenario."""
 SERVICE_DETAILS = ("Onboarding, distribution and instantiation of a VM" +
                    "using à la carte and Multicloud module")
 SERVICE_COMPONENTS="SDC, DMAAP, AAI, SO, SDNC, Multicloud"
@@ -11,7 +11,7 @@ USE_MULTICLOUD = True
 # onboarding and related AAI configuration (Cloud config)
 ONLY_INSTANTIATE= False
 VENDOR_NAME = "sdktests_vendor"
-SERVICE_NAME = "ubuntu16test" # must be the same as in YAML
+SERVICE_NAME = "basicvmtest" # must be the same as in YAML
 
 CLOUD_REGION_CLOUD_OWNER = "sdktestsOwner" # must not contain _
 CLOUD_REGION_ID = "RegionOne" # should be valid, as otherwise MultiCloud fails
@@ -40,4 +40,4 @@ PLATFORM = "sdktests_platform"
 
 SERVICE_INSTANCE_NAME = "sdktests_service_instance_name"
 
-SERVICE_YAML_TEMPLATE = sys.path[-1] + "/onaptests/templates/vnf-services/ubuntu16test-service.yaml"
+SERVICE_YAML_TEMPLATE = sys.path[-1] + "/onaptests/templates/vnf-services/basic_vm-service.yaml"
