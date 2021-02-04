@@ -19,7 +19,7 @@
 tosca_definitions_version: cloudify_dsl_1_3
 imports:
   - https://www.getcloudify.org/spec/cloudify/4.5.5/types.yaml
-  - plugin:k8splugin?version=3.4.2
+  - plugin:k8splugin?version=>=3.4.3,<4.0.0
   - plugin:clamppolicyplugin?version=1.1.0
 inputs:
   service_name:
@@ -139,3 +139,4 @@ node_templates:
         get_input: policy_id
       policy_model_id:
         get_input: policy_model_id
+
