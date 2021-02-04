@@ -1,8 +1,6 @@
 import sys
 from yaml import load
 
-from pathlib import Path
-
 from .settings import * # pylint: disable=W0614
 
 """ Specific Basic clamp settings."""
@@ -32,7 +30,6 @@ OPERATIONAL_POLICIES = [
   }
 ]
 
-CERT = (Path.cwd() / 'cert.pem', Path.cwd() / 'cert.key')
 # SERVICE_NAME = "ubuntu18agent"
 
 # if a yaml file is define, retrieve info from this yaml files
