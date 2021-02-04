@@ -29,7 +29,7 @@ class ClampStep(YamlTemplateBaseStep):
         super().__init__(cleanup=cleanup)
         self._yaml_template: dict = None
         self.add_step(OnboardClampStep(cleanup=cleanup))
-        Clamp(cert=settings.CERT)
+        Clamp()
         self.loop_instance = None
 
     @property
@@ -95,8 +95,7 @@ class ClampStep(YamlTemplateBaseStep):
         """Instantite a closed loopin CLAMP."""
         loop = InstantiateLoop(template=loop_template,
                                loop_name=loop_name,
-                               operational_policies=operational_policies,
-                               cert=settings.CERT)
+                               operational_policies=operational_policies)
         return loop.instantiate_loop()
 
     def loop_counter(self, action: str) -> None:
