@@ -4,6 +4,7 @@ from yaml import load
 
 from onapsdk.aai.business import Customer, ServiceInstance, ServiceSubscription
 from onapsdk.configuration import settings
+from onapsdk.exceptions import APIError, ResourceNotFound
 from onapsdk.msb.k8s import Definition
 from onapsdk.so.instantiation import VnfParameter
 
@@ -142,7 +143,7 @@ class K8SProfileStep(BaseStep):
                 ######## Check profile for Definition ###################################
                 try:
                     rbdef.get_profile_by_name(k8s_profile_name)
-                except ValueError:
+                except ResourceNotFound:
                     ######## Create profile for Definition ###################################
                     profile = rbdef.create_profile(k8s_profile_name,
                                                    k8s_profile_namespace,
@@ -174,7 +175,7 @@ class K8SProfileStep(BaseStep):
                 try:
                     profile = rbdef.get_profile_by_name(k8s_profile_name)
                     profile.delete()
-                except ValueError:
+                except APIError:
                     self._logger.error("K8s profile deletion %s failed", k8s_profile_name)
                     raise onap_test_exceptions.ProfileCleanupException
         super().cleanup()

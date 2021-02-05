@@ -9,6 +9,7 @@ from onapsdk.aai.business.owning_entity import OwningEntity
 from onapsdk.aai.cloud_infrastructure.cloud_region import CloudRegion
 from onapsdk.aai.cloud_infrastructure.tenant import Tenant
 from onapsdk.configuration import settings
+from onapsdk.exceptions import ResourceNotFound
 from onapsdk.sdc.service import Service
 from onapsdk.so.instantiation import ServiceInstantiation
 from onapsdk.vid import LineOfBusiness, Platform, Project
@@ -137,7 +138,7 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
         try:
             owning_entity = OwningEntity.get_by_owning_entity_name(
                 settings.OWNING_ENTITY)
-        except ValueError:
+        except ResourceNotFound:
             self._logger.info("Owning entity not found, create it")
             owning_entity = OwningEntity.create(settings.OWNING_ENTITY)
         vid_project: Project = Project(settings.PROJECT)

@@ -4,6 +4,7 @@ from uuid import uuid4
 
 from onapsdk.aai.cloud_infrastructure import CloudRegion
 from onapsdk.configuration import settings
+from onapsdk.exceptions import ResourceNotFound
 
 from ..base import BaseStep
 from onaptests.steps.cloud.cloud_region_create import CloudRegionCreateStep
@@ -78,7 +79,7 @@ class RegisterCloudRegionStep(BaseStep):
         # if it does not exist, create it
         try:
             cloud_region.get_tenant(settings.TENANT_ID)
-        except ValueError:
+        except ResourceNotFound:
             self._logger.warning("Impossible to retrieve the Specificed Tenant")
             self._logger.debug("If no multicloud selected, add the tenant")
             cloud_region.add_tenant(
@@ -90,7 +91,7 @@ class RegisterCloudRegionStep(BaseStep):
         try:
             cloud_region.get_availability_zone_by_name(
                 settings.AVAILABILITY_ZONE_NAME)
-        except ValueError:
+        except ResourceNotFound:
             cloud_region.add_availability_zone(
                 settings.AVAILABILITY_ZONE_NAME,
                 settings.AVAILABILITY_ZONE_TYPE)

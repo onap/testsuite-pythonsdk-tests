@@ -5,6 +5,7 @@ import time
 
 from xtesting.core import testcase
 from onapsdk.configuration import settings
+from onapsdk.exceptions import SDKException
 
 import onaptests.utils.exceptions as onap_test_exceptions
 from onaptests.steps.instantiate.vl_ala_carte import YamlTemplateVlAlaCarteInstantiateStep
@@ -40,8 +41,8 @@ class BasicNetwork(testcase.TestCase):
                 time.sleep(settings.CLEANUP_ACTIVITY_TIMER)
                 try:
                     self.test.cleanup()
-                except ValueError as error:
-                    self.__logger.info("service deleted as expected {0}".format(error))
+                except SDKException as error:
+                    self.__logger.info("service deletion error {0}".format(error))
                 self.result = 100
             else:
                 self.__logger.info("No cleanup requested. Test completed.")
