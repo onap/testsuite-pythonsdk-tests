@@ -5,6 +5,7 @@ import time
 
 from xtesting.core import testcase
 from onapsdk.configuration import settings
+from onapsdk.exceptions import SDKException
 
 import onaptests.utils.exceptions as onap_test_exceptions
 from onaptests.steps.instantiate.vf_module_ala_carte import YamlTemplateVfModuleAlaCarteInstantiateStep
@@ -46,6 +47,8 @@ class BasicVm(testcase.TestCase):
         except onap_test_exceptions.OnapTestException as exc:
             self.result = 0
             self.__logger.error(exc.error_message)
+        except SDKException as error:
+            self.__logger.info("service error {0}".format(error))
         finally:
             self.stop_time = time.time()
 

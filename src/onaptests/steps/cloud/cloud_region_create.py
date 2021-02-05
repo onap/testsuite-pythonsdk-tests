@@ -1,6 +1,7 @@
 """A&AI cloud region creation module."""
 from onapsdk.aai.cloud_infrastructure import CloudRegion
 from onapsdk.configuration import settings
+from onapsdk.exceptions import ResourceNotFound
 
 from ..base import BaseStep
 
@@ -38,7 +39,7 @@ class CloudRegionCreateStep(BaseStep):
                 cloud_owner=settings.CLOUD_REGION_CLOUD_OWNER,
                 cloud_region_id=settings.CLOUD_REGION_ID,
             )
-        except ValueError:
+        except ResourceNotFound:
             CloudRegion.create(
                 cloud_owner=settings.CLOUD_REGION_CLOUD_OWNER,
                 cloud_region_id=settings.CLOUD_REGION_ID,

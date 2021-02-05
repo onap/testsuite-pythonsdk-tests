@@ -4,8 +4,9 @@ import time
 
 from abc import ABC, abstractmethod
 from typing import List
-from onapsdk.configuration import settings
 from onapsdk.aai.business import Customer
+from onapsdk.configuration import settings
+from onapsdk.exceptions import SettingsError
 
 from .reports_collection import Report, ReportsCollection, ReportStepStatus
 
@@ -26,7 +27,7 @@ class BaseStep(ABC):
         # Setup Proxy if SOCK_HTTP is defined in settings
         try:
             cls.set_proxy(settings.SOCK_HTTP)
-        except AttributeError:
+        except SettingsError:
             pass
 
     def __init__(self, cleanup: bool = False) -> None:

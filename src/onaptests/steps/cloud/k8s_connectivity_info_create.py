@@ -1,5 +1,6 @@
 """Connectivity info creation module."""
 from onapsdk.configuration import settings
+from onapsdk.exceptions import APIError
 from onapsdk.msb.k8s import ConnectivityInfo
 
 from ..base import BaseStep
@@ -31,7 +32,7 @@ class K8SConnectivityInfoStep(BaseStep):
         try:
             self._logger.info("Check if k8s connectivity information exists")
             ConnectivityInfo.get_connectivity_info_by_region_id(settings.CLOUD_REGION_ID)
-        except ValueError:
+        except APIError:
             self._logger.info("Create the k8s connectivity information")
             ConnectivityInfo.create(settings.CLOUD_REGION_ID,
                                     settings.CLOUD_REGION_CLOUD_OWNER,
