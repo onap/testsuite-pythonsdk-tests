@@ -46,6 +46,8 @@ class BasicVm(testcase.TestCase):
         except onap_test_exceptions.OnapTestException as exc:
             self.result = 0
             self.__logger.error(exc.error_message)
+        except SDKException as error:
+            self.__logger.info("service error {0}".format(error))
         finally:
             self.stop_time = time.time()
 

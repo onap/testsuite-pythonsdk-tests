@@ -1,5 +1,6 @@
 from onapsdk.aai.business import Customer
 from onapsdk.configuration import settings
+from onapsdk.exceptions import APIError
 
 from ..base import BaseStep
 
@@ -25,4 +26,7 @@ class CustomerCreateStep(BaseStep):
          - GLOBAL_CUSTOMER_ID.
         """
         super().execute()
-        Customer.create(settings.GLOBAL_CUSTOMER_ID, settings.GLOBAL_CUSTOMER_ID, "INFRA")
+        try:
+            Customer.create(settings.GLOBAL_CUSTOMER_ID, settings.GLOBAL_CUSTOMER_ID, "INFRA")
+        except APIError as error:
+            self._logger.warn("Try to update the Customer failed.")
