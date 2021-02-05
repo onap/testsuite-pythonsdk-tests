@@ -6,6 +6,7 @@ from onapsdk.aai.cloud_infrastructure import CloudRegion, Tenant
 from onapsdk.aai.business import Customer, ServiceInstance, ServiceSubscription
 from onapsdk.aai.business.owning_entity import OwningEntity as AaiOwningEntity
 from onapsdk.configuration import settings
+from onapsdk.exceptions import ResourceNotFound
 from onapsdk.sdc.service import Service
 from onapsdk.so.instantiation import ServiceInstantiation
 from onapsdk.vid import Project
@@ -66,7 +67,7 @@ class ServiceAlaCarteInstantiateStep(BaseStep):
         try:
             owning_entity = AaiOwningEntity.get_by_owning_entity_name(
                 settings.OWNING_ENTITY)
-        except ValueError:
+        except ResourceNotFound:
             self._logger.info("Owning entity not found, create it")
             owning_entity = AaiOwningEntity.create(settings.OWNING_ENTITY)
         vid_project = Project.create(settings.PROJECT)
@@ -187,7 +188,7 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         try:
             owning_entity = AaiOwningEntity.get_by_owning_entity_name(
                 settings.OWNING_ENTITY)
-        except ValueError:
+        except ResourceNotFound:
             self._logger.info("Owning entity not found, create it")
             owning_entity = AaiOwningEntity.create(settings.OWNING_ENTITY)
         vid_project = Project.create(settings.PROJECT)

@@ -1,5 +1,9 @@
 xtesting
 openstacksdk
+<<<<<<< HEAD
 onapsdk==7.3.0
+=======
+onapsdk>=7.4.0
+>>>>>>> cc4a4b3... Python SDK 7.4.0 compatibility
 jinja2
 kubernetes
