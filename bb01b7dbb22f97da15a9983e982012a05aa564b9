@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4098b19c_d0ad447a",
+        "filename": "requirements.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 2319
+      },
+      "writtenOn": "2021-02-06T16:32:05Z",
+      "side": 1,
+      "message": "Could we do \u003e\u003d7.4.0,\u003c7.5.0 so we’re sure not to have « bad surprise » at next version?",
+      "revId": "bb01b7dbb22f97da15a9983e982012a05aa564b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
