@@ -1,4 +1,5 @@
 """Instantiate service with PNF using SO macro flow."""
+import time
 from yaml import load
 
 from xtesting.core import testcase
@@ -107,8 +108,16 @@ class PnfMacro(testcase.TestCase):
 
     def run(self):
         """Run PNF macro test."""
-        self.test.execute()
-        self.test.cleanup()
+        self.start_time = time.time()
+        try:
+            self.test.execute()
+            self.test.cleanup()
+            self.result = 100
+        except Exception as exc:
+            self.result = 0
+            self.__logger.error(exc.error_message)
+        finally:
+            self.stop_time = time.time()
 
     def clean(self):
         """Generate report."""

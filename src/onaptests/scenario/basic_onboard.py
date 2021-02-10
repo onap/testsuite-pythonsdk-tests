@@ -4,7 +4,6 @@ import logging
 import time
 from xtesting.core import testcase
 from onapsdk.configuration import settings
-import onaptests.utils.exceptions as onap_test_exceptions
 from onaptests.steps.onboard.service import YamlTemplateServiceOnboardStep
 
 class BasicOnboard(testcase.TestCase):
@@ -33,7 +32,7 @@ class BasicOnboard(testcase.TestCase):
             self.test.execute()
             self.__logger.info("VNF basic_vm successfully onboarded")
             self.result = 100
-        except onap_test_exceptions.OnapTestException as exc:
+        except Exception as exc:
             self.result = 0
             self.__logger.error(exc.error_message)
         finally:
