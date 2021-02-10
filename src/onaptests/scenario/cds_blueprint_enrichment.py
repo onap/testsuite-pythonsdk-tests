@@ -5,9 +5,11 @@ import logging
 import time
 
 from onapsdk.configuration import settings
+from onapsdk.exceptions import SDKException
 from xtesting.core import testcase
 
 from onaptests.steps.onboard.cds import CbaEnrichStep
+from onaptests.utils.exceptions import OnapTestException
 
 
 class CDSBlueprintEnrichment(testcase.TestCase):
@@ -30,8 +32,12 @@ class CDSBlueprintEnrichment(testcase.TestCase):
     def run(self):
         self.__logger.debug("CDS blueprint enrichment run")
         self.start_time = time.time()
-        self.test.execute()
-        self.result = 100
+        try:
+            self.test.execute()
+            self.result = 100
+        except (OnapTestException, SDKException) as exc:
+            self.result = 0
+            self.__logger.error(exc.error_message)
         self.stop_time = time.time()
 
     def clean(self):

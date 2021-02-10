@@ -5,9 +5,10 @@ import time
 
 from xtesting.core import testcase
 from onapsdk.configuration import settings
+from onapsdk.exceptions import SDKException
 
-import onaptests.utils.exceptions as onap_test_exceptions
 from onaptests.steps.instantiate.vf_module_ala_carte import YamlTemplateVfModuleAlaCarteInstantiateStep
+from onaptests.utils.exceptions import OnapTestException
 
 class BasicCnf(testcase.TestCase):
     """Onboard then instantiate a simple CNF with ONAP."""
@@ -42,7 +43,7 @@ class BasicCnf(testcase.TestCase):
             else:
                 self.__logger.info("No cleanup requested. Test completed.")
                 self.result = 100
-        except onap_test_exceptions.OnapTestException as exc:
+        except (OnapTestException, SDKException) as exc:
             self.result = 0
             self.__logger.error(exc.error_message)
         finally:

@@ -7,8 +7,8 @@ from xtesting.core import testcase
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SDKException
 
-import onaptests.utils.exceptions as onap_test_exceptions
 from onaptests.steps.instantiate.vl_ala_carte import YamlTemplateVlAlaCarteInstantiateStep
+from onaptests.utils.exceptions import OnapTestException
 
 class BasicNetwork(testcase.TestCase):
     """Onboard then instantiate a simple Network with ONAP."""
@@ -47,7 +47,7 @@ class BasicNetwork(testcase.TestCase):
             else:
                 self.__logger.info("No cleanup requested. Test completed.")
                 self.result = 100
-        except onap_test_exceptions.OnapTestException as exc:
+        except (OnapTestException, SDKException) as exc:
             self.result = 0
             self.__logger.error(exc.error_message)
         finally:
