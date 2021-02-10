@@ -4,7 +4,7 @@ from enum import Enum
 from typing import List
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from onapsdk.configuration import settings
-
+from onapsdk.exceptions import SettingsError
 
 class ReportStepStatus(Enum):
     """Enum which stores steps execution statuses."""
@@ -63,12 +63,12 @@ class ReportsCollection:
         usecase = settings.SERVICE_NAME
         try:
             details = settings.SERVICE_DETAILS
-        except (KeyError, AttributeError):
+        except (KeyError, AttributeError, SettingsError):
             details = ""
 
         try:
             components = settings.SERVICE_COMPONENTS
-        except (KeyError, AttributeError):
+        except (KeyError, AttributeError, SettingsError):
             components = ""
 
         jinja_env = Environment(
