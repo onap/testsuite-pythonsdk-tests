@@ -71,3 +71,6 @@ class ProfileCleanupException(OnapTestException):
 class EnvironmentPreparationException(OnapTestException):
     """Test environment preparation exception."""
     error_message="Test can't be run properly due to preparation error"
+
+class SubstepExecutionException(OnapTestException):
+    """Exception raised if substep execution fails."""

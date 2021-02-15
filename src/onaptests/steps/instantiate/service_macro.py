@@ -186,7 +186,7 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
             service_subscription: ServiceSubscription = customer.get_service_subscription_by_service_type(self.service_name)
             self._service_instance: ServiceInstance = service_subscription.get_service_instance_by_name(self.service_instance_name)
 
-
+    @YamlTemplateBaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
         """Cleanup Service.
 

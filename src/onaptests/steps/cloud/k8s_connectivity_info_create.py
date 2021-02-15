@@ -38,6 +38,7 @@ class K8SConnectivityInfoStep(BaseStep):
                                     settings.CLOUD_REGION_CLOUD_OWNER,
                                     open(settings.K8S_CONFIG, 'rb').read())
 
+    @BaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
         """Cleanup K8S Connectivity information."""
         self._logger.info("Clean the k8s connectivity information")

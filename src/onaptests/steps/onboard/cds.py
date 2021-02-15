@@ -124,6 +124,7 @@ class CbaEnrichStep(CDSBaseStep):
         blueprint.enrich()
         blueprint.save(settings.CDS_CBA_ENRICHED)
 
+    @BaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
         """Cleanup enrichment step.
 
