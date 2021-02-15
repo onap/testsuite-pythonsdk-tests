@@ -68,6 +68,46 @@ class TestStepNoSuperExecute(BaseStep):
         return "Test"
 
 
+class TestCleanupStepA(BaseStep):
+
+    @BaseStep.store_state
+    def execute(self):
+        return super().execute()
+
+    @BaseStep.store_state(cleanup=True)
+    def cleanup(self):
+        return super().cleanup()
+
+    @property
+    def description(self):
+        return "Test cleanup step A"
+
+    @property
+    def component(self) -> str:
+        return "Test"
+
+
+class TestCleanupStepB(TestCleanupStepA):
+
+    @property
+    def description(self):
+        return "Test cleanup step B"
+
+
+class TestCleanupStepC(TestCleanupStepA):
+
+    @property
+    def description(self):
+        return "Test cleanup step C"
+
+
+class TestCleanupStepD(TestCleanupStepA):
+
+    @property
+    def description(self):
+        return "Test cleanup step D"
+
+
 def test_store_state():
     ts = TestStep()
     ts.execute()
@@ -112,3 +152,25 @@ def test_store_state_time_measurement():
     assert len(ts.reports_collection.report) == 1
     rep = ts.reports_collection.report[0]
     assert rep.step_execution_duration < 1
+
+
+def test_store_state_with_cleanup():
+
+    ts = TestCleanupStepA(cleanup=True)
+    ts_b = TestCleanupStepB(cleanup=True)
+    ts_b.add_step(TestCleanupStepC(cleanup=True))
+    ts.add_step(ts_b)
+    ts.add_step(TestCleanupStepD(cleanup=True))
+    ts.execute()
+    ts.cleanup()
+    assert len(ts.reports_collection.report) == 8
+    (rep_cleanup_step_4, rep_cleanup_step_3, rep_cleanup_step_2, rep_cleanup_step_1,
+        rep_exec_step_4, rep_exec_step_3, rep_exec_step_2, rep_exec_step_1) = ts.reports_collection.report
+    assert rep_exec_step_1.step_description == "[Test] TestCleanupStepC: Test cleanup step C"
+    assert rep_exec_step_2.step_description == "[Test] TestCleanupStepB: Test cleanup step B"
+    assert rep_exec_step_3.step_description == "[Test] TestCleanupStepD: Test cleanup step D"
+    assert rep_exec_step_4.step_description == "[Test] TestCleanupStepA: Test cleanup step A"
+    assert rep_cleanup_step_1.step_description == "[Test] TestCleanupStepA cleanup: Test cleanup step A"
+    assert rep_cleanup_step_2.step_description == "[Test] TestCleanupStepB cleanup: Test cleanup step B"
+    assert rep_cleanup_step_3.step_description == "[Test] TestCleanupStepC cleanup: Test cleanup step C"
+    assert rep_cleanup_step_4.step_description == "[Test] TestCleanupStepD cleanup: Test cleanup step D"

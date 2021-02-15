@@ -148,7 +148,7 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
             if vf_module_instantiation.failed:
                 raise onap_test_exceptions.VfModuleInstantiateException
 
-
+    @YamlTemplateBaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
         """Cleanup Vf module.
 
