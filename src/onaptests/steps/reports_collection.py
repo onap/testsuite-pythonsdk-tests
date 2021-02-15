@@ -6,10 +6,12 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SettingsError
 
+
 class ReportStepStatus(Enum):
     """Enum which stores steps execution statuses."""
     PASS = "PASS"
     FAIL = "FAIL"
+    NOT_EXECUTED = "NOT EXECUTED"
 
 
 @dataclass

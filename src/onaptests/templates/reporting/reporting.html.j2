@@ -28,7 +28,7 @@
           </thead>
           <tbody>
           {% for step_report in report.report %}
-            <tr {% if  step_report.step_execution_status.value == 'FAIL' %} class="has-background-danger"  {% else %} class="has-background-success-light" {% endif %}>
+            <tr {% if  step_report.step_execution_status.value == 'FAIL' %} class="has-background-danger" {% elif step_report.step_execution_status.value == 'PASS' %} class="has-background-success-light" {% else %} class="has-background-warning-light" {% endif %}>
             <td>
             {{ step_report.step_description }}
             </td>

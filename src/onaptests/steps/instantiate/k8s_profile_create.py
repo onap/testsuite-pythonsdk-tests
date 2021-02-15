@@ -151,6 +151,7 @@ class K8SProfileStep(BaseStep):
                     ####### Upload artifact for created profile ##############################
                     profile.upload_artifact(open(settings.K8S_PROFILE_ARTIFACT_PATH, 'rb').read())
 
+    @BaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
         """Cleanup K8S profiles.
         """

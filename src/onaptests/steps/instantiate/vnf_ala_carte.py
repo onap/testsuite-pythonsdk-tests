@@ -123,6 +123,7 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
             if vnf_instantiation.failed:
                 raise onap_test_exceptions.VnfInstantiateException
 
+    @YamlTemplateBaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
         """Cleanup VNF.
 

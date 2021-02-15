@@ -146,6 +146,7 @@ class YamlTemplateVlAlaCarteInstantiateStep(YamlTemplateBaseStep):
             if net_instantiation.failed:
                 raise onap_test_exceptions.NetworkInstantiateException
 
+    @YamlTemplateBaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
         """Cleanup VL.
 
