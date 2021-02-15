@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ca3a226_79a2ac97",
+        "filename": "src/onaptests/steps/wrapper/helm_charts.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2021-02-15T08:44:31Z",
+      "side": 1,
+      "message": "Nit: consider using `all` built-in function for that kind of checks",
+      "range": {
+        "startLine": 56,
+        "startChar": 11,
+        "endLine": 56,
+        "endChar": 64
+      },
+      "revId": "f8a25ffab1fc0fcd2b5ba7d233d018c8db5d104f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "843d9cff_a65a1e2c",
+        "filename": "src/onaptests/steps/wrapper/helm_charts.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2021-02-15T08:44:31Z",
+      "side": 1,
+      "message": "Why not substep?",
+      "range": {
+        "startLine": 66,
+        "startChar": 27,
+        "endLine": 66,
+        "endChar": 53
+      },
+      "revId": "f8a25ffab1fc0fcd2b5ba7d233d018c8db5d104f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b13798_50e9f3ae",
+        "filename": "src/onaptests/steps/wrapper/start.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2021-02-15T08:44:31Z",
+      "side": 1,
+      "message": "can we check it in __init__ ? we won\u0027r do any substeps execution if configuration is invalid then. We can also run in `execute` method `requests.request(self.method.lower(), self.url, **self.data)`",
+      "range": {
+        "startLine": 69,
+        "startChar": 12,
+        "endLine": 69,
+        "endChar": 81
+      },
+      "revId": "f8a25ffab1fc0fcd2b5ba7d233d018c8db5d104f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e73e341_91eb1e31",
+        "filename": "src/onaptests/utils/simulators.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2021-02-15T08:44:31Z",
+      "side": 1,
+      "message": "I think it won\u0027t work in Docker image, because we have there installed onapsdk package and there is no \"src\" directory",
+      "range": {
+        "startLine": 6,
+        "startChar": 4,
+        "endLine": 6,
+        "endChar": 66
+      },
+      "revId": "f8a25ffab1fc0fcd2b5ba7d233d018c8db5d104f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
