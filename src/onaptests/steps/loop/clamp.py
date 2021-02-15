@@ -148,6 +148,7 @@ class ClampStep(YamlTemplateBaseStep):
             loop_name=loop_name,
             operational_policies=operational_policies)
 
+    @YamlTemplateBaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
         """Cleanup Service.
 

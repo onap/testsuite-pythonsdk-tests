@@ -38,6 +38,7 @@ class CreateInstanceStep(BaseStep):
                                         rb_name=settings.PNF_RB_NAME,
                                         rb_version=settings.PNF_RB_VERSION)
 
+    @BaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
         """Delete instance."""
         if self.instance:

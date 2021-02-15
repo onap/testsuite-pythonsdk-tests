@@ -1,9 +1,11 @@
+import functools
+import itertools
 import logging
 import logging.config
 import time
 
 from abc import ABC, abstractmethod
-from typing import List
+from typing import Iterator, List
 from onapsdk.aai.business import Customer
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SettingsError
@@ -41,7 +43,10 @@ class BaseStep(ABC):
         self._cleanup: bool = cleanup
         self._parent: "BaseStep" = None
         self._reports_collection: ReportsCollection = None
-        self._start_time: float = None
+        self._start_execution_time: float = None
+        self._start_cleanup_time: float = None
+        self._execution_report: ReportStepStatus = None
+        self._cleanup_report: ReportStepStatus = None
 
     def add_step(self, step: "BaseStep") -> None:
         """Add substep.
@@ -88,7 +93,38 @@ class BaseStep(ABC):
             return self.parent.reports_collection
         if not self._reports_collection:
             self._reports_collection = ReportsCollection()
+            for step_report in itertools.chain(self.execution_reports, self.cleanup_reports):
+                self._reports_collection.put(step_report)
         return self._reports_collection
+
+    @property
+    def execution_reports(self) -> Iterator[ReportsCollection]:
+        """Execution reports generator.
+
+        Steps tree postorder traversal
+
+        Yields:
+            Iterator[ReportsCollection]: Step execution report
+
+        """
+        for step in self._steps:
+            yield from step.execution_reports
+        yield self._execution_report
+
+    @property
+    def cleanup_reports(self) -> Iterator[ReportsCollection]:
+        """Cleanup reports generator.
+
+        Steps tree preorder traversal
+
+        Yields:
+            Iterator[ReportsCollection]: Step cleanup report
+
+        """
+        if self._cleanup:
+            yield self._cleanup_report
+            for step in self._steps:
+                yield from step.cleanup_reports
 
     @property
     def name(self) -> str:
@@ -121,9 +157,14 @@ class BaseStep(ABC):
         """
 
     @classmethod
-    def store_state(cls, fun):
+    def store_state(cls, fun=None, *, cleanup=False):
+        if fun is None:
+            return functools.partial(cls.store_state, cleanup=cleanup)
+        @functools.wraps(fun)
         def wrapper(self, *args, **kwargs):
             try:
+                if cleanup:
+                    self._start_cleanup_time = time.time()
                 ret = fun(self, *args, **kwargs)
                 execution_status: ReportStepStatus = ReportStepStatus.PASS
                 return ret
@@ -131,17 +172,22 @@ class BaseStep(ABC):
                 execution_status: ReportStepStatus = ReportStepStatus.FAIL
                 raise
             finally:
-                if not self._start_time:
-                    self._logger.error("No execution start time saved for %s step. Fix it by call `super.execute()` "
-                                       "in step class `execute()` method definition")
-                    self._start_time = time.time()
-                self.reports_collection.put(
-                    Report(
+                if cleanup:
+                    self._cleanup_report = Report(
+                        step_description=f"[{self.component}] {self.name} cleanup: {self.description}",
+                        step_execution_status=execution_status,
+                        step_execution_duration=time.time() - self._start_cleanup_time
+                    )
+                else:
+                    if not self._start_execution_time:
+                        self._logger.error("No execution start time saved for %s step. Fix it by call `super.execute()` "
+                                           "in step class `execute()` method definition", self.name)
+                        self._start_execution_time = time.time()
+                    self._execution_report = Report(
                         step_description=f"[{self.component}] {self.name}: {self.description}",
                         step_execution_status=execution_status,
-                        step_execution_duration=time.time() - self._start_time
+                        step_execution_duration=time.time() - self._start_execution_time
                     )
-                )
         return wrapper
 
     def execute(self) -> None:
@@ -153,7 +199,7 @@ class BaseStep(ABC):
         """
         for step in self._steps:
             step.execute()
-        self._start_time = time.time()
+        self._start_execution_time = time.time()
 
     def cleanup(self) -> None:
         """Step's cleanup.
