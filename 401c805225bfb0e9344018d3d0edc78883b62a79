@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "043a4f05_b881f3d5",
+        "filename": "src/onaptests/steps/wrapper/helm_charts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 6868
+      },
+      "writtenOn": "2021-02-22T14:08:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa012f0a_8931ac5f",
+      "range": {
+        "startLine": 33,
+        "startChar": 22,
+        "endLine": 33,
+        "endChar": 42
+      },
+      "revId": "401c805225bfb0e9344018d3d0edc78883b62a79",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cf92fcd_719f5b22",
         "filename": "src/onaptests/steps/wrapper/helm_charts.py",
         "patchSetId": 7
@@ -45,6 +69,47 @@
       "revId": "401c805225bfb0e9344018d3d0edc78883b62a79",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "687949cc_f0d48ad5",
+        "filename": "src/onaptests/steps/wrapper/helm_charts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 6868
+      },
+      "writtenOn": "2021-02-22T14:08:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cf92fcd_719f5b22",
+      "range": {
+        "startLine": 82,
+        "startChar": 12,
+        "endLine": 82,
+        "endChar": 29
+      },
+      "revId": "401c805225bfb0e9344018d3d0edc78883b62a79",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5cc9616_3ad7cba2",
+        "filename": "src/onaptests/steps/wrapper/helm_charts.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 6868
+      },
+      "writtenOn": "2021-02-22T14:08:40Z",
+      "side": 1,
+      "message": "Removed this, too. User will decide what to do with raised exceptions.",
+      "revId": "401c805225bfb0e9344018d3d0edc78883b62a79",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
