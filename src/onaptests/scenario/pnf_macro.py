@@ -1,4 +1,5 @@
 """Instantiate service with PNF using SO macro flow."""
+import logging
 import time
 from yaml import load
 
@@ -99,6 +100,8 @@ class PnfMacroScenarioStep(YamlTemplateBaseStep):
 
 class PnfMacro(testcase.TestCase):
     """Run PNF simulator and onboard then instantiate a service with PNF."""
+
+    __logger = logging.getLogger(__name__)
 
     def __init__(self, **kwargs):
         """Init Basic Network use case."""
