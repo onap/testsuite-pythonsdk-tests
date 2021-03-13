@@ -63,8 +63,10 @@ class ServiceOnboardStep(BaseStep):
         if settings.PNF_NAME != "":
             pnf: Pnf = Pnf(name=settings.PNF_NAME)
             service.add_resource(pnf)
-        service.checkin()
-        service.onboard()
+        # If the service is already distributed, do not try to checkin/onboard (replay of tests)
+        if service.status != "Distributed":
+            service.checkin()
+            service.onboard()
 
 
 class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
@@ -137,8 +139,10 @@ class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
         service.create()
         self.declare_resources(service)
         self.assign_properties(service)
-        service.checkin()
-        service.onboard()
+        # If the service is already distributed, do not try to checkin/onboard (replay of tests)
+        if service.status != "Distributed":
+            service.checkin()
+            service.onboard()
 
     def declare_resources(self, service: Service) -> None:
         """Declare resources.
