@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db4f14d4_cce50119",
+        "filename": "src/onaptests/steps/onboard/service.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 2701
+      },
+      "writtenOn": "2021-03-15T16:50:17Z",
+      "side": 1,
+      "message": "we have distributed() function instead that returns bool\nonboard() function checks also state and does checkin when needed, it also skips onboard of already distributed service, so maybe it is enough to remove checkin() call instead?",
+      "revId": "de45d4b7dec05cf8bd8b85a2b96d8bec9ac17104",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1da85c3d_aac263f1",
+        "filename": "src/onaptests/steps/onboard/service.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 2701
+      },
+      "writtenOn": "2021-03-15T16:50:17Z",
+      "side": 1,
+      "message": "like above.",
+      "revId": "de45d4b7dec05cf8bd8b85a2b96d8bec9ac17104",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
