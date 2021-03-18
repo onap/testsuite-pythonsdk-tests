@@ -83,7 +83,7 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
         super().execute()
         if not self.is_pnf_pod_running():
             EnvironmentPreparationException("PNF simulator is not running")
-        time.sleep(5.0)  # Let's still wait for PNF simulator to make sure it's initialized
+        time.sleep(30.0)  # Let's still wait for PNF simulator to make sure it's initialized
         ves_ip, ves_port = self.get_ves_ip_and_port()
         response = requests.post(
             "http://portal.api.simpledemo.onap.org:30999/simulator/event",
