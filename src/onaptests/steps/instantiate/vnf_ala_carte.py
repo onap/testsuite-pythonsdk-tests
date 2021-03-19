@@ -118,9 +118,13 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
                 cloud_region,
                 tenant,
                 f"{self.service_instance_name}_vnf_{idx}")
-            while not vnf_instantiation.finished:
-                time.sleep(10)
-            if vnf_instantiation.failed:
+            try:
+                vnf_instantiation.wait_for_finish(settings.ORCHESTRATION_REQUEST_TIMEOUT)
+                if vnf_instantiation.failed:
+                    self._logger.error("VNF instantiation %s failed", vnf.name)
+                    raise onap_test_exceptions.VnfInstantiateException
+            except TimeoutError:
+                self._logger.error("VNF instantiation %s timed out", vnf.name)
                 raise onap_test_exceptions.VnfInstantiateException
 
     @YamlTemplateBaseStep.store_state(cleanup=True)
@@ -133,16 +137,13 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
         """
         for vnf_instance in self._service_instance.vnf_instances:
             vnf_deletion = vnf_instance.delete()
-            nb_try = 0
-            nb_try_max = 30
 
-            while not vnf_deletion.finished and nb_try < nb_try_max:
-                self._logger.info("Wait for vnf deletion")
-                nb_try += 1
-                time.sleep(15)
-            if vnf_deletion.finished:
-                self._logger.info("VNF %s deleted", vnf_instance.name)
-            else:
-                self._logger.error("VNF deletion %s failed", vnf_instance.name)
+            try:
+                vnf_deletion.wait_for_finish(settings.ORCHESTRATION_REQUEST_TIMEOUT)
+                if vnf_deletion.failed:
+                    self._logger.error("VNF deletion %s failed", vnf_instance.name)
+                    raise onap_test_exceptions.VnfCleanupException
+            except TimeoutError:
+                self._logger.error("VNF deletion %s timed out", vnf_instance.name)
                 raise onap_test_exceptions.VnfCleanupException
         super().cleanup()
