@@ -1,4 +1,3 @@
-import time
 import re
 from typing import Iterable
 from uuid import uuid4
@@ -141,9 +140,13 @@ class YamlTemplateVlAlaCarteInstantiateStep(YamlTemplateBaseStep):
                 platform,
                 network_instance_name=f"{self.service_instance_name}_net_{idx}",
                 subnets=self.get_subnets(network.name))
-            while not net_instantiation.finished:
-                time.sleep(10)
-            if net_instantiation.failed:
+            try:
+                net_instantiation.wait_for_finish(settings.ORCHESTRATION_REQUEST_TIMEOUT)
+                if net_instantiation.failed:
+                    self._logger.error("VL instantiation %s failed", net_instantiation.name)
+                    raise onap_test_exceptions.NetworkInstantiateException
+            except TimeoutError:
+                self._logger.error("VL instantiation %s timed out", net_instantiation.name)
                 raise onap_test_exceptions.NetworkInstantiateException
 
     @YamlTemplateBaseStep.store_state(cleanup=True)
@@ -158,7 +161,11 @@ class YamlTemplateVlAlaCarteInstantiateStep(YamlTemplateBaseStep):
                 self._logger.info("Start network deletion %s",net_instance.name)
                 net_deletion = net_instance.delete()
                 try:
-                    net_deletion.wait_for_finish()
+                    net_deletion.wait_for_finish(settings.ORCHESTRATION_REQUEST_TIMEOUT)
+                    if net_deletion.failed:
+                        self._logger.error("VL deletion %s failed", net_instance.name)
+                        raise onap_test_exceptions.NetworkCleanupException
                 except TimeoutError:
+                    self._logger.error("VL deletion %s timed out", net_instance.name)
                     raise onap_test_exceptions.NetworkCleanupException
             super().cleanup()

@@ -1,4 +1,3 @@
-import time
 from typing import Iterable
 from uuid import uuid4
 from yaml import load
@@ -143,10 +142,14 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
                     tenant,
                     self._service_instance_name,
                     vnf_parameters=self.get_vnf_parameters(vnf_instance.vnf.name))
-            while not vf_module_instantiation.finished:
-                time.sleep(10)
-            if vf_module_instantiation.failed:
-                raise onap_test_exceptions.VfModuleInstantiateException
+                try:
+                    vf_module_instantiation.wait_for_finish(settings.ORCHESTRATION_REQUEST_TIMEOUT)
+                    if vf_module_instantiation.failed:
+                        self._logger.error("VfModule instantiation %s failed", vf_module.name)
+                        raise onap_test_exceptions.VfModuleInstantiateException
+                except TimeoutError:
+                    self._logger.error("VfModule instantiation %s timed out", vf_module.name)
+                    raise onap_test_exceptions.VfModuleInstantiateException
 
     @YamlTemplateBaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
@@ -164,16 +167,14 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
                 self._logger.info("Delete VF Module %s",
                                   vf_module.name)
                 vf_module_deletion = vf_module.delete()
-                nb_try = 0
-                nb_try_max = 30
 
-                while not vf_module_deletion.finished and nb_try < nb_try_max:
-                    self._logger.info("Wait for vf module deletion")
-                    nb_try += 1
-                    time.sleep(20)
-                if vf_module_deletion.finished:
+                try:
+                    vf_module_deletion.wait_for_finish(settings.ORCHESTRATION_REQUEST_TIMEOUT)
+                    if vf_module_deletion.failed:
+                        self._logger.error("VfModule deletion %s failed", vf_module.name)
+                        raise onap_test_exceptions.VfModuleCleanupException
                     self._logger.info("VfModule %s deleted", vf_module.name)
-                else:
-                    self._logger.error("VfModule deletion %s failed", vf_module.name)
+                except TimeoutError:
+                    self._logger.error("VfModule deletion %s timed out", vf_module.name)
                     raise onap_test_exceptions.VfModuleCleanupException
         super().cleanup()
