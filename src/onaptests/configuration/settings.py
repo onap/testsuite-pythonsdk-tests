@@ -46,4 +46,4 @@ K8S_CONFIG = None  # None means it will use default config (~/.kube/config)
 K8S_NAMESPACE = "onap"  # Kubernetes namespace
 #SOCK_HTTP = "socks5h://127.0.0.1:8091"
 
-ORCHESTRATION_REQUEST_TIMEOUT = 60.0 * 10  # Ten minutes in seconds
+ORCHESTRATION_REQUEST_TIMEOUT = 60.0 * 15  # 15 minutes in seconds
