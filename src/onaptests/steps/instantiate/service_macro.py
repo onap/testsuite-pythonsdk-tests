@@ -179,8 +179,13 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
             tenant=tenant,
             service_instance_name=self.service_instance_name
         )
-        service_instantiation.wait_for_finish(timeout=settings.INSTANTIATION_TIMEOUT)
+        try:
+            service_instantiation.wait_for_finish(timeout=settings.ORCHESTRATION_REQUEST_TIMEOUT)
+        except TimeoutError:
+            self._logger.error("Service instantiation %s timed out", self.service_instance_name)
+            raise onap_test_exceptions.ServiceInstantiateException
         if service_instantiation.failed:
+            self._logger.error("Service instantiation %s failed", self.service_instance_name)
             raise onap_test_exceptions.ServiceInstantiateException
         else:
             service_subscription: ServiceSubscription = customer.get_service_subscription_by_service_type(self.service_name)
@@ -195,7 +200,11 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
 
         """
         service_deletion = self._service_instance.delete()
-        service_deletion.wait_for_finish(timeout=600)
+        try:
+            service_deletion.wait_for_finish(timeout=settings.ORCHESTRATION_REQUEST_TIMEOUT)
+        except TimeoutError:
+            self._logger.error("Service deletion %s timed out", self._service_instance_name)
+            raise onap_test_exceptions.ServiceCleanupException
         if service_deletion.finished:
             self._logger.info("Service %s deleted", self._service_instance_name)
         else:
