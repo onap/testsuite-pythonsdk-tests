@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d62be41_b8475b1f",
+        "filename": "src/onaptests/steps/onboard/cds.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-03-22T15:33:31Z",
+      "side": 1,
+      "message": "k8s_client calls a method with self.k8s_client as param...I need to make a test...",
+      "revId": "dad0aa604954891777cab4d777106bcfd62e29c7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
