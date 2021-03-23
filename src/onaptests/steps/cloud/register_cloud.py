@@ -46,34 +46,32 @@ class RegisterCloudRegionStep(BaseStep):
          - TENANT_NAME.
         """
         super().execute()
-        try:
-            cloud_region: CloudRegion = CloudRegion.get_by_id(
-                cloud_owner=settings.CLOUD_REGION_CLOUD_OWNER,
-                cloud_region_id=settings.CLOUD_REGION_ID)
-        except ResourceNotFound:
-            cloud_region.add_esr_system_info(
-                esr_system_info_id=str(uuid4()),
-                user_name=settings.VIM_USERNAME,
-                password=settings.VIM_PASSWORD,
-                system_type="VIM",
-                service_url=settings.VIM_SERVICE_URL,
-                ssl_insecure=False,
-                system_status="active",
-                cloud_domain=settings.CLOUD_DOMAIN,
-                default_tenant=settings.TENANT_NAME
-            )
-            if settings.USE_MULTICLOUD:
-                self._logger.info("*Multicloud registration *")
-                cloud_region.register_to_multicloud()
-                time.sleep(20)
-                nb_try = 0
-                nb_try_max = 3
-                while nb_try < nb_try_max:
-                    if not cloud_region.tenants:
-                        time.sleep(20)
-                    else:
-                        break
-                    nb_try += 1
+        cloud_region: CloudRegion = CloudRegion.get_by_id(
+            cloud_owner=settings.CLOUD_REGION_CLOUD_OWNER,
+            cloud_region_id=settings.CLOUD_REGION_ID)
+        cloud_region.add_esr_system_info(
+            esr_system_info_id=str(uuid4()),
+            user_name=settings.VIM_USERNAME,
+            password=settings.VIM_PASSWORD,
+            system_type="VIM",
+            service_url=settings.VIM_SERVICE_URL,
+            ssl_insecure=False,
+            system_status="active",
+            cloud_domain=settings.CLOUD_DOMAIN,
+            default_tenant=settings.TENANT_NAME
+        )
+        if settings.USE_MULTICLOUD:
+            self._logger.info("*Multicloud registration *")
+            cloud_region.register_to_multicloud()
+            time.sleep(20)
+            nb_try = 0
+            nb_try_max = 3
+            while nb_try < nb_try_max:
+                if not cloud_region.tenants:
+                    time.sleep(20)
+                else:
+                    break
+                nb_try += 1
 
         # Retrieve the tenant, created by multicloud registration
         # if it does not exist, create it
@@ -82,9 +80,10 @@ class RegisterCloudRegionStep(BaseStep):
         except ResourceNotFound:
             self._logger.warning("Impossible to retrieve the Specificed Tenant")
             self._logger.debug("If no multicloud selected, add the tenant")
-            cloud_region.add_tenant(
-                tenant_id=settings.TENANT_ID,
-                tenant_name=settings.TENANT_NAME)
+            if not settings.USE_MULTICLOUD:
+                cloud_region.add_tenant(
+                    tenant_id=settings.TENANT_ID,
+                    tenant_name=settings.TENANT_NAME)
 
         # be sure that an availability zone has been created
         # if not, create it
