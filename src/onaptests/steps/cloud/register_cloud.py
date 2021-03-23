@@ -37,6 +37,7 @@ class RegisterCloudRegionStep(BaseStep):
          - TENANT_NAME.
         """
         super().execute()
+<<<<<<< HEAD   (ffb384 [RELEASE] Fix pbr version to avoid docker build error)
         self._logger.info("*Check if cloud region exists *")
         try:
             cloud_region: CloudRegion = CloudRegion.get_by_id(
@@ -73,12 +74,41 @@ class RegisterCloudRegionStep(BaseStep):
                 nb_try = 0
                 nb_try_max = 3
                 while nb_try < nb_try_max:
+=======
+        cloud_region: CloudRegion = CloudRegion.get_by_id(
+            cloud_owner=settings.CLOUD_REGION_CLOUD_OWNER,
+            cloud_region_id=settings.CLOUD_REGION_ID)
+        cloud_region.add_esr_system_info(
+            esr_system_info_id=str(uuid4()),
+            user_name=settings.VIM_USERNAME,
+            password=settings.VIM_PASSWORD,
+            system_type="VIM",
+            service_url=settings.VIM_SERVICE_URL,
+            ssl_insecure=False,
+            system_status="active",
+            cloud_domain=settings.CLOUD_DOMAIN,
+            default_tenant=settings.TENANT_NAME
+        )
+        if settings.USE_MULTICLOUD:
+            self._logger.info("*Multicloud registration *")
+            cloud_region.register_to_multicloud()
+            time.sleep(20)
+            nb_try = 0
+            nb_try_max = 3
+            while nb_try < nb_try_max:
+                try:
+>>>>>>> CHANGE (0a315a Basic VM macro)
                     if not cloud_region.tenants:
+                        self._logger.debug("No tenats available, check one more time")
                         time.sleep(20)
                     else:
                         break
-                    nb_try += 1
+                except ResourceNotFound:
+                    self._logger.debug("No tenats available, check one more time")
+                    time.sleep(20)
+                nb_try += 1
 
+<<<<<<< HEAD   (ffb384 [RELEASE] Fix pbr version to avoid docker build error)
             # Retrieve the tenant, created by multicloud registration
             # if it does not exist, create it
             try:
@@ -89,6 +119,21 @@ class RegisterCloudRegionStep(BaseStep):
                 cloud_region.add_tenant(
                     tenant_id=settings.TENANT_ID,
                     tenant_name=settings.TENANT_NAME)
+=======
+        # Retrieve the tenant, created by multicloud registration
+        # if it does not exist, create it
+        try:
+            cloud_region.get_tenant(settings.TENANT_ID)
+        except ResourceNotFound:
+            self._logger.warning("Impossible to retrieve the Specificed Tenant")
+            self._logger.debug("If no multicloud selected, add the tenant, reraise otherwise")
+            if not settings.USE_MULTICLOUD:
+                cloud_region.add_tenant(
+                    tenant_id=settings.TENANT_ID,
+                    tenant_name=settings.TENANT_NAME)
+            else:
+                raise
+>>>>>>> CHANGE (0a315a Basic VM macro)
 
             # be sure that an availability zone has been created
             # if not, create it

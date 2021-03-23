@@ -3,7 +3,12 @@ import logging.config
 import time
 
 from abc import ABC, abstractmethod
+<<<<<<< HEAD   (ffb384 [RELEASE] Fix pbr version to avoid docker build error)
 from typing import List
+=======
+from typing import Iterator, List, Optional
+from onapsdk.aai.business import Customer
+>>>>>>> CHANGE (0a315a Basic VM macro)
 from onapsdk.configuration import settings
 from onapsdk.aai.business import Customer
 
@@ -122,19 +127,38 @@ class BaseStep(ABC):
     def store_state(cls, fun):
         def wrapper(self, *args, **kwargs):
             try:
+<<<<<<< HEAD   (ffb384 [RELEASE] Fix pbr version to avoid docker build error)
                 start_time: float = time.time()
+=======
+                if cleanup:
+                    self._start_cleanup_time = time.time()
+                execution_status: Optional[ReportStepStatus] = None
+>>>>>>> CHANGE (0a315a Basic VM macro)
                 ret = fun(self, *args, **kwargs)
-                execution_status: ReportStepStatus = ReportStepStatus.PASS
+                execution_status = ReportStepStatus.PASS
                 return ret
+<<<<<<< HEAD   (ffb384 [RELEASE] Fix pbr version to avoid docker build error)
             except Exception:
                 execution_status: ReportStepStatus = ReportStepStatus.FAIL
+=======
+            except SubstepExecutionException:
+                execution_status = ReportStepStatus.PASS if cleanup else ReportStepStatus.NOT_EXECUTED
+                raise
+            except (OnapTestException, SDKException):
+                execution_status = ReportStepStatus.FAIL
+>>>>>>> CHANGE (0a315a Basic VM macro)
                 raise
             finally:
                 self.reports_collection.put(
                     Report(
                         step_description=f"[{self.component}] {self.name}: {self.description}",
+<<<<<<< HEAD   (ffb384 [RELEASE] Fix pbr version to avoid docker build error)
                         step_execution_status=execution_status,
                         step_execution_duration=time.time() - start_time
+=======
+                        step_execution_status=execution_status if execution_status else ReportStepStatus.FAIL,
+                        step_execution_duration=time.time() - self._start_execution_time
+>>>>>>> CHANGE (0a315a Basic VM macro)
                     )
                 )
         return wrapper
