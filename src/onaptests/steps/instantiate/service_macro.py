@@ -1,5 +1,6 @@
 
 import time
+from typing import List
 from uuid import uuid4
 from onapsdk.aai.business.service import ServiceInstance
 from yaml import load
@@ -11,7 +12,7 @@ from onapsdk.aai.cloud_infrastructure.tenant import Tenant
 from onapsdk.configuration import settings
 from onapsdk.exceptions import ResourceNotFound
 from onapsdk.sdc.service import Service
-from onapsdk.so.instantiation import ServiceInstantiation
+from onapsdk.so.instantiation import InstantiationParameter, ServiceInstantiation, VfmoduleParameters, VnfParameters
 from onapsdk.vid import LineOfBusiness, Platform, Project
 from onaptests.steps.cloud.customer_service_subscription_create import CustomerServiceSubscriptionCreateStep
 
@@ -168,6 +169,14 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
                 "Service Distribution for %s failed !!",service.name)
             raise onap_test_exceptions.ServiceDistributionException
 
+        vnf_params_list: List[VnfParameters] = []
+        for vnf_data in self.yaml_template[self.service_name].get("vnfs", []):
+            vnf_params_list.append(VnfParameters(
+                vnf_data["vnf_name"],
+                [],
+                [VfmoduleParameters(vnf_data["vf_module_name"], [InstantiationParameter(name=vnf_parameter_data["name"], value=vnf_parameter_data["value"]) for vnf_parameter_data in vnf_data["vnf_parameters"]])]
+            ))
+
         service_instantiation = ServiceInstantiation.instantiate_macro(
             service,
             customer=customer,
@@ -177,7 +186,8 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
             platform=platform,
             cloud_region=cloud_region,
             tenant=tenant,
-            service_instance_name=self.service_instance_name
+            service_instance_name=self.service_instance_name,
+            vnf_parameters=vnf_params_list
         )
         try:
             service_instantiation.wait_for_finish(timeout=settings.ORCHESTRATION_REQUEST_TIMEOUT)
@@ -199,15 +209,16 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
             Exception: Service cleaning failed
 
         """
-        service_deletion = self._service_instance.delete()
-        try:
-            service_deletion.wait_for_finish(timeout=settings.ORCHESTRATION_REQUEST_TIMEOUT)
-        except TimeoutError:
-            self._logger.error("Service deletion %s timed out", self._service_instance_name)
-            raise onap_test_exceptions.ServiceCleanupException
-        if service_deletion.finished:
-            self._logger.info("Service %s deleted", self._service_instance_name)
-        else:
-            self._logger.error("Service deletion %s failed", self._service_instance_name)
-            raise onap_test_exceptions.ServiceCleanupException
+        if self._service_instance:
+            service_deletion = self._service_instance.delete()
+            try:
+                service_deletion.wait_for_finish(timeout=settings.ORCHESTRATION_REQUEST_TIMEOUT)
+            except TimeoutError:
+                self._logger.error("Service deletion %s timed out", self._service_instance_name)
+                raise onap_test_exceptions.ServiceCleanupException
+            if service_deletion.finished:
+                self._logger.info("Service %s deleted", self._service_instance_name)
+            else:
+                self._logger.error("Service deletion %s failed", self._service_instance_name)
+                raise onap_test_exceptions.ServiceCleanupException
         super().cleanup()
