@@ -5,7 +5,7 @@ import logging.config
 import time
 
 from abc import ABC, abstractmethod
-from typing import Iterator, List
+from typing import Iterator, List, Optional
 from onapsdk.aai.business import Customer
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SDKException, SettingsError
@@ -168,14 +168,15 @@ class BaseStep(ABC):
             try:
                 if cleanup:
                     self._start_cleanup_time = time.time()
+                execution_status: Optional[ReportStepStatus] = None
                 ret = fun(self, *args, **kwargs)
-                execution_status: ReportStepStatus = ReportStepStatus.PASS
+                execution_status = ReportStepStatus.PASS
                 return ret
             except SubstepExecutionException:
-                execution_status: ReportStepStatus = ReportStepStatus.PASS if cleanup else ReportStepStatus.NOT_EXECUTED
+                execution_status = ReportStepStatus.PASS if cleanup else ReportStepStatus.NOT_EXECUTED
                 raise
             except (OnapTestException, SDKException):
-                execution_status: ReportStepStatus = ReportStepStatus.FAIL
+                execution_status = ReportStepStatus.FAIL
                 raise
             finally:
                 if cleanup:
@@ -191,7 +192,7 @@ class BaseStep(ABC):
                         self._start_execution_time = time.time()
                     self._execution_report = Report(
                         step_description=f"[{self.component}] {self.name}: {self.description}",
-                        step_execution_status=execution_status,
+                        step_execution_status=execution_status if execution_status else ReportStepStatus.FAIL,
                         step_execution_duration=time.time() - self._start_execution_time
                     )
         return wrapper
