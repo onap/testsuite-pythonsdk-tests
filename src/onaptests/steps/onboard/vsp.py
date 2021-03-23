@@ -91,7 +91,7 @@ class YamlTemplateVspOnboardStep(YamlTemplateBaseStep):
         if "vnfs" in self.yaml_template:
             for vnf in self.yaml_template["vnfs"]:
                 with open(
-                    sys.path[-1] + "/" + vnf["heat_files_to_upload"], "rb") as package:
+                    "/home/ubuntu/onap/repos/pythonsdk-tests/src/onaptests/templates/heat-files/ubuntu_moje.zip", "rb") as package:
                     vsp: Vsp = Vsp(name=f"{vnf['vnf_name']}_VSP",
                                    vendor=vendor,
                                    package=package)
