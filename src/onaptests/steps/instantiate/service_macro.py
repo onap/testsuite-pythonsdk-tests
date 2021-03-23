@@ -1,5 +1,6 @@
 
 import time
+from typing import List
 from uuid import uuid4
 from onapsdk.aai.business.service import ServiceInstance
 from yaml import load
@@ -11,7 +12,7 @@ from onapsdk.aai.cloud_infrastructure.tenant import Tenant
 from onapsdk.configuration import settings
 from onapsdk.exceptions import ResourceNotFound
 from onapsdk.sdc.service import Service
-from onapsdk.so.instantiation import ServiceInstantiation
+from onapsdk.so.instantiation import InstantiationParameter, ServiceInstantiation, VfmoduleParameters, VnfParameters
 from onapsdk.vid import LineOfBusiness, Platform, Project
 from onaptests.steps.cloud.customer_service_subscription_create import CustomerServiceSubscriptionCreateStep
 
@@ -39,13 +40,12 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
         if not settings.ONLY_INSTANTIATE:
             self.add_step(YamlTemplateServiceOnboardStep(cleanup))
 
-            are_pnfs: bool = "pnfs" in self.yaml_template[self.service_name]
             if any(
                 filter(lambda x: x in self.yaml_template[self.service_name].keys(),
                        ["vnfs", "networks"])):
                 # can additionally contain "pnfs", no difference
                 self.add_step(ConnectServiceSubToCloudRegionStep(cleanup))
-            elif are_pnfs:  # only pnfs
+            else:  # only pnfs
                 self.add_step(CustomerServiceSubscriptionCreateStep(cleanup))
 
 
@@ -126,7 +126,9 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
         super().execute()
         service = Service(self.service_name)
         customer: Customer = Customer.get_by_global_customer_id(settings.GLOBAL_CUSTOMER_ID)
-        if any(["networks", "vnfs"]) in self.yaml_template[self.service_name]:
+        if any(
+                filter(lambda x: x in self.yaml_template[self.service_name].keys(),
+                       ["vnfs", "networks"])):
             cloud_region: CloudRegion = CloudRegion.get_by_id(
                 cloud_owner=settings.CLOUD_REGION_CLOUD_OWNER,
                 cloud_region_id=settings.CLOUD_REGION_ID,
@@ -168,6 +170,16 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
                 "Service Distribution for %s failed !!",service.name)
             raise onap_test_exceptions.ServiceDistributionException
 
+        vnf_params_list: List[VnfParameters] = []
+        for vnf_data in self.yaml_template[self.service_name].get("vnfs", []):
+            vnf_params_list.append(VnfParameters(
+                vnf_data["vnf_name"],
+                [InstantiationParameter(name=parameter["name"], value=parameter["value"]) for parameter in vnf_data.get("vnf_parameters", [])],
+                [VfmoduleParameters(vf_module_data["vf_module_name"],
+                 [InstantiationParameter(name=parameter["name"], value=parameter["value"]) for parameter in vf_module_data.get("parameters", [])]) \
+                     for vf_module_data in vnf_data.get("vf_module_parameters", [])]
+            ))
+
         service_instantiation = ServiceInstantiation.instantiate_macro(
             service,
             customer=customer,
@@ -177,7 +189,9 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
             platform=platform,
             cloud_region=cloud_region,
             tenant=tenant,
-            service_instance_name=self.service_instance_name
+            service_instance_name=self.service_instance_name,
+            vnf_parameters=vnf_params_list,
+            enable_multicloud=settings.USE_MULTICLOUD
         )
         try:
             service_instantiation.wait_for_finish(timeout=settings.ORCHESTRATION_REQUEST_TIMEOUT)
@@ -199,15 +213,16 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
             Exception: Service cleaning failed
 
         """
-        service_deletion = self._service_instance.delete()
-        try:
-            service_deletion.wait_for_finish(timeout=settings.ORCHESTRATION_REQUEST_TIMEOUT)
-        except TimeoutError:
-            self._logger.error("Service deletion %s timed out", self._service_instance_name)
-            raise onap_test_exceptions.ServiceCleanupException
-        if service_deletion.finished:
-            self._logger.info("Service %s deleted", self._service_instance_name)
-        else:
-            self._logger.error("Service deletion %s failed", self._service_instance_name)
-            raise onap_test_exceptions.ServiceCleanupException
+        if self._service_instance:
+            service_deletion = self._service_instance.delete()
+            try:
+                service_deletion.wait_for_finish(timeout=settings.ORCHESTRATION_REQUEST_TIMEOUT)
+            except TimeoutError:
+                self._logger.error("Service deletion %s timed out", self._service_instance_name)
+                raise onap_test_exceptions.ServiceCleanupException
+            if service_deletion.finished:
+                self._logger.info("Service %s deleted", self._service_instance_name)
+            else:
+                self._logger.error("Service deletion %s failed", self._service_instance_name)
+                raise onap_test_exceptions.ServiceCleanupException
         super().cleanup()
