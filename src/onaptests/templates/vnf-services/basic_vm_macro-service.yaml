@@ -1,0 +1,52 @@
+---
+basic_vm_macro:
+    instantiation_type: "Macro"
+    vnfs:
+        - vnf_name: basic_vm_macro
+          properties:
+            controller_actor: "CDS"
+            skip_post_instantiation_configuration: False
+            sdnc_artifact_name: "vnf"
+            sdnc_model_version: "1.0.0"
+            sdnc_model_name: "ubuntu16"
+          vnf_artifact_type: "CONTROLLER_BLUEPRINT_ARCHIVE"
+          vnf_artifact_name: "BASIC_VM_enriched.zip"
+          vnf_artifact_label: "vnfcds"
+          vnf_artifact_file_path: "/tmp/BASIC_VM_enriched.zip"
+          heat_files_to_upload: onaptests/templates/heat-files/ubuntu20/ubuntu20agent.zip
+          vf_module_parameters: 
+            - vf_module_name: base_ubuntu20
+              parameters: [
+                {"name": "ubuntu20_image_name",
+                "value": "ubuntu-agent"
+                },
+                {"name": "ubuntu20_key_name",
+                "value": "cleouverte"
+                },
+                {"name": "ubuntu20_pub_key",
+                "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAA\
+  BAQDY15cdBmIs2XOpe4EiFCsaY6bmUmK/GysMoLl4UG51JCfJwvwoWCoA+6mDIbymZxhxq9IGx\
+  ilp/yTA6WQ9s/5pBag1cUMJmFuda9PjOkXl04jgqh5tR6I+GZ97AvCg93KAECis5ubSqw1xOCj4\
+  utfEUtPoF1OuzqM/lE5mY4N6VKXn+fT7pCD6cifBEs6JHhVNvs5OLLp/tO8Pa3kKYQOdyS0xc3r\
+  h+t2lrzvKUSWGZbX+dLiFiEpjsUL3tDqzkEMNUn4pdv69OJuzWHCxRWPfdrY9Wg0j3mJesP29EBh\
+  t+w+EC9/kBKq+1VKdmsXUXAcjEvjovVL8l1BrX3BY0R8D imported-openssh-key"
+                },
+                {"name": "ubuntu20_flavor_name",
+                "value": "m1.smaller"
+                },
+                {"name": "VM_name",
+                "value": "ubuntu20agent-VM-01"
+                },
+                {"name": "vnf_id",
+                "value": "ubuntu20agent-VNF-instance"
+                },
+                {"name": "vf_module_id",
+                "value": "ubuntu20agent-vfmodule-instance"
+                },
+                {"name": "vnf_name",
+                "value": "ubuntu20agent-VNF"
+                },
+                {"name": "admin_plane_net_name",
+                "value": "admin"
+                }
+              ]
