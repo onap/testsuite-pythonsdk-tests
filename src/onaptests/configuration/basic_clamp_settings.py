@@ -6,6 +6,13 @@ from .settings import * # pylint: disable=W0614
 """ Specific Basic clamp settings."""
 CLEANUP_FLAG = False
 CLAMP_DISTRIBUTION_TIMER = 10
+
+# pylint: disable=bad-whitespace
+# The ONAP part
+SERVICE_DETAILS=("Onboarding, enriching a model with TCA." +
+                 "Design a loop with Clamp and deploy it in Policy and DCAE")
+SERVICE_COMPONENTS="SDC, CLAMP, POLICY, DCAE, DMAAP"
+
 VENDOR_NAME = "basiclamp_vendor"
 
 VSP_NAME = "basiclamp_vsp"
@@ -30,12 +37,10 @@ OPERATIONAL_POLICIES = [
   }
 ]
 
-# SERVICE_NAME = "ubuntu18agent"
-
 # if a yaml file is define, retrieve info from this yaml files
 # if not declare the parameters in the settings
 SERVICE_YAML_TEMPLATE = (sys.path[-1] + "/onaptests/templates/vnf-services/" +
-                         "ubuntu18agent-service.yaml")
+                         "basic_clamp-service.yaml")
 CONFIGURATION_PATH = sys.path[-1] + "/onaptests/configuration/"
 
 try:
