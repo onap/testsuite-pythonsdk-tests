@@ -11,11 +11,10 @@ from onapsdk.configuration import settings
 class InstantiateLoop():
     """class instantiating a closed loop in clamp."""
 
-    def __init__(self, template: str, loop_name: str, operational_policies: list, cert: tuple):
+    def __init__(self, template: str, loop_name: str, operational_policies: list):
         self.template=template
         self.loop_name=loop_name
         self.operational_policies=operational_policies
-        self.cert=cert
 
         self._logger: logging.Logger = logging.getLogger("")
         logging.config.dictConfig(settings.LOG_CONFIG)
@@ -71,8 +70,7 @@ class InstantiateLoop():
         """Instantiate the control loop."""
         loop = LoopInstance(template=self.template,
                             name=self.loop_name,
-                            details={},
-                            cert=self.cert)
+                            details={})
         details = loop.create()
         if details:
             self._logger.info("Loop instance %s successfully created !!", self.loop_name)
