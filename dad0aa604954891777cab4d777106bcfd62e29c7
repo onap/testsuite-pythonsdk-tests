@@ -34,6 +34,24 @@
       "revId": "dad0aa604954891777cab4d777106bcfd62e29c7",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "207a2869_99fab088",
+        "filename": "src/onaptests/steps/onboard/cds.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-04-01T05:59:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cf3b9c57_cf5fedfa",
+      "revId": "dad0aa604954891777cab4d777106bcfd62e29c7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
