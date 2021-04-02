@@ -151,8 +151,8 @@ class CbaEnrichStep(CDSBaseStep):
         """
         super().execute()
         blueprint: Blueprint = Blueprint.load_from_file(settings.CDS_CBA_UNENRICHED)
-        blueprint.enrich()
-        blueprint.save(settings.CDS_CBA_ENRICHED)
+        enriched: Blueprint = blueprint.enrich()
+        enriched.save(settings.CDS_CBA_ENRICHED)
 
     @BaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
@@ -163,3 +163,29 @@ class CbaEnrichStep(CDSBaseStep):
         """
         super().cleanup()
         Path(settings.CDS_CBA_ENRICHED).unlink()
+
+
+class CbaPublishStep(CDSBaseStep):
+    """Publish CBA file step."""
+
+    def __init__(self, cleanup=False) -> None:
+        """Initialize CBA publish step."""
+        super().__init__(cleanup=cleanup)
+        self.add_step(CbaEnrichStep(cleanup=cleanup))
+
+    @property
+    def description(self) -> str:
+        """Step description."""
+        return "Publish CBA file."
+
+    @BaseStep.store_state
+    def execute(self) -> None:
+        """Enrich CBA file.
+
+        Use settings values:
+         - CDS_DD_FILE.
+
+        """
+        super().execute()
+        blueprint: Blueprint = Blueprint.load_from_file(settings.CDS_CBA_ENRICHED)
+        blueprint.publish()
