@@ -3,6 +3,7 @@
 
 from abc import ABC
 from pathlib import Path
+from typing import Optional
 
 from kubernetes import client, config
 from onapsdk.cds import Blueprint, DataDictionarySet
@@ -24,6 +25,12 @@ class CDSBaseStep(BaseStep, ABC):
 class ExposeCDSBlueprintprocessorNodePortStep(CDSBaseStep):
     """Expose CDS blueprintsprocessor port."""
 
+    def __init__(self, cleanup: bool) -> None:
+        """Initialize step."""
+        super().__init__(cleanup=cleanup)
+        self.service_name: str = "cds-blueprints-processor-http"
+        self.client: Optional[client.CoreV1Api] = None
+
     @property
     def description(self) -> str:
         """Step description."""
@@ -40,12 +47,35 @@ class ExposeCDSBlueprintprocessorNodePortStep(CDSBaseStep):
         """
         super().execute()
         config.load_kube_config(settings.K8S_CONFIG)
-        k8s_client = client.CoreV1Api()
-        k8s_client.patch_namespaced_service(
-            "cds-blueprints-processor-http",
+        self.k8s_client = client.CoreV1Api()
+        self.k8s_client.patch_namespaced_service(
+            self.service_name,
             settings.K8S_NAMESPACE,
             {"spec": {"ports": [{"port": 8080, "nodePort": 30449}], "type": "NodePort"}}
         )
+
+    def cleanup(self) -> None:
+        """Step cleanup.
+
+        Restore CDS blueprintprocessor service.
+
+        """
+        self.k8s_client.patch_namespaced_service(
+            self.service_name,
+            settings.K8S_NAMESPACE,
+            [
+                {
+                    "op": "remove",
+                    "path": "/spec/ports/0/nodePort"
+                },
+                {
+                    "op": "replace",
+                    "path": "/spec/type",
+                    "value": "ClusterIP"
+                }
+            ]
+        )
+        return super().cleanup()
 
 
 class BootstrapBlueprintprocessor(CDSBaseStep):
