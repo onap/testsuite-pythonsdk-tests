@@ -78,3 +78,11 @@ class SubstepExecutionException(OnapTestException):
 class EnvironmentCleanupException(OnapTestException):
     """Test environment cleanup exception."""
     error_message="Test couldn't finish a cleanup"
+
+class PolicyException(OnapTestException):
+    """Policy exception."""
+    error_message="Problem with policy module"
+
+class DcaeException(OnapTestException):
+    """DCAE exception."""
+    error_message="Problem with DCAE module"

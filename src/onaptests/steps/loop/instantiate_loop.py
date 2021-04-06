@@ -6,6 +6,7 @@ import logging.config
 
 from onapsdk.clamp.loop_instance import LoopInstance
 from onapsdk.configuration import settings
+from onaptests.utils.exceptions import OnapTestException
 
 
 class InstantiateLoop():
@@ -57,14 +58,14 @@ class InstantiateLoop():
 
         else:
             self._logger.error("An error occured while submitting the loop instance")
-            exit(1)
+            raise OnapTestException.PolicyException
         self._logger.info("******** DEPLOY LOOP INSTANCE *******")
         deploy = loop.deploy_microservice_to_dcae()
         if deploy:
             self._logger.info("Loop instance %s successfully deployed on DCAE !!", self.loop_name)
         else:
             self._logger.error("An error occured while deploying the loop instance")
-            exit(1)
+            raise OnapTestException.DcaeException
 
     def instantiate_loop(self):
         """Instantiate the control loop."""
