@@ -1,0 +1,7 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Bartek Grzybowski <b.grzybowski@partner.samsung.com>
+Submitted-by: Sylvain Desbureaux <sylvain.desbureaux@orange.com>
+Submitted-at: Tue, 06 Apr 2021 12:34:42 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/testsuite/pythonsdk-tests/+/120198
+Project: testsuite/pythonsdk-tests
+Branch: refs/heads/master
