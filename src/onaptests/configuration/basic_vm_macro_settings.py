@@ -15,7 +15,7 @@ CDS_CBA_UNENRICHED = Path(Path(__file__).parent.parent, "templates/artifacts/bas
 CDS_CBA_ENRICHED = "/tmp/BASIC_VM_enriched.zip"
 
 ONLY_INSTANTIATE = False
-USE_MULTICLOUD = True
+USE_MULTICLOUD = False
 
 VENDOR_NAME = "basicvm_macro_vendor"
 
