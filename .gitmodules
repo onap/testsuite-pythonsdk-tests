@@ -1,3 +1,0 @@
-[submodule "src/onaptests/masspnfsimulator"]
-	path = src/onaptests/masspnfsimulator
-	url = ../../integration/simulators/masspnf-simulator
