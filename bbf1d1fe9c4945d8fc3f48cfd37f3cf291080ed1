@@ -1,0 +1,9 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Verified+1: Michal Jagiello <michal.jagiello@t-mobile.pl>
+Code-Review+1: Sylvain Desbureaux <sylvain.desbureaux@orange.com>
+Code-Review+2: Michal Jagiello <michal.jagiello@t-mobile.pl>
+Submitted-by: Michal Jagiello <michal.jagiello@t-mobile.pl>
+Submitted-at: Thu, 08 Apr 2021 08:41:50 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/testsuite/pythonsdk-tests/+/120301
+Project: testsuite/pythonsdk-tests
+Branch: refs/heads/master
