@@ -5,6 +5,7 @@ from .settings import *  # pylint: disable=W0614
 
 ONLY_INSTANTIATE = False
 CLEANUP_FLAG = True
+USE_MULTICLOUD = False
 
 VENDOR_NAME = "pnf_macro_vendor"
 SERVICE_NAME = "test_pnf_macro"
@@ -43,3 +44,7 @@ K8S_VERSION = "1.0"
 K8S_CONFIG = str(Path(Path(__file__).parent.parent, "templates/artifacts/config"))
 
 SERVICE_INSTANCE_NAME = "TestPNFMacroInstantiation"
+
+DCAE_VES_COLLECTOR_POD_NAME = "xdcae-ves-collector"
+PNF_WAIT_TIME = 60.0
+PNF_REGISTRATION_NUMBER_OF_TRIES = 5
