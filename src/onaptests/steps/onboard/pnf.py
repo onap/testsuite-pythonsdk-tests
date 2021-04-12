@@ -3,8 +3,9 @@
 from onapsdk.configuration import settings
 from onapsdk.sdc.pnf import Pnf
 from onapsdk.sdc.vendor import Vendor
+from onapsdk.sdc.vsp import Vsp
 from ..base import BaseStep, YamlTemplateBaseStep
-from .vendor import VendorOnboardStep
+from .vsp import VspOnboardStep, YamlTemplateVspOnboardStep
 
 
 class PnfOnboardStep(BaseStep):
@@ -21,7 +22,7 @@ class PnfOnboardStep(BaseStep):
 
         """
         super().__init__(cleanup=cleanup)
-        self.add_step(VendorOnboardStep(cleanup=cleanup))
+        self.add_step(VspOnboardStep(cleanup=cleanup))
 
     @property
     def description(self) -> str:
@@ -72,7 +73,7 @@ class YamlTemplatePnfOnboardStep(YamlTemplateBaseStep):
 
         """
         super().__init__(cleanup=cleanup)
-        self.add_step(VendorOnboardStep(cleanup=cleanup))
+        self.add_step(YamlTemplateVspOnboardStep(cleanup=cleanup))
 
     @property
     def description(self) -> str:
@@ -103,7 +104,11 @@ class YamlTemplatePnfOnboardStep(YamlTemplateBaseStep):
         if "pnfs" in self.yaml_template:
             vendor: Vendor = Vendor(name=settings.VENDOR_NAME)
             for pnf in self.yaml_template["pnfs"]:
-                pnf_obj: Pnf = Pnf(name=pnf["pnf_name"], vendor=vendor)
+                if "heat_files_to_upload" in pnf:
+                    vsp: Vsp = Vsp(name=f"{pnf['pnf_name']}_VSP")
+                else:
+                    vsp = None
+                pnf_obj: Pnf = Pnf(name=pnf["pnf_name"], vendor=vendor, vsp=vsp)
                 pnf_obj.create()
                 pnf_obj.add_deployment_artifact(
                     artifact_type=pnf["pnf_artifact_type"],

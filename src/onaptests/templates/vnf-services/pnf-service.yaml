@@ -1,0 +1,13 @@
+---
+test_pnf_macro:
+      tosca_file_from_SDC: service-basic_network-template
+      version: "1.0"
+      subscription_type: "net"
+      instantiation_type: "Macro"
+      pnfs:
+            - pnf_name: "test-pnf"
+              heat_files_to_upload: onaptests/templates/artifacts/pNF.csar
+              pnf_artifact_type: "CONTROLLER_BLUEPRINT_ARCHIVE"
+              pnf_artifact_name: "CBA_enriched.zip"
+              pnf_artifact_label: "cbapnf"
+              pnf_artifact_file_path: "/tmp/PNF_DEMO_enriched.zip"
