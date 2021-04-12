@@ -96,3 +96,12 @@ class YamlTemplateVspOnboardStep(YamlTemplateBaseStep):
                                    vendor=vendor,
                                    package=package)
                     vsp.onboard()
+        elif "pnfs" in self.yaml_template:
+            for pnf in self.yaml_template["pnfs"]:
+                if "heat_files_to_upload" in pnf:
+                    with open(
+                        sys.path[-1] + "/" + pnf["heat_files_to_upload"], "rb") as package:
+                        vsp: Vsp = Vsp(name=f"{pnf['pnf_name']}_VSP",
+                                    vendor=vendor,
+                                    package=package)
+                        vsp.onboard()
