@@ -43,9 +43,12 @@ class BasicVm(testcase.TestCase):
             else:
                 self.__logger.info("No cleanup requested. Test completed.")
                 self.result = 100
-        except (OnapTestException, SDKException) as exc:
+        except OnapTestException as exc:
             self.result = 0
             self.__logger.error(exc.error_message)
+        except SDKException:
+            self.result = 0
+            self.__logger.error("SDK Exception")
         finally:
             self.stop_time = time.time()
 
