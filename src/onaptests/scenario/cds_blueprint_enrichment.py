@@ -35,10 +35,14 @@ class CDSBlueprintEnrichment(testcase.TestCase):
         try:
             self.test.execute()
             self.result = 100
-        except (OnapTestException, SDKException) as exc:
+        except OnapTestException as exc:
             self.result = 0
             self.__logger.error(exc.error_message)
-        self.stop_time = time.time()
+        except SDKException:
+            self.result = 0
+            self.__logger.error("SDK Exception")
+        finally:
+            self.stop_time = time.time()
 
     def clean(self):
         """Clean Additional resources if needed."""

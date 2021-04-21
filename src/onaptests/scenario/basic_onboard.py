@@ -34,9 +34,12 @@ class BasicOnboard(testcase.TestCase):
             self.test.execute()
             self.__logger.info("VNF basic_vm successfully onboarded")
             self.result = 100
-        except (OnapTestException, SDKException) as exc:
+        except OnapTestException as exc:
             self.result = 0
             self.__logger.error(exc.error_message)
+        except SDKException:
+            self.result = 0
+            self.__logger.error("SDK Exception")
         finally:
             self.stop_time = time.time()
 
