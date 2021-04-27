@@ -7,6 +7,8 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 """Clamp Scenario class."""
 from yaml import load
+import random
+import string
 import time
 
 from onapsdk.clamp.clamp_element import Clamp
@@ -93,8 +95,11 @@ class ClampStep(YamlTemplateBaseStep):
 
     def instantiate_clamp(self, loop_template: str, loop_name: str, operational_policies: list):
         """Instantite a closed loopin CLAMP."""
+        letters = string.ascii_letters
+        loop_name_random = loop_name.join(
+            random.choice(letters) for i in range(6))
         loop = InstantiateLoop(template=loop_template,
-                               loop_name=loop_name,
+                               loop_name=loop_name_random,
                                operational_policies=operational_policies)
         return loop.instantiate_loop()
 
