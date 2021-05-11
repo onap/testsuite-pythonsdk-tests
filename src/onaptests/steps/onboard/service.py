@@ -53,6 +53,7 @@ class ServiceOnboardStep(BaseStep):
         """
         super().execute()
         service: Service = Service(name=settings.SERVICE_NAME, instantiation_type=settings.SERVICE_INSTANTIATION_TYPE)
+<<<<<<< HEAD   (ffb384 [RELEASE] Fix pbr version to avoid docker build error)
         service.create()
         if settings.VL_NAME != "":
             vl: Vl = Vl(name=settings.VL_NAME)
@@ -65,6 +66,26 @@ class ServiceOnboardStep(BaseStep):
             service.add_resource(pnf)
         service.checkin()
         service.onboard()
+=======
+        if not service.created:
+            service.create()
+            if settings.VL_NAME != "":
+                vl: Vl = Vl(name=settings.VL_NAME)
+                service.add_resource(vl)
+            if settings.VF_NAME != "":
+                vf: Vf = Vf(name=settings.VF_NAME)
+                service.add_resource(vf)
+            if settings.PNF_NAME != "":
+                pnf: Pnf = Pnf(name=settings.PNF_NAME)
+                service.add_resource(pnf)
+        # If the service is already distributed, do not try to checkin/onboard (replay of tests)
+        # checkin is done if needed
+        # If service is replayed, no need to try to re-onboard the model
+        if not service.distributed:
+            time.sleep(30)
+            service.checkin()
+            service.onboard()
+>>>>>>> CHANGE (ed9b03 [TEST] Do not try to recreate already created SDC resources)
 
 
 class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
@@ -133,12 +154,32 @@ class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
                 self.yaml_template[self.service_name]["instantiation_type"])
         else:
             instantiation_type: ServiceInstantiationType = ServiceInstantiationType.A_LA_CARTE
+<<<<<<< HEAD   (ffb384 [RELEASE] Fix pbr version to avoid docker build error)
         service: Service = Service(name=settings.SERVICE_NAME, instantiation_type=instantiation_type)
         service.create()
         self.declare_resources(service)
         self.assign_properties(service)
         service.checkin()
         service.onboard()
+=======
+        service: Service = Service(name=self.service_name, instantiation_type=instantiation_type)
+        if not service.created:
+            service.create()
+            self.declare_resources(service)
+            self.assign_properties(service)
+            # If the service is already distributed, do not try to checkin/onboard (replay of tests)
+            # checkin is done if needed
+            # If service is replayed, no need to try to re-onboard the model
+        if not service.distributed:
+            try:
+                service.checkin()
+            except (APIError, ResourceNotFound):
+                # Retry as checkin may be a bit long
+                # Temp workaround to avoid internal race in SDC
+                time.sleep(5)
+                service.checkin()
+            service.onboard()
+>>>>>>> CHANGE (ed9b03 [TEST] Do not try to recreate already created SDC resources)
 
     def declare_resources(self, service: Service) -> None:
         """Declare resources.
