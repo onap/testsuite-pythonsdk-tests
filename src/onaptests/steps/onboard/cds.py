@@ -9,8 +9,10 @@ from kubernetes import client, config
 from onapsdk.cds import Blueprint, DataDictionarySet
 from onapsdk.cds.blueprint_processor import Blueprintprocessor
 from onapsdk.configuration import settings
+import urllib3
 
 from ..base import BaseStep
+from onaptests.utils.exceptions import OnapTestException
 
 
 class CDSBaseStep(BaseStep, ABC):
@@ -48,11 +50,15 @@ class ExposeCDSBlueprintprocessorNodePortStep(CDSBaseStep):
         super().execute()
         config.load_kube_config(settings.K8S_CONFIG)
         self.k8s_client = client.CoreV1Api()
-        self.k8s_client.patch_namespaced_service(
-            self.service_name,
-            settings.K8S_NAMESPACE,
-            {"spec": {"ports": [{"port": 8080, "nodePort": 30449}], "type": "NodePort"}}
-        )
+        try:
+            self.k8s_client.patch_namespaced_service(
+                self.service_name,
+                settings.K8S_NAMESPACE,
+                {"spec": {"ports": [{"port": 8080, "nodePort": 30449}], "type": "NodePort"}}
+            )
+        except urllib3.exceptions.HTTPError:
+            self._logger.exception("Can't connect with k8s")
+            raise OnapTestException
 
     def cleanup(self) -> None:
         """Step cleanup.
@@ -60,22 +66,26 @@ class ExposeCDSBlueprintprocessorNodePortStep(CDSBaseStep):
         Restore CDS blueprintprocessor service.
 
         """
-        self.k8s_client.patch_namespaced_service(
-            self.service_name,
-            settings.K8S_NAMESPACE,
-            [
-                {
-                    "op": "remove",
-                    "path": "/spec/ports/0/nodePort"
-                },
-                {
-                    "op": "replace",
-                    "path": "/spec/type",
-                    "value": "ClusterIP"
-                }
-            ]
-        )
-        return super().cleanup()
+        try:
+            self.k8s_client.patch_namespaced_service(
+                self.service_name,
+                settings.K8S_NAMESPACE,
+                [
+                    {
+                        "op": "remove",
+                        "path": "/spec/ports/0/nodePort"
+                    },
+                    {
+                        "op": "replace",
+                        "path": "/spec/type",
+                        "value": "ClusterIP"
+                    }
+                ]
+            )
+            return super().cleanup()
+        except urllib3.exceptions.HTTPError:
+            self._logger.exception("Can't connect with k8s")
+            raise OnapTestException
 
 
 class BootstrapBlueprintprocessor(CDSBaseStep):
