@@ -145,7 +145,20 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
                             }
                         }
                     }
+<<<<<<< HEAD   (44c443 [CLAMP] Update clamp to allow re-play of the test)
                 }
             }
         )
         response.raise_for_status()
+=======
+                )
+                response.raise_for_status()
+                registered_successfully = True
+                self._logger.info(f"PNF registered with {settings.SERVICE_INSTANCE_NAME} source name")
+            except (requests.ConnectionError, requests.HTTPError) as http_error:
+                self._logger.debug(f"Can't connect with PNF simulator: {str(http_error)}")
+                registration_number = registration_number + 1
+                time.sleep(settings.PNF_WAIT_TIME)
+        if not registered_successfully:
+            raise OnapTestException("PNF not registered successfully")
+>>>>>>> CHANGE (3f016d [TEST] Catch ConnectionError exception during pnf simulator )
