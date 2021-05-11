@@ -1,4 +1,5 @@
 from onapsdk.configuration import settings
+from onapsdk.constants import DRAFT
 from onapsdk.sdc.vf import Vf
 from onapsdk.sdc.vsp import Vsp
 
@@ -40,7 +41,8 @@ class VfOnboardStep(BaseStep):
         super().execute()
         vsp: Vsp = Vsp(name=settings.VSP_NAME)
         vf: Vf = Vf(name=settings.VF_NAME, vsp=vsp)
-        vf.onboard()
+        if not vf.created:
+            vf.onboard()
 
 
 class YamlTemplateVfOnboardStep(YamlTemplateBaseStep):
@@ -85,15 +87,16 @@ class YamlTemplateVfOnboardStep(YamlTemplateBaseStep):
             for vnf in self.yaml_template["vnfs"]:
                 vsp: Vsp = Vsp(name=f"{vnf['vnf_name']}_VSP")
                 vf: Vf = Vf(name=vnf['vnf_name'], vsp=vsp)
-                if all([x in vnf for x in ["vnf_artifact_type",
-                                           "vnf_artifact_name",
-                                           "vnf_artifact_label",
-                                           "vnf_artifact_file_path"]]):
-                    vf.create()
-                    vf.add_deployment_artifact(
-                        artifact_type=vnf["vnf_artifact_type"],
-                        artifact_name=vnf["vnf_artifact_name"],
-                        artifact_label=vnf["vnf_artifact_label"],
-                        artifact=vnf["vnf_artifact_file_path"]
-                    )
-                vf.onboard()
+                if not vf.created:
+                    if all([x in vnf for x in ["vnf_artifact_type",
+                                               "vnf_artifact_name",
+                                               "vnf_artifact_label",
+                                               "vnf_artifact_file_path"]]):
+                        vf.create()
+                        vf.add_deployment_artifact(
+                            artifact_type=vnf["vnf_artifact_type"],
+                            artifact_name=vnf["vnf_artifact_name"],
+                            artifact_label=vnf["vnf_artifact_label"],
+                            artifact=vnf["vnf_artifact_file_path"]
+                        )
+                    vf.onboard()

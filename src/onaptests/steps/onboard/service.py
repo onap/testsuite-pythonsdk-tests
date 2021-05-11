@@ -1,5 +1,6 @@
 import time
 from typing import Any, Dict
+from onapsdk.constants import DRAFT
 from yaml import load
 
 from onapsdk.configuration import settings
@@ -55,16 +56,17 @@ class ServiceOnboardStep(BaseStep):
         """
         super().execute()
         service: Service = Service(name=settings.SERVICE_NAME, instantiation_type=settings.SERVICE_INSTANTIATION_TYPE)
-        service.create()
-        if settings.VL_NAME != "":
-            vl: Vl = Vl(name=settings.VL_NAME)
-            service.add_resource(vl)
-        if settings.VF_NAME != "":
-            vf: Vf = Vf(name=settings.VF_NAME)
-            service.add_resource(vf)
-        if settings.PNF_NAME != "":
-            pnf: Pnf = Pnf(name=settings.PNF_NAME)
-            service.add_resource(pnf)
+        if not service.created:
+            service.create()
+            if settings.VL_NAME != "":
+                vl: Vl = Vl(name=settings.VL_NAME)
+                service.add_resource(vl)
+            if settings.VF_NAME != "":
+                vf: Vf = Vf(name=settings.VF_NAME)
+                service.add_resource(vf)
+            if settings.PNF_NAME != "":
+                pnf: Pnf = Pnf(name=settings.PNF_NAME)
+                service.add_resource(pnf)
         # If the service is already distributed, do not try to checkin/onboard (replay of tests)
         # checkin is done if needed
         # If service is replayed, no need to try to re-onboard the model
@@ -141,12 +143,13 @@ class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
         else:
             instantiation_type: ServiceInstantiationType = ServiceInstantiationType.A_LA_CARTE
         service: Service = Service(name=self.service_name, instantiation_type=instantiation_type)
-        service.create()
-        self.declare_resources(service)
-        self.assign_properties(service)
-        # If the service is already distributed, do not try to checkin/onboard (replay of tests)
-        # checkin is done if needed
-        # If service is replayed, no need to try to re-onboard the model
+        if not service.created:
+            service.create()
+            self.declare_resources(service)
+            self.assign_properties(service)
+            # If the service is already distributed, do not try to checkin/onboard (replay of tests)
+            # checkin is done if needed
+            # If service is replayed, no need to try to re-onboard the model
         if not service.distributed:
             try:
                 service.checkin()
