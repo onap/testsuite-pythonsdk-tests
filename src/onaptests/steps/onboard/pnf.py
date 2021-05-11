@@ -50,14 +50,15 @@ class PnfOnboardStep(BaseStep):
         super().execute()
         vendor: Vendor = Vendor(name=settings.VENDOR_NAME)
         pnf: Pnf = Pnf(name=settings.PNF_NAME, vendor=vendor)
-        pnf.create()
-        pnf.add_deployment_artifact(
-            artifact_type=settings.PNF_ARTIFACT_TYPE,
-            artifact_name=settings.PNF_ARTIFACT_NAME,
-            artifact_label=settings.PNF_ARTIFACT_LABEL,
-            artifact=settings.PNF_ARTIFACT_FILE_PATH
-        )
-        pnf.onboard()
+        if not pnf.created:
+            pnf.create()
+            pnf.add_deployment_artifact(
+                artifact_type=settings.PNF_ARTIFACT_TYPE,
+                artifact_name=settings.PNF_ARTIFACT_NAME,
+                artifact_label=settings.PNF_ARTIFACT_LABEL,
+                artifact=settings.PNF_ARTIFACT_FILE_PATH
+            )
+            pnf.onboard()
 
 
 class YamlTemplatePnfOnboardStep(YamlTemplateBaseStep):
@@ -110,11 +111,12 @@ class YamlTemplatePnfOnboardStep(YamlTemplateBaseStep):
                 else:
                     vsp = None
                 pnf_obj: Pnf = Pnf(name=pnf["pnf_name"], vendor=vendor, vsp=vsp)
-                pnf_obj.create()
-                pnf_obj.add_deployment_artifact(
-                    artifact_type=pnf["pnf_artifact_type"],
-                    artifact_name=pnf["pnf_artifact_name"],
-                    artifact_label=pnf["pnf_artifact_label"],
-                    artifact=pnf["pnf_artifact_file_path"]
-                )
-                pnf_obj.onboard()
+                if not pnf_obj.created:
+                    pnf_obj.create()
+                    pnf_obj.add_deployment_artifact(
+                        artifact_type=pnf["pnf_artifact_type"],
+                        artifact_name=pnf["pnf_artifact_name"],
+                        artifact_label=pnf["pnf_artifact_label"],
+                        artifact=pnf["pnf_artifact_file_path"]
+                    )
+                    pnf_obj.onboard()
