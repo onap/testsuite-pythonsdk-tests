@@ -1,7 +1,6 @@
 import os
 import openstack
 from pathlib import Path
-from uuid import uuid4
 
 from yaml import load
 
@@ -58,4 +57,4 @@ try:
 except (FileNotFoundError, ValueError):
     raise onap_test_exceptions.TestConfigurationException
 
-SERVICE_INSTANCE_NAME = f"basic_macro_{str(uuid4())}"
+SERVICE_INSTANCE_NAME = "basic_vm_macro_service_instance"
