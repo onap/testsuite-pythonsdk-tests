@@ -110,6 +110,7 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
                             "version": "4.0.1",
                             "vesEventListenerVersion": "7.0.1"
                         },
+<<<<<<< HEAD   (fe3d58 Merge "[TEST] Do not try to recreate already created SDC res)
                         "pnfRegistrationFields": {
                             "pnfRegistrationFieldsVersion": "2.0",
                             "lastServiceDate": "2019-08-16",
@@ -135,6 +136,18 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
                                 "maxConnectionAttempts": "100",
                                 "betweenAttemptsTimeout": "2000",
                                 "keepaliveDelay": "120"
+=======
+                        "templateName": "registration.json",
+                        "patch": {
+                            "event": {
+                                "commonEventHeader": {
+                                    "sourceName": settings.SERVICE_INSTANCE_NAME
+                                },
+                                "pnfRegistrationFields": {
+                                    "oamV4IpAddress": "192.168.0.1",
+                                    "oamV6IpAddress": "2001:db8::1428:57ab"
+                                }
+>>>>>>> CHANGE (acd970 [TEST] Patch ip values in pnf-simulator event)
                             }
                         }
                     }
