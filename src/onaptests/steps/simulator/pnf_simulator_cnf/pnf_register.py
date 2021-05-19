@@ -109,6 +109,10 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
                             "event": {
                                 "commonEventHeader": {
                                     "sourceName": settings.SERVICE_INSTANCE_NAME
+                                },
+                                "pnfRegistrationFields": {
+                                    "oamV4IpAddress": "192.168.0.1",
+                                    "oamV6IpAddress": "2001:db8::1428:57ab"
                                 }
                             }
                         }
