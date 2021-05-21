@@ -117,31 +117,16 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
                             "version": "4.0.1",
                             "vesEventListenerVersion": "7.0.1"
                         },
-                        "pnfRegistrationFields": {
-                            "pnfRegistrationFieldsVersion": "2.0",
-                            "lastServiceDate": "2019-08-16",
-                            "macAddress": "D7:64:C8:CC:E9:32",
-                            "manufactureDate": "2019-08-16",
-                            "modelNumber": "Simulated Device",
-                            "oamV4IpAddress": "172.30.1.6",
-                            "oamV6IpAddress": "0:0:0:0:0:ffff:a0a:011",
-                            "serialNumber": "Simulated Device",
-                            "softwareVersion": "2.3.5",
-                            "unitFamily": "Simulated Device",
-                            "unitType": "ntsim_oran",
-                            "vendorName": "Melacon",
-                            "additionalFields": {
-                                "oamPort": "830",
-                                "protocol": "SSH",
-                                "username": "netconf",
-                                "password": "netconf",
-                                "reconnectOnChangedSchema": "false",
-                                "sleep-factor": "1.5",
-                                "tcpOnly": "false",
-                                "connectionTimeout": "20000",
-                                "maxConnectionAttempts": "100",
-                                "betweenAttemptsTimeout": "2000",
-                                "keepaliveDelay": "120"
+                        "templateName": "registration.json",
+                        "patch": {
+                            "event": {
+                                "commonEventHeader": {
+                                    "sourceName": settings.SERVICE_INSTANCE_NAME
+                                },
+                                "pnfRegistrationFields": {
+                                    "oamV4IpAddress": "192.168.0.1",
+                                    "oamV6IpAddress": "2001:db8::1428:57ab"
+                                }
                             }
                         }
                     }
