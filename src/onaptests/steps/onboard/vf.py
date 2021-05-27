@@ -1,3 +1,5 @@
+import time
+
 from onapsdk.configuration import settings
 from onapsdk.sdc.vf import Vf
 from onapsdk.sdc.vsp import Vsp
@@ -98,4 +100,5 @@ class YamlTemplateVfOnboardStep(YamlTemplateBaseStep):
                             artifact_label=vnf["vnf_artifact_label"],
                             artifact=vnf["vnf_artifact_file_path"]
                         )
+                    time.sleep(10)
                     vf.onboard()

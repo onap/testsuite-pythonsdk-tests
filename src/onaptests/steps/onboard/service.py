@@ -70,7 +70,7 @@ class ServiceOnboardStep(BaseStep):
         # checkin is done if needed
         # If service is replayed, no need to try to re-onboard the model
         if not service.distributed:
-            time.sleep(30)
+            time.sleep(10)
             service.checkin()
             service.onboard()
 
@@ -155,7 +155,7 @@ class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
             except (APIError, ResourceNotFound):
                 # Retry as checkin may be a bit long
                 # Temp workaround to avoid internal race in SDC
-                time.sleep(5)
+                time.sleep(10)
                 service.checkin()
             service.onboard()
 
