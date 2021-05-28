@@ -11,7 +11,7 @@ import urllib3
 
 from onaptests.steps.base import BaseStep
 from onaptests.steps.instantiate.msb_k8s import CreateInstanceStep
-from onaptests.utils.exceptions import EnvironmentPreparationException
+from onaptests.utils.exceptions import EnvironmentPreparationException, OnapTestException
 
 
 class PnfSimulatorCnfRegisterStep(BaseStep):
@@ -90,32 +90,19 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
         super().execute()
         if not self.is_pnf_pod_running():
             EnvironmentPreparationException("PNF simulator is not running")
-        time.sleep(30.0)  # Let's still wait for PNF simulator to make sure it's initialized
-        ves_ip, ves_port = self.get_ves_ip_and_port()
-        response = requests.post(
-            "http://portal.api.simpledemo.onap.org:30999/simulator/event",
-            json={
-                "vesServerUrl": f"https://{ves_ip}:{ves_port}/eventListener/v7",
-                "event": {
-                    "event": {
-                        "commonEventHeader": {
-                            "domain": "pnfRegistration",
-                            "eventId": "ORAN_SIM_400600927_2020-04-02T17:20:22.2Z",
-                            "eventName": "pnfRegistration",
-                            "eventType": "EventType5G",
-                            "sequence": 0,
-                            "priority": "Low",
-                            "reportingEntityId": "",
-                            "reportingEntityName": "ORAN_SIM_400600927",
-                            "sourceId": "",
-                            "sourceName": settings.SERVICE_INSTANCE_NAME,
-                            "startEpochMicrosec": 94262132085746,
-                            "lastEpochMicrosec": 94262132085746,
-                            "nfNamingCode": "sdn controller",
-                            "nfVendorName": "sdn",
-                            "timeZoneOffset": "+00:00",
-                            "version": "4.0.1",
-                            "vesEventListenerVersion": "7.0.1"
+        time.sleep(settings.PNF_WAIT_TIME)  # Let's still wait for PNF simulator to make sure it's initialized
+        ves_ip, _ = self.get_ves_ip_and_port()  # Use only 8443
+        registration_number: int = 0
+        registered_successfully: bool = False
+        while registration_number < settings.PNF_REGISTRATION_NUMBER_OF_TRIES and not registered_successfully:
+            try:
+                response = requests.post(
+                    "http://portal.api.simpledemo.onap.org:30999/simulator/start",
+                    json={
+                        "simulatorParams": {
+                            "repeatCount": 9999,
+                            "repeatInterval": 30,
+                            "vesServerUrl": f"https://sample1:sample1@{ves_ip}:8443/eventListener/v7"
                         },
                         "templateName": "registration.json",
                         "patch": {
@@ -130,7 +117,13 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
                             }
                         }
                     }
-                }
-            }
-        )
-        response.raise_for_status()
+                )
+                response.raise_for_status()
+                registered_successfully = True
+                self._logger.info(f"PNF registered with {settings.SERVICE_INSTANCE_NAME} source name")
+            except (requests.ConnectionError, requests.HTTPError) as http_error:
+                self._logger.debug(f"Can't connect with PNF simulator: {str(http_error)}")
+                registration_number = registration_number + 1
+                time.sleep(settings.PNF_WAIT_TIME)
+        if not registered_successfully:
+            raise OnapTestException("PNF not registered successfully")
