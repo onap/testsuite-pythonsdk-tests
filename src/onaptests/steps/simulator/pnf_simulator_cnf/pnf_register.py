@@ -90,6 +90,7 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
         super().execute()
         if not self.is_pnf_pod_running():
             EnvironmentPreparationException("PNF simulator is not running")
+<<<<<<< HEAD   (b27c9a Merge "[TEST] Patch ip values in pnf-simulator event" into h)
         time.sleep(30.0)  # Let's still wait for PNF simulator to make sure it's initialized
         ves_ip, ves_port = self.get_ves_ip_and_port()
         response = requests.post(
@@ -116,6 +117,21 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
                             "timeZoneOffset": "+00:00",
                             "version": "4.0.1",
                             "vesEventListenerVersion": "7.0.1"
+=======
+        time.sleep(settings.PNF_WAIT_TIME)  # Let's still wait for PNF simulator to make sure it's initialized
+        ves_ip, _ = self.get_ves_ip_and_port()  # Use only 8443
+        registration_number: int = 0
+        registered_successfully: bool = False
+        while registration_number < settings.PNF_REGISTRATION_NUMBER_OF_TRIES and not registered_successfully:
+            try:
+                response = requests.post(
+                    "http://portal.api.simpledemo.onap.org:30999/simulator/start",
+                    json={
+                        "simulatorParams": {
+                            "repeatCount": 9999,
+                            "repeatInterval": 30,
+                            "vesServerUrl": f"https://sample1:sample1@{ves_ip}:8443/eventListener/v7"
+>>>>>>> CHANGE (fc0c7c [TEST] Use nf-simulator/vesclient)
                         },
                         "templateName": "registration.json",
                         "patch": {
