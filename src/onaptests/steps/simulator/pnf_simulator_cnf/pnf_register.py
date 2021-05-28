@@ -91,7 +91,7 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
         if not self.is_pnf_pod_running():
             EnvironmentPreparationException("PNF simulator is not running")
         time.sleep(settings.PNF_WAIT_TIME)  # Let's still wait for PNF simulator to make sure it's initialized
-        ves_ip, ves_port = self.get_ves_ip_and_port()
+        ves_ip, _ = self.get_ves_ip_and_port()  # Use only 8443
         registration_number: int = 0
         registered_successfully: bool = False
         while registration_number < settings.PNF_REGISTRATION_NUMBER_OF_TRIES and not registered_successfully:
@@ -102,7 +102,7 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
                         "simulatorParams": {
                             "repeatCount": 9999,
                             "repeatInterval": 30,
-                            "vesServerUrl": f"https://{ves_ip}:{ves_port}/eventListener/v7"
+                            "vesServerUrl": f"https://sample1:sample1@{ves_ip}:8443/eventListener/v7"
                         },
                         "templateName": "registration.json",
                         "patch": {
