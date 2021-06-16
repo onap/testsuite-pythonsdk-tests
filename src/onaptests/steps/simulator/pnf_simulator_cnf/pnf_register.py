@@ -53,7 +53,7 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
             for event in k8s_watch.stream(k8s_client.list_namespaced_pod,
                                         namespace=settings.K8S_NAMESPACE,
                                         timeout_seconds=timeout_seconds):
-                if event["object"].metadata.name == "pnf-simulator":
+                if event["object"].metadata.name == "pnf-macro-test-simulator":
                     if not event["object"].status.phase in ["Pending", "Running"]:
                         # Invalid pod state
                         return False
