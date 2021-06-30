@@ -3,9 +3,10 @@
 
 from abc import ABC
 from pathlib import Path
-from typing import Optional
+from typing import Any, Dict
 
 from kubernetes import client, config
+from kubernetes.client.exceptions import ApiException
 from onapsdk.cds import Blueprint, DataDictionarySet
 from onapsdk.cds.blueprint_processor import Blueprintprocessor
 from onapsdk.configuration import settings
@@ -31,12 +32,33 @@ class ExposeCDSBlueprintprocessorNodePortStep(CDSBaseStep):
         """Initialize step."""
         super().__init__(cleanup=cleanup)
         self.service_name: str = "cds-blueprints-processor-http"
-        self.client: Optional[client.CoreV1Api] = None
+        config.load_kube_config(settings.K8S_CONFIG)
+        self.k8s_client: client.CoreV1Api = client.CoreV1Api()
 
     @property
     def description(self) -> str:
         """Step description."""
         return "Expose CDS blueprintsprocessor NodePort."
+
+    def is_service_node_port_type(self) -> bool:
+        """Check if CDS blueprints processor service type is 'NodePort'
+
+        Raises:
+            OnapTestException: Kubernetes API error
+
+        Returns:
+            bool: True if service type is 'NodePort', False otherwise
+
+        """
+        try:
+            service_data: Dict[str, Any] = self.k8s_client.read_namespaced_service(
+                self.service_name,
+                settings.K8S_NAMESPACE
+            )
+            return service_data.spec.type == "NodePort"
+        except ApiException:
+            self._logger.exception("Kubernetes API exception")
+            raise OnapTestException
 
     @BaseStep.store_state
     def execute(self) -> None:
@@ -48,17 +70,21 @@ class ExposeCDSBlueprintprocessorNodePortStep(CDSBaseStep):
 
         """
         super().execute()
-        config.load_kube_config(settings.K8S_CONFIG)
-        self.k8s_client = client.CoreV1Api()
-        try:
-            self.k8s_client.patch_namespaced_service(
-                self.service_name,
-                settings.K8S_NAMESPACE,
-                {"spec": {"ports": [{"port": 8080, "nodePort": 30449}], "type": "NodePort"}}
-            )
-        except urllib3.exceptions.HTTPError:
-            self._logger.exception("Can't connect with k8s")
-            raise OnapTestException
+        if not self.is_service_node_port_type():
+            try:
+                self.k8s_client.patch_namespaced_service(
+                    self.service_name,
+                    settings.K8S_NAMESPACE,
+                    {"spec": {"ports": [{"port": 8080, "nodePort": 30449}], "type": "NodePort"}}
+                )
+            except ApiException:
+                self._logger.exception("Kubernetes API exception")
+                raise OnapTestException
+            except urllib3.exceptions.HTTPError:
+                self._logger.exception("Can't connect with k8s")
+                raise OnapTestException
+        else:
+            self._logger.debug("Service already patched, skip")
 
     def cleanup(self) -> None:
         """Step cleanup.
@@ -66,26 +92,32 @@ class ExposeCDSBlueprintprocessorNodePortStep(CDSBaseStep):
         Restore CDS blueprintprocessor service.
 
         """
-        try:
-            self.k8s_client.patch_namespaced_service(
-                self.service_name,
-                settings.K8S_NAMESPACE,
-                [
-                    {
-                        "op": "remove",
-                        "path": "/spec/ports/0/nodePort"
-                    },
-                    {
-                        "op": "replace",
-                        "path": "/spec/type",
-                        "value": "ClusterIP"
-                    }
-                ]
-            )
-            return super().cleanup()
-        except urllib3.exceptions.HTTPError:
-            self._logger.exception("Can't connect with k8s")
-            raise OnapTestException
+        if self.is_service_node_port_type():
+            try:
+                self.k8s_client.patch_namespaced_service(
+                    self.service_name,
+                    settings.K8S_NAMESPACE,
+                    [
+                        {
+                            "op": "remove",
+                            "path": "/spec/ports/0/nodePort"
+                        },
+                        {
+                            "op": "replace",
+                            "path": "/spec/type",
+                            "value": "ClusterIP"
+                        }
+                    ]
+                )
+            except ApiException:
+                self._logger.exception("Kubernetes API exception")
+                raise OnapTestException
+            except urllib3.exceptions.HTTPError:
+                self._logger.exception("Can't connect with k8s")
+                raise OnapTestException
+        else:
+            self._logger.debug("Service is not 'NodePort' type, skip")
+        return super().cleanup()
 
 
 class BootstrapBlueprintprocessor(CDSBaseStep):
