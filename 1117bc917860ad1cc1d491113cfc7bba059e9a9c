@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fb5cf81_d621825b",
+        "filename": "setup.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1215
+      },
+      "writtenOn": "2021-07-05T14:03:15Z",
+      "side": 1,
+      "message": "basic_vm_macro_stability \u003d onaptests.scenario.basic_vm_macro_stability:BasicVmMacroStability",
+      "revId": "1117bc917860ad1cc1d491113cfc7bba059e9a9c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
