@@ -1,3 +1,5 @@
+from pathlib import Path
+import sys
 import time
 
 from onapsdk.configuration import settings
@@ -94,11 +96,14 @@ class YamlTemplateVfOnboardStep(YamlTemplateBaseStep):
                                                "vnf_artifact_label",
                                                "vnf_artifact_file_path"]]):
                         vf.create()
+                        artifact_file_path: Path = Path(vnf["vnf_artifact_file_path"])
+                        if not artifact_file_path.exists():
+                            artifact_file_path = Path(sys.path[-1], artifact_file_path)
                         vf.add_deployment_artifact(
                             artifact_type=vnf["vnf_artifact_type"],
                             artifact_name=vnf["vnf_artifact_name"],
                             artifact_label=vnf["vnf_artifact_label"],
-                            artifact=vnf["vnf_artifact_file_path"]
+                            artifact=str(artifact_file_path)
                         )
                     time.sleep(10)
                     vf.onboard()
