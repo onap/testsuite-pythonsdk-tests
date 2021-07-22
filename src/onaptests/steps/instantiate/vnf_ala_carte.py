@@ -135,7 +135,7 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
 
         """
         for vnf_instance in self._service_instance.vnf_instances:
-            vnf_deletion = vnf_instance.delete()
+            vnf_deletion = vnf_instance.delete(a_la_carte=True)
 
             try:
                 vnf_deletion.wait_for_finish(settings.ORCHESTRATION_REQUEST_TIMEOUT)

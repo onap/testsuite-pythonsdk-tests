@@ -166,7 +166,7 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
             for vf_module in vnf_instance.vf_modules:
                 self._logger.info("Delete VF Module %s",
                                   vf_module.name)
-                vf_module_deletion = vf_module.delete()
+                vf_module_deletion = vf_module.delete(a_la_carte=True)
 
                 try:
                     vf_module_deletion.wait_for_finish(settings.ORCHESTRATION_REQUEST_TIMEOUT)

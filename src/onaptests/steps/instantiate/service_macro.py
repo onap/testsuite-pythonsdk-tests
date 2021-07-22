@@ -214,7 +214,7 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
 
         """
         if self._service_instance:
-            service_deletion = self._service_instance.delete()
+            service_deletion = self._service_instance.delete(a_la_carte=False)
             try:
                 service_deletion.wait_for_finish(timeout=settings.ORCHESTRATION_REQUEST_TIMEOUT)
             except TimeoutError:

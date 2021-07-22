@@ -159,7 +159,7 @@ class YamlTemplateVlAlaCarteInstantiateStep(YamlTemplateBaseStep):
         if settings.CLEANUP_FLAG:
             for net_instance in self._service_instance.network_instances:
                 self._logger.info("Start network deletion %s",net_instance.name)
-                net_deletion = net_instance.delete()
+                net_deletion = net_instance.delete(a_la_carte=True)
                 try:
                     net_deletion.wait_for_finish(settings.ORCHESTRATION_REQUEST_TIMEOUT)
                     if net_deletion.failed:
