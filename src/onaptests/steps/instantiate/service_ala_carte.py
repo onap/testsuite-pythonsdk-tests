@@ -251,7 +251,7 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
             Exception: Service cleaning failed
 
         """
-        service_deletion = self._service_instance.delete()
+        service_deletion = self._service_instance.delete(a_la_carte=True)
         try:
             service_deletion.wait_for_finish(settings.ORCHESTRATION_REQUEST_TIMEOUT)
         except TimeoutError:

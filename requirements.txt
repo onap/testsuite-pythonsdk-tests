@@ -1,6 +1,6 @@
 xtesting
 openstacksdk
-onapsdk==7.5.1
+git+https://gitlab.com/Orange-OpenSource/lfn/onap/python-onapsdk.git@v8.1.2#egg=onapsdk
 jinja2
 kubernetes
 avionix==0.4.4
