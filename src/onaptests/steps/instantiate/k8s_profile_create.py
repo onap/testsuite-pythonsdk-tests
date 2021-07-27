@@ -125,7 +125,7 @@ class K8SProfileStep(BaseStep):
                 # Define profile (rb_profile) for resource bundle definition
                 # Retrieve resource bundle definition (rbdef) corresponding to vf module
                 rbdef_name = vf_module.metadata["vfModuleModelInvariantUUID"]
-                rbdef_version = vf_module.metadata["vfModuleModelUUID"]
+                rbdef_version = vf_module.metadata["vfModuleModelCustomizationUUID"]
                 rbdef = Definition.get_definition_by_name_version(rbdef_name, rbdef_version)
                 # Get k8s profile name from yaml service template
                 vnf_parameters = self.get_vnf_parameters(vnf_instance.vnf.name)
@@ -161,7 +161,7 @@ class K8SProfileStep(BaseStep):
             for vf_module in vnf_instance.vnf.vf_modules:
                 # Retrieve resource bundle definition (rbdef) corresponding to vf module
                 rbdef_name = vf_module.metadata["vfModuleModelInvariantUUID"]
-                rbdef_version = vf_module.metadata["vfModuleModelUUID"]
+                rbdef_version = vf_module.metadata["vfModuleModelCustomizationUUID"]
                 rbdef = Definition.get_definition_by_name_version(rbdef_name, rbdef_version)
                 # Get k8s profile name from yaml service template
                 vnf_parameters = self.get_vnf_parameters(vnf_instance.vnf.name)
