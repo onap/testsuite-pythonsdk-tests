@@ -33,13 +33,15 @@ PLATFORM = "pnf_macro_platform"
 
 INSTANTIATION_TIMEOUT = 600
 
-PNF_DEFINITION_ATRIFACT_FILE_PATH = Path(Path(__file__).parent.parent,
+MSB_K8S_CLEANUP_WAIT_TIME = 60
+MSB_K8S_DEFINITION_ATRIFACT_FILE_PATH = Path(Path(__file__).parent.parent,
                                          "templates/artifacts/pnf-simulator.tar.gz")
-PNF_RB_NAME = f"pnf-cnf-rb-{str(uuid4())}"
-PNF_RB_VERSION = "v1"
-PNF_PROFILE_ARTIFACT_FILE_PATH = Path(Path(__file__).parent.parent,
+MSB_K8S_RESOURCE_NAME_PREFIX = "pnf-cnf"
+MSB_K8S_RB_NAME = f"{MSB_K8S_RESOURCE_NAME_PREFIX}-rb-{str(uuid4())}"
+MSB_K8S_RB_VERSION = "v1"
+MSB_K8S_PROFILE_ARTIFACT_FILE_PATH = Path(Path(__file__).parent.parent,
                                       "templates/artifacts/profile.tar.gz")
-PNF_PROFILE_NAME = f"pnf-cnf-profile-{str(uuid4())}"
+MSB_K8S_PROFILE_NAME = f"{MSB_K8S_RESOURCE_NAME_PREFIX}-profile-{str(uuid4())}"
 K8S_VERSION = "1.0"
 K8S_CONFIG = str(Path(Path(__file__).parent.parent, "templates/artifacts/config"))
 
