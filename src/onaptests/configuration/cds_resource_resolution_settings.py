@@ -14,11 +14,12 @@ COMPLEX_PHYSICAL_LOCATION_ID = "sdktests"
 
 MSB_K8S_DEFINITION_ATRIFACT_FILE_PATH = Path(Path(__file__).parent.parent,
                                             "templates/artifacts/cds-resource-resolution/cds-mock-server.tar.gz")
-MSB_K8S_RB_NAME = f"cds-ms-rb-{str(uuid4())}"
+MSB_K8S_RESOURCE_NAME_PREFIX = "cds-ms"
+MSB_K8S_RB_NAME = f"{MSB_K8S_RESOURCE_NAME_PREFIX}-rb-{str(uuid4())}"
 MSB_K8S_RB_VERSION = "v1"
 MSB_K8S_PROFILE_ARTIFACT_FILE_PATH = Path(Path(__file__).parent.parent,
                                         "templates/artifacts/profile.tar.gz")
-MSB_K8S_PROFILE_NAME = f"cds-ms-prof-{str(uuid4())}"
+MSB_K8S_PROFILE_NAME = f"{MSB_K8S_RESOURCE_NAME_PREFIX}-prof-{str(uuid4())}"
 K8S_VERSION = "1.0"
 K8S_CONFIG = str(Path(Path(__file__).parent.parent, "templates/artifacts/config"))
 K8S_ADDITIONAL_RESOURCES_NAMESPACE = "onap-tests"

@@ -6,6 +6,8 @@
 #                    #
 ######################
 
+# Generic settings
+CLEANUP_FLAG = False
 
 # Variables to set logger information
 # Possible values for logging levels in onapsdk: INFO, DEBUG , WARNING, ERROR
@@ -37,9 +39,11 @@ LOG_CONFIG = {
         "handlers": ["console", "file"]
     }
 }
-CLEANUP_FLAG = False
 
+# Reporting settings
 REPORTING_FILE_PATH = "/tmp/reporting.html"
+
+# K8S settings
 K8S_REGION_TYPE = "k8s"
 TILLER_HOST = "localhost"
 K8S_CONFIG = None  # None means it will use default config (~/.kube/config)
@@ -47,4 +51,8 @@ K8S_ONAP_NAMESPACE = "onap"  # ONAP Kubernetes namespace
 K8S_ADDITIONAL_RESOURCES_NAMESPACE = K8S_ONAP_NAMESPACE  # Resources created on tests namespace
 #SOCK_HTTP = "socks5h://127.0.0.1:8091"
 
+# Instantiation settings
 ORCHESTRATION_REQUEST_TIMEOUT = 60.0 * 15  # 15 minutes in seconds
+
+# MSB K8S settings
+MSB_K8S_CLEANUP_WAIT_TIME = 60

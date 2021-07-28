@@ -205,7 +205,7 @@ class CbaEnrichStep(CDSBaseStep):
 
         """
         super().cleanup()
-        Path(settings.CDS_CBA_ENRICHED).unlink()
+        Path(settings.CDS_CBA_ENRICHED).unlink(missing_ok=True)
 
 
 class CbaPublishStep(CDSBaseStep):
