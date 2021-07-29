@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d4b63c4_684174ef",
+        "filename": "src/onaptests/configuration/cds_resource_resolution_settings.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 7352
+      },
+      "writtenOn": "2021-07-29T08:48:19Z",
+      "side": 1,
+      "message": "wouldn\u0027t going with either \u0027from onaptests.configuration import settings\u0027 or \u0027import onaptests.configuration.settings\u0027 achieve the same and avoid # pylint comment?",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 5
+      },
+      "revId": "1909ff164bf1a04795e36261391ed0495c4b9285",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "225a1cb3_e6483359",
+        "filename": "src/onaptests/scenario/cds_resource_resolution.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 7352
+      },
+      "writtenOn": "2021-07-29T08:48:19Z",
+      "side": 1,
+      "message": "scenario?",
+      "range": {
+        "startLine": 18,
+        "startChar": 27,
+        "endLine": 18,
+        "endChar": 36
+      },
+      "revId": "1909ff164bf1a04795e36261391ed0495c4b9285",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "837345ce_bdb2aef6",
+        "filename": "src/onaptests/scenario/cds_resource_resolution.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 7352
+      },
+      "writtenOn": "2021-07-29T08:48:19Z",
+      "side": 1,
+      "message": "some of the method comments seem to be just repetition of the method name?",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 27
+      },
+      "revId": "1909ff164bf1a04795e36261391ed0495c4b9285",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a9fa613_a1060bd9",
+        "filename": "src/onaptests/scenario/cds_resource_resolution.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 7352
+      },
+      "writtenOn": "2021-07-29T08:48:19Z",
+      "side": 1,
+      "message": "is it accurate?",
+      "range": {
+        "startLine": 24,
+        "startChar": 14,
+        "endLine": 24,
+        "endChar": 56
+      },
+      "revId": "1909ff164bf1a04795e36261391ed0495c4b9285",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b48d97f4_b1090e3b",
+        "filename": "src/onaptests/scenario/cds_resource_resolution.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 7352
+      },
+      "writtenOn": "2021-07-29T08:48:19Z",
+      "side": 1,
+      "message": "following seems clearer to me but both are fine:\nName of the component this step relates to.",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 52
+      },
+      "revId": "1909ff164bf1a04795e36261391ed0495c4b9285",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b950fbb_0f5cb131",
+        "filename": "src/onaptests/scenario/cds_resource_resolution.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 7352
+      },
+      "writtenOn": "2021-07-29T08:48:19Z",
+      "side": 1,
+      "message": "Usually?",
+      "range": {
+        "startLine": 51,
+        "startChar": 12,
+        "endLine": 51,
+        "endChar": 19
+      },
+      "revId": "1909ff164bf1a04795e36261391ed0495c4b9285",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
