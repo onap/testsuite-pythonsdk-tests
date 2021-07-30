@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f1066a57_988be8c3",
+        "filename": "src/onaptests/scenario/cds_resource_resolution.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2021-07-30T11:51:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "225a1cb3_e6483359",
+      "range": {
+        "startLine": 18,
+        "startChar": 27,
+        "endLine": 18,
+        "endChar": 36
+      },
+      "revId": "1909ff164bf1a04795e36261391ed0495c4b9285",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "837345ce_bdb2aef6",
         "filename": "src/onaptests/scenario/cds_resource_resolution.py",
         "patchSetId": 2
@@ -83,6 +107,30 @@
       "writtenOn": "2021-07-29T08:48:19Z",
       "side": 1,
       "message": "some of the method comments seem to be just repetition of the method name?",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 27
+      },
+      "revId": "1909ff164bf1a04795e36261391ed0495c4b9285",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe4d767_105b63e3",
+        "filename": "src/onaptests/scenario/cds_resource_resolution.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2021-07-30T11:51:20Z",
+      "side": 1,
+      "message": "Haha, you\u0027re right. In that case it\u0027s pretty impossible to explain more what\u0027s going on if we simply initialize object and add a few steps",
+      "parentUuid": "837345ce_bdb2aef6",
       "range": {
         "startLine": 21,
         "startChar": 11,
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "0e4b995f_c3369cac",
+        "filename": "src/onaptests/scenario/cds_resource_resolution.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2021-07-30T11:51:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a9fa613_a1060bd9",
+      "range": {
+        "startLine": 24,
+        "startChar": 14,
+        "endLine": 24,
+        "endChar": 56
+      },
+      "revId": "1909ff164bf1a04795e36261391ed0495c4b9285",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b48d97f4_b1090e3b",
         "filename": "src/onaptests/scenario/cds_resource_resolution.py",
         "patchSetId": 2
@@ -141,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d010f0df_40a051e1",
+        "filename": "src/onaptests/scenario/cds_resource_resolution.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2021-07-30T11:51:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b48d97f4_b1090e3b",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 52
+      },
+      "revId": "1909ff164bf1a04795e36261391ed0495c4b9285",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b950fbb_0f5cb131",
         "filename": "src/onaptests/scenario/cds_resource_resolution.py",
         "patchSetId": 2
@@ -161,6 +257,30 @@
       "revId": "1909ff164bf1a04795e36261391ed0495c4b9285",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe36a388_2d838467",
+        "filename": "src/onaptests/scenario/cds_resource_resolution.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2021-07-30T11:51:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b950fbb_0f5cb131",
+      "range": {
+        "startLine": 51,
+        "startChar": 12,
+        "endLine": 51,
+        "endChar": 19
+      },
+      "revId": "1909ff164bf1a04795e36261391ed0495c4b9285",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
