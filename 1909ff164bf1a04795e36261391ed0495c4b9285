@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cff72f3b_b4ee7f18",
+        "filename": "src/onaptests/configuration/cds_resource_resolution_settings.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2021-07-30T11:42:10Z",
+      "side": 1,
+      "message": "Not really. What we want is to have all data from `settings` and override some of them. Unfortunately with your proposals is not possible. I\u0027ll show you an example:\nWe have 2 settings files:\n`settings.py`:\nNAME \u003d \"Joe\"\nAGE \u003d 21\n\n`settings_test.py`:\nfrom settings import *\nNAME \u003d \"Ben\"\n\nand a `test.py`:\nimport settings_test as settings\nprint(f\"{settings.NAME} {settings.AGE}\")\n\nWhen you execute a code using `python3.8 test.py` the result is:\nBen 21\n\nbut if we change `settings_test.py` into:\nimport settings\nNAME \u003d \"Ben\"\n\nand try to execute `python3.8 test.py` we will get\nTraceback (most recent call last):\n  File \"test.py\", line 2, in \u003cmodule\u003e\n    print(f\"{settings.NAME} {settings.AGE}\")\nAttributeError: module \u0027settings_test\u0027 has no attribute \u0027AGE\u0027\n\nI know using wildcard import should be avoided, but in some cases it\u0027s not a bad practice",
+      "parentUuid": "7d4b63c4_684174ef",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 5
+      },
+      "revId": "1909ff164bf1a04795e36261391ed0495c4b9285",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "225a1cb3_e6483359",
         "filename": "src/onaptests/scenario/cds_resource_resolution.py",
         "patchSetId": 2
