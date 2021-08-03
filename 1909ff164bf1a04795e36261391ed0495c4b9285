@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1f1c635d_9bc0cfb9",
+        "filename": "src/onaptests/configuration/cds_resource_resolution_settings.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 7352
+      },
+      "writtenOn": "2021-08-03T14:35:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cff72f3b_b4ee7f18",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 5
+      },
+      "revId": "1909ff164bf1a04795e36261391ed0495c4b9285",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "225a1cb3_e6483359",
         "filename": "src/onaptests/scenario/cds_resource_resolution.py",
         "patchSetId": 2
@@ -140,6 +164,30 @@
       "revId": "1909ff164bf1a04795e36261391ed0495c4b9285",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aec63ce_5afe2075",
+        "filename": "src/onaptests/scenario/cds_resource_resolution.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 7352
+      },
+      "writtenOn": "2021-08-03T14:35:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cbe4d767_105b63e3",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 27
+      },
+      "revId": "1909ff164bf1a04795e36261391ed0495c4b9285",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
