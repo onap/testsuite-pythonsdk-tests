@@ -22,6 +22,30 @@
       "revId": "15ff9bb0642ee4184e338b7e2192e45af02ec004",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b5cceb6_f62436ab",
+        "filename": "src/onaptests/steps/instantiate/msb_k8s.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2021-08-03T17:47:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0759bc9_04681b73",
+      "range": {
+        "startLine": 34,
+        "startChar": 16,
+        "endLine": 34,
+        "endChar": 62
+      },
+      "revId": "15ff9bb0642ee4184e338b7e2192e45af02ec004",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
