@@ -43,7 +43,8 @@ REPORTING_FILE_PATH = "/tmp/reporting.html"
 K8S_REGION_TYPE = "k8s"
 TILLER_HOST = "localhost"
 K8S_CONFIG = None  # None means it will use default config (~/.kube/config)
-K8S_NAMESPACE = "onap"  # Kubernetes namespace
+K8S_ONAP_NAMESPACE = "onap"  # ONAP Kubernetes namespace
+K8S_ADDITIONAL_RESOURCES_NAMESPACE = K8S_ONAP_NAMESPACE  # Resources created on tests namespace
 #SOCK_HTTP = "socks5h://127.0.0.1:8091"
 
 ORCHESTRATION_REQUEST_TIMEOUT = 60.0 * 15  # 15 minutes in seconds

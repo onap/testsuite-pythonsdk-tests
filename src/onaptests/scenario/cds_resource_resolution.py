@@ -26,10 +26,10 @@ class CDSResourceResolutionStep(BaseStep):
         """
         super().__init__(cleanup=cleanup)
         self.add_step(CdsMockserverCnfConfigureStep(
-            cleanup=settings.CLEANUP_FLAG
+            cleanup=cleanup
         ))
         self.add_step(CbaProcessStep(
-            cleanup=settings.CLEANUP_FLAG
+            cleanup=cleanup
         ))
 
     @property

@@ -26,13 +26,13 @@ class PnfMacroScenarioStep(YamlTemplateBaseStep):
         super().__init__(cleanup=cleanup)
         self._yaml_template: dict = None
         self.add_step(PnfSimulatorCnfRegisterStep(
-            cleanup=settings.CLEANUP_FLAG
+            cleanup=cleanup
         ))
         self.add_step(CbaEnrichStep(
-            cleanup=settings.CLEANUP_FLAG
+            cleanup=cleanup
         ))
         self.add_step(YamlTemplateServiceMacroInstantiateStep(
-            cleanup=settings.CLEANUP_FLAG
+            cleanup=cleanup
         ))
 
     @property
