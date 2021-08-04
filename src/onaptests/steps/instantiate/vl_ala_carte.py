@@ -156,7 +156,7 @@ class YamlTemplateVlAlaCarteInstantiateStep(YamlTemplateBaseStep):
         Raises:
             Exception: VL cleaning failed
         """
-        if settings.CLEANUP_FLAG:
+        if self._cleanup:
             for net_instance in self._service_instance.network_instances:
                 self._logger.info("Start network deletion %s",net_instance.name)
                 net_deletion = net_instance.delete(a_la_carte=True)
