@@ -52,3 +52,5 @@ try:
 except ValueError:
     SERVICE_NAME = "" # Fill me
     VF_NAME = "" # Fill me
+
+MODEL_YAML_TEMPLATE = None
