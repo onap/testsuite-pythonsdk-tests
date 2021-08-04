@@ -54,7 +54,7 @@ class ExposeCDSBlueprintprocessorNodePortStep(CDSBaseStep):
         try:
             service_data: Dict[str, Any] = self.k8s_client.read_namespaced_service(
                 self.service_name,
-                settings.K8S_NAMESPACE
+                settings.K8S_ONAP_NAMESPACE
             )
             return service_data.spec.type == "NodePort"
         except ApiException:
@@ -67,7 +67,7 @@ class ExposeCDSBlueprintprocessorNodePortStep(CDSBaseStep):
 
         Use settings values:
          - K8S_CONFIG,
-         - K8S_NAMESPACE.
+         - K8S_ONAP_NAMESPACE.
 
         """
         super().execute()
@@ -75,7 +75,7 @@ class ExposeCDSBlueprintprocessorNodePortStep(CDSBaseStep):
             try:
                 self.k8s_client.patch_namespaced_service(
                     self.service_name,
-                    settings.K8S_NAMESPACE,
+                    settings.K8S_ONAP_NAMESPACE,
                     {"spec": {"ports": [{"port": 8080, "nodePort": 30449}], "type": "NodePort"}}
                 )
             except ApiException:
@@ -97,7 +97,7 @@ class ExposeCDSBlueprintprocessorNodePortStep(CDSBaseStep):
             try:
                 self.k8s_client.patch_namespaced_service(
                     self.service_name,
-                    settings.K8S_NAMESPACE,
+                    settings.K8S_ONAP_NAMESPACE,
                     [
                         {
                             "op": "remove",

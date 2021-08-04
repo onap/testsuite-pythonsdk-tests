@@ -25,10 +25,10 @@ class BasicVmMacroStep(YamlTemplateBaseStep):
         super().__init__(cleanup=cleanup)
         self._yaml_template: dict = None
         self.add_step(CbaPublishStep(
-            cleanup=settings.CLEANUP_FLAG
+            cleanup=cleanup
         ))
         self.add_step(YamlTemplateServiceMacroInstantiateStep(
-            cleanup=settings.CLEANUP_FLAG
+            cleanup=cleanup
         ))
 
     @property
