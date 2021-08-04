@@ -76,6 +76,10 @@ class PnfMacroScenarioStep(YamlTemplateBaseStep):
         return self._yaml_template
 
     @property
+    def model_yaml_template(self) -> dict:
+        return {}
+
+    @property
     def service_name(self) -> dict:
         """Service name.
 
