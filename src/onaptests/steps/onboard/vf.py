@@ -80,7 +80,22 @@ class YamlTemplateVfOnboardStep(YamlTemplateBaseStep):
             dict: YAML template
 
         """
-        return self.parent.yaml_template[self.parent.service_name]
+        if settings.MODEL_YAML_TEMPLATE:
+            return self.model_yaml_template
+        else:
+            return self.parent.yaml_template[self.parent.service_name]
+
+    @property
+    def model_yaml_template(self) -> dict:
+        """Step Model YAML template.
+
+        Load from file if it's a root step, get from parent otherwise.
+
+        Returns:
+            dict: Step YAML template
+
+        """
+        return self.parent.model_yaml_template[self.parent.service_name]
 
     @YamlTemplateBaseStep.store_state
     def execute(self):

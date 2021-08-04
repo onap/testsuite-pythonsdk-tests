@@ -1,0 +1,58 @@
+---
+{{ service_name }}:
+    subscription_service_type: {{ service_name }}
+    vnfs:
+        - model_name: {{ service_name }}VF0
+          vnf_name: {{ service_name }}00
+          vnf_parameters: [
+              {"name": "vnf-name",
+              "value": "multi_vnf_ubuntu_0_0"
+              },
+              {"name": "vnf_name",
+              "value": "MultiVnfUbuntu00"
+              }
+          ]
+          vf_module_parameters:
+              - vf_module_name: {{ service_name }}00network0
+                model_name: base
+                parameters: [
+                    {"name": "name",
+                     "value": "multi_vnf_ubuntu_0_0_network_0"},
+                    {"name": "cidr",
+                     "value": "10.10.10.0/24"}
+                ]
+        - model_name: {{ service_name }}VF0
+          vnf_name: {{ service_name }}01
+          vnf_parameters: [
+              {"name": "vnf-name",
+              "value": "multi_vnf_ubuntu_0_1"
+              },
+              {"name": "vnf_name",
+              "value": "MultiVnfUbuntu01"
+              }
+          ]
+          vf_module_parameters:
+              - vf_module_name: {{ service_name }}01vfm0
+                model_name: ubuntu-vf-module
+                parameters: [
+                    {"name": "name",
+                     "value": "multi_vnf_ubuntu_0_1_vfm_0"},
+                    {"name": "network_mgmt",
+                     "value": "vlan197_net"},
+                    {"name": "key_name",
+                     "value": "sebastien"},
+                    {"name": "network_name",
+                     "value": "multi_vnf_ubuntu_0_0_network_0"}
+                ]
+              - vf_module_name: {{ service_name }}01vfm1
+                model_name: ubuntu-vf-module
+                parameters: [
+                    {"name": "name",
+                     "value": "multi_vnf_ubuntu_0_1_vfm_1"},
+                    {"name": "network_mgmt",
+                     "value": "vlan197_net"},
+                    {"name": "key_name",
+                     "value": "sebastien"},
+                    {"name": "network_name",
+                     "value": "multi_vnf_ubuntu_0_0_network_0"}
+                ]

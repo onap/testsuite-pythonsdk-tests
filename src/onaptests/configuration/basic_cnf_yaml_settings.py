@@ -79,3 +79,5 @@ VIM_PASSWORD = cloud.config.auth.get('password','dummy123')
 VIM_SERVICE_URL = cloud.config.auth.get('auth_url','http://10.12.25.2:5000/v3')
 TENANT_ID = cloud.config.auth.get('project_id','123456')
 TENANT_NAME = cloud.config.auth.get('project_name','dummy_test')
+
+MODEL_YAML_TEMPLATE = None
