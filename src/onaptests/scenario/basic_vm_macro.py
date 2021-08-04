@@ -25,10 +25,10 @@ class BasicVmMacroStep(YamlTemplateBaseStep):
         super().__init__(cleanup=cleanup)
         self._yaml_template: dict = None
         self.add_step(CbaPublishStep(
-            cleanup=settings.CLEANUP_FLAG
+            cleanup=cleanup
         ))
         self.add_step(YamlTemplateServiceMacroInstantiateStep(
-            cleanup=settings.CLEANUP_FLAG
+            cleanup=cleanup
         ))
 
     @property
@@ -101,7 +101,7 @@ class BasicVmMacroStep(YamlTemplateBaseStep):
 class BasicVmMacro(testcase.TestCase):
     """Instantiate a basic vm macro."""
 
-    __logger = logging.getLogger(__name__)
+    __logger = logging.getLogger()
 
     def __init__(self, **kwargs):
         """Init Basic Macro use case."""
