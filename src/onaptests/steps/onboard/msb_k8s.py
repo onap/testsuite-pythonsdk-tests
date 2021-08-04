@@ -74,6 +74,6 @@ class CreateProfileStep(BaseStep):
             rb_version=settings.PNF_RB_VERSION)
         with open(settings.PNF_PROFILE_ARTIFACT_FILE_PATH, "rb") as profile_file:
             self.profile = definition.create_profile(profile_name=settings.PNF_PROFILE_NAME,
-                                                     namespace=settings.K8S_NAMESPACE,
+                                                     namespace=settings.K8S_ADDITIONAL_RESOURCES_NAMEPSACE,
                                                      kubernetes_version=settings.K8S_VERSION)
             self.profile.upload_artifact(profile_file.read())
