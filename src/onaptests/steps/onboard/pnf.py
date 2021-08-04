@@ -99,6 +99,10 @@ class YamlTemplatePnfOnboardStep(YamlTemplateBaseStep):
         """
         return self.parent.yaml_template[self.parent.service_name]
 
+    @property
+    def model_yaml_template(self) -> dict:
+        return {}
+
     @YamlTemplateBaseStep.store_state
     def execute(self):
         """Onboard PNFs from YAML template."""
