@@ -1,0 +1,16 @@
+---
+{{ service_name }}:
+    instantiation_type: "Macro"
+    vnfs:
+        - vnf_name: {{ service_name }}VF0
+          properties:
+              controller_actor: "CDS"
+              skip_post_instantiation_configuration: False
+              sdnc_artifact_name: "UbuntuVNF"
+              sdnc_model_version: "1.0.0"
+              sdnc_model_name: "UbuntuVNF"
+          vnf_artifact_type: "CONTROLLER_BLUEPRINT_ARCHIVE"
+          vnf_artifact_name: "UBUNTUVNF_enriched.zip"
+          vnf_artifact_label: "UbuntuVNF"
+          vnf_artifact_file_path: "/tmp/UBUNTUVNF_enriched.zip"
+          heat_files_to_upload: onaptests/templates/heat-files/nso_ubuntu/nso_ubuntu.zip

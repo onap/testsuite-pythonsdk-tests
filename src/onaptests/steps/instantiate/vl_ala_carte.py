@@ -56,6 +56,10 @@ class YamlTemplateVlAlaCarteInstantiateStep(YamlTemplateBaseStep):
         return self.parent.yaml_template
 
     @property
+    def model_yaml_template(self) -> dict:
+        return {}
+
+    @property
     def service_name(self) -> str:
         """Service name.
 
