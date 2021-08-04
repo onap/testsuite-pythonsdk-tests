@@ -12,15 +12,16 @@ CLOUD_REGION_VERSION = "1.0"
 CLOUD_OWNER_DEFINED_TYPE = "N/A"
 COMPLEX_PHYSICAL_LOCATION_ID = "sdktests"
 
-PNF_DEFINITION_ATRIFACT_FILE_PATH = Path(Path(__file__).parent.parent,
-                                         "templates/artifacts/cds-resource-resolution/cds-mock-server.tar.gz")
-PNF_RB_NAME = f"cds-ms-rb-{str(uuid4())}"
-PNF_RB_VERSION = "v1"
-PNF_PROFILE_ARTIFACT_FILE_PATH = Path(Path(__file__).parent.parent,
-                                      "templates/artifacts/profile.tar.gz")
-PNF_PROFILE_NAME = f"cds-ms-prof-{str(uuid4())}"
+MSB_K8S_DEFINITION_ATRIFACT_FILE_PATH = Path(Path(__file__).parent.parent,
+                                            "templates/artifacts/cds-resource-resolution/cds-mock-server.tar.gz")
+MSB_K8S_RB_NAME = f"cds-ms-rb-{str(uuid4())}"
+MSB_K8S_RB_VERSION = "v1"
+MSB_K8S_PROFILE_ARTIFACT_FILE_PATH = Path(Path(__file__).parent.parent,
+                                        "templates/artifacts/profile.tar.gz")
+MSB_K8S_PROFILE_NAME = f"cds-ms-prof-{str(uuid4())}"
 K8S_VERSION = "1.0"
 K8S_CONFIG = str(Path(Path(__file__).parent.parent, "templates/artifacts/config"))
+K8S_ADDITIONAL_RESOURCES_NAMESPACE = "onap-tests"
 CDS_MOCKSERVER_EXPECTATIONS = [
     {
         "method": "GET",
