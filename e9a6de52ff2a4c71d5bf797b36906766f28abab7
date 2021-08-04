@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fe828f9_0b81cdf8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 7352
+      },
+      "writtenOn": "2021-08-04T18:56:01Z",
+      "side": 1,
+      "message": "how about \"Gather cleanup reports from substeps, even if parent step has none\"?",
+      "range": {
+        "startLine": 7,
+        "startChar": 7,
+        "endLine": 7,
+        "endChar": 82
+      },
+      "revId": "e9a6de52ff2a4c71d5bf797b36906766f28abab7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
