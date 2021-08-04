@@ -66,3 +66,5 @@ VENDOR_NAME = "basic_onboard_vendor"
 
 VF_NAME = "basic_onboard_vf"
 VSP_NAME = "basic_onboard_vsp"
+
+MODEL_YAML_TEMPLATE = None
