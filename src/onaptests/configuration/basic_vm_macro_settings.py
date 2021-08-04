@@ -59,3 +59,5 @@ except (FileNotFoundError, ValueError):
     raise onap_test_exceptions.TestConfigurationException
 
 SERVICE_INSTANCE_NAME = f"basic_macro_{str(uuid4())}"
+
+MODEL_YAML_TEMPLATE = None
