@@ -48,3 +48,6 @@ SERVICE_INSTANCE_NAME = "TestPNFMacroInstantiation"
 DCAE_VES_COLLECTOR_POD_NAME = "dcae-ves-collector"
 PNF_WAIT_TIME = 60.0
 PNF_REGISTRATION_NUMBER_OF_TRIES = 20
+
+# Disable YAML SDC model definition which means all SDC config reside in SERVICE_YAML_TEMPLATE
+MODEL_YAML_TEMPLATE = None

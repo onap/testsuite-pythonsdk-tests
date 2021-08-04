@@ -70,3 +70,5 @@ TENANT_ID = cloud.config.auth.get('project_id','Fill me')
 TENANT_NAME = cloud.config.auth.get('project_name','Fill me')
 CLOUD_REGION_ID = cloud.config.auth.get('region_name','RegionOne')
 CLOUD_DOMAIN = cloud.config.auth.get('project_domain_name','Default')
+
+MODEL_YAML_TEMPLATE = None
