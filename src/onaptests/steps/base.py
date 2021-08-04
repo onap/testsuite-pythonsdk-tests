@@ -247,3 +247,15 @@ class YamlTemplateBaseStep(BaseStep, ABC):
             dict: YAML template
 
         """
+
+    @property
+    @abstractmethod
+    def model_yaml_template(self) -> dict:
+        """Model YAML template abstract property.
+
+        Every YAML template step need to implement that property.
+
+        Returns:
+            dict: YAML template
+
+        """
