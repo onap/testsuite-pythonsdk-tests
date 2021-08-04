@@ -74,6 +74,6 @@ class CreateProfileStep(BaseStep):
             rb_version=settings.MSB_K8S_RB_VERSION)
         with open(settings.MSB_K8S_PROFILE_ARTIFACT_FILE_PATH, "rb") as profile_file:
             self.profile = definition.create_profile(profile_name=settings.MSB_K8S_PROFILE_NAME,
-                                                     namespace=settings.K8S_NAMESPACE,
+                                                     namespace=settings.K8S_ADDITIONAL_RESOURCES_NAMESPACE,
                                                      kubernetes_version=settings.K8S_VERSION)
             self.profile.upload_artifact(profile_file.read())

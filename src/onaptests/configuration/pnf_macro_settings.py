@@ -44,6 +44,7 @@ MSB_K8S_PROFILE_ARTIFACT_FILE_PATH = Path(Path(__file__).parent.parent,
 MSB_K8S_PROFILE_NAME = f"{MSB_K8S_RESOURCE_NAME_PREFIX}-profile-{str(uuid4())}"
 K8S_VERSION = "1.0"
 K8S_CONFIG = str(Path(Path(__file__).parent.parent, "templates/artifacts/config"))
+K8S_ADDITIONAL_RESOURCES_NAMESPACE = "onap-tests"
 
 SERVICE_INSTANCE_NAME = "TestPNFMacroInstantiation"
 
