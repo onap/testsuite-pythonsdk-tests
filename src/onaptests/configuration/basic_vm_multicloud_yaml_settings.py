@@ -41,3 +41,4 @@ PLATFORM = "sdktests_platform"
 SERVICE_INSTANCE_NAME = "sdktests_service_instance_name"
 
 SERVICE_YAML_TEMPLATE = sys.path[-1] + "/onaptests/templates/vnf-services/basic_vm-service.yaml"
+MODEL_YAML_TEMPLATE = None
