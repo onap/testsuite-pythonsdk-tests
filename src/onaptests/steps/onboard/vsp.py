@@ -77,7 +77,22 @@ class YamlTemplateVspOnboardStep(YamlTemplateBaseStep):
             dict: YAML template
 
         """
-        return self.parent.yaml_template
+        if settings.MODEL_YAML_TEMPLATE:
+            return self.model_yaml_template
+        else:
+            return self.parent.yaml_template
+
+    @property
+    def model_yaml_template(self) -> dict:
+        """Model YAML template.
+
+        Get model YAML template from parent.
+
+        Returns:
+            dict: YAML template
+
+        """
+        return self.parent.model_yaml_template
 
     @YamlTemplateBaseStep.store_state
     def execute(self):

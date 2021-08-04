@@ -1,6 +1,6 @@
 
 import time
-from typing import List
+from typing import List, Dict, Any
 from uuid import uuid4
 from onapsdk.aai.business.service import ServiceInstance
 from yaml import load
@@ -35,6 +35,7 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
         """
         super().__init__(cleanup=cleanup)
         self._yaml_template: dict = None
+        self._model_yaml_template: dict = None
         self._service_instance_name: str = None
         self._service_instance: str = None
         if not settings.ONLY_INSTANTIATE:
@@ -75,6 +76,23 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
                     self._yaml_template: dict = load(yaml_template)
             return self._yaml_template
         return self.parent.yaml_template
+
+    @property
+    def model_yaml_template(self) -> dict:
+        """Step Model YAML template.
+
+        Load from file if it's a root step, get from parent otherwise.
+
+        Returns:
+            dict: Step YAML template
+
+        """
+        if self.is_root:
+            if not self._model_yaml_template:
+                with open(settings.MODEL_YAML_TEMPLATE, "r") as model_yaml_template:
+                    self._model_yaml_template: dict = load(model_yaml_template)
+            return self._model_yaml_template
+        return self.parent.model_yaml_template
 
     @property
     def service_name(self) -> str:
@@ -167,32 +185,49 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
 
         if distribution_completed is False:
             self._logger.error(
-                "Service Distribution for %s failed !!",service.name)
+                "Service Distribution for %s failed !!", service.name)
             raise onap_test_exceptions.ServiceDistributionException
 
-        vnf_params_list: List[VnfParameters] = []
-        for vnf_data in self.yaml_template[self.service_name].get("vnfs", []):
-            vnf_params_list.append(VnfParameters(
-                vnf_data["vnf_name"],
-                [InstantiationParameter(name=parameter["name"], value=parameter["value"]) for parameter in vnf_data.get("vnf_parameters", [])],
-                [VfmoduleParameters(vf_module_data["vf_module_name"],
-                 [InstantiationParameter(name=parameter["name"], value=parameter["value"]) for parameter in vf_module_data.get("parameters", [])]) \
+        if settings.MODEL_YAML_TEMPLATE:
+            service_instantiation = ServiceInstantiation.instantiate_macro_v2(
+                so_service=self.yaml_template[self.service_name],
+                sdc_service=service,
+                service_instance_name=self.service_instance_name,
+                customer=customer,
+                owning_entity=owning_entity,
+                project=vid_project,
+                line_of_business=line_of_business,
+                platform=platform,
+                cloud_region=cloud_region,
+                tenant=tenant,
+                enable_multicloud=settings.USE_MULTICLOUD
+            )
+        else:
+            vnf_params_list: List[VnfParameters] = []
+            for vnf_data in self.yaml_template[self.service_name].get("vnfs", []):
+                vnf_params_list.append(VnfParameters(
+                    vnf_data["vnf_name"],
+                    [InstantiationParameter(name=parameter["name"], value=parameter["value"]) for parameter in
+                     vnf_data.get("vnf_parameters", [])],
+                    [VfmoduleParameters(vf_module_data["vf_module_name"],
+                                        [InstantiationParameter(name=parameter["name"], value=parameter["value"]) for
+                                         parameter in vf_module_data.get("parameters", [])]) \
                      for vf_module_data in vnf_data.get("vf_module_parameters", [])]
-            ))
+                ))
 
-        service_instantiation = ServiceInstantiation.instantiate_macro(
-            service,
-            customer=customer,
-            owning_entity=owning_entity,
-            project=vid_project,
-            line_of_business=line_of_business,
-            platform=platform,
-            cloud_region=cloud_region,
-            tenant=tenant,
-            service_instance_name=self.service_instance_name,
-            vnf_parameters=vnf_params_list,
-            enable_multicloud=settings.USE_MULTICLOUD
-        )
+            service_instantiation = ServiceInstantiation.instantiate_macro(
+                sdc_service=service,
+                customer=customer,
+                owning_entity=owning_entity,
+                project=vid_project,
+                line_of_business=line_of_business,
+                platform=platform,
+                cloud_region=cloud_region,
+                tenant=tenant,
+                service_instance_name=self.service_instance_name,
+                vnf_parameters=vnf_params_list,
+                enable_multicloud=settings.USE_MULTICLOUD
+            )
         try:
             service_instantiation.wait_for_finish(timeout=settings.ORCHESTRATION_REQUEST_TIMEOUT)
         except TimeoutError:
@@ -201,9 +236,9 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
         if service_instantiation.failed:
             self._logger.error("Service instantiation %s failed", self.service_instance_name)
             raise onap_test_exceptions.ServiceInstantiateException
-        else:
-            service_subscription: ServiceSubscription = customer.get_service_subscription_by_service_type(self.service_name)
-            self._service_instance: ServiceInstance = service_subscription.get_service_instance_by_name(self.service_instance_name)
+
+        service_subscription: ServiceSubscription = customer.get_service_subscription_by_service_type(self.service_name)
+        self._service_instance: ServiceInstance = service_subscription.get_service_instance_by_name(self.service_instance_name)
 
     @YamlTemplateBaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
