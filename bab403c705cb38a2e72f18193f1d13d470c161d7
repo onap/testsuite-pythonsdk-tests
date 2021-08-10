@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8ed3c266_eeafe730",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2021-08-10T12:55:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a2dd89c6_b5b85100",
+      "range": {
+        "startLine": 10,
+        "startChar": 131,
+        "endLine": 10,
+        "endChar": 163
+      },
+      "revId": "bab403c705cb38a2e72f18193f1d13d470c161d7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b2883d9_140f278e",
         "filename": "src/onaptests/configuration/pnf_macro_settings.py",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2021-08-10T12:53:52Z",
       "side": 1,
       "message": "s/NAMEPSACE/NAMESPACE",
+      "revId": "bab403c705cb38a2e72f18193f1d13d470c161d7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c851c84_f57df943",
+        "filename": "src/onaptests/configuration/pnf_macro_settings.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2021-08-10T12:55:08Z",
+      "side": 1,
+      "message": "\u003cfacepalm\u003e",
+      "parentUuid": "0b2883d9_140f278e",
       "revId": "bab403c705cb38a2e72f18193f1d13d470c161d7",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
