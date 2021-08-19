@@ -1,5 +1,5 @@
 xtesting
 openstacksdk
-onapsdk==7.3.0
+onapsdk==7.7.2
 jinja2
 kubernetes
