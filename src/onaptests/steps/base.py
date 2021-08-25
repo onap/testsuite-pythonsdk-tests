@@ -126,8 +126,8 @@ class BaseStep(ABC):
         if self._cleanup:
             if self._cleanup_report:
                 yield self._cleanup_report
-            for step in self._steps:
-                yield from step.cleanup_reports
+                for step in self._steps:
+                    yield from step.cleanup_reports
 
     @property
     def name(self) -> str:

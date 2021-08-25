@@ -8,7 +8,6 @@ from typing import Any, Dict
 from kubernetes import client, config
 from kubernetes.client.exceptions import ApiException
 from onapsdk.cds import Blueprint, DataDictionarySet
-from onapsdk.cds.blueprint import Workflow
 from onapsdk.cds.blueprint_processor import Blueprintprocessor
 from onapsdk.configuration import settings
 import urllib3
@@ -54,7 +53,7 @@ class ExposeCDSBlueprintprocessorNodePortStep(CDSBaseStep):
         try:
             service_data: Dict[str, Any] = self.k8s_client.read_namespaced_service(
                 self.service_name,
-                settings.K8S_ONAP_NAMESPACE
+                settings.K8S_NAMESPACE
             )
             return service_data.spec.type == "NodePort"
         except ApiException:
@@ -67,7 +66,7 @@ class ExposeCDSBlueprintprocessorNodePortStep(CDSBaseStep):
 
         Use settings values:
          - K8S_CONFIG,
-         - K8S_ONAP_NAMESPACE.
+         - K8S_NAMESPACE.
 
         """
         super().execute()
@@ -75,7 +74,7 @@ class ExposeCDSBlueprintprocessorNodePortStep(CDSBaseStep):
             try:
                 self.k8s_client.patch_namespaced_service(
                     self.service_name,
-                    settings.K8S_ONAP_NAMESPACE,
+                    settings.K8S_NAMESPACE,
                     {"spec": {"ports": [{"port": 8080, "nodePort": 30449}], "type": "NodePort"}}
                 )
             except ApiException:
@@ -97,7 +96,7 @@ class ExposeCDSBlueprintprocessorNodePortStep(CDSBaseStep):
             try:
                 self.k8s_client.patch_namespaced_service(
                     self.service_name,
-                    settings.K8S_ONAP_NAMESPACE,
+                    settings.K8S_NAMESPACE,
                     [
                         {
                             "op": "remove",
@@ -223,45 +222,12 @@ class CbaPublishStep(CDSBaseStep):
 
     @BaseStep.store_state
     def execute(self) -> None:
-        """Publish CBA file.
+        """Enrich CBA file.
 
         Use settings values:
-         - CDS_CBA_ENRICHED.
+         - CDS_DD_FILE.
 
         """
         super().execute()
         blueprint: Blueprint = Blueprint.load_from_file(settings.CDS_CBA_ENRICHED)
         blueprint.publish()
-
-
-class CbaProcessStep(CDSBaseStep):
-    """Process CBA step."""
-
-    def __init__(self, cleanup=False) -> None:
-        """Initialize CBA process step."""
-        super().__init__(cleanup=cleanup)
-        self.add_step(CbaPublishStep(cleanup=cleanup))
-
-    @property
-    def description(self) -> str:
-        """Step description."""
-        return "Process CBA file."
-
-    @BaseStep.store_state
-    def execute(self) -> None:
-        """Process CBA file.
-
-        Check if output is equal to expected
-
-        Use settings values:
-         - CDS_CBA_ENRICHED,
-         - CDS_WORKFLOW_NAME,
-         - CDS_WORKFLOW_INPUT
-
-        """
-        super().execute()
-        blueprint: Blueprint = Blueprint.load_from_file(settings.CDS_CBA_ENRICHED)
-        workflow: Workflow = blueprint.get_workflow_by_name(settings.CDS_WORKFLOW_NAME)
-        output: Dict[str, Any] = workflow.execute(settings.CDS_WORKFLOW_INPUT)
-        if not output == settings.CDS_WORKFLOW_EXPECTED_OUTPUT:
-            raise OnapTestException("Response is not equal to the expected one")

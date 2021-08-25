@@ -51,7 +51,7 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
         k8s_watch: "Watch" =  watch.Watch()
         try:
             for event in k8s_watch.stream(k8s_client.list_namespaced_pod,
-                                        namespace=settings.K8S_ADDITIONAL_RESOURCES_NAMESPACE,
+                                        namespace=settings.K8S_NAMESPACE,
                                         timeout_seconds=timeout_seconds):
                 if event["object"].metadata.name == "pnf-macro-test-simulator":
                     if not event["object"].status.phase in ["Pending", "Running"]:
@@ -76,7 +76,7 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
         config.load_kube_config(settings.K8S_CONFIG)
         k8s_client: "CoreV1API" = client.CoreV1Api()
         try:
-            for service in k8s_client.list_namespaced_service(namespace=settings.K8S_ONAP_NAMESPACE).items:
+            for service in k8s_client.list_namespaced_service(namespace=settings.K8S_NAMESPACE).items:
                 if service.metadata.name == settings.DCAE_VES_COLLECTOR_POD_NAME:
                     return service.spec.cluster_ip, service.spec.ports[0].port
             raise EnvironmentPreparationException("Couldn't get VES ip and port")
