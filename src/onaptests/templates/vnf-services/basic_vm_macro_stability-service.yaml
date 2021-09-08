@@ -18,7 +18,7 @@ basic_vm_macro:
               - vf_module_name: base_ubuntu20
                 parameters: [
                     {"name": "ubuntu20_image_name",
-                     "value": "Ubuntu_2004"
+                     "value": "ubuntu-20.04"
                     },
                     {"name": "ubuntu20_key_name",
                      "value": "cleouverte"
@@ -32,7 +32,7 @@ basic_vm_macro:
   t+w+EC9/kBKq+1VKdmsXUXAcjEvjovVL8l1BrX3BY0R8D imported-openssh-key"
                     },
                     {"name": "ubuntu20_flavor_name",
-                     "value": "m1.smaller"
+                     "value": "m1.small"
                     },
                     {"name": "VM_name",
                      "value": "ubuntu20agent-VM-01"
