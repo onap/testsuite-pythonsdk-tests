@@ -70,7 +70,7 @@ class ServiceAlaCarteInstantiateStep(BaseStep):
         except ResourceNotFound:
             self._logger.info("Owning entity not found, create it")
             owning_entity = AaiOwningEntity.create(settings.OWNING_ENTITY)
-        vid_project = Project.create(settings.PROJECT)
+        vid_project = Project(settings.PROJECT)
 
         service_instantiation = ServiceInstantiation.instantiate_so_ala_carte(
             service,
@@ -197,7 +197,7 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         except ResourceNotFound:
             self._logger.info("Owning entity not found, create it")
             owning_entity = AaiOwningEntity.create(settings.OWNING_ENTITY)
-        vid_project = Project.create(settings.PROJECT)
+        vid_project = Project(settings.PROJECT)
 
         # Before instantiating, be sure that the service has been distributed
         self._logger.info("******** Check Service Distribution *******")
