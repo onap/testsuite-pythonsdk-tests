@@ -1,0 +1,7 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-by: Michal Jagiello <michal.jagiello@t-mobile.pl>
+Submitted-at: Mon, 27 Sep 2021 15:28:29 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/testsuite/pythonsdk-tests/+/124507
+Project: testsuite/pythonsdk-tests
+Branch: refs/heads/master
