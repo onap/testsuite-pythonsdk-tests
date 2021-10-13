@@ -13,7 +13,6 @@ from onapsdk.configuration import settings
 from onapsdk.exceptions import ResourceNotFound
 from onapsdk.sdc.service import Service
 from onapsdk.so.instantiation import InstantiationParameter, ServiceInstantiation, VfmoduleParameters, VnfParameters
-from onapsdk.vid import LineOfBusiness, Platform, Project
 from onaptests.steps.cloud.customer_service_subscription_create import CustomerServiceSubscriptionCreateStep
 
 import onaptests.utils.exceptions as onap_test_exceptions
@@ -143,9 +142,6 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
         except ResourceNotFound:
             self._logger.info("Owning entity not found, create it")
             owning_entity = OwningEntity.create(settings.OWNING_ENTITY)
-        vid_project: Project = Project(settings.PROJECT)
-        line_of_business: LineOfBusiness = LineOfBusiness(settings.LINE_OF_BUSINESS)
-        platform: Platform = Platform(settings.PLATFORM)
 
         # Before instantiating, be sure that the service has been distributed
         self._logger.info("******** Check Service Distribution *******")
@@ -184,9 +180,9 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
             service,
             customer=customer,
             owning_entity=owning_entity,
-            project=vid_project,
-            line_of_business=line_of_business,
-            platform=platform,
+            project=settings.PROJECT,
+            line_of_business=settings.LINE_OF_BUSINESS,
+            platform=settings.PLATFORM,
             cloud_region=cloud_region,
             tenant=tenant,
             service_instance_name=self.service_instance_name,

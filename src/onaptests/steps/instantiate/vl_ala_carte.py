@@ -7,7 +7,6 @@ from onapsdk.aai.business import Customer, ServiceInstance, ServiceSubscription
 from onapsdk.configuration import settings
 from onapsdk.so.instantiation import Subnet
 from onapsdk.sdc.service import Service
-from onapsdk.vid import LineOfBusiness, Platform
 
 import onaptests.utils.exceptions as onap_test_exceptions
 from ..base import YamlTemplateBaseStep
@@ -130,14 +129,12 @@ class YamlTemplateVlAlaCarteInstantiateStep(YamlTemplateBaseStep):
         service_subscription: ServiceSubscription = customer.get_service_subscription_by_service_type(self.service_name)
         service_instance: ServiceInstance = service_subscription.get_service_instance_by_name(self.service_instance_name)
         self._service_instance = service_instance
-        line_of_business: LineOfBusiness = LineOfBusiness(settings.LINE_OF_BUSINESS)
-        platform: Platform = Platform(settings.PLATFORM)
         for idx, network in enumerate(service.networks):
         #for network in self.yaml_template[self.service_name]["networks"]:
             net_instantiation = service_instance.add_network(
                 network,
-                line_of_business,
-                platform,
+                settings.LINE_OF_BUSINESS,
+                settings.PLATFORM,
                 network_instance_name=f"{self.service_instance_name}_net_{idx}",
                 subnets=self.get_subnets(network.name))
             try:
