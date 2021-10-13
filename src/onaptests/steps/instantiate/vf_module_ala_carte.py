@@ -5,7 +5,7 @@ from yaml import load
 from onapsdk.aai.cloud_infrastructure import CloudRegion, Tenant
 from onapsdk.aai.business import Customer, ServiceInstance, ServiceSubscription
 from onapsdk.configuration import settings
-from onapsdk.so.instantiation import VnfParameter
+from onapsdk.so.instantiation import InstantiationParameter
 
 import onaptests.utils.exceptions as onap_test_exceptions
 from ..base import YamlTemplateBaseStep
@@ -91,14 +91,14 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
             return self._service_instance_name
         return self.parent.service_instance_name
 
-    def get_vnf_parameters(self, vnf_name: str) -> Iterable[VnfParameter]:
+    def get_vnf_parameters(self, vnf_name: str) -> Iterable[InstantiationParameter]:
         """Get VNF parameters from YAML template.
 
         Args:
             vnf_name (str): VNF name to get parameters for.
 
         Yields:
-            Iterator[Iterable[VnfParameter]]: VNF parameter
+            Iterator[Iterable[InstantiationParameter]]: VNF parameter
 
         """
 
@@ -107,7 +107,7 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
         for vnf in self.yaml_template[self.service_name]["vnfs"]:
             if vnf["vnf_name"] == vnf_name:
                 for vnf_parameter in vnf["vnf_parameters"]:
-                    yield VnfParameter(
+                    yield InstantiationParameter(
                         name=vnf_parameter["name"],
                         value=vnf_parameter["value"]
                     )
