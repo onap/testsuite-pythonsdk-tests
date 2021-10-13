@@ -9,7 +9,6 @@ from onapsdk.configuration import settings
 from onapsdk.exceptions import ResourceNotFound
 from onapsdk.sdc.service import Service
 from onapsdk.so.instantiation import ServiceInstantiation
-from onapsdk.vid import Project
 
 import onaptests.utils.exceptions as onap_test_exceptions
 from ..base import BaseStep, YamlTemplateBaseStep
@@ -70,15 +69,14 @@ class ServiceAlaCarteInstantiateStep(BaseStep):
         except ResourceNotFound:
             self._logger.info("Owning entity not found, create it")
             owning_entity = AaiOwningEntity.create(settings.OWNING_ENTITY)
-        vid_project = Project(settings.PROJECT)
 
-        service_instantiation = ServiceInstantiation.instantiate_so_ala_carte(
+        service_instantiation = ServiceInstantiation.instantiate_ala_carte(
             service,
             cloud_region,
             tenant,
             customer,
             owning_entity,
-            vid_project,
+            settings.PROJECT,
             service_instance_name=settings.SERVICE_INSTANCE_NAME
         )
         try:
@@ -197,7 +195,6 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         except ResourceNotFound:
             self._logger.info("Owning entity not found, create it")
             owning_entity = AaiOwningEntity.create(settings.OWNING_ENTITY)
-        vid_project = Project(settings.PROJECT)
 
         # Before instantiating, be sure that the service has been distributed
         self._logger.info("******** Check Service Distribution *******")
@@ -222,13 +219,13 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
                 "Service Distribution for %s failed !!",service.name)
             raise onap_test_exceptions.ServiceDistributionException
 
-        service_instantiation = ServiceInstantiation.instantiate_so_ala_carte(
+        service_instantiation = ServiceInstantiation.instantiate_ala_carte(
             service,
             cloud_region,
             tenant,
             customer,
             owning_entity,
-            vid_project,
+            settings.PROJECT,
             service_instance_name=self.service_instance_name
         )
         try:
