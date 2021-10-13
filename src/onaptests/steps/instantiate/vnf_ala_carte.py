@@ -5,7 +5,6 @@ from onapsdk.aai.cloud_infrastructure import CloudRegion, Tenant
 from onapsdk.aai.business import Customer, ServiceInstance, ServiceSubscription
 from onapsdk.configuration import settings
 from onapsdk.sdc.service import Service
-from onapsdk.vid import LineOfBusiness, Platform
 
 import onaptests.utils.exceptions as onap_test_exceptions
 from ..base import YamlTemplateBaseStep
@@ -102,8 +101,6 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
         customer: Customer = Customer.get_by_global_customer_id(settings.GLOBAL_CUSTOMER_ID)
         service_subscription: ServiceSubscription = customer.get_service_subscription_by_service_type(self.service_name)
         self._service_instance: ServiceInstance = service_subscription.get_service_instance_by_name(self.service_instance_name)
-        line_of_business: LineOfBusiness = LineOfBusiness(settings.LINE_OF_BUSINESS)
-        platform: Platform = Platform(settings.PLATFORM)
         cloud_region: CloudRegion = CloudRegion.get_by_id(
             cloud_owner=settings.CLOUD_REGION_CLOUD_OWNER,
             cloud_region_id=settings.CLOUD_REGION_ID,
@@ -112,8 +109,8 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
         for idx, vnf in enumerate(service.vnfs):
             vnf_instantiation = self._service_instance.add_vnf(
                 vnf,
-                line_of_business,
-                platform,
+                settings.LINE_OF_BUSINESS,
+                settings.PLATFORM,
                 cloud_region,
                 tenant,
                 f"{self.service_instance_name}_vnf_{idx}")
