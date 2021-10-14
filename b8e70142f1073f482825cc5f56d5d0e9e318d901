@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d52a0b6_c0f2d376",
+        "filename": "src/onaptests/templates/vnf-services/multi-vnf-ubuntu-service.yaml.j2",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2021-10-14T10:52:54Z",
+      "side": 1,
+      "message": "@Oleg: https://python-onapsdk.readthedocs.io/en/latest/usage/usage/instantiation.html#instantiate-a-service-using-so-service-template-macro\nThere is a YAML model definition of instance",
+      "revId": "b8e70142f1073f482825cc5f56d5d0e9e318d901",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
