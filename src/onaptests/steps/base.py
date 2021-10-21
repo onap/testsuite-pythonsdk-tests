@@ -187,8 +187,9 @@ class BaseStep(ABC):
                     )
                 else:
                     if not self._start_execution_time:
-                        self._logger.error("No execution start time saved for %s step. Fix it by call `super.execute()` "
-                                           "in step class `execute()` method definition", self.name)
+                        if execution_status != ReportStepStatus.NOT_EXECUTED:
+                            self._logger.error("No execution start time saved for %s step. Fix it by call `super.execute()` "
+                                               "in step class `execute()` method definition", self.name)
                         self._start_execution_time = time.time()
                     self._execution_report = Report(
                         step_description=f"[{self.component}] {self.name}: {self.description}",
