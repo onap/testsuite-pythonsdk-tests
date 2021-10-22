@@ -114,7 +114,7 @@ class MultiVnfUbuntuMacro(testcase.TestCase):
             kwargs["case_name"] = 'nso_ubuntu_macro'
         super().__init__(**kwargs)
         self.__logger.debug("NSO Ubuntu macro init started")
-        self.test = MultiVnfUbuntuMacro(cleanup=settings.CLEANUP_FLAG)
+        self.test = MultiVnfUbuntuMacroStep(cleanup=settings.CLEANUP_FLAG)
 
     def run(self):
         """Run NSO Ubuntu macro test."""
