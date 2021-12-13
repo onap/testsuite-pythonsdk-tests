@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0e1ccfd1_e486c99d",
+        "filename": "src/onaptests/configuration/cds_resource_resolution_settings.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2021-12-13T09:47:59Z",
+      "side": 1,
+      "message": "Default value is set https://gerrit.onap.org/r/c/testsuite/pythonsdk-tests/+/123811/5/src/onaptests/configuration/settings.py#b46 and it\u0027s \"onap\" (as we won\u0027t use it for all tests suites). That scenario will create additional resources which are not part of onap, just used for testing, that\u0027s why I set that value here explicitly",
+      "parentUuid": "75ad5245_7aca6efb",
+      "revId": "2eab96a0dc9a498a535e555bd78edb2c209c6789",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39066b23_bf7b7af3",
         "filename": "src/onaptests/configuration/pnf_macro_settings.py",
         "patchSetId": 4
