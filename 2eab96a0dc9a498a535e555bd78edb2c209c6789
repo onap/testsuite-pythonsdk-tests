@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75ad5245_7aca6efb",
+        "filename": "src/onaptests/configuration/cds_resource_resolution_settings.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2021-12-13T07:54:34Z",
+      "side": 1,
+      "message": "Is this value hardcoded or it\u0027s just default value?",
+      "revId": "2eab96a0dc9a498a535e555bd78edb2c209c6789",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39066b23_bf7b7af3",
+        "filename": "src/onaptests/configuration/pnf_macro_settings.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2021-12-13T07:54:34Z",
+      "side": 1,
+      "message": "Same question as above.",
+      "revId": "2eab96a0dc9a498a535e555bd78edb2c209c6789",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
