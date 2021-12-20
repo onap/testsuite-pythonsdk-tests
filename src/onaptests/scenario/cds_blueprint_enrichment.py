@@ -15,7 +15,7 @@ from onaptests.utils.exceptions import OnapTestException
 class CDSBlueprintEnrichment(testcase.TestCase):
     """Enrich simple blueprint using CDS blueprintprocessor."""
 
-    __logger = logging.getLogger(__name__)
+    __logger = logging.getLogger()
 
     def __init__(self, **kwargs):
         """Init CDS blueprint enrichment use case."""
@@ -34,13 +34,15 @@ class CDSBlueprintEnrichment(testcase.TestCase):
         self.start_time = time.time()
         try:
             self.test.execute()
+            if settings.CLEANUP_FLAG:
+                self.test.cleanup()
             self.result = 100
         except OnapTestException as exc:
             self.result = 0
-            self.__logger.error(exc.error_message)
+            self.__logger.exception(exc.error_message)
         except SDKException:
             self.result = 0
-            self.__logger.error("SDK Exception")
+            self.__logger.exception("SDK Exception")
         finally:
             self.stop_time = time.time()
 
