@@ -1,10 +1,10 @@
-import sys
 from dataclasses import dataclass
 from enum import Enum
 from typing import List
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SettingsError
+from onaptests.utils.resources import get_resource_location
 
 
 class ReportStepStatus(Enum):
@@ -58,8 +58,8 @@ class ReportsCollection:
             int: How many steps failed
 
         """
-        return sum((1 for step_report in self.report if \
-            step_report.step_execution_status == ReportStepStatus.FAIL))
+        return sum((1 for step_report in self.report if
+                    step_report.step_execution_status == ReportStepStatus.FAIL))
 
     def generate_report(self) -> None:
         usecase = settings.SERVICE_NAME
@@ -75,7 +75,7 @@ class ReportsCollection:
 
         jinja_env = Environment(
             autoescape=select_autoescape(['html']),
-            loader=FileSystemLoader(sys.path[-1] + '/onaptests/templates/reporting'))
+            loader=FileSystemLoader(get_resource_location('templates/reporting')))
 
         jinja_env.get_template('reporting.html.j2').stream(
             report=self,
