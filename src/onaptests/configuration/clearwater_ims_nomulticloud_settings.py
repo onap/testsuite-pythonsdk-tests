@@ -1,8 +1,7 @@
 import os
-import sys
 import openstack
-from yaml import load
-
+from yaml import load, SafeLoader
+from onaptests.utils.resources import get_resource_location
 from .settings import * # pylint: disable=W0614
 
 """ Specific clearwater IMS without multicloud."""
@@ -21,13 +20,12 @@ VF_NAME = "clearwater-ims_ubuntu_vf"
 VSP_NAME = "clearwater-ims_ubuntu_vsp"
 # if a yaml file is define, retrieve info from this yaml files
 # if not declare the parameters in the settings
-SERVICE_YAML_TEMPLATE = (sys.path[-1] + "/onaptests/templates/vnf-services/" +
-                         "clearwater-ims-service.yaml")
+SERVICE_YAML_TEMPLATE = get_resource_location("templates/vnf-services/clearwater-ims-service.yaml")
 
 try:
     # Try to retrieve the SERVICE NAME from the yaml file
     with open(SERVICE_YAML_TEMPLATE, "r") as yaml_template:
-        yaml_config_file = load(yaml_template)
+        yaml_config_file = load(yaml_template, SafeLoader)
         SERVICE_NAME = next(iter(yaml_config_file.keys()))
 except ValueError:
     SERVICE_NAME = "" # Fill me

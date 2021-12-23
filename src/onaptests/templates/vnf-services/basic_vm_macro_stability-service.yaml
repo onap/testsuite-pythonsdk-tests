@@ -12,8 +12,8 @@ basic_vm_macro:
           vnf_artifact_type: "CONTROLLER_BLUEPRINT_ARCHIVE"
           vnf_artifact_name: "BASIC_VM_enriched.zip"
           vnf_artifact_label: "vnfcds"
-          vnf_artifact_file_path: onaptests/templates/artifacts/basic_vm_cba_enriched.zip
-          heat_files_to_upload: onaptests/templates/heat-files/ubuntu20/ubuntu20agent.zip
+          vnf_artifact_file_path: templates/artifacts/basic_vm_cba_enriched.zip
+          heat_files_to_upload: templates/heat-files/ubuntu20/ubuntu20agent.zip
           vf_module_parameters:
               - vf_module_name: base_ubuntu20
                 parameters: [
