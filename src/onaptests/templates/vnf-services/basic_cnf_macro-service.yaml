@@ -1,0 +1,28 @@
+---
+basic_cnf_macro:
+    tosca_file_from_SDC: service-basic_cnf_macro-template
+    version: "1.0"
+    subscription_type: "basic_cnf_macro"
+    vnfs:
+        - vnf_name: basic_cnf_macro
+          properties:
+              controller_actor: "CDS"
+              skip_post_instantiation_configuration: False
+              sdnc_artifact_name: "vnf"
+              sdnc_model_version: "1.0.0"
+              sdnc_model_name: "APACHE"
+          vnf_artifact_type: "CONTROLLER_BLUEPRINT_ARCHIVE"
+          vnf_artifact_name: "basic_cnf_cba_enriched.zip"
+          vnf_artifact_label: "vnfcba"
+          vnf_artifact_file_path: templates/artifacts/basic_cnf_cba_enriched.zip
+          heat_files_to_upload: templates/heat-files/basic_cnf_macro/basic_cnf_macro.zip
+          vnf_parameters: [
+              {
+                  "name": "k8s-rb-profile-name",
+                  "value": "cnftest"
+              },
+              {
+                  "name": "k8s-rb-profile-namespace",
+                  "value": "apache"
+              }
+          ]

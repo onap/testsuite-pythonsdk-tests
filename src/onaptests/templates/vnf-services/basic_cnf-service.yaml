@@ -5,7 +5,7 @@ basic_cnf:
     subscription_type: "basic_cnf"
     vnfs:
         - vnf_name: basic_cnf
-          heat_files_to_upload: onaptests/templates/heat-files/basic_cnf/basic_cnf.zip
+          heat_files_to_upload: templates/heat-files/basic_cnf/basic_cnf.zip
           vnf_parameters: [
               {"name": "dummy_name_0",
                "value": "dummy_name"
