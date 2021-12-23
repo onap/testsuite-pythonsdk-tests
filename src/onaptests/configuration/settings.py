@@ -28,7 +28,7 @@ LOG_CONFIG = {
             "level": "DEBUG",
             "class": "logging.FileHandler",
             "formatter": "default",
-            "filename": "/tmp/pythonsdk.debug.log",
+            "filename": "pythonsdk.debug.log",
             "mode": "w"
         }
     },
@@ -39,7 +39,7 @@ LOG_CONFIG = {
 }
 CLEANUP_FLAG = False
 
-REPORTING_FILE_PATH = "/tmp/reporting.html"
+REPORTING_FILE_PATH = "reporting.html"
 K8S_REGION_TYPE = "k8s"
 TILLER_HOST = "localhost"
 K8S_CONFIG = None  # None means it will use default config (~/.kube/config)
