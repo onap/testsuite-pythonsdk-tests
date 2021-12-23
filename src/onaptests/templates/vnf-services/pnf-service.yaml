@@ -6,7 +6,7 @@ test_pnf_macro:
       instantiation_type: "Macro"
       pnfs:
             - pnf_name: "test-pnf"
-              heat_files_to_upload: onaptests/templates/artifacts/pNF.csar
+              heat_files_to_upload: templates/artifacts/pNF.csar
               pnf_artifact_type: "CONTROLLER_BLUEPRINT_ARCHIVE"
               pnf_artifact_name: "CBA_enriched.zip"
               pnf_artifact_label: "cbapnf"

@@ -1,6 +1,7 @@
 xtesting
 openstacksdk
-onapsdk==9.0.0
+onapsdk==9.2.0
 jinja2
 kubernetes
 avionix==0.4.4
+PyYaml==5.3.1

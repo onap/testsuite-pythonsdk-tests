@@ -39,4 +39,4 @@ class CustomerServiceSubscriptionCreateStep(BaseStep):
         super().execute()
         service = Service(name=settings.SERVICE_NAME)
         customer = Customer.get_by_global_customer_id(settings.GLOBAL_CUSTOMER_ID)
-        customer.subscribe_service(service)
+        customer.subscribe_service(service.name)
