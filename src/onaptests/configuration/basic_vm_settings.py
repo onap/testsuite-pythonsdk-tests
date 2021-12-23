@@ -1,8 +1,7 @@
 import os
 import openstack
-import sys
-from yaml import load
-
+from yaml import load, SafeLoader
+from onaptests.utils.resources import get_resource_location
 import onaptests.utils.exceptions as onap_test_exceptions
 from .settings import * # pylint: disable=W0614
 
@@ -20,13 +19,12 @@ ONLY_INSTANTIATE= False
 
 # if a yaml file is define, retrieve info from this yaml files
 # if not declare the parameters in the settings
-SERVICE_YAML_TEMPLATE = (sys.path[-1] + "/onaptests/templates/vnf-services/" +
-                         "basic_vm-service.yaml")
+SERVICE_YAML_TEMPLATE = get_resource_location("templates/vnf-services/basic_vm-service.yaml")
 
 try:
     # Try to retrieve the SERVICE NAME from the yaml file
     with open(SERVICE_YAML_TEMPLATE, "r") as yaml_template:
-        yaml_config_file = load(yaml_template)
+        yaml_config_file = load(yaml_template, SafeLoader)
         SERVICE_NAME = next(iter(yaml_config_file.keys()))
 except (FileNotFoundError, ValueError):
     raise onap_test_exceptions.TestConfigurationException

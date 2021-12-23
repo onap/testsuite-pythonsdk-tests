@@ -2,7 +2,7 @@
 {{ service_name }}:
     vnfs:
         - vnf_name: {{ service_name }}
-          heat_files_to_upload: onaptests/templates/heat-files/ubuntu18/ubuntu18agent.zip
+          heat_files_to_upload: templates/heat-files/ubuntu18/ubuntu18agent.zip
           vnf_parameters: [
               {"name": "ubuntu18_image_name",
               "value": "ubuntu-agent"
