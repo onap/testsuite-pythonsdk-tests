@@ -1,10 +1,10 @@
 from pathlib import Path
-import sys
 import time
 
 from onapsdk.configuration import settings
 from onapsdk.sdc.vf import Vf
 from onapsdk.sdc.vsp import Vsp
+from onaptests.utils.resources import get_resource_location
 
 from ..base import BaseStep, YamlTemplateBaseStep
 from .vsp import VspOnboardStep, YamlTemplateVspOnboardStep
@@ -113,7 +113,7 @@ class YamlTemplateVfOnboardStep(YamlTemplateBaseStep):
                         vf.create()
                         artifact_file_path: Path = Path(vnf["vnf_artifact_file_path"])
                         if not artifact_file_path.exists():
-                            artifact_file_path = Path(sys.path[-1], artifact_file_path)
+                            artifact_file_path = Path(get_resource_location(artifact_file_path))
                         vf.add_deployment_artifact(
                             artifact_type=vnf["vnf_artifact_type"],
                             artifact_name=vnf["vnf_artifact_name"],
