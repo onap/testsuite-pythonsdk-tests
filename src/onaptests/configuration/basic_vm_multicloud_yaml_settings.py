@@ -1,4 +1,5 @@
 import sys
+from onaptests.utils.resources import get_resource_location
 from .settings import * # pylint: disable=W0614
 
 """ Specific Basic VM with multicloud and yaml config scenario."""
@@ -40,5 +41,5 @@ PLATFORM = "sdktests_platform"
 
 SERVICE_INSTANCE_NAME = "sdktests_service_instance_name"
 
-SERVICE_YAML_TEMPLATE = sys.path[-1] + "/onaptests/templates/vnf-services/basic_vm-service.yaml"
+SERVICE_YAML_TEMPLATE = get_resource_location("templates/vnf-services/basic_vm-service.yaml")
 MODEL_YAML_TEMPLATE = None

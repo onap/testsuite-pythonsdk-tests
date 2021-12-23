@@ -2,17 +2,17 @@ import os
 import openstack
 from pathlib import Path
 from uuid import uuid4
-
 from yaml import load
 
 import onaptests.utils.exceptions as onap_test_exceptions
+from onaptests.utils.resources import get_resource_location
 from .settings import * # pylint: disable=W0614
 
 
 CLEANUP_FLAG = True
 
-CDS_DD_FILE = Path(Path(__file__).parent.parent, "templates/artifacts/dd.json")
-CDS_CBA_UNENRICHED = Path(Path(__file__).parent.parent, "templates/artifacts/basic_vm_cba.zip")
+CDS_DD_FILE = Path(get_resource_location("templates/artifacts/dd.json"))
+CDS_CBA_UNENRICHED = Path(get_resource_location("templates/artifacts/basic_vm_cba.zip"))
 CDS_CBA_ENRICHED = "/tmp/BASIC_VM_enriched.zip"
 
 ONLY_INSTANTIATE = False
@@ -47,8 +47,7 @@ PROJECT = "basicvm-project"
 LINE_OF_BUSINESS = "basicvm-lob"
 PLATFORM = "basicvm-platform"
 CLOUD_DOMAIN = "Default"
-SERVICE_YAML_TEMPLATE = Path(Path(__file__).parent.parent, "templates/vnf-services/" +
-                         "basic_vm_macro-service.yaml")
+SERVICE_YAML_TEMPLATE = Path(get_resource_location("templates/vnf-services/basic_vm_macro-service.yaml"))
 
 try:
     # Try to retrieve the SERVICE NAME from the yaml file
