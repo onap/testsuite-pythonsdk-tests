@@ -188,6 +188,7 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         super().execute()
         service = Service(self.service_name)
         customer: Customer = Customer.get_by_global_customer_id(settings.GLOBAL_CUSTOMER_ID)
+        service_subscription: ServiceSubscription = customer.get_service_subscription_by_service_type(service.name)
         cloud_region: CloudRegion = CloudRegion.get_by_id(
             cloud_owner=settings.CLOUD_REGION_CLOUD_OWNER,
             cloud_region_id=settings.CLOUD_REGION_ID,
@@ -230,6 +231,7 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
             customer,
             owning_entity,
             settings.PROJECT,
+            service_subscription,
             service_instance_name=self.service_instance_name
         )
         try:
