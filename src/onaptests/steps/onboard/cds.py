@@ -214,7 +214,9 @@ class CbaPublishStep(CDSBaseStep):
     def __init__(self, cleanup=False) -> None:
         """Initialize CBA publish step."""
         super().__init__(cleanup=cleanup)
-        self.add_step(CbaEnrichStep(cleanup=cleanup))
+        """Let's skip enrichment if enriched CBA is already present"""
+        if Path.is_file(settings.CDS_CBA_UNENRICHED):
+            self.add_step(CbaEnrichStep(cleanup=cleanup))
 
     @property
     def description(self) -> str:
