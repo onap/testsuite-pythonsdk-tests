@@ -1,7 +1,7 @@
 """Instantiate basic vm using SO macro flow."""
 import logging
 import time
-from yaml import load
+from yaml import load, SafeLoader
 
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SDKException
@@ -20,7 +20,7 @@ class BasicVmMacroStep(YamlTemplateBaseStep):
 
         Substeps:
             - CbaPublishStep
-            - YamlTemplateServiceAlaCarteInstantiateStep.
+            - YamlTemplateServiceMacroInstantiateStep.
         """
         super().__init__(cleanup=cleanup)
         self._yaml_template: dict = None
@@ -68,7 +68,7 @@ class BasicVmMacroStep(YamlTemplateBaseStep):
         """
         if not self._yaml_template:
             with open(settings.SERVICE_YAML_TEMPLATE, "r") as yaml_template:
-                self._yaml_template: dict = load(yaml_template)
+                self._yaml_template: dict = load(yaml_template, SafeLoader)
         return self._yaml_template
 
     @property

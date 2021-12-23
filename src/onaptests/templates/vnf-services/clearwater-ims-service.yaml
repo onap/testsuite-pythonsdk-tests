@@ -2,7 +2,7 @@
 clearwater_ims:
     vnfs:
         - vnf_name: clearwater_ims_vnf
-          heat_files_to_upload: onaptests/templates/heat-files/clearwater_ims/clearwater_ims.zip
+          heat_files_to_upload: templates/heat-files/clearwater_ims/clearwater_ims.zip
           vnf_parameters: [
               {"name": "public_net_id",
                "value": "FILL ME"},

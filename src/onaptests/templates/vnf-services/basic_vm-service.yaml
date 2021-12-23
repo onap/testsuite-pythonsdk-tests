@@ -2,7 +2,7 @@
 basic_vm:
     vnfs:
         - vnf_name: basic_vm
-          heat_files_to_upload: onaptests/templates/heat-files/ubuntu20/ubuntu20agent.zip
+          heat_files_to_upload: templates/heat-files/ubuntu20/ubuntu20agent.zip
           vnf_parameters: [
               {"name": "ubuntu20_image_name",
                "value": "ubuntu-20.04"

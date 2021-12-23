@@ -1,6 +1,6 @@
 import time
 from uuid import uuid4
-from yaml import load
+from yaml import load, SafeLoader
 
 from onapsdk.aai.cloud_infrastructure import CloudRegion, Tenant
 from onapsdk.aai.business import Customer, ServiceInstance, ServiceSubscription
@@ -130,7 +130,7 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         if self.is_root:
             if not self._yaml_template:
                 with open(settings.SERVICE_YAML_TEMPLATE, "r") as yaml_template:
-                    self._yaml_template: dict = load(yaml_template)
+                    self._yaml_template: dict = load(yaml_template, SafeLoader)
             return self._yaml_template
         return self.parent.yaml_template
 
@@ -188,6 +188,7 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         super().execute()
         service = Service(self.service_name)
         customer: Customer = Customer.get_by_global_customer_id(settings.GLOBAL_CUSTOMER_ID)
+        service_subscription: ServiceSubscription = customer.get_service_subscription_by_service_type(service.name)
         cloud_region: CloudRegion = CloudRegion.get_by_id(
             cloud_owner=settings.CLOUD_REGION_CLOUD_OWNER,
             cloud_region_id=settings.CLOUD_REGION_ID,
@@ -230,6 +231,7 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
             customer,
             owning_entity,
             settings.PROJECT,
+            service_subscription,
             service_instance_name=self.service_instance_name
         )
         try:
