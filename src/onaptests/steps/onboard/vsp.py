@@ -1,7 +1,7 @@
-import sys
 from onapsdk.configuration import settings
 from onapsdk.sdc.vendor import Vendor
 from onapsdk.sdc.vsp import Vsp
+from onaptests.utils.resources import get_resource_location
 
 from ..base import BaseStep, YamlTemplateBaseStep
 from .vendor import VendorOnboardStep
@@ -105,8 +105,7 @@ class YamlTemplateVspOnboardStep(YamlTemplateBaseStep):
         vendor: Vendor = Vendor(name=settings.VENDOR_NAME)
         if "vnfs" in self.yaml_template:
             for vnf in self.yaml_template["vnfs"]:
-                with open(
-                    sys.path[-1] + "/" + vnf["heat_files_to_upload"], "rb") as package:
+                with open(get_resource_location(vnf["heat_files_to_upload"]), "rb") as package:
                     vsp: Vsp = Vsp(name=f"{vnf['vnf_name']}_VSP",
                                    vendor=vendor,
                                    package=package)
@@ -114,8 +113,7 @@ class YamlTemplateVspOnboardStep(YamlTemplateBaseStep):
         elif "pnfs" in self.yaml_template:
             for pnf in self.yaml_template["pnfs"]:
                 if "heat_files_to_upload" in pnf:
-                    with open(
-                        sys.path[-1] + "/" + pnf["heat_files_to_upload"], "rb") as package:
+                    with open(get_resource_location(pnf["heat_files_to_upload"]), "rb") as package:
                         vsp: Vsp = Vsp(name=f"{pnf['pnf_name']}_VSP",
                                     vendor=vendor,
                                     package=package)

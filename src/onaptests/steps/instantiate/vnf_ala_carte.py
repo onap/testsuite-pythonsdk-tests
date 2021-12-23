@@ -1,5 +1,5 @@
 from uuid import uuid4
-from yaml import load
+from yaml import load, SafeLoader
 
 from onapsdk.aai.cloud_infrastructure import CloudRegion, Tenant
 from onapsdk.aai.business import Customer, ServiceInstance, ServiceSubscription
@@ -49,7 +49,7 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
         if self.is_root:
             if not self._yaml_template:
                 with open(settings.SERVICE_YAML_TEMPLATE, "r") as yaml_template:
-                    self._yaml_template: dict = load(yaml_template)
+                    self._yaml_template: dict = load(yaml_template, SafeLoader)
             return self._yaml_template
         return self.parent.yaml_template
 

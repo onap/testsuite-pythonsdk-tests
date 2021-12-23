@@ -1,9 +1,9 @@
 import uuid
 import os
-import sys
 from pathlib import Path
 import openstack
 from jinja2 import Environment, PackageLoader
+from onaptests.utils.resources import get_resource_location
 from .settings import *  # pylint: disable=W0614
 
 VNF_FILENAME_PREFIX = "multi-vnf-ubuntu"
@@ -23,8 +23,7 @@ def generate_service_config_yaml_file(filename):
 
     rendered_template = template.render(service_name=SERVICE_NAME)
 
-    file_name = (sys.path[-1] + "/onaptests/templates/vnf-services/" +
-                 f"{filename}.yaml")
+    file_name = get_resource_location(f"templates/vnf-services/{filename}.yaml")
 
     with open(file_name, 'w+') as file_to_write:
         file_to_write.write(rendered_template)
@@ -32,8 +31,8 @@ def generate_service_config_yaml_file(filename):
 
 CLEANUP_FLAG = True
 
-CDS_DD_FILE = Path(Path(__file__).parent.parent, "templates/artifacts/dd_nso_ubuntu.json")
-CDS_CBA_UNENRICHED = Path(Path(__file__).parent.parent, "templates/artifacts/nso_ubuntuvnf.zip")
+CDS_DD_FILE = Path(get_resource_location("templates/artifacts/dd_nso_ubuntu.json"))
+CDS_CBA_UNENRICHED = Path(get_resource_location("templates/artifacts/nso_ubuntuvnf.zip"))
 CDS_CBA_ENRICHED = "/tmp/UBUNTUVNF_enriched.zip"
 
 ONLY_INSTANTIATE = False
@@ -69,11 +68,11 @@ CLOUD_DOMAIN = "Default"
 
 VENDOR_NAME = 'ubuntu_xtesting_vendor'
 
-SERVICE_YAML_TEMPLATE = Path(Path(__file__).parent.parent, "templates/vnf-services/" +
-                             f"{VNF_FILENAME_PREFIX}-service.yaml")
+SERVICE_YAML_TEMPLATE = Path(get_resource_location("templates/vnf-services/" +
+                             f"{VNF_FILENAME_PREFIX}-service.yaml"))
 
-MODEL_YAML_TEMPLATE = Path(Path(__file__).parent.parent, "templates/vnf-services/" +
-                           f"{VNF_FILENAME_PREFIX}-model.yaml")
+MODEL_YAML_TEMPLATE = Path(get_resource_location("templates/vnf-services/" +
+                           f"{VNF_FILENAME_PREFIX}-model.yaml"))
 
 
 generate_service_config_yaml_file(f"{VNF_FILENAME_PREFIX}-service")

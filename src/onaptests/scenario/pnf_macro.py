@@ -1,7 +1,7 @@
 """Instantiate service with PNF using SO macro flow."""
 import logging
 import time
-from yaml import load
+from yaml import load, SafeLoader
 
 from xtesting.core import testcase
 from onapsdk.configuration import settings
@@ -72,7 +72,7 @@ class PnfMacroScenarioStep(YamlTemplateBaseStep):
         """
         if not self._yaml_template:
             with open(settings.SERVICE_YAML_TEMPLATE, "r") as yaml_template:
-                self._yaml_template: dict = load(yaml_template)
+                self._yaml_template: dict = load(yaml_template, SafeLoader)
         return self._yaml_template
 
     @property
