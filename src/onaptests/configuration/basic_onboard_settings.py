@@ -1,13 +1,15 @@
 
-import sys
 import random
 import string
-from yaml import load
+from yaml import load, SafeLoader
 from jinja2 import Environment, PackageLoader
+
 import onaptests.utils.exceptions as onap_test_exceptions
+from onaptests.utils.resources import get_resource_location
 from .settings import * # pylint: disable=W0614
 
 """ Creation of service to onboard"""
+
 
 # We need to create a service file with a random service name,
 # to be sure that we force onboarding
@@ -28,10 +30,7 @@ def generate_service_config_yaml_file():
 
     rendered_template = template.render(service_name=service_name)
 
-    file_name = (sys.path[-1] + "/onaptests/templates/vnf-services/" +
-                 "basic-onboard-service.yaml")
-
-    with open(file_name, 'w+') as file_to_write:
+    with open(SERVICE_YAML_TEMPLATE, 'w+') as file_to_write:
         file_to_write.write(rendered_template)
 
 """Basic onboard service to only onboard a service in SDC"""
@@ -48,14 +47,14 @@ SERVICE_COMPONENTS="SDC"
 
 # if a yaml file is define, retrieve info from this yaml files
 # if not declare the parameters in the settings
+
+SERVICE_YAML_TEMPLATE = get_resource_location("templates/vnf-services/basic-onboard-service.yaml")
 generate_service_config_yaml_file()
-SERVICE_YAML_TEMPLATE = (sys.path[-1] + "/onaptests/templates/vnf-services/" +
-                         "basic-onboard-service.yaml")
 
 try:
     # Try to retrieve the SERVICE NAME from the yaml file
     with open(SERVICE_YAML_TEMPLATE, "r") as yaml_template:
-        yaml_config_file = load(yaml_template)
+        yaml_config_file = load(yaml_template, SafeLoader)
         SERVICE_NAME = next(iter(yaml_config_file.keys()))
 except (FileNotFoundError, ValueError):
     raise onap_test_exceptions.TestConfigurationException
