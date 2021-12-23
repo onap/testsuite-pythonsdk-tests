@@ -3,7 +3,7 @@ import time
 from typing import List
 from uuid import uuid4
 from onapsdk.aai.business.service import ServiceInstance
-from yaml import load
+from yaml import load, SafeLoader
 
 from onapsdk.aai.business.customer import Customer, ServiceSubscription
 from onapsdk.aai.business.owning_entity import OwningEntity
@@ -73,7 +73,7 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
         if self.is_root:
             if not self._yaml_template:
                 with open(settings.SERVICE_YAML_TEMPLATE, "r") as yaml_template:
-                    self._yaml_template: dict = load(yaml_template)
+                    self._yaml_template: dict = load(yaml_template, SafeLoader)
             return self._yaml_template
         return self.parent.yaml_template
 
@@ -144,6 +144,7 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
         super().execute()
         service = Service(self.service_name)
         customer: Customer = Customer.get_by_global_customer_id(settings.GLOBAL_CUSTOMER_ID)
+        service_subscription: ServiceSubscription = customer.get_service_subscription_by_service_type(service.name)
         if any(
                 filter(lambda x: x in self.yaml_template[self.service_name].keys(),
                        ["vnfs", "networks"])):
@@ -161,9 +162,6 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
         except ResourceNotFound:
             self._logger.info("Owning entity not found, create it")
             owning_entity = OwningEntity.create(settings.OWNING_ENTITY)
-        vid_project: Project = Project(settings.PROJECT)
-        line_of_business: LineOfBusiness = LineOfBusiness(settings.LINE_OF_BUSINESS)
-        platform: Platform = Platform(settings.PLATFORM)
 
         # Before instantiating, be sure that the service has been distributed
         self._logger.info("******** Check Service Distribution *******")
@@ -210,11 +208,12 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
             sdc_service=service,
             customer=customer,
             owning_entity=owning_entity,
-            project=vid_project,
-            line_of_business=line_of_business,
-            platform=platform,
+            project=settings.PROJECT,
+            line_of_business=settings.LINE_OF_BUSINESS,
+            platform=settings.PLATFORM,
             cloud_region=cloud_region,
             tenant=tenant,
+            service_subscription=service_subscription,
             service_instance_name=self.service_instance_name,
             vnf_parameters=vnf_params_list,
             enable_multicloud=settings.USE_MULTICLOUD,

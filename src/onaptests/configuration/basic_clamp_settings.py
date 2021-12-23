@@ -1,5 +1,5 @@
-import sys
-from yaml import load
+from yaml import load, SafeLoader
+from onaptests.utils.resources import get_resource_location
 
 from .settings import * # pylint: disable=W0614
 
@@ -39,14 +39,13 @@ OPERATIONAL_POLICIES = [
 
 # if a yaml file is define, retrieve info from this yaml files
 # if not declare the parameters in the settings
-SERVICE_YAML_TEMPLATE = (sys.path[-1] + "/onaptests/templates/vnf-services/" +
-                         "basic_clamp-service.yaml")
-CONFIGURATION_PATH = sys.path[-1] + "/onaptests/configuration/"
+SERVICE_YAML_TEMPLATE = get_resource_location("templates/vnf-services/basic_clamp-service.yaml")
+CONFIGURATION_PATH = get_resource_location("configuration/")
 
 try:
     # Try to retrieve the SERVICE NAME from the yaml file
     with open(SERVICE_YAML_TEMPLATE, "r") as yaml_template:
-        yaml_config_file = load(yaml_template)
+        yaml_config_file = load(yaml_template, SafeLoader)
         SERVICE_NAME = next(iter(yaml_config_file.keys()))
         VF_NAME = SERVICE_NAME
 except ValueError:
