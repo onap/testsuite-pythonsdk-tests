@@ -1,7 +1,6 @@
-"""Instantiate basic vm using SO macro flow."""
+"""Instantiate basic cnf using SO macro flow."""
 import logging
 import time
-
 from yaml import load, SafeLoader
 
 from onapsdk.configuration import settings
@@ -14,23 +13,22 @@ from onaptests.utils.exceptions import OnapTestException
 from onaptests.steps.instantiate.service_macro import YamlTemplateServiceMacroInstantiateStep
 
 
-class MultiVnfUbuntuMacroStep(YamlTemplateBaseStep):
+class BasicCnfMacroStep(YamlTemplateBaseStep):
 
     def __init__(self, cleanup=False):
         """Initialize step.
 
         Substeps:
             - CbaPublishStep
-            - YamlTemplateServiceAlaCarteInstantiateStep.
+            - YamlTemplateServiceMacroInstantiateStep.
         """
         super().__init__(cleanup=cleanup)
         self._yaml_template: dict = None
-        self._model_yaml_template: dict = None
         self.add_step(CbaPublishStep(
-            cleanup=settings.CLEANUP_FLAG
+            cleanup=cleanup
         ))
         self.add_step(YamlTemplateServiceMacroInstantiateStep(
-            cleanup=settings.CLEANUP_FLAG
+            cleanup=cleanup
         ))
 
     @property
@@ -43,7 +41,7 @@ class MultiVnfUbuntuMacroStep(YamlTemplateBaseStep):
             str: Step description
 
         """
-        return "Multi VNF Ubuntu macro scenario step"
+        return "Basic CNF macro scenario step"
 
     @property
     def component(self) -> str:
@@ -75,10 +73,7 @@ class MultiVnfUbuntuMacroStep(YamlTemplateBaseStep):
 
     @property
     def model_yaml_template(self) -> dict:
-        if not self._model_yaml_template:
-            with open(settings.MODEL_YAML_TEMPLATE, "r") as model_yaml_template:
-                self._model_yaml_template: dict = load(model_yaml_template)
-        return self._model_yaml_template
+        return {}
 
     @property
     def service_name(self) -> dict:
@@ -103,26 +98,24 @@ class MultiVnfUbuntuMacroStep(YamlTemplateBaseStep):
         return settings.SERVICE_INSTANCE_NAME
 
 
-class MultiVnfUbuntuMacro(testcase.TestCase):
-    """Instantiate a basic vm macro."""
+class BasicCnfMacro(testcase.TestCase):
+    """Instantiate a basic cnf macro."""
 
-    __logger = logging.getLogger(__name__)
+    __logger = logging.getLogger()
 
     def __init__(self, **kwargs):
-        """Init Basic Macro use case."""
+        """Init Basic Cnf Macro use case."""
         if "case_name" not in kwargs:
-            kwargs["case_name"] = 'nso_ubuntu_macro'
+            kwargs["case_name"] = 'basic_cnf_macro'
         super().__init__(**kwargs)
-        self.__logger.debug("NSO Ubuntu macro init started")
-        self.test = MultiVnfUbuntuMacroStep(cleanup=settings.CLEANUP_FLAG)
+        self.__logger.debug("Basic Cnf macro init started")
+        self.test = BasicCnfMacroStep(cleanup=settings.CLEANUP_FLAG)
 
     def run(self):
-        """Run NSO Ubuntu macro test."""
+        """Run basic cnf macro test."""
         self.start_time = time.time()
         try:
             self.test.execute()
-            self.__logger.info("Starting to clean up in {} seconds".format(settings.CLEANUP_ACTIVITY_TIMER))
-            time.sleep(settings.CLEANUP_ACTIVITY_TIMER)
             self.test.cleanup()
             self.result = 100
         except OnapTestException as exc:
