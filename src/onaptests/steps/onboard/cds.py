@@ -217,6 +217,8 @@ class CbaPublishStep(CDSBaseStep):
         """Let's skip enrichment if enriched CBA is already present"""
         if Path.is_file(settings.CDS_CBA_UNENRICHED):
             self.add_step(CbaEnrichStep(cleanup=cleanup))
+        else:
+            self.add_step(ExposeCDSBlueprintprocessorNodePortStep(cleanup=cleanup))
 
     @property
     def description(self) -> str:

@@ -3,3 +3,4 @@
 *.jpg binary
 *.xlsx binary
 *.csar -text
+*.zip binary
