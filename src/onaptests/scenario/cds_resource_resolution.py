@@ -80,6 +80,7 @@ class CDSResourceResolution(testcase.TestCase):
         self.start_time = time.time()
         try:
             self.test.execute()
+            self.test.cleanup()
             self.result = 100
         except OnapTestException as exc:
             self.result = 0
