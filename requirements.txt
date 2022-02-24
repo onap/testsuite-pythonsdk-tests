@@ -1,6 +1,6 @@
 xtesting==0.91.0
 avionix>=0.4.5
-openstacksdk
+openstacksdk>=0.61.0
 onapsdk==9.2.2
-jinja2
-kubernetes
+jinja2>3
+kubernetes>=22.6.0
