@@ -79,15 +79,14 @@ class CDSResourceResolution(testcase.TestCase):
         self.__logger.debug("CDS resource resolution run")
         self.start_time = time.time()
         try:
-            self.test.execute()
-            self.test.cleanup()
-            self.result = 100
-        except OnapTestException as exc:
-            self.result = 0
-            self.__logger.error(exc.error_message)
-        except SDKException:
-            self.result = 0
-            self.__logger.error("SDK Exception")
+            for test_phase in (self.test.execute, self.test.cleanup):
+                try:
+                    test_phase()
+                    self.result += 50
+                except OnapTestException as exc:
+                    self.__logger.error(exc.error_message)
+                except SDKException:
+                    self.__logger.error("SDK Exception")
         finally:
             self.stop_time = time.time()
 
