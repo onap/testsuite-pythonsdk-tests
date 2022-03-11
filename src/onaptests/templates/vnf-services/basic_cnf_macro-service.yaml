@@ -19,7 +19,7 @@ basic_cnf_macro:
           vnf_parameters: [
               {
                   "name": "k8s-rb-profile-namespace",
-                  "value": "apache"
+                  "value": "onap-tests"
               },
               {
                   "name": "k8s-rb-profile-k8s-version",
@@ -43,7 +43,7 @@ basic_cnf_macro:
                     },
                     {
                         "name": "k8s-rb-profile-namespace",
-                        "value": "apache"
+                        "value": "onap-tests"
                     },
                     {
                         "name": "k8s-rb-instance-release-name",
