@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d51ca1c8_9037ec2b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2022-03-17T10:16:57Z",
+      "side": 1,
+      "message": "typo?",
+      "range": {
+        "startLine": 10,
+        "startChar": 32,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "df204f3f26cf4a67f50447560687ff9d1b255de8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75d80a5b_5029749a",
+        "filename": "docs/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2022-03-17T10:16:57Z",
+      "side": 1,
+      "message": "Could you please rephrase? I can\u0027t seem to understand this sentence.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 9
+      },
+      "revId": "df204f3f26cf4a67f50447560687ff9d1b255de8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2b935fd_b3d312ff",
+        "filename": "docs/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2022-03-17T10:16:57Z",
+      "side": 1,
+      "message": "based",
+      "range": {
+        "startLine": 190,
+        "startChar": 36,
+        "endLine": 190,
+        "endChar": 41
+      },
+      "revId": "df204f3f26cf4a67f50447560687ff9d1b255de8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9d966be_51057855",
+        "filename": "docs/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 5097
+      },
+      "writtenOn": "2022-03-17T10:16:57Z",
+      "side": 1,
+      "message": "typo?",
+      "range": {
+        "startLine": 194,
+        "startChar": 0,
+        "endLine": 194,
+        "endChar": 5
+      },
+      "revId": "df204f3f26cf4a67f50447560687ff9d1b255de8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
