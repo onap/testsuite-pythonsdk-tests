@@ -41,7 +41,7 @@ K8S_CONFIG = get_resource_location("templates/artifacts/config")
 VENDOR_NAME = "basicnf_vendor"
 
 CLOUD_REGION_CLOUD_OWNER = "basicnf-owner"  # must not contain _
-CLOUD_REGION_ID = "k8sregion"
+CLOUD_REGION_ID = "k8sregion-cnf"
 CLOUD_REGION_TYPE = "k8s"
 CLOUD_REGION_VERSION = "1.0"
 CLOUD_DOMAIN = "Default"
