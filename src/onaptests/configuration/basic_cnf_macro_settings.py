@@ -8,7 +8,7 @@ import onaptests.utils.exceptions as onap_test_exceptions
 from .settings import *  # pylint: disable=W0614
 
 """ Specific basic_cnf_macro with multicloud-k8s and yaml config scenario."""
-SERVICE_DETAILS = ("Onboarding, distribution and instantiation of a Apache CNF" +
+SERVICE_DETAILS = ("Onboarding, distribution and instantiation of a Apache CNF " +
                    "using macro and native CNF path: cnf-adapter + K8sPlugin")
 SERVICE_COMPONENTS = "SDC, DMAAP, AAI, SO, SDNC, CDS, Multicloud K8S"
 
@@ -31,7 +31,7 @@ K8S_CONFIG = get_resource_location("templates/artifacts/config")
 VENDOR_NAME = "basiccnf_macro_vendor"
 
 CLOUD_REGION_CLOUD_OWNER = "basiccnf-cloud-owner"  # must not contain _
-CLOUD_REGION_ID = "k8sregion"
+CLOUD_REGION_ID = "k8sregion-cnf-macro"
 CLOUD_REGION_TYPE = "k8s"
 CLOUD_REGION_VERSION = "1.0"
 CLOUD_DOMAIN = "Default"
