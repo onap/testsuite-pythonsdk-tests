@@ -18,7 +18,7 @@ CDS_CBA_UNENRICHED = Path(get_resource_location("templates/artifacts/PNF_DEMO.zi
 CDS_CBA_ENRICHED = "/tmp/PNF_DEMO_enriched.zip"
 
 CLOUD_REGION_CLOUD_OWNER = "basicnf-owner" # must not contain _
-CLOUD_REGION_ID = "k8sregion"
+CLOUD_REGION_ID = "k8sregion-pnf-macro"
 CLOUD_REGION_TYPE = "k8s"
 CLOUD_REGION_VERSION = "1.0"
 CLOUD_OWNER_DEFINED_TYPE = "N/A"
