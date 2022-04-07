@@ -124,9 +124,9 @@ class PnfMacro(testcase.TestCase):
                     test_phase()
                     self.result += 50
                 except OnapTestException as exc:
-                    self.__logger.error(exc.error_message)
+                    self.__logger.exception(exc.error_message)
                 except SDKException:
-                    self.__logger.error("SDK Exception")
+                    self.__logger.exception("SDK Exception")
         finally:
             self.stop_time = time.time()
 
