@@ -2,6 +2,7 @@ import time
 from typing import Any, Dict
 from yaml import load, SafeLoader
 
+import onapsdk.constants as onapsdk_const
 from onapsdk.configuration import settings
 from onapsdk.exceptions import APIError, ResourceNotFound
 from onapsdk.sdc.component import Component
@@ -69,7 +70,8 @@ class ServiceOnboardStep(BaseStep):
         # If the service is already distributed, do not try to checkin/onboard (replay of tests)
         # checkin is done if needed
         # If service is replayed, no need to try to re-onboard the model
-        if not service.distributed:
+        # Double check because of: https://gitlab.com/Orange-OpenSource/lfn/onap/python-onapsdk/-/issues/176
+        if not service.distributed and service.state != onapsdk_const.DISTRIBUTED:
             time.sleep(10)
             service.checkin()
             service.onboard()
@@ -169,7 +171,8 @@ class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
             # If the service is already distributed, do not try to checkin/onboard (replay of tests)
             # checkin is done if needed
             # If service is replayed, no need to try to re-onboard the model
-        if not service.distributed:
+        # Double check because of: https://gitlab.com/Orange-OpenSource/lfn/onap/python-onapsdk/-/issues/176
+        if not service.distributed and service.state != onapsdk_const.DISTRIBUTED:
             try:
                 service.checkin()
             except (APIError, ResourceNotFound):
