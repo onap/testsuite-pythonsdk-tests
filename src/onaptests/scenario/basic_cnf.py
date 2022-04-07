@@ -45,10 +45,10 @@ class BasicCnf(testcase.TestCase):
                 self.result = 100
         except OnapTestException as exc:
             self.result = 0
-            self.__logger.error(exc.error_message)
+            self.__logger.exception(exc.error_message)
         except SDKException:
             self.result = 0
-            self.__logger.error("SDK exception")
+            self.__logger.exception("SDK exception")
         finally:
             self.stop_time = time.time()
 
