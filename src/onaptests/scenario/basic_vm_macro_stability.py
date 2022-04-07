@@ -32,10 +32,10 @@ class BasicVmMacroStability(testcase.TestCase):
             self.result = 100
         except OnapTestException as exc:
             self.result = 0
-            self.__logger.error(exc.error_message)
+            self.__logger.exception(exc.error_message)
         except SDKException:
             self.result = 0
-            self.__logger.error("SDK Exception")
+            self.__logger.exception("SDK Exception")
         finally:
             self.stop_time = time.time()
 
