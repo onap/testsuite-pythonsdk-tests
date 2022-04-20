@@ -72,8 +72,14 @@ class ServiceOnboardStep(BaseStep):
         # If service is replayed, no need to try to re-onboard the model
         # Double check because of: https://gitlab.com/Orange-OpenSource/lfn/onap/python-onapsdk/-/issues/176
         if not service.distributed and service.status != onapsdk_const.DISTRIBUTED:
-            time.sleep(10)
-            service.checkin()
+            if service.status == onapsdk_const.DRAFT:
+                try:
+                    service.checkin()
+                except (APIError, ResourceNotFound):
+                    # Retry as checkin may be a bit long
+                    # Temp workaround to avoid internal race in SDC
+                    time.sleep(10)
+                    service.checkin()
             service.onboard()
 
 
@@ -173,13 +179,14 @@ class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
             # If service is replayed, no need to try to re-onboard the model
         # Double check because of: https://gitlab.com/Orange-OpenSource/lfn/onap/python-onapsdk/-/issues/176
         if not service.distributed and service.status != onapsdk_const.DISTRIBUTED:
-            try:
-                service.checkin()
-            except (APIError, ResourceNotFound):
-                # Retry as checkin may be a bit long
-                # Temp workaround to avoid internal race in SDC
-                time.sleep(10)
-                service.checkin()
+            if service.status == onapsdk_const.DRAFT:
+                try:
+                    service.checkin()
+                except (APIError, ResourceNotFound):
+                    # Retry as checkin may be a bit long
+                    # Temp workaround to avoid internal race in SDC
+                    time.sleep(10)
+                    service.checkin()
             service.onboard()
 
     def declare_resources(self, service: Service) -> None:
