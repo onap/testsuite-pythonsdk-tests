@@ -91,6 +91,11 @@ committers:
       company: 'Samsung'
       id: 'mkrasowski'
       timezone: 'Europe/Warsaw'
+    - name: 'Fiachra Corcoran'
+      email: 'fiachra.corcoran@est.tech'
+      company: 'Ericsson'
+      id: 'efiacor'
+      timezone: 'Europe/Dublin'
 tsc:
     # yamllint disable rule:line-length
     approval: 'https://lists.onap.org/g/onap-tsc/message/6408?p=,,,20,0,0,0::relevance,,new+repository+for+integration+team+testsuite%2Fpythonsdk-tests,20,2,0,74178111'
@@ -122,3 +127,6 @@ tsc:
         - type: 'Addition'
           name: 'Maciej Lisowski, Marcin Sebastian Krasowski'
           link: 'https://lists.onap.org/g/onap-tsc/message/8449'
+        - type: 'Addition'
+          name: 'Fiachra Corcoran'
+          link: 'https://lists.onap.org/g/onap-tsc/message/8634'
