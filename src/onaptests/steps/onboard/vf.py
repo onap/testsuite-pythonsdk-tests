@@ -47,6 +47,12 @@ class VfOnboardStep(BaseStep):
         if not vf.created():
             vf.onboard()
 
+    @BaseStep.store_state(cleanup=True)
+    def cleanup(self):
+        vf: Vf = Vf(name=settings.VF_NAME)
+        vf.delete()
+        super().cleanup()
+
 
 class YamlTemplateVfOnboardStep(YamlTemplateBaseStep):
     """Vf onboard using YAML template step."""
@@ -122,3 +128,11 @@ class YamlTemplateVfOnboardStep(YamlTemplateBaseStep):
                         )
                     time.sleep(10)
                     vf.onboard()
+
+    @YamlTemplateBaseStep.store_state(cleanup=True)
+    def cleanup(self):
+        if "vnfs" in self.yaml_template:
+            for vnf in self.yaml_template["vnfs"]:
+                vf_obj: Vf = Vf(name=vnf["vnf_name"])
+                vf_obj.delete()
+        super().cleanup()
