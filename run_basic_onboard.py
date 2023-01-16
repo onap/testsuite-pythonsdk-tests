@@ -15,6 +15,7 @@ if __name__ == "__main__":
         cleanup=settings.CLEANUP_FLAG)
     try:
         basic_vm_onboard.execute()
+        basic_vm_onboard.cleanup()
     except onap_test_exceptions.TestConfigurationException:
         logger.error("Basic Onboard configuration error")
     basic_vm_onboard.reports_collection.generate_report()
