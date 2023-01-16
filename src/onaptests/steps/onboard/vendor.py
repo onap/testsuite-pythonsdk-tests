@@ -28,3 +28,10 @@ class VendorOnboardStep(BaseStep):
         super().execute()
         vendor: Vendor = Vendor(name=settings.VENDOR_NAME)
         vendor.onboard()
+
+    @BaseStep.store_state(cleanup=True)
+    def cleanup(self) -> None:
+        vendor: Vendor = Vendor(name=settings.VENDOR_NAME)
+        vendor.archive()
+        vendor.delete()
+        super().cleanup()
