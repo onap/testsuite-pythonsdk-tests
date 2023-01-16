@@ -44,6 +44,12 @@ class VspOnboardStep(BaseStep):
         vsp: Vsp = Vsp(name=settings.VSP_NAME, vendor=vendor, package=open(settings.VSP_FILE_PATH, "rb"))
         vsp.onboard()
 
+    @BaseStep.store_state(cleanup=True)
+    def cleanup(self):
+        vsp: Vsp = Vsp(name=settings.VSP_NAME)
+        vsp.delete()
+        super().cleanup()
+
 
 class YamlTemplateVspOnboardStep(YamlTemplateBaseStep):
     """Vsp onboard using YAML template step."""
@@ -118,3 +124,15 @@ class YamlTemplateVspOnboardStep(YamlTemplateBaseStep):
                                     vendor=vendor,
                                     package=package)
                         vsp.onboard()
+
+    @YamlTemplateBaseStep.store_state(cleanup=True)
+    def cleanup(self) -> None:
+        if "vnfs" in self.yaml_template:
+            for vnf in self.yaml_template["vnfs"]:
+                vsp: Vsp = Vsp(name=f"{vnf['vnf_name']}_VSP")
+                vsp.delete()
+        elif "pnfs" in self.yaml_template:
+            for pnf in self.yaml_template["pnfs"]:
+                vsp: Vsp = Vsp(name=f"{pnf['pnf_name']}_VSP")
+                vsp.delete()
+        super().cleanup()

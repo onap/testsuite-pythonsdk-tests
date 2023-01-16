@@ -63,7 +63,5 @@ except (FileNotFoundError, ValueError):
 #CLEANUP_ACTIVITY_TIMER = 10  # nb of seconds before cleanup in case cleanup option is set
 VENDOR_NAME = "basic_onboard_vendor"
 
-VF_NAME = "basic_onboard_vf"
-VSP_NAME = "basic_onboard_vsp"
-
 MODEL_YAML_TEMPLATE = None
+CLEANUP_FLAG = True

@@ -32,6 +32,7 @@ class BasicOnboard(testcase.TestCase):
         self.__logger.debug("start time")
         try:
             self.test.execute()
+            self.test.cleanup()
             self.__logger.info("VNF basic_vm successfully onboarded")
             self.result = 100
         except OnapTestException as exc:
