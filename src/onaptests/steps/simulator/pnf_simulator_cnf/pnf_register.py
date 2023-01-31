@@ -63,14 +63,14 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
             self._logger.error("Can't connect with k8s")
             raise OnapTestException
 
-    def get_ves_ip_and_port(self) -> Tuple[str, str]:
-        """Static method to get VES ip address and port.
+    def get_ves_protocol_ip_and_port(self) -> Tuple[str, str, str]:
+        """Static method to get VES protocol, ip address and port.
 
         Raises:
             EnvironmentPreparationException: VES pod is not running
 
         Returns:
-            Tuple[str, str]: VES IP and port
+            Tuple[str, str, str]: VES protocol, IP and port
 
         """
         config.load_kube_config(settings.K8S_CONFIG)
@@ -78,8 +78,11 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
         try:
             for service in k8s_client.list_namespaced_service(namespace=settings.K8S_ONAP_NAMESPACE).items:
                 if service.metadata.name == settings.DCAE_VES_COLLECTOR_POD_NAME:
-                    return service.spec.cluster_ip, service.spec.ports[0].port
-            raise EnvironmentPreparationException("Couldn't get VES ip and port")
+                    proto = "http"
+                    if "443" in service.spec.ports[0].port:
+                        proto = "https"
+                    return proto, service.spec.cluster_ip, service.spec.ports[0].port
+            raise EnvironmentPreparationException("Couldn't get VES protocol, ip and port")
         except urllib3.exceptions.HTTPError:
             self._logger.error("Can't connect with k8s")
             raise OnapTestException
@@ -91,7 +94,7 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
         if not self.is_pnf_pod_running():
             EnvironmentPreparationException("PNF simulator is not running")
         time.sleep(settings.PNF_WAIT_TIME)  # Let's still wait for PNF simulator to make sure it's initialized
-        ves_ip, _ = self.get_ves_ip_and_port()  # Use only 8443
+        ves_proto, ves_ip, ves_port = self.get_ves_protocol_ip_and_port()
         registration_number: int = 0
         registered_successfully: bool = False
         while registration_number < settings.PNF_REGISTRATION_NUMBER_OF_TRIES and not registered_successfully:
@@ -102,7 +105,7 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
                         "simulatorParams": {
                             "repeatCount": 9999,
                             "repeatInterval": 30,
-                            "vesServerUrl": f"https://sample1:sample1@{ves_ip}:8443/eventListener/v7"
+                            "vesServerUrl": f"{ves_proto}://sample1:sample1@{ves_ip}:{ves_port}/eventListener/v7"
                         },
                         "templateName": "registration.json",
                         "patch": {
