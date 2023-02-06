@@ -5,7 +5,7 @@ import time
 from xtesting.core import testcase
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SDKException
-from onaptests.steps.onboard.service import YamlTemplateServiceOnboardStep
+from onaptests.steps.onboard.cps import CreateCpsAnchorNodeStep
 from onaptests.utils.exceptions import OnapTestException
 
 class BasicCps(testcase.TestCase):
@@ -27,8 +27,7 @@ class BasicCps(testcase.TestCase):
             kwargs["case_name"] = 'basic_cps'
         super().__init__(**kwargs)
         self.__logger.debug("BasicCps init started")
-        # self.test = YamlTemplateServiceOnboardStep(  # To be created
-        #     cleanup=settings.CLEANUP_FLAG)
+        self.test = CreateCpsAnchorNodeStep(cleanup=settings.CLEANUP_FLAG)
         self.start_time = None
         self.stop_time = None
         self.result = 0
