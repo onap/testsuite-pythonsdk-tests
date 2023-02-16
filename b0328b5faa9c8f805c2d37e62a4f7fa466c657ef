@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a91cb2bf_170af349",
+        "filename": "src/onaptests/configuration/settings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2023-02-16T08:09:54Z",
+      "side": 1,
+      "message": "Is there a Jira to track this?",
+      "range": {
+        "startLine": 43,
+        "startChar": 12,
+        "endLine": 43,
+        "endChar": 20
+      },
+      "revId": "b0328b5faa9c8f805c2d37e62a4f7fa466c657ef",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
