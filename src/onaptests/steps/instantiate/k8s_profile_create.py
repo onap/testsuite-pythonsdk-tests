@@ -5,7 +5,7 @@ from yaml import load, SafeLoader
 from onapsdk.aai.business import Customer, ServiceInstance, ServiceSubscription
 from onapsdk.configuration import settings
 from onapsdk.exceptions import APIError, ResourceNotFound
-from onapsdk.msb.k8s import Definition
+from onapsdk.k8s import Definition
 from onapsdk.so.instantiation import InstantiationParameter
 
 import onaptests.utils.exceptions as onap_test_exceptions

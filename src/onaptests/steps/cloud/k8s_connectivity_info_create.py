@@ -1,7 +1,7 @@
 """Connectivity info creation module."""
 from onapsdk.configuration import settings
 from onapsdk.exceptions import APIError
-from onapsdk.msb.k8s import ConnectivityInfo
+from onapsdk.k8s import ConnectivityInfo
 
 from ..base import BaseStep
 

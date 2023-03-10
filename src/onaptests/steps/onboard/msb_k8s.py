@@ -1,6 +1,6 @@
 """MSB k8s plugin module."""
 from onapsdk.configuration import settings
-from onapsdk.msb.k8s import Definition, Profile
+from onapsdk.k8s import Definition, Profile
 
 from onaptests.steps.base import BaseStep
 from onaptests.steps.cloud.cloud_region_create import CloudRegionCreateStep

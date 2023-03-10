@@ -1,6 +1,6 @@
 """MSB k8s instantiation module."""
 from onapsdk.configuration import settings
-from onapsdk.msb.k8s import Instance
+from onapsdk.k8s import Instance
 
 from onaptests.steps.base import BaseStep
 from onaptests.steps.onboard.msb_k8s import CreateProfileStep
