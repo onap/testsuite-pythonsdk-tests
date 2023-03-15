@@ -82,13 +82,6 @@ class ServiceOnboardStep(BaseStep):
                     service.checkin()
             service.onboard()
 
-    @BaseStep.store_state
-    def cleanup(self) -> None:
-        """Cleanup service onboard step."""
-        service: Service = Service(name=settings.SERVICE_NAME)
-        service.delete()
-        super().cleanup()
-
 
 class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
     """Service onboard using YAML template step."""
@@ -260,10 +253,3 @@ class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
         for property_name, property_value in component_properties.items():
             prop: ComponentProperty = component.get_property(property_name)
             prop.value = property_value
-
-    @YamlTemplateBaseStep.store_state(cleanup=True)
-    def cleanup(self) -> None:
-        """Cleanup service onboard step."""
-        service: Service = Service(name=self.service_name)
-        service.delete()
-        super().cleanup()

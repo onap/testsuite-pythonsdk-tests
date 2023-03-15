@@ -60,12 +60,6 @@ class PnfOnboardStep(BaseStep):
             )
             pnf.onboard()
 
-    @BaseStep.store_state(cleanup=True)
-    def cleanup(self):
-        pnf: Pnf = Pnf(name=settings.PNF_NAME)
-        pnf.delete()
-        super().cleanup()
-
 
 class YamlTemplatePnfOnboardStep(YamlTemplateBaseStep):
     """PNF onboard using YAML template step."""
@@ -130,11 +124,3 @@ class YamlTemplatePnfOnboardStep(YamlTemplateBaseStep):
                         artifact=pnf["pnf_artifact_file_path"]
                     )
                     pnf_obj.onboard()
-
-    @YamlTemplateBaseStep.store_state(cleanup=True)
-    def cleanup(self):
-        if "pnfs" in self.yaml_template:
-            for pnf in self.yaml_template["pnfs"]:
-                pnf_obj: Pnf = Pnf(name=pnf["pnf_name"])
-                pnf_obj.delete()
-        super().cleanup()
