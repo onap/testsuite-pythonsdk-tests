@@ -50,7 +50,8 @@ class VfOnboardStep(BaseStep):
     @BaseStep.store_state(cleanup=True)
     def cleanup(self):
         vf: Vf = Vf(name=settings.VF_NAME)
-        vf.delete()
+        if vf.exists():
+            vf.delete()
         super().cleanup()
 
 
@@ -134,5 +135,6 @@ class YamlTemplateVfOnboardStep(YamlTemplateBaseStep):
         if "vnfs" in self.yaml_template:
             for vnf in self.yaml_template["vnfs"]:
                 vf_obj: Vf = Vf(name=vnf["vnf_name"])
-                vf_obj.delete()
+                if vf_obj.exists():
+                    vf_obj.delete()
         super().cleanup()

@@ -63,7 +63,8 @@ class PnfOnboardStep(BaseStep):
     @BaseStep.store_state(cleanup=True)
     def cleanup(self):
         pnf: Pnf = Pnf(name=settings.PNF_NAME)
-        pnf.delete()
+        if pnf.exists():
+            pnf.delete()
         super().cleanup()
 
 
@@ -136,5 +137,6 @@ class YamlTemplatePnfOnboardStep(YamlTemplateBaseStep):
         if "pnfs" in self.yaml_template:
             for pnf in self.yaml_template["pnfs"]:
                 pnf_obj: Pnf = Pnf(name=pnf["pnf_name"])
-                pnf_obj.delete()
+                if pnf_obj.exists():
+                    pnf_obj.delete()
         super().cleanup()

@@ -47,8 +47,9 @@ class VspOnboardStep(BaseStep):
     @BaseStep.store_state(cleanup=True)
     def cleanup(self):
         vsp: Vsp = Vsp(name=settings.VSP_NAME)
-        vsp.archive()
-        vsp.delete()
+        if vsp.exists():
+            vsp.archive()
+            vsp.delete()
         super().cleanup()
 
 
@@ -131,11 +132,13 @@ class YamlTemplateVspOnboardStep(YamlTemplateBaseStep):
         if "vnfs" in self.yaml_template:
             for vnf in self.yaml_template["vnfs"]:
                 vsp: Vsp = Vsp(name=f"{vnf['vnf_name']}_VSP")
-                vsp.archive()
-                vsp.delete()
+                if vsp.exists():
+                    vsp.archive()
+                    vsp.delete()
         elif "pnfs" in self.yaml_template:
             for pnf in self.yaml_template["pnfs"]:
                 vsp: Vsp = Vsp(name=f"{pnf['pnf_name']}_VSP")
-                vsp.archive()
-                vsp.delete()
+                if vsp.exists():
+                    vsp.archive()
+                    vsp.delete()
         super().cleanup()
