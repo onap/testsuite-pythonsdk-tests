@@ -86,7 +86,9 @@ class ServiceOnboardStep(BaseStep):
     def cleanup(self) -> None:
         """Cleanup service onboard step."""
         service: Service = Service(name=settings.SERVICE_NAME)
-        service.delete()
+        if service.exists():
+            service.archive()
+            service.delete()
         super().cleanup()
 
 
@@ -265,5 +267,7 @@ class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
     def cleanup(self) -> None:
         """Cleanup service onboard step."""
         service: Service = Service(name=self.service_name)
-        service.delete()
+        if service.exists():
+            service.archive()
+            service.delete()
         super().cleanup()
