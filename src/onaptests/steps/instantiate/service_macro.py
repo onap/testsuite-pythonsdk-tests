@@ -166,8 +166,8 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
         self._logger.info("******** Check Service Distribution *******")
         distribution_completed = False
         nb_try = 0
-        nb_try_max = 10
-        while distribution_completed is False and nb_try < nb_try_max:
+        while distribution_completed is False and \
+                nb_try < settings.SERVICE_DISTRIBUTION_NUMBER_OF_TRIES:
             distribution_completed = service.distributed
             if distribution_completed is True:
                 self._logger.info(
@@ -175,9 +175,9 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
                 service.name)
                 break
             self._logger.info(
-                "Service Distribution for %s ongoing, Wait for 60 s",
-                service.name)
-            time.sleep(60)
+                "Service Distribution for %s ongoing, Wait for %d s",
+                service.name,settings.SERVICE_DISTRIBUTION_SLEEP_TIME)
+            time.sleep(settings.SERVICE_DISTRIBUTION_SLEEP_TIME)
             nb_try += 1
 
         if distribution_completed is False:

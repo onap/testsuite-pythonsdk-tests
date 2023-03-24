@@ -266,8 +266,9 @@ class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
     @YamlTemplateBaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
         """Cleanup service onboard step."""
-        service: Service = Service(name=self.service_name)
-        if service.exists():
-            service.archive()
-            service.delete()
-        super().cleanup()
+        if settings.SDC_CLEANUP:
+            service: Service = Service(name=self.service_name)
+            if service.exists():
+                service.archive()
+                service.delete()
+            super().cleanup()
