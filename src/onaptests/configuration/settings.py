@@ -41,7 +41,7 @@ CLEANUP_FLAG = False
 # Additional flag to enable SDC resources cleanup
 # Added as SDC's VSP deletion is broken and most tests fail due to that
 # Should be removed as soon as SDC resource deletion is fixed
-SDC_CLEANUP = False
+SDC_CLEANUP = True
 
 REPORTING_FILE_PATH = "/tmp/reporting.html"
 K8S_REGION_TYPE = "k8s"

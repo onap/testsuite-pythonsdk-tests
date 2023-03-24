@@ -166,7 +166,7 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
         self._logger.info("******** Check Service Distribution *******")
         distribution_completed = False
         nb_try = 0
-        nb_try_max = 10
+        nb_try_max = 30
         while distribution_completed is False and nb_try < nb_try_max:
             distribution_completed = service.distributed
             if distribution_completed is True:
