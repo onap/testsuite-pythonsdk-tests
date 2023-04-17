@@ -65,4 +65,3 @@ VENDOR_NAME = "basic_onboard_vendor"
 
 MODEL_YAML_TEMPLATE = None
 CLEANUP_FLAG = True
-SDC_CLEANUP = True
