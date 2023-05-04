@@ -1,0 +1,15 @@
+{% extends "base.html.j2" %}
+{% block title %}ReplicaSet {{ replicaset.name }}{% endblock %}
+{% block content %}
+    {{ two_level_breadcrumb('ReplicaSet', replicaset.name) | indent(width=4) }}
+
+    {{ pod_parent_summary('ReplicaSet', replicaset.name, replicaset.failed_pods, replicaset.pods) }}
+
+    <section class="section">
+      {{ description(replicaset.k8s) | indent(width=6) }}
+
+      {{ pods_container(replicaset.pods, "ReplicaSet") | indent(width=6) }}
+
+    {{ events(replicaset.events) }}
+    </section>
+{% endblock %}
