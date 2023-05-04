@@ -2,7 +2,7 @@ tox
 Sphinx
 doc8
 docutils
-setuptools
+setuptools==65.3.0
 six
 sphinx_rtd_theme>=0.4.3
 sphinxcontrib-blockdiag

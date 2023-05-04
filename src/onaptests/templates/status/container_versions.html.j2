@@ -1,0 +1,38 @@
+
+{% extends "base.html.j2" %}
+{% block title %}ONAP Docker Versions{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class=container>
+    <h1 class="title is-1">ONAP Docker versions</h1>
+    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+      <thead>
+        <tr>
+          <th>Container</th>
+          <th>Version</th>
+          <th>Repositories</th>
+          <th>Components using it</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for container in containers.keys()|sort %}
+        <tr>
+          <td class="container" rowspan="{{ containers[container]['number_components'] }}">{{ container }}</td>
+        {% for version in containers[container]['versions'].keys()|sort %}
+          <td class="version" rowspan="{{ containers[container]['versions'][version]['components']|length }}">{{ version }}</td>
+          <td class="repositories" rowspan="{{ containers[container]['versions'][version]['components']|length }}">{% for repository in containers[container]['versions'][version]['repositories'] %}{{ repository }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+        {% for component in containers[container]['versions'][version]['components']|sort %}
+        {% if not loop.first %}
+        <tr>
+        {% endif %}
+          <td class="component">{{ component }}</td>
+        </tr>
+        {% endfor %}
+        {% endfor %}
+        {% endfor %}
+        </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}
