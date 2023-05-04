@@ -1,0 +1,104 @@
+{% extends "base.html.j2" %}
+{% block title %}Container {{ container.name }} from pod {{ pod_name }} logs{% endblock %}
+{% block content %}
+    <section class="section">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+          <ul>
+            <li><a href="./index.html">Summary</a></li>
+            <li><a href="./pod-{{ pod_name }}.html" title="{{ pod_name }}">Pod {{pod_name }}</a></li>
+            <li class="is-active"><a href="#" aria-current="page">Container {{ container.name }} logs</a></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+    <section class="section">
+    <div class="container">
+      <h1 class="title is-1">
+        Results
+      </h1>
+      <p class="subtitle">
+        By type
+      </p>
+      <div class="tabs is-centered">
+        <ul>
+          <li id="logs_toggle"><a onclick="toggleVisibility('logs')">Logs</a></li>
+          {% if old_logs %}
+          <li id="old_logs_toggle"><a onclick="toggleVisibility('old_logs')">Previous Logs</a></li>
+          {% endif %}
+          {% if log_files %}
+          {% for file in log_files %}
+          <li id="{{ file.split('.')[0].split('/')[-1] }}_toggle"><a onclick="toggleVisibility('{{ file.split('.')[0].split('/')[-1] }}')">{{ file }}</a></li>
+          {% endfor %}
+          {% endif %}
+        </ul>
+      </div>
+    <section class="section">
+      <div id="logs" class="container">
+        <div class="columns is-mobile is-centered">
+          <div class="column is-half">
+            <a class="button is-link is-fullwidth" href="./pod-{{ pod_name }}-{{ container.name }}.log">raw version</a>
+          </div>
+        </div>
+        <pre>
+          <code>{{ logs }}</code>
+        <pre>
+      </div>
+      {% if old_logs %}
+      <div id="old_logs" class="container">
+        <div class="columns is-mobile is-centered">
+            <div class="column is-half">
+              <a class="button is-link is-fullwidth" href="./pod-{{ pod_name }}-{{ container.name }}.old.log">raw version</a>
+            </div>
+        </div>
+        <pre>
+          <code>{{ old_logs }}</code>
+        <pre>
+      </div>
+      {% endif %}
+      {% if log_files %}
+      {% for file in log_files %}
+      <div id="{{ file.split('.')[0].split('/')[-1] }}" class="container">
+        <div class="columns is-mobile is-centered">
+          <div class="column is-half">
+            <a class="button is-link is-fullwidth" href="./pod-{{ pod_name }}-{{ container.name }}-{{ file.split('.')[0].split('/')[-1] }}.log">raw version</a>
+          </div>
+        </div>
+        <pre>
+          <code>{{ log_files[file] }}</code>
+        <pre>
+      </div>
+      {% endfor %}
+      {% endif %}
+    </section>
+{% endblock %}
+
+{% block more_head %}
+    <script language="JavaScript">
+      function toggleVisibility(id) {
+        document.getElementById('logs').style.display = 'none';
+        {% if old_logs %}
+        document.getElementById('old_logs').style.display = 'none';
+        {% endif %}
+        {% if log_files %}
+        {% for file in log_files %}
+        document.getElementById('{{ file.split('.')[0].split('/')[-1] }}').style.display = 'none';
+        {% endfor %}
+        {% endif %}
+        document.getElementById(id).style.display = 'inline';
+        document.getElementById('logs_toggle').classList.remove("is-active");
+        {% if old_logs %}
+        document.getElementById('old_logs_toggle').classList.remove("is-active");
+        {% endif %}
+        {% if log_files %}
+        {% for file in log_files %}
+        document.getElementById('{{ file.split('.')[0].split('/')[-1] }}_toggle').classList.remove("is-active");
+        {% endfor %}
+        {% endif %}
+        document.getElementById(id + '_toggle').classList.add("is-active");
+      }
+      document.addEventListener('readystatechange', () => {
+        if (document.readyState == 'complete') toggleVisibility('logs');
+      });
+    </script>
+{% endblock %}
