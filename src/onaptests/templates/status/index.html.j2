@@ -1,0 +1,376 @@
+{% extends "base.html.j2" %}
+{% block title %}Summary{% endblock %}
+{% block content %}
+    <section class="section">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+          <ul>
+            <li class="is-active"><a href="./index.html" aria-current="page">Summary</a></li>
+            <li><a href="./versions.html" aria-current="page">Versions</a></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+
+    {{ summary('Results', "", [
+      { 'title': 'Jobs', 'failing': (ns.failing_jobs | length), 'total': (ns.jobs | length)},
+      { 'title': 'Deployments', 'failing': (ns.failing_deployments | length), 'total': (ns.deployments | length)},
+      { 'title': 'Replicasets', 'failing': (ns.failing_replicasets | length), 'total': (ns.replicasets | length)},
+      { 'title': 'StatefulSets', 'failing': (ns.failing_statefulsets | length), 'total': (ns.statefulsets | length)},
+      { 'title': 'DaemonSets', 'failing': (ns.failing_daemonsets | length), 'total': (ns.daemonsets | length)},
+      { 'title': 'Persistent Volume Claims', 'failing': (ns.failing_pvcs | length), 'total': (ns.pvcs | length)}])
+    }}
+
+  <section class="section">
+    <div class="container">
+      <h1 class="title is-1">
+        Results
+      </h1>
+      <p class="subtitle">
+        By type
+      </p>
+      <div class="tabs is-centered">
+        <ul>
+          <li id="pods_toggle"><a onclick="toggleVisibility('pods')">Pods</a></li>
+          <li id="services_toggle"><a onclick="toggleVisibility('services')">Services</a></li>
+          {% if (ns.jobs | length) > 0 %}
+          <li id="jobs_toggle"><a onclick="toggleVisibility('jobs')">Jobs</a></li>
+          {% endif %}
+          {% if (ns.deployments | length) > 0 %}
+          <li id="deployments_toggle"><a onclick="toggleVisibility('deployments')">Deployments</a></li>
+          {% endif %}
+          {% if (ns.replicasets | length) > 0 %}
+          <li id="replicasets_toggle"><a onclick="toggleVisibility('replicasets')">Replicasets</a></li>
+          {% endif %}
+          {% if (ns.statefulsets | length) > 0 %}
+          <li id="statefulsets_toggle"><a onclick="toggleVisibility('statefulsets')">StatefulSets</a></li>
+          {% endif %}
+          {% if (ns.daemonsets | length) > 0 %}
+          <li id="daemonsets_toggle"><a onclick="toggleVisibility('daemonsets')">DaemonSets</a></li>
+          {% endif %}
+          {% if (ns.pvcs | length) > 0 %}
+          <li id="pvcs_toggle"><a onclick="toggleVisibility('pvcs')">Persistent Volume Claims</a></li>
+          {% endif %}
+          {% if (ns.configmaps | length) > 0 %}
+          <li id="configmaps_toggle"><a onclick="toggleVisibility('configmaps')">Config Maps</a></li>
+          {% endif %}
+          {% if (ns.secrets | length) > 0 %}
+          <li id="secrets_toggle"><a onclick="toggleVisibility('secrets')">Secrets</a></li>
+          {% endif %}
+          {% if (ns.ingresses | length) > 0 %}
+          <li id="ingresses_toggle"><a onclick="toggleVisibility('ingresses')">Ingresses</a></li>
+          {% endif %}
+        </ul>
+      </div>
+
+      <!-- Pods table -->
+      {{ pods_container(ns.pods, "Namespace", has_title=False) | indent(width=6) }}
+
+      <!-- Services table -->
+      <div id="services" class="table-container">
+        <table class="table is-fullwidth is-striped is-hoverable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Ports</th>
+              <th>Pods selected</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for service in ns.services %}
+            <tr>
+              <td><a href="./service-{{ service.name }}.html" title="{{ service.name }}">{{ service.name }}</a></td>
+              <td>{{ service.type }}</td>
+              <td>
+              {% if service.k8s.spec.ports %}
+              {% for port in service.k8s.spec.ports %}
+              {{ port.port }}{% if port.node_port %}:{{ port.node_port }}{% endif %}/{{ port.protocol }}{% if not loop.last %},{% endif %}
+              {% endfor %}
+              {% else %}
+              <span class="tag is-warning">No Ports!</span>
+              {% endif %}
+              </td>
+              <td>{% if (service.pods | length) > 0 %}{{ service.pods | length }}{% else %}<span class="tag is-warning">0</span>{% endif %}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      {% if (ns.jobs | length) > 0 %}
+      <!-- Jobs table -->
+      <div id="jobs" class="table-container">
+        <table class="table is-fullwidth is-striped is-hoverable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Completions</th>
+              <th>Duration</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for job in ns.jobs %}
+            <tr>
+              <td><a href="./job-{{ job.name }}.html" title="{{ job.name }}">{{ job.name }}</a></td>
+              <td>{% if job.k8s.status.succeeded %}{{ job.k8s.status.succeeded }}{% else %}0{% endif %}/{{ job.k8s.spec.completions }}</td>
+              <td>{% if job.k8s.status.completion_time %}{{ delta(job.k8s.status.completion_time, job.k8s.status.start_time)[0] }}{% else %}<span class="tag is-warning">N/A</span>{% endif %}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+
+      {% if (ns.deployments | length) > 0 %}
+      <!-- Deployments table -->
+      <div id="deployments" class="table-container">
+        <table class="table is-fullwidth is-striped is-hoverable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Ready</th>
+              <th>Up to Date</th>
+              <th>Available</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for deployment in ns.deployments %}
+            <tr>
+              <td><a href="./deployment-{{ deployment.name }}.html" title="{{ deployment.name }}">{{ deployment.name }}</a></td>
+              <td>{% if deployment.k8s.status.ready_replicas %}{{ deployment.k8s.status.ready_replicas }}{% else %}0{% endif %}/{{ deployment.k8s.spec.replicas }}</td>
+              <td>{{ number_ok(deployment.k8s.status.updated_replicas, '0', total=deployment.k8s.spec.replicas) }}</td>
+              <td>{{ number_ok(deployment.k8s.status.available_replicas, '0', total=deployment.k8s.spec.replicas) }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+
+      {% if (ns.replicasets | length) > 0 %}
+      <!-- ReplicaSets table -->
+      <div id="replicasets" class="table-container">
+        <table class="table is-fullwidth is-striped is-hoverable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Ready</th>
+              <th>Available</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for rs in ns.replicasets %}
+            <tr>
+              <td><a href="./replicaset-{{ rs.name }}.html" title="{{ rs.name }}">{{ rs.name }}</a></td>
+              <td>{% if rs.k8s.status.ready_replicas %}{{ rs.k8s.status.ready_replicas }}{% else %}0{% endif %}/{{ rs.k8s.spec.replicas }}</td>
+              <td>{{ number_ok(rs.k8s.status.available_replicas, '0', total=rs.k8s.spec.replicas) }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+
+      {% if (ns.statefulsets | length) > 0 %}
+      <!-- StatefulSets table -->
+      <div id="statefulsets" class="table-container">
+        <table class="table is-fullwidth is-striped is-hoverable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Ready</th>
+              <th>Up to Date</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for sts in ns.statefulsets %}
+            <tr>
+              <td><a href="./statefulset-{{ sts.name }}.html" title="{{ sts.name }}">{{ sts.name }}</a></td>
+              <td>{% if sts.k8s.status.ready_replicas %}{{ sts.k8s.status.ready_replicas }}{% else %}0{% endif %}/{{ sts.k8s.spec.replicas }}</td>
+              <td>{{ number_ok(sts.k8s.status.updated_replicas, '0', total=sts.k8s.spec.replicas) }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+
+      {% if (ns.daemonsets | length) > 0 %}
+      <!-- DaemonSets table -->
+      <div id="daemonsets" class="table-container">
+        <table class="table is-fullwidth is-striped is-hoverable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Desired</th>
+              <th>Current</th>
+              <th>Ready</th>
+              <th>Up to Date</th>
+              <th>Available</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for ds in ns.daemonsets %}
+            <tr>
+              <td><a href="./daemoset-{{ ds.name }}.html" title="{{ ds.name }}">{{ ds.name }}</a></td>
+              <td>{{ sts.k8s.status.desired_number_scheduled }}</td>
+              <td>{{ number_ok(sts.k8s.status.current_number_scheduled, '0', total=sts.k8s.spec.desired_number_scheduled) }}</td>
+              <td>{{ number_ok(sts.k8s.status.number_ready, '0', total=sts.k8s.spec.desired_number_scheduled) }}</td>
+              <td>{{ number_ok(sts.k8s.status.updated_number_scheduled, '0', total=sts.k8s.spec.desired_number_scheduled) }}</td>
+              <td>{{ number_ok(sts.k8s.status.number_available, '0', total=sts.k8s.spec.desired_number_scheduled) }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+
+      {% if (ns.pvcs | length) > 0 %}
+      <!-- PVCs table -->
+      <div id="pvcs" class="table-container">
+        <table class="table is-fullwidth is-striped is-hoverable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Volume</th>
+              <th>Capacity</th>
+              <th>Access Modes</th>
+              <th>Storage Class</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for pvc in ns.pvcs %}
+            <tr>
+              <td>{{ pvc.name }}</td>
+              <td>{% if (pvc.k8s.status.phase | lower) == "bound" %}{{ pvc.k8s.status.phase }}{% else %}<span class="tag is-warning">{{ pvc.k8s.status.phase }}</span>{% endif %}</td>
+              <td>{% if pvc.k8s.spec.volume_name %}{{ pvc.k8s.spec.volume_name }}{% endif %}</td>
+              <td>{% if pvc.k8s.status.capacity %}{{ pvc.k8s.status.capacity.storage }}{% endif %}</td>
+              <td>{% if pvc.k8s.status.access_modes %}{{ pvc.k8s.status.capacity.access_modes | join(', ') }}{% endif %}</td>
+              <td>{% if pvc.k8s.spec.storage_class_name %}{{ pvc.k8s.spec.storage_class_name }}{% endif %}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+
+      {% if (ns.configmaps | length) > 0 %}
+      <!-- ConfigMaps table -->
+      <div id="configmaps" class="table-container">
+        <table class="table is-fullwidth is-striped is-hoverable">
+          <thead>
+            <tr>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for cm in ns.configmaps %}
+            <tr>
+              <td>{{ cm.name }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+
+      {% if (ns.secrets | length) > 0 %}
+      <!-- Secrets table -->
+      <div id="secrets" class="table-container">
+        <table class="table is-fullwidth is-striped is-hoverable">
+          <thead>
+            <tr>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for secret in ns.secrets %}
+            <tr>
+              <td>{{ secret.name }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+
+      {% if (ns.ingresses | length) > 0 %}
+      <div id="ingresses"></div>
+      {% endif %}
+
+    </div>
+{% endblock %}
+
+{% block more_head %}
+    <script language="JavaScript">
+      function toggleVisibility(id) {
+        document.getElementById('pods').style.display = 'none';
+        document.getElementById('services').style.display = 'none';
+        {% if (ns.jobs | length) > 0 %}
+        document.getElementById('jobs').style.display = 'none';
+        {% endif %}
+        {% if (ns.deployments | length) > 0 %}
+        document.getElementById('deployments').style.display = 'none';
+        {% endif %}
+        {% if (ns.replicasets | length) > 0 %}
+        document.getElementById('replicasets').style.display = 'none';
+        {% endif %}
+        {% if (ns.statefulsets | length) > 0 %}
+        document.getElementById('statefulsets').style.display = 'none';
+        {% endif %}
+        {% if (ns.daemonsets | length) > 0 %}
+        document.getElementById('daemonsets').style.display = 'none';
+        {% endif %}
+        {% if (ns.pvcs | length) > 0 %}
+        document.getElementById('pvcs').style.display = 'none';
+        {% endif %}
+        {% if (ns.configmaps | length) > 0 %}
+        document.getElementById('configmaps').style.display = 'none';
+        {% endif %}
+        {% if (ns.secrets | length) > 0 %}
+        document.getElementById('secrets').style.display = 'none';
+        {% endif %}
+        {% if (ns.ingresses | length) > 0 %}
+        document.getElementById('ingresses').style.display = 'none';
+        {% endif %}
+        document.getElementById(id).style.display = 'inline';
+        document.getElementById('pods_toggle').classList.remove("is-active");
+        document.getElementById('services_toggle').classList.remove("is-active");
+        {% if (ns.jobs | length) > 0 %}
+        document.getElementById('jobs_toggle').classList.remove("is-active");
+        {% endif %}
+        {% if (ns.deployments | length) > 0 %}
+        document.getElementById('deployments_toggle').classList.remove("is-active");
+        {% endif %}
+        {% if (ns.replicasets | length) > 0 %}
+        document.getElementById('replicasets_toggle').classList.remove("is-active");
+        {% endif %}
+        {% if (ns.statefulsets | length) > 0 %}
+        document.getElementById('statefulsets_toggle').classList.remove("is-active");
+        {% endif %}
+        {% if (ns.daemonsets | length) > 0 %}
+        document.getElementById('daemonsets_toggle').classList.remove("is-active");
+        {% endif %}
+        {% if (ns.pvcs | length) > 0 %}
+        document.getElementById('pvcs_toggle').classList.remove("is-active");
+        {% endif %}
+        {% if (ns.configmaps | length) > 0 %}
+        document.getElementById('configmaps_toggle').classList.remove("is-active");
+        {% endif %}
+        {% if (ns.secrets | length) > 0 %}
+        document.getElementById('secrets_toggle').classList.remove("is-active");
+        {% endif %}
+        {% if (ns.ingresses | length) > 0 %}
+        document.getElementById('ingresses_toggle').classList.remove("is-active");
+        {% endif %}
+        {% if (ns.deployments | length) > 0 %}
+        document.getElementById(id + '_toggle').classList.add("is-active");
+        {% endif %}
+      }
+      document.addEventListener('readystatechange', () => {
+        if (document.readyState == 'complete') toggleVisibility('pods');
+      });
+    </script>
+{% endblock %}
