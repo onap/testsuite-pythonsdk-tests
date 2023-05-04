@@ -1,0 +1,15 @@
+{% extends "base.html.j2" %}
+{% block title %}StatefulSet {{ statefulset.name }}{% endblock %}
+{% block content %}
+    {{ two_level_breadcrumb('StatefulSet', statefulset.name) | indent(width=4) }}
+
+    {{ pod_parent_summary('StatefulSet', statefulset.name, statefulset.failed_pods, statefulset.pods) }}
+
+    <section class="section">
+      {{ description(statefulset.k8s) | indent(width=6) }}
+
+      {{ pods_container(statefulset.pods, "StatefulSet") | indent(width=6) }}
+
+    {{ events(statefulset.events) }}
+    </section>
+{% endblock %}
