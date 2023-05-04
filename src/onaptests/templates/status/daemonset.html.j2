@@ -1,0 +1,15 @@
+{% extends "base.html.j2" %}
+{% block title %}DaemonSet {{ daemonset.name }}{% endblock %}
+{% block content %}
+    {{ two_level_breadcrumb('DaemonSet', daemonset.name) | indent(width=4) }}
+
+    {{ pod_parent_summary('DaemonSet', daemonset.name, daemonset.failed_pods, daemonset.pods) }}
+
+    <section class="section">
+      {{ description(daemonset.k8s) | indent(width=6) }}
+
+      {{ pods_container(daemonset.pods, "DaemonSet") | indent(width=6) }}
+
+    {{ events(daemonset.events) }}
+    </section>
+{% endblock %}

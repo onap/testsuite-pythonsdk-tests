@@ -1,0 +1,101 @@
+{% macro container_table(title, containers_list) %}
+<div class="container">
+  <h1 class="title is-1">{{ title }}</h1>
+  <div class="table-container">
+    <table class="table is-fullwidth is-striped is-hoverable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Image</th>
+          <th>State</th>
+          <th>Ready</th>
+          <th>Restart Count</th>
+        </tr>
+      <tbody>
+        {% for container in containers_list %}
+        <tr>
+          <td><a href="./pod-{{ pod.name }}-{{ container.name }}-logs.html" title="{{ pod.name }}-{{ container.name }}-logs">{{ container.name }}</a></td>
+          <td>{{ container.image }}</td>
+          <td>{{ container.status }}</td>
+          <td>{{ container.ready }}</td>
+          <td>{{ container.restart_count }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endmacro %}
+
+{% extends "base.html.j2" %}
+{% block title %}Pod {{ pod.name }}{% endblock %}
+{% block content %}
+    {{ two_level_breadcrumb('Pod', pod.name) | indent(width=4) }}
+
+    {{ summary('Pod', pod.name, [
+      {
+        'title': 'Init containers',
+        'failing': ((pod.init_containers | length) - pod.runned_init_containers),
+        'total': (pod.init_containers | length)
+      },
+      {
+        'title': 'Containers',
+        'failing': ((pod.containers | length) - pod.running_containers),
+        'total': (pod.containers | length)
+      }])
+    }}
+
+    <section class="section">
+      {{ description(pod.k8s) | indent(width=6) }}
+
+      {% if (pod.init_containers | length) > 0 %}
+      {{ container_table("Init Containers", pod.init_containers) | indent(width=6) }}
+      {% endif %}
+
+
+      {% if (pod.containers | length) > 0 %}
+      {{ container_table("Containers", pod.containers) | indent(width=8) }}
+      {% endif %}
+
+      {% if pod.k8s.spec.volumes %}
+      <div class="container">
+        <h1 class="title is-1">Volumes</h1>
+        <div class="table-container">
+          <table class="table is-fullwidth is-striped is-hoverable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Properties</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for volume_name, volume in pod.volumes.items() %}
+            {%   for volume_type, details in volume.items() %}
+              <tr>
+                <td>{{ volume_name }}</td>
+                <td>{{ volume_type }}</td>
+                <td>
+                  <table class="table is-narrow">
+                    <tbody>
+                    {% for key, value in details.items() %}
+                      <tr>
+                        <th>{{ key }}</th>
+                        <td>{{ value }}</td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            {%   endfor %}
+            {% endfor %}
+            </tbody>
+          </table>
+       </div>
+      </div>
+      {% endif %}
+
+      {{ events(pod.events) }}
+    </section>
+{% endblock %}

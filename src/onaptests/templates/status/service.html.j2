@@ -1,0 +1,45 @@
+{% extends "base.html.j2" %}
+{% block title %}Service {{ service.name }}{% endblock %}
+{% block content %}
+    {{ two_level_breadcrumb('Service', service.name) | indent(width=4) }}
+
+    {{ pod_parent_summary('Service', service.name, service.failed_pods, service.pods) }}
+
+    <section class="section">
+      {{ description(service.k8s) | indent(width=6) }}
+
+      {{ pods_container(service.pods, "Service") | indent(width=6) }}
+
+      <div class="container">
+        <h1 class="title is-1">Ports</h1>
+        {% if service.k8s.spec.ports %}
+        <div id="ports" class="table-container">
+          <table class="table is-fullwidth is-striped is-hoverable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Port</th>
+                <th>Node Port</th>
+                <th>Target Port</th>
+                <th>Protocol</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for port in service.k8s.spec.ports %}
+              <tr>
+                <td>{{ port.name }}</td>
+                <td>{{ port.port }}</td>
+                <td>{{ port.node_port }}</td>
+                <td>{{ port.target_port }}</td>
+                <td>{{ port.protocol }}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div class="notification is-warning">Service has no ports!</div>
+        {% endif %}
+      </div>
+    </section>
+{% endblock %}
