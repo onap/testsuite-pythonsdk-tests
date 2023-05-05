@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "8ad342b1_eb81b52c",
+        "filename": "run_status.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-05T14:11:49Z",
+      "side": 1,
+      "message": "That should be import from installed onaptests package",
+      "revId": "c330751d0c5c4b1cadb3683566ff7967c8be7ab5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f6c557e_1a0a0021",
+        "filename": "src/onaptests/scenario/status.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-05T14:11:49Z",
+      "side": 1,
+      "message": "Maybe we could add configurable kubeconfig?",
+      "revId": "c330751d0c5c4b1cadb3683566ff7967c8be7ab5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d830f2_65c0a82a",
+        "filename": "src/onaptests/scenario/status.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-05T14:11:49Z",
+      "side": 1,
+      "message": "can we use f\"string\" formatting?",
+      "revId": "c330751d0c5c4b1cadb3683566ff7967c8be7ab5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1813afd5_4cf56370",
         "filename": "src/onaptests/scenario/status.py",
         "patchSetId": 7
