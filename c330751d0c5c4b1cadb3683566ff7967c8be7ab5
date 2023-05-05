@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "ac72ee04_0c45a14f",
+        "filename": "src/onaptests/scenario/status.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-05T14:14:56Z",
+      "side": 1,
+      "message": "all 3 imports above are invalid I think. I have an import error",
+      "revId": "c330751d0c5c4b1cadb3683566ff7967c8be7ab5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f6c557e_1a0a0021",
         "filename": "src/onaptests/scenario/status.py",
         "patchSetId": 7
