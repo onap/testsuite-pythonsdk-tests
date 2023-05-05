@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1813afd5_4cf56370",
+        "filename": "src/onaptests/scenario/status.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-05T14:05:54Z",
+      "side": 1,
+      "message": "do we need to iterate through range and then get element by an index?",
+      "revId": "c330751d0c5c4b1cadb3683566ff7967c8be7ab5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a54ced3b_b6d9c6d1",
+        "filename": "src/onaptests/scenario/status.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-05T14:05:54Z",
+      "side": 1,
+      "message": "do we need to iterate through range and then get element by an index?",
+      "revId": "c330751d0c5c4b1cadb3683566ff7967c8be7ab5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fcd575f_0b44045f",
+        "filename": "src/onaptests/scenario/status.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-05T14:05:54Z",
+      "side": 1,
+      "message": "remove whitespace",
+      "revId": "c330751d0c5c4b1cadb3683566ff7967c8be7ab5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dbbd955_1651b978",
+        "filename": "src/onaptests/scenario/status.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-05T14:05:54Z",
+      "side": 1,
+      "message": "remove whitespace",
+      "revId": "c330751d0c5c4b1cadb3683566ff7967c8be7ab5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe13a1d3_ed343e2c",
+        "filename": "src/onaptests/scenario/status.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-05T14:05:54Z",
+      "side": 1,
+      "message": "do we need to iterate through range and then get element by an index? maybe it\u0027s possible to iterate through k8s_pvcs?",
+      "revId": "c330751d0c5c4b1cadb3683566ff7967c8be7ab5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e928ec9e_0ce13c00",
+        "filename": "src/onaptests/scenario/status.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-05T14:05:54Z",
+      "side": 1,
+      "message": "it can be done in one line I believe (I mean two lines above)",
+      "revId": "c330751d0c5c4b1cadb3683566ff7967c8be7ab5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a115a1_7c4b4357",
+        "filename": "src/onaptests/scenario/status.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-05T14:05:54Z",
+      "side": 1,
+      "message": "do we need to iterate through range and then get element by an index?",
+      "revId": "c330751d0c5c4b1cadb3683566ff7967c8be7ab5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4704935c_2f4e7231",
+        "filename": "src/onaptests/scenario/status.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-05T14:05:54Z",
+      "side": 1,
+      "message": "o we need to iterate through range and then get element by an index?",
+      "revId": "c330751d0c5c4b1cadb3683566ff7967c8be7ab5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "165e6e52_8d7bfa69",
+        "filename": "src/onaptests/scenario/status.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-05T14:05:54Z",
+      "side": 1,
+      "message": "do we need to iterate through range and then get element by an index?",
+      "revId": "c330751d0c5c4b1cadb3683566ff7967c8be7ab5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e655103a_94705a0e",
+        "filename": "src/onaptests/scenario/status.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-05T14:05:54Z",
+      "side": 1,
+      "message": "should be logger not print I believe",
+      "revId": "c330751d0c5c4b1cadb3683566ff7967c8be7ab5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b8415df_a8f8abb3",
+        "filename": "src/onaptests/utils/resources.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-05T14:05:54Z",
+      "side": 1,
+      "message": "Utils module keeps classes which can be reused by more than one module. Classes below are dedicated for one particular scenario and probably should have dedicated module",
+      "revId": "c330751d0c5c4b1cadb3683566ff7967c8be7ab5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
