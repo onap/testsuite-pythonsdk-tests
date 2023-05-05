@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "3f872c83_4d9b7977",
+        "filename": "src/onaptests/scenario/status.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-05T14:13:25Z",
+      "side": 1,
+      "message": "cannot be imported, missing requirement?",
+      "revId": "c330751d0c5c4b1cadb3683566ff7967c8be7ab5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f6c557e_1a0a0021",
         "filename": "src/onaptests/scenario/status.py",
         "patchSetId": 7
