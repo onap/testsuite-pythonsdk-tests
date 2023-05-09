@@ -13,7 +13,8 @@ from onapsdk.cds.blueprint_processor import Blueprintprocessor
 from onapsdk.configuration import settings
 import urllib3
 
-from ..base import BaseStep
+from onaptests.steps.base import BaseStep
+
 from onaptests.utils.exceptions import OnapTestException
 
 
@@ -68,10 +69,11 @@ class ExposeCDSBlueprintprocessorNodePortStep(CDSBaseStep):
         Use settings values:
          - K8S_CONFIG,
          - K8S_ONAP_NAMESPACE.
+         - EXPOSE
 
         """
         super().execute()
-        if not self.is_service_node_port_type():
+        if not self.is_service_node_port_type() and settings.EXPOSE:
             try:
                 self.k8s_client.patch_namespaced_service(
                     self.service_name,
