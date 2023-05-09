@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67645ec0_20af4d3e",
+        "filename": "src/onaptests/scenario/status.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-09T13:55:32Z",
+      "side": 1,
+      "message": "No, should be None, but if is None you do not change defualt value from testcase.TestCase",
+      "revId": "f830267946793521c4000581c91df3d36ee8f592",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
