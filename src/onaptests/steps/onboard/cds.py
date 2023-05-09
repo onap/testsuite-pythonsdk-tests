@@ -13,7 +13,8 @@ from onapsdk.cds.blueprint_processor import Blueprintprocessor
 from onapsdk.configuration import settings
 import urllib3
 
-from ..base import BaseStep
+from onaptests.steps.base import BaseStep
+
 from onaptests.utils.exceptions import OnapTestException
 
 
@@ -68,6 +69,7 @@ class ExposeCDSBlueprintprocessorNodePortStep(CDSBaseStep):
         Use settings values:
          - K8S_CONFIG,
          - K8S_ONAP_NAMESPACE.
+         - EXPOSE
 
         """
         super().execute()
@@ -131,7 +133,8 @@ class BootstrapBlueprintprocessor(CDSBaseStep):
             - ExposeCDSBlueprintprocessorNodePortStep.
         """
         super().__init__(cleanup=cleanup)
-        self.add_step(ExposeCDSBlueprintprocessorNodePortStep(cleanup=cleanup))
+        if settings.EXPOSE_SERVICES_NODE_PORTS:
+            self.add_step(ExposeCDSBlueprintprocessorNodePortStep(cleanup=cleanup))
 
     @property
     def description(self) -> str:
@@ -217,7 +220,7 @@ class CbaPublishStep(CDSBaseStep):
         """Let's skip enrichment if enriched CBA is already present"""
         if Path.is_file(settings.CDS_CBA_UNENRICHED):
             self.add_step(CbaEnrichStep(cleanup=cleanup))
-        else:
+        elif settings.EXPOSE_SERVICES_NODE_PORTS:
             self.add_step(ExposeCDSBlueprintprocessorNodePortStep(cleanup=cleanup))
 
     @property
