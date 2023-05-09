@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad5ff66e_8f38766e",
+        "filename": "src/onaptests/scenario/status.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-09T07:29:23Z",
+      "side": 1,
+      "message": "f\"string\" formatting please",
+      "revId": "a5558dbf8981371cc0e48493cede45714ebe7a25",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
