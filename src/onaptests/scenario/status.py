@@ -12,7 +12,6 @@ from kubernetes import client, config
 from kubernetes.stream import stream
 from urllib3.exceptions import MaxRetryError, NewConnectionError
 from jinja2 import Environment, PackageLoader, select_autoescape
-
 from onaptests.scenario.resources import Pod, Container, Service, Job
 from onaptests.scenario.resources import Deployment, StatefulSet, DaemonSet, Pvc, ReplicaSet
 from onaptests.scenario.resources import ConfigMap, Secret, Ingress
