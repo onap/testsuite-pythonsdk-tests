@@ -1,10 +1,20 @@
 from dataclasses import dataclass
 from enum import Enum
+import json
+import os
 from typing import List
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SettingsError
 from onaptests.utils.resources import get_resource_location
+from json import JSONEncoder
+
+
+class ReportStepStatusEncoder(JSONEncoder):
+    def default(self, o):
+        if isinstance(o, ReportStepStatus):
+            return o.value
+        return super().default(o)
 
 
 class ReportStepStatus(Enum):
@@ -84,3 +94,21 @@ class ReportsCollection:
             components=components,
             log_path="./pythonsdk.debug.log").dump(
             settings.REPORTING_FILE_PATH)
+
+        report_dict = {
+            'usecase': usecase,
+            'details': details,
+            'components': components,
+            'steps': [
+                {
+                    'description': step_report.step_description,
+                    'status': step_report.step_execution_status,
+                    'duration': step_report.step_execution_duration
+                }
+                for step_report in self.report
+            ]
+        }
+        report_dict['steps'].sort(key=lambda step: step['description'])
+        with open(settings.JSON_REPORTING_FILE_PATH,'w') as f:
+            json.dump(report_dict, f, indent =4, cls=ReportStepStatusEncoder)
+        return report_dict
