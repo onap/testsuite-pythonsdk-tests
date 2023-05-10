@@ -40,7 +40,9 @@ LOG_CONFIG = {
 CLEANUP_FLAG = False
 SDC_CLEANUP = False
 
-REPORTING_FILE_PATH = "/tmp/reporting.html"
+REPORTING_FILE_DIRECTORY = "/tmp/"
+REPORTING_FILE_PATH = "reporting.html"
+JSON_REPORTING_FILE_PATH = "reporting.json"
 K8S_REGION_TYPE = "k8s"
 TILLER_HOST = "localhost"
 K8S_CONFIG = None  # None means it will use default config (~/.kube/config)
