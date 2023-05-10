@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
+import json
+from pathlib import Path
 from typing import List
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from onapsdk.configuration import settings
@@ -83,4 +85,22 @@ class ReportsCollection:
             details=details,
             components=components,
             log_path="./pythonsdk.debug.log").dump(
-            settings.REPORTING_FILE_PATH)
+                str(Path(settings.REPORTING_FILE_DIRECTORY).joinpath(settings.HTML_REPORTING_FILE_NAME)))
+
+        report_dict = {
+            'usecase': usecase,
+            'details': details,
+            'components': components,
+            'steps': [
+                {
+                    'description': step_report.step_description,
+                    'status': step_report.step_execution_status.value,
+                    'duration': step_report.step_execution_duration
+                }
+                for step_report in self.report
+            ]
+        }
+        report_dict['steps'].sort(key=lambda step: int(''.join(filter(str.isdigit, step['description']))))
+        with (Path(settings.REPORTING_FILE_DIRECTORY).joinpath(settings.JSON_REPORTING_FILE_NAME)).open('w') as file:
+            json.dump(report_dict, file, indent=4)
+        return report_dict
