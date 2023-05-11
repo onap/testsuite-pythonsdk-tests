@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "18bda8a4_f87942c5",
+        "filename": "src/onaptests/steps/onboard/cds.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-11T06:34:28Z",
+      "side": 1,
+      "message": "And I\u0027d prefer even don\u0027t add that step if EXPOSE is False",
+      "range": {
+        "startLine": 30,
+        "startChar": 6,
+        "endLine": 30,
+        "endChar": 45
+      },
+      "revId": "b7c406f86657851ea4042cd460eab8963285a84e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8abc21a_2258fe69",
         "filename": "src/onaptests/steps/onboard/cds.py",
         "patchSetId": 3
