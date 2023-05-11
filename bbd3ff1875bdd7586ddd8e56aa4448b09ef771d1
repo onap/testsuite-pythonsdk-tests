@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14322fbc_e4d6b17a",
+        "filename": "src/onaptests/steps/reports_collection.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-11T12:14:40Z",
+      "side": 1,
+      "message": "feel free to use list comprehension here",
+      "range": {
+        "startLine": 93,
+        "startChar": 21,
+        "endLine": 93,
+        "endChar": 23
+      },
+      "revId": "bbd3ff1875bdd7586ddd8e56aa4448b09ef771d1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e28994_a85a400a",
+        "filename": "src/onaptests/steps/reports_collection.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-11T12:14:40Z",
+      "side": 1,
+      "message": "how man can configure where they wants to store that?",
+      "revId": "bbd3ff1875bdd7586ddd8e56aa4448b09ef771d1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b08952a_3e7604db",
+        "filename": "src/onaptests/steps/reports_collection.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-11T12:14:40Z",
+      "side": 1,
+      "message": "File \"/home/ubuntu/onap/repos/integration_repos/pythonsdk-tests/src/onaptests/steps/reports_collection.py\", line 104, in generate_report\n    json.dump(report_dict, f, indent \u003d4)\n  File \"/usr/local/lib/python3.11/json/__init__.py\", line 179, in dump\n    for chunk in iterable:\n  File \"/usr/local/lib/python3.11/json/encoder.py\", line 432, in _iterencode\n    yield from _iterencode_dict(o, _current_indent_level)\n  File \"/usr/local/lib/python3.11/json/encoder.py\", line 406, in _iterencode_dict\n    yield from chunks\n  File \"/usr/local/lib/python3.11/json/encoder.py\", line 326, in _iterencode_list\n    yield from chunks\n  File \"/usr/local/lib/python3.11/json/encoder.py\", line 406, in _iterencode_dict\n    yield from chunks\n  File \"/usr/local/lib/python3.11/json/encoder.py\", line 439, in _iterencode\n    o \u003d _default(o)\n        ^^^^^^^^^^^\n  File \"/usr/local/lib/python3.11/json/encoder.py\", line 180, in default\n    raise TypeError(f\u0027Object of type {o.__class__.__name__} \u0027\nTypeError: Object of type ReportStepStatus is not JSON serializable",
+      "revId": "bbd3ff1875bdd7586ddd8e56aa4448b09ef771d1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
