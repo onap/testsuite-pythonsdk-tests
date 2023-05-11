@@ -1,0 +1,28 @@
+
+{% extends "base.html.j2" %}
+{% block title %}ONAP Docker Versions{% endblock %}
+
+{% block content %}
+<h1 class="title is-1">ONAP Docker versions</h1>
+<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Container</th>
+      <th>Image</th>
+      <th>Version</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+    {% for pod in pod_versions %}
+    <tr>
+         <td>{{ pod.component }}</td>
+         <td>{{ pod.container }}</td>
+         <td>{{ pod.image }}</td>
+         <td>{{ pod.version }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

@@ -1,0 +1,28 @@
+{%- macro statistic(resource_name, failing, total, failing_list) %}
+>>> Nb {{ resource_name }}: {{ total }}
+>>> Nb Failed {{ resource_name }}: {{ failing }}
+{%- if failing > 0 %}
+>>> List of Failed {{ resource_name }}: [{{ failing_list | map(attribute='name') | join(", ") }}]
+{%- endif %}
+{%- endmacro %}
+------------------------------------------------
+------- {{ namespace }} kubernetes tests ------------------
+------------------------------------------------
+{%- if (ns.jobs | length) > 0 %}
+{{ statistic("Jobs", (ns.failing_jobs | length), (ns.jobs | length), ns.failing_jobs)  }}
+{%- endif %}
+{%- if (ns.deployments | length) > 0 %}
+{{ statistic("Deployments", (ns.failing_deployments | length), (ns.deployments | length), ns.failing_deployments)  }}
+{%- endif %}
+{%- if (ns.statefulsets | length) > 0 %}
+{{ statistic("StatefulSets", (ns.failing_statefulsets | length), (ns.statefulsets | length), ns.failing_statefulsets)  }}
+{%- endif %}
+{%- if (ns.daemonsets | length) > 0 %}
+{{ statistic("DaemonSets", (ns.failing_daemonsets | length), (ns.daemonsets | length), ns.failing_daemonsets)  }}
+{%- endif %}
+{%- if (ns.pvcs | length) > 0 %}
+{{ statistic("Persistent Volume Claims", (ns.failing_pvcs | length), (ns.pvcs | length), ns.failing_pvcs)  }}
+{%- endif %}
+------------------------------------------------
+------------------------------------------------
+------------------------------------------------
