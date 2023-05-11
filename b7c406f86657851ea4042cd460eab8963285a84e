@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1f58a27_25fc77a8",
+        "filename": "src/onaptests/configuration/settings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-11T06:26:39Z",
+      "side": 1,
+      "message": "I\u0027d prefer to keep configuration values more self descriptive -- expose what?",
+      "revId": "b7c406f86657851ea4042cd460eab8963285a84e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8abc21a_2258fe69",
+        "filename": "src/onaptests/steps/onboard/cds.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-11T06:26:39Z",
+      "side": 1,
+      "message": "if first value is False then second is not even checked. We don\u0027t need to check if service is node port type if we don\u0027t plan to expose it at all",
+      "revId": "b7c406f86657851ea4042cd460eab8963285a84e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
