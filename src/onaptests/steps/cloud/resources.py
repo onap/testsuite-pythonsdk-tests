@@ -60,6 +60,8 @@ class Pod(K8sResource):
 
     def set_volumes(self, volumes):
         """Generate the volume list."""
+        if volumes is None:
+            return
         for volume in volumes:
             volume_name = volume.name
             self.volumes[volume_name] = {}
