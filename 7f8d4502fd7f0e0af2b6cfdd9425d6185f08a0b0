@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5fc511f_5546fa85",
+        "filename": "src/onaptests/configuration/settings.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 2701
+      },
+      "writtenOn": "2023-05-18T11:43:17Z",
+      "side": 1,
+      "message": "not required here. Each test defines it in its sepcific configuration",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 38
+      },
+      "revId": "7f8d4502fd7f0e0af2b6cfdd9425d6185f08a0b0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
