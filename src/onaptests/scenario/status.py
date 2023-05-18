@@ -13,12 +13,13 @@ from kubernetes.stream import stream
 from urllib3.exceptions import MaxRetryError, NewConnectionError
 from jinja2 import Environment, PackageLoader, select_autoescape
 from onapsdk.configuration import settings
-from onaptests.configuration import settings
+from onaptests.configuration import status_settings
 from onaptests.scenario.resources import Pod, Container, Service, Job
 from onaptests.scenario.resources import Deployment, StatefulSet, DaemonSet, Pvc, ReplicaSet
 from onaptests.scenario.resources import ConfigMap, Secret, Ingress
 
-NAMESPACE = settings.K8S_ONAP_NAMESPACE
+
+NAMESPACE = status_settings.K8S_ONAP_NAMESPACE
 FULL_LOGS_CONTAINERS = [
     'dcae-bootstrap', 'dcae-cloudify-manager', 'aai-resources',
     'aai-traversal', 'aai-modelloader', 'sdnc', 'so', 'so-bpmn-infra',

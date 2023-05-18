@@ -95,35 +95,3 @@ class ReportsCollection:
             components=components,
             log_path="./pythonsdk.debug.log").dump(
             settings.REPORTING_FILE_PATH)
-
-    def generate_report_json(self) -> dict:
-        usecase = status_settings.SERVICE_NAME
-        path = status_settings.REPORTING_FILE_PATH
-
-        try:
-            details = status_settings.SERVICE_DETAILS
-        except (KeyError, AttributeError, SettingsError):
-            details = ""
-
-        try:
-            components = status_settings.SERVICE_COMPONENTS
-        except (KeyError, AttributeError, SettingsError):
-            components = ""
-
-        report_dict = {
-            'usecase': usecase,
-            'details': details,
-            'components': components,
-            'steps': [
-                {
-                    'description': step_report.step_description,
-                    'status': step_report.step_execution_status,
-                    'duration': step_report.step_execution_duration
-                }
-                for step_report in self.report
-            ]
-        }
-        report_dict['steps'].sort(key=lambda step: step['description'])
-        with open(path,'w') as f:
-            json.dump(report_dict, f, indent =4, cls=ReportStepStatusEncoder)
-        return report_dict
