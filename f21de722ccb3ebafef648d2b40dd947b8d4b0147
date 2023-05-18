@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2df70cf8_73b0f14c",
+        "filename": "src/onaptests/steps/reports_collection.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 2701
+      },
+      "writtenOn": "2023-05-18T20:49:48Z",
+      "side": 1,
+      "message": "it should be a part of the generate_report method...",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 43
+      },
+      "revId": "f21de722ccb3ebafef648d2b40dd947b8d4b0147",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
