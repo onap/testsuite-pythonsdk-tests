@@ -130,8 +130,10 @@ class Job(K8sPodParentResource):
 class Deployment(K8sPodParentResource):
     """Deployment class."""
 
+
 class ReplicaSet(K8sPodParentResource):
     """ReplicaSet class."""
+
 
 class StatefulSet(K8sPodParentResource):
     """StatefulSet class."""
