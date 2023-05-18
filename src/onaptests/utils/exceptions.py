@@ -86,3 +86,7 @@ class PolicyException(OnapTestException):
 class DcaeException(OnapTestException):
     """DCAE exception."""
     error_message="Problem with DCAE module"
+
+class StatusCheckException(OnapTestException):
+    """Status Check exception."""
+    error_message="Namespace status check has failed"
