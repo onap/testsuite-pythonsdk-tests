@@ -49,6 +49,7 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
         config.load_kube_config(settings.K8S_CONFIG)
         k8s_client: "CoreV1API" = client.CoreV1Api()
         k8s_watch: "Watch" =  watch.Watch()
+        status = False
         try:
             for event in k8s_watch.stream(k8s_client.list_namespaced_pod,
                                         namespace=settings.K8S_ADDITIONAL_RESOURCES_NAMESPACE,
@@ -57,8 +58,9 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
                     if not event["object"].status.phase in ["Pending", "Running"]:
                         # Invalid pod state
                         return False
-                    return event["object"].status.phase == "Running"
-            return False
+                    if event["object"].status.phase == "Running":
+                        return True
+            return status
         except urllib3.exceptions.HTTPError:
             self._logger.error("Can't connect with k8s")
             raise OnapTestException
@@ -91,8 +93,9 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
     def execute(self) -> None:
         """Send PNF registration event."""
         super().execute()
-        if not self.is_pnf_pod_running():
-            EnvironmentPreparationException("PNF simulator is not running")
+        status = self.is_pnf_pod_running()
+        if not status:
+            raise EnvironmentPreparationException("PNF simulator is not running")
         time.sleep(settings.PNF_WAIT_TIME)  # Let's still wait for PNF simulator to make sure it's initialized
         ves_proto, ves_ip, ves_port = self.get_ves_protocol_ip_and_port()
         registration_number: int = 0
