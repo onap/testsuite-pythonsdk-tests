@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8c45dbd_7a4664e4",
+        "filename": "src/onaptests/configuration/settings.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 2701
+      },
+      "writtenOn": "2023-05-24T11:02:03Z",
+      "side": 1,
+      "message": "FILE_NAME",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 19
+      },
+      "revId": "615590c846dbff302d4c621e362f1bcb006253db",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02554299_385f5550",
+        "filename": "src/onaptests/configuration/settings.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 2701
+      },
+      "writtenOn": "2023-05-24T11:02:03Z",
+      "side": 1,
+      "message": "FILE_NAME",
+      "range": {
+        "startLine": 45,
+        "startChar": 15,
+        "endLine": 45,
+        "endChar": 24
+      },
+      "revId": "615590c846dbff302d4c621e362f1bcb006253db",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
