@@ -45,6 +45,57 @@
       "revId": "615590c846dbff302d4c621e362f1bcb006253db",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f409a61_76385227",
+        "filename": "src/onaptests/steps/reports_collection.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-24T11:09:11Z",
+      "side": 1,
+      "message": "Can you say more about that class? Why we need it and not simply use\n```\nstep_report.step_execution_status.value\n```\non line 105?",
+      "revId": "615590c846dbff302d4c621e362f1bcb006253db",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c213d7_7f97e138",
+        "filename": "src/onaptests/steps/reports_collection.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-24T11:09:11Z",
+      "side": 1,
+      "message": "why sort? Don\u0027t we lost steps order then? It should be already in desired order I believe",
+      "revId": "615590c846dbff302d4c621e362f1bcb006253db",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a9b0c30_6ebb686a",
+        "filename": "src/onaptests/steps/reports_collection.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-24T11:09:11Z",
+      "side": 1,
+      "message": "if you have pathlib use Path.open() method instead of using open and then create a Path object",
+      "revId": "615590c846dbff302d4c621e362f1bcb006253db",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
