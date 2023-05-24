@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f4e96cfb_5b88918c",
+        "filename": "src/onaptests/configuration/settings.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-24T11:29:34Z",
+      "side": 1,
+      "message": "I recommend to keep file type as a prefix, so there should be\nHTML_REPORTING_FILE_NAME\nJSON_REPORTING_FILE_NAME",
+      "revId": "181bb4a4f88020cc7739bd9de5d4cc25a8ae5c44",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cbd8c96_7e0221bd",
         "filename": "tests/test_generate_json.py",
         "patchSetId": 13
