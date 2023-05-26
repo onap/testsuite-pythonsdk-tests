@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8435033e_19f15c2c",
+        "filename": "src/onaptests/scenario/basic_sdnc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-26T06:37:53Z",
+      "side": 1,
+      "message": "whitespace",
+      "revId": "75ebe903a6d3c6c72f9c5b885f58239738719831",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb5dbd6c_c89aa4cf",
+        "filename": "src/onaptests/steps/instantiate/sdnc_service.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-26T06:37:53Z",
+      "side": 1,
+      "message": "I don\u0027t see any reason to keep that step if we have BasicSdnc TestCase class",
+      "revId": "75ebe903a6d3c6c72f9c5b885f58239738719831",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
