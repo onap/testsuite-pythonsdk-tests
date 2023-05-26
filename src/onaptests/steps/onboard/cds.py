@@ -207,8 +207,8 @@ class CbaEnrichStep(CDSBaseStep):
         Delete enriched CBA file.
 
         """
-        super().cleanup()
         Path(settings.CDS_CBA_ENRICHED).unlink()
+        super().cleanup()
 
 
 class CbaPublishStep(CDSBaseStep):
