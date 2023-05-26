@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1bde0a6_28d3c52c",
+        "filename": "src/onaptests/steps/reports_collection.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-26T06:43:08Z",
+      "side": 1,
+      "message": "fix whitespace",
+      "revId": "189157ac07ef625987c50fdf827af524e8e7fab0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
