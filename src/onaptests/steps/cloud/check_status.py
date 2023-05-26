@@ -116,7 +116,7 @@ class CheckNamespaceStatusStep(BaseStep):
         super().__init__(cleanup=cleanup)
 
         if settings.STATUS_RESULTS_DIRECTORY:
-            self.res_dir = f"{settings.STATUS_RESULTS_DIRECTORY}/kubernetes-status"
+            self.res_dir = f"{settings.STATUS_RESULTS_DIRECTORY}"
         else:
             self.res_dir = f"{testcase.TestCase.dir_results}/kubernetes-status"
 
