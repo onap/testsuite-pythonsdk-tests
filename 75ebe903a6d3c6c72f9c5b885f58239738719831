@@ -33,6 +33,24 @@
       "revId": "75ebe903a6d3c6c72f9c5b885f58239738719831",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c392ff78_2ee7796e",
+        "filename": "src/onaptests/steps/instantiate/sdnc_service.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 8318
+      },
+      "writtenOn": "2023-05-26T06:49:58Z",
+      "side": 1,
+      "message": "The ServiceCreateStep is for testing GR-API. In the near future we will add step for NETCONF-API. I would propose to save the ServiceCreateStep class.",
+      "parentUuid": "bb5dbd6c_c89aa4cf",
+      "revId": "75ebe903a6d3c6c72f9c5b885f58239738719831",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
