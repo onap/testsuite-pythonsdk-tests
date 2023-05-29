@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33a6206b_5e4ddac8",
+        "filename": "src/onaptests/steps/instantiate/sdnc_service.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-29T11:43:02Z",
+      "side": 1,
+      "message": "that sould be execute I believe",
+      "revId": "5acaaf32d53ec27deefad7073b6d6315899f6826",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
