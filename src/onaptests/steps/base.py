@@ -235,9 +235,6 @@ class BaseStep(ABC):
         Not all steps has to have cleanup method
 
         """
-        self._logger.info("*****************************")
-        self._logger.info("Start Cleanup step: " + self.name)
-        self._logger.info("*****************************")
         if self._cleanup:
             for step in self._steps:
                 try:

@@ -42,6 +42,6 @@ class K8SConnectivityInfoStep(BaseStep):
     def cleanup(self) -> None:
         """Cleanup K8S Connectivity information."""
         self._logger.info("Clean the k8s connectivity information")
-        super().cleanup()
         connectinfo = ConnectivityInfo.get_connectivity_info_by_region_id(settings.CLOUD_REGION_ID)
         connectinfo.delete()
+        super().cleanup()
