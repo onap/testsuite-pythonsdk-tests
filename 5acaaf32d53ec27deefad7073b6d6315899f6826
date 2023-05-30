@@ -16,6 +16,24 @@
       "revId": "5acaaf32d53ec27deefad7073b6d6315899f6826",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9fa5bc0_5ba6802d",
+        "filename": "src/onaptests/steps/instantiate/sdnc_service.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 2701
+      },
+      "writtenOn": "2023-05-30T11:40:50Z",
+      "side": 1,
+      "message": "\u003e that sould be execute I believe\n\nand should have a decoration",
+      "parentUuid": "33a6206b_5e4ddac8",
+      "revId": "5acaaf32d53ec27deefad7073b6d6315899f6826",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
