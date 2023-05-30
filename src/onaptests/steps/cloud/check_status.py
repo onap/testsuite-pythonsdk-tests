@@ -163,7 +163,8 @@ class CheckNamespaceStatusStep(BaseStep):
 
         """
         super().execute()
-        os.makedirs(self.res_dir, exist_ok=True)
+        if settings.STORE_ARTIFACTS:
+            os.makedirs(self.res_dir, exist_ok=True)
         self.__logger.debug("start test")
         try:
             self.k8s_pods = self.core.list_namespaced_pod(NAMESPACE).items
@@ -242,13 +243,13 @@ class CheckNamespaceStatusStep(BaseStep):
         self.parse_secrets()
         self.parse_ingresses()
         self.parse_versions()
-
-        self.jinja_env.get_template('index.html.j2').stream(
-            ns=self,
-            delta=delta).dump('{}/index.html'.format(self.res_dir))
-        self.jinja_env.get_template('raw_output.txt.j2').stream(
-            ns=self, namespace=NAMESPACE).dump('{}/onap-k8s.log'.format(
-                self.res_dir))
+        if settings.STORE_ARTIFACTS:
+            self.jinja_env.get_template('index.html.j2').stream(
+                ns=self,
+                delta=delta).dump('{}/index.html'.format(self.res_dir))
+            self.jinja_env.get_template('raw_output.txt.j2').stream(
+                ns=self, namespace=NAMESPACE).dump('{}/onap-k8s.log'.format(
+                    self.res_dir))
 
         if len(self.jobs) > 0:
             self.details['jobs'] = {
@@ -322,12 +323,13 @@ class CheckNamespaceStatusStep(BaseStep):
             pod.events = self.core.list_namespaced_event(
                 NAMESPACE,
                 field_selector="involvedObject.name={}".format(pod.name)).items
-            self.jinja_env.get_template('pod.html.j2').stream(pod=pod).dump(
-                '{}/pod-{}.html'.format(self.res_dir, pod.name))
-            if any(waiver_elt in pod.name for waiver_elt in WAIVER_LIST):
-                self.__logger.warn("Waiver pattern found in pod, exclude %s", pod.name)
-            else:
-                self.pods.append(pod)
+            if settings.STORE_ARTIFACTS:
+                self.jinja_env.get_template('pod.html.j2').stream(pod=pod).dump(
+                    '{}/pod-{}.html'.format(self.res_dir, pod.name))
+                if any(waiver_elt in pod.name for waiver_elt in WAIVER_LIST):
+                    self.__logger.warn("Waiver pattern found in pod, exclude %s", pod.name)
+                else:
+                    self.pods.append(pod)
 
     def parse_container(self, pod, k8s_container, init=False):
         """Get the logs of a container."""
@@ -366,31 +368,34 @@ class CheckNamespaceStatusStep(BaseStep):
                 self.__logger.error(
                     "{0} has an unicode decode error in the logs...", pod.name,
                 )
-            with open(
-                    "{}/pod-{}-{}.log".format(self.res_dir,
-                                              pod.name, container.name),
-                    'w') as log_result:
-                log_result.write(logs)
+            if settings.STORE_ARTIFACTS:
+                with open(
+                        "{}/pod-{}-{}.log".format(self.res_dir,
+                                                pod.name, container.name),
+                        'w') as log_result:
+                    log_result.write(logs)
             if (not container.ready) and container.restart_count > 0:
                 old_logs = self.core.read_namespaced_pod_log(
                     pod.name,
                     NAMESPACE,
                     container=container.name,
                     previous=True)
-                with open(
-                        "{}/pod-{}-{}.old.log".format(self.res_dir,
-                                                      pod.name,
-                                                      container.name),
-                        'w') as log_result:
-                    log_result.write(old_logs)
+                if settings.STORE_ARTIFACTS:
+                    with open(
+                            "{}/pod-{}-{}.old.log".format(self.res_dir,
+                                                        pod.name,
+                                                        container.name),
+                            'w') as log_result:
+                        log_result.write(old_logs)
             if (container.name in FULL_LOGS_CONTAINERS):
                 logs = self.core.read_namespaced_pod_log(
                     pod.name, NAMESPACE, container=container.name)
-                with open(
-                        "{}/pod-{}-{}.log".format(self.res_dir,
-                                                  pod.name, container.name),
-                        'w') as log_result:
-                    log_result.write(logs)
+                if settings.STORE_ARTIFACTS:
+                    with open(
+                            "{}/pod-{}-{}.log".format(self.res_dir,
+                                                    pod.name, container.name),
+                            'w') as log_result:
+                        log_result.write(logs)
             if (container.name in SPECIFIC_LOGS_CONTAINERS):
                 for log_file in SPECIFIC_LOGS_CONTAINERS[container.name]:
                     exec_command = ['/bin/sh', '-c', "cat {}".format(log_file)]
@@ -414,13 +419,14 @@ class CheckNamespaceStatusStep(BaseStep):
         except client.rest.ApiException as exc:
             self.__logger.warning("%scontainer %s of pod %s has an exception: %s",
                                prefix, container.name, pod.name, exc.reason)
-        self.jinja_env.get_template('container_log.html.j2').stream(
-            container=container,
-            pod_name=pod.name,
-            logs=logs,
-            old_logs=old_logs,
-            log_files=log_files).dump('{}/pod-{}-{}-logs.html'.format(
-                self.res_dir, pod.name, container.name))
+        if settings.STORE_ARTIFACTS:
+            self.jinja_env.get_template('container_log.html.j2').stream(
+                container=container,
+                pod_name=pod.name,
+                logs=logs,
+                old_logs=old_logs,
+                log_files=log_files).dump('{}/pod-{}-{}-logs.html'.format(
+                    self.res_dir, pod.name, container.name))
         if any(waiver_elt in container.name for waiver_elt in WAIVER_LIST):
             self.__logger.warn(
                 "Waiver pattern found in container, exclude %s", container.name)
@@ -439,10 +445,11 @@ class CheckNamespaceStatusStep(BaseStep):
             (service.pods,
              service.failed_pods) = self._find_child_pods(k8s.spec.selector)
 
-            self.jinja_env.get_template('service.html.j2').stream(
-                service=service).dump('{}/service-{}.html'.format(
-                    self.res_dir, service.name))
-            self.services.append(service)
+            if settings.STORE_ARTIFACTS:
+                self.jinja_env.get_template('service.html.j2').stream(
+                    service=service).dump('{}/service-{}.html'.format(
+                        self.res_dir, service.name))
+                self.services.append(service)
 
     def parse_jobs(self):
         """Parse the jobs.
@@ -465,8 +472,9 @@ class CheckNamespaceStatusStep(BaseStep):
                 NAMESPACE,
                 field_selector=field_selector).items
 
-            self.jinja_env.get_template('job.html.j2').stream(job=job).dump(
-                '{}/job-{}.html'.format(self.res_dir, job.name))
+            if settings.STORE_ARTIFACTS:
+                self.jinja_env.get_template('job.html.j2').stream(job=job).dump(
+                    '{}/job-{}.html'.format(self.res_dir, job.name))
 
             # timemout job
             if not k8s.status.completion_time:
@@ -499,9 +507,10 @@ class CheckNamespaceStatusStep(BaseStep):
                 NAMESPACE,
                 field_selector=field_selector).items
 
-            self.jinja_env.get_template('deployment.html.j2').stream(
-                deployment=deployment).dump('{}/deployment-{}.html'.format(
-                    self.res_dir, deployment.name))
+            if settings.STORE_ARTIFACTS:
+                self.jinja_env.get_template('deployment.html.j2').stream(
+                    deployment=deployment).dump('{}/deployment-{}.html'.format(
+                        self.res_dir, deployment.name))
 
             if k8s.status.unavailable_replicas:
                 self.__logger.warning("a Deployment is in error: {}".format(deployment.name))
@@ -528,9 +537,10 @@ class CheckNamespaceStatusStep(BaseStep):
                 NAMESPACE,
                 field_selector=field_selector).items
 
-            self.jinja_env.get_template('replicaset.html.j2').stream(
-                replicaset=replicaset).dump('{}/replicaset-{}.html'.format(
-                    self.res_dir, replicaset.name))
+            if settings.STORE_ARTIFACTS:
+                self.jinja_env.get_template('replicaset.html.j2').stream(
+                    replicaset=replicaset).dump('{}/replicaset-{}.html'.format(
+                        self.res_dir, replicaset.name))
 
             if (not k8s.status.ready_replicas 
                 or (k8s.status.ready_replicas < k8s.status.replicas)):
@@ -558,9 +568,10 @@ class CheckNamespaceStatusStep(BaseStep):
                 NAMESPACE,
                 field_selector=field_selector).items
 
-            self.jinja_env.get_template('statefulset.html.j2').stream(
-                statefulset=statefulset).dump('{}/statefulset-{}.html'.format(
-                    self.res_dir, statefulset.name))
+            if settings.STORE_ARTIFACTS:
+                self.jinja_env.get_template('statefulset.html.j2').stream(
+                    statefulset=statefulset).dump('{}/statefulset-{}.html'.format(
+                        self.res_dir, statefulset.name))
 
             if ((not k8s.status.ready_replicas)
                     or (k8s.status.ready_replicas < k8s.status.replicas)):
@@ -587,9 +598,10 @@ class CheckNamespaceStatusStep(BaseStep):
                 NAMESPACE,
                 field_selector=field_selector).items
 
-            self.jinja_env.get_template('daemonset.html.j2').stream(
-                daemonset=daemonset).dump('{}/daemonset-{}.html'.format(
-                    self.res_dir, daemonset.name))
+            if settings.STORE_ARTIFACTS:
+                self.jinja_env.get_template('daemonset.html.j2').stream(
+                    daemonset=daemonset).dump('{}/daemonset-{}.html'.format(
+                        self.res_dir, daemonset.name))
 
             if (k8s.status.number_ready < k8s.status.desired_number_scheduled):
                 self.__logger.warning("a DaemonSet is in error: {}".format(daemonset.name))
@@ -720,12 +732,13 @@ class CheckNamespaceStatusStep(BaseStep):
                         'number_components': 1
                     }
 
-        self.jinja_env.get_template('version.html.j2').stream(
-            pod_versions=pod_versions).dump('{}/versions.html'.format(
-                self.res_dir))
-        self.jinja_env.get_template('container_versions.html.j2').stream(
-            containers=containers).dump('{}/container_versions.html'.format(
-                self.res_dir))
+        if settings.STORE_ARTIFACTS:
+            self.jinja_env.get_template('version.html.j2').stream(
+                pod_versions=pod_versions).dump('{}/versions.html'.format(
+                    self.res_dir))
+            self.jinja_env.get_template('container_versions.html.j2').stream(
+                containers=containers).dump('{}/container_versions.html'.format(
+                    self.res_dir))
         # create a json file for version tracking
         with open(self.res_dir + "/onap_versions.json", "w") as write_file:
             json.dump(pod_versions, write_file)
