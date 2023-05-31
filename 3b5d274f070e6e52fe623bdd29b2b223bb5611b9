@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "300f837f_919df8cf",
+        "filename": "src/onaptests/configuration/basic_sdnc_settings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-31T06:42:10Z",
+      "side": 1,
+      "message": "I think both import are unused",
+      "revId": "3b5d274f070e6e52fe623bdd29b2b223bb5611b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcd73ff4_a18ca49e",
+        "filename": "src/onaptests/steps/instantiate/sdnc_service.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-31T06:42:10Z",
+      "side": 1,
+      "message": "same issue as on comment on the bottom",
+      "revId": "3b5d274f070e6e52fe623bdd29b2b223bb5611b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7deba8b_f9de46d5",
+        "filename": "src/onaptests/steps/instantiate/sdnc_service.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-31T06:42:10Z",
+      "side": 1,
+      "message": "you don\u0027t need to create that variable here. BaseStep class creates __logger",
+      "revId": "3b5d274f070e6e52fe623bdd29b2b223bb5611b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2404019_87e625c5",
+        "filename": "src/onaptests/steps/instantiate/sdnc_service.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-31T06:42:10Z",
+      "side": 1,
+      "message": "please remove that. That line is useless",
+      "revId": "3b5d274f070e6e52fe623bdd29b2b223bb5611b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6022c839_858e78f1",
+        "filename": "src/onaptests/steps/instantiate/sdnc_service.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-05-31T06:42:10Z",
+      "side": 1,
+      "message": "you are going to hide that error? Please raise OnapTestException or create a subclass of that Exception and raise that here. Otherwise that step will always be marked as PASS",
+      "revId": "3b5d274f070e6e52fe623bdd29b2b223bb5611b9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
