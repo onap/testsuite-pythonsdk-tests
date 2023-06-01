@@ -16,6 +16,24 @@
       "revId": "43aeb413b46bf09d0ece51a4d4ab96b54b70e90c",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a48f1de_baac8b94",
+        "filename": "src/onaptests/configuration/status_settings.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 2701
+      },
+      "writtenOn": "2023-06-01T19:11:01Z",
+      "side": 1,
+      "message": "By default should store only in infra status check, in gating. In other cases by default it should be set to False. Can we provide specific overrides for on-demand test run in testkube?",
+      "parentUuid": "1c5a3fb6_b9e9e1c0",
+      "revId": "43aeb413b46bf09d0ece51a4d4ab96b54b70e90c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
