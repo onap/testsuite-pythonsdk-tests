@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3a480d_c26eb8ca",
+        "filename": "src/onaptests/steps/cloud/check_status.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-06-05T12:35:28Z",
+      "side": 1,
+      "message": "check comment on another file",
+      "revId": "9db8616f56b943ad09eb6a6c293e136f5779febe",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b721f4d_3a8ba779",
+        "filename": "src/onaptests/steps/cloud/k8s_connectivity_info_create.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-06-05T12:35:28Z",
+      "side": 1,
+      "message": "Not needed here. we are going to load here a config to create a connectivity info. I have no idea if it\u0027s possible to use service account instead of k8s config in connectivity info, but your change here has no sense",
+      "revId": "9db8616f56b943ad09eb6a6c293e136f5779febe",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf5b973_9817e08c",
+        "filename": "src/onaptests/steps/cloud/k8s_connectivity_info_create.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-06-05T12:35:28Z",
+      "side": 1,
+      "message": "check comment on another file",
+      "revId": "9db8616f56b943ad09eb6a6c293e136f5779febe",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb5610c_6cfa029a",
+        "filename": "src/onaptests/steps/onboard/cds.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-06-05T12:35:28Z",
+      "side": 1,
+      "message": "check comment on another file",
+      "revId": "9db8616f56b943ad09eb6a6c293e136f5779febe",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "225546ff_9411647e",
+        "filename": "src/onaptests/steps/simulator/pnf_simulator_cnf/pnf_register.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-06-05T12:35:28Z",
+      "side": 1,
+      "message": "lines 53 and 55 (if settings.K8S_CONFIG is None) doing exactly the same.\nCheck https://github.com/kubernetes-client/python/blob/469ef552ce2d9afdec9048bb624caca5dc8e4f40/kubernetes/base/config/kube_config.py#L793 that config_file by default is None",
+      "revId": "9db8616f56b943ad09eb6a6c293e136f5779febe",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e54716c9_50bfdbf6",
+        "filename": "src/onaptests/steps/simulator/pnf_simulator_cnf/pnf_register.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-06-05T12:35:28Z",
+      "side": 1,
+      "message": "check comment above",
+      "revId": "9db8616f56b943ad09eb6a6c293e136f5779febe",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
