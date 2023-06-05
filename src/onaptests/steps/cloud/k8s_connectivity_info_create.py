@@ -2,7 +2,7 @@
 from onapsdk.configuration import settings
 from onapsdk.exceptions import APIError
 from onapsdk.k8s import ConnectivityInfo
-
+from kubernetes import client, config
 from ..base import BaseStep
 
 class K8SConnectivityInfoStep(BaseStep):
@@ -33,6 +33,13 @@ class K8SConnectivityInfoStep(BaseStep):
             self._logger.info("Check if k8s connectivity information exists")
             ConnectivityInfo.get_connectivity_info_by_region_id(settings.CLOUD_REGION_ID)
         except APIError:
+            if settings.IN_CLUSTER:
+                config.load_incluster_config()
+            else:
+                if settings.K8S_CONFIG:
+                    config.load_kube_config(config_file=settings.K8S_CONFIG)
+                else:
+                    config.load_kube_config()
             self._logger.info("Create the k8s connectivity information")
             ConnectivityInfo.create(settings.CLOUD_REGION_ID,
                                     settings.CLOUD_REGION_CLOUD_OWNER,

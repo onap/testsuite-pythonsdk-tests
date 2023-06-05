@@ -46,7 +46,13 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
             bool: True if PNF simulator pod is running, False otherwise
 
         """
-        config.load_kube_config(settings.K8S_CONFIG)
+        if settings.IN_CLUSTER:
+            config.load_incluster_config()
+        else:
+            if settings.K8S_CONFIG:
+                config.load_kube_config(config_file=settings.K8S_CONFIG)
+            else:
+                config.load_kube_config()
         k8s_client: "CoreV1API" = client.CoreV1Api()
         k8s_watch: "Watch" =  watch.Watch()
         status = False
@@ -75,7 +81,13 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
             Tuple[str, str, str]: VES protocol, IP and port
 
         """
-        config.load_kube_config(settings.K8S_CONFIG)
+        if settings.IN_CLUSTER:
+            config.load_incluster_config()
+        else:
+            if settings.K8S_CONFIG:
+                config.load_kube_config(config_file=settings.K8S_CONFIG)
+            else:
+                config.load_kube_config()
         k8s_client: "CoreV1API" = client.CoreV1Api()
         try:
             for service in k8s_client.list_namespaced_service(namespace=settings.K8S_ONAP_NAMESPACE).items:

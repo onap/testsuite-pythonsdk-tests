@@ -120,10 +120,13 @@ class CheckNamespaceStatusStep(BaseStep):
         else:
             self.res_dir = f"{testcase.TestCase.dir_results}/kubernetes-status"
 
-        if settings.K8S_CONFIG:
-            config.load_kube_config(config_file=settings.K8S_CONFIG)
+        if settings.IN_CLUSTER:
+            config.load_incluster_config()
         else:
-            config.load_kube_config()
+            if settings.K8S_CONFIG:
+                config.load_kube_config(config_file=settings.K8S_CONFIG)
+            else:
+                config.load_kube_config()
 
         self.core = client.CoreV1Api()
         self.batch = client.BatchV1Api()

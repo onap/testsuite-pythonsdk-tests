@@ -34,7 +34,13 @@ class ExposeCDSBlueprintprocessorNodePortStep(CDSBaseStep):
         """Initialize step."""
         super().__init__(cleanup=cleanup)
         self.service_name: str = "cds-blueprints-processor-http"
-        config.load_kube_config(settings.K8S_CONFIG)
+        if settings.IN_CLUSTER:
+            config.load_incluster_config()
+        else:
+            if settings.K8S_CONFIG:
+                config.load_kube_config(config_file=settings.K8S_CONFIG)
+            else:
+                config.load_kube_config()
         self.k8s_client: client.CoreV1Api = client.CoreV1Api()
 
     @property
