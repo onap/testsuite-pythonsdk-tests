@@ -2,7 +2,7 @@
 from onapsdk.configuration import settings
 from onapsdk.exceptions import APIError
 from onapsdk.k8s import ConnectivityInfo
-
+from kubernetes import client, config
 from ..base import BaseStep
 
 class K8SConnectivityInfoStep(BaseStep):
