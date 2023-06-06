@@ -193,7 +193,8 @@ class BaseStep(ABC):
                     self._cleanup_report = Report(
                         step_description=f"[{self.component}] {self.name} cleanup: {self.description}",
                         step_execution_status=execution_status,
-                        step_execution_duration=time.time() - self._start_cleanup_time
+                        step_execution_duration=time.time() - self._start_cleanup_time,
+                        step_component=self.component
                     )
                 else:
                     self._logger.info("*****************************************************")
@@ -207,7 +208,8 @@ class BaseStep(ABC):
                     self._execution_report = Report(
                         step_description=f"[{self.component}] {self.name}: {self.description}",
                         step_execution_status=execution_status if execution_status else ReportStepStatus.FAIL,
-                        step_execution_duration=time.time() - self._start_execution_time
+                        step_execution_duration=time.time() - self._start_execution_time,
+                        step_component=self.component
                     )
         return wrapper
 

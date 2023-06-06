@@ -15,13 +15,13 @@ class ReportStepStatus(Enum):
     FAIL = "FAIL"
     NOT_EXECUTED = "NOT EXECUTED"
 
-
 @dataclass
 class Report:
     """Step execution report."""
     step_description: str
     step_execution_status: ReportStepStatus
     step_execution_duration: float
+    step_component: str
 
 
 class ReportsCollection:
@@ -95,7 +95,8 @@ class ReportsCollection:
                 {
                     'description': step_report.step_description,
                     'status': step_report.step_execution_status.value,
-                    'duration': step_report.step_execution_duration
+                    'duration': step_report.step_execution_duration,
+                    'component': step_report.step_component
                 }
                 for step_report in reversed(self.report)
             ]

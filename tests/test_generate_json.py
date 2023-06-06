@@ -19,12 +19,12 @@ class TestReportsCollection(unittest.TestCase):
         settings.HTML_REPORTING_FILE_NAME = "reporting.html"
         settings.JSON_REPORTING_FILE_NAME = "reporting.json"
 
-        self.collection.put(Report("Step 1", ReportStepStatus.PASS, 10.0))
-        self.collection.put(Report("Step 2", ReportStepStatus.FAIL, 5.0))
-        self.collection.put(Report("Step 3", ReportStepStatus.NOT_EXECUTED, 0.0))
-        self.collection.put(Report("Step 10", ReportStepStatus.NOT_EXECUTED, 0.0))
-        self.collection.put(Report("Step 12", ReportStepStatus.PASS, 20.0))
-        self.collection.put(Report("Step 21", ReportStepStatus.FAIL, 15.0))
+        self.collection.put(Report("Step 1", ReportStepStatus.PASS, 10.0, "TEST"))
+        self.collection.put(Report("Step 2", ReportStepStatus.FAIL, 5.0, "TEST"))
+        self.collection.put(Report("Step 3", ReportStepStatus.NOT_EXECUTED, 0.0, "TEST"))
+        self.collection.put(Report("Step 10", ReportStepStatus.NOT_EXECUTED, 0.0, "TEST"))
+        self.collection.put(Report("Step 12", ReportStepStatus.PASS, 20.0, "TEST"))
+        self.collection.put(Report("Step 21", ReportStepStatus.FAIL, 15.0, "TEST"))
 
         report_dict = self.collection.generate_report()
         report_json_path = os.path.join(settings.REPORTING_FILE_DIRECTORY, settings.JSON_REPORTING_FILE_NAME)
