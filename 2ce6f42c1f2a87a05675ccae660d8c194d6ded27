@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19cf30f6_c57f5f30",
+        "filename": "src/onaptests/steps/cloud/k8s_connectivity_info_create.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-06-15T13:15:29Z",
+      "side": 1,
+      "message": "please use isort here",
+      "revId": "2ce6f42c1f2a87a05675ccae660d8c194d6ded27",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3617a7ed_e7e155d3",
+        "filename": "src/onaptests/steps/cloud/k8s_connectivity_info_create.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-06-15T13:15:29Z",
+      "side": 1,
+      "message": "do we need to load incluster config if we are going to read a secret file here?",
+      "revId": "2ce6f42c1f2a87a05675ccae660d8c194d6ded27",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
