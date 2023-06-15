@@ -67,3 +67,9 @@ SERVICE_CHANGED_DATA = {
         "service-instance-name": "gnb-93100002"
     }
 }
+
+VF_MODULE_NAME = "sdnc-sanity-vf-module"
+
+VNF_NAME = "sdnc-sanity-vnf-name"
+
+VNF_TYPE = "sdnc-sanity-vnf-type"
