@@ -3,14 +3,16 @@
 import logging
 import time
 
-from xtesting.core import testcase
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SDKException
-
-from onaptests.steps.instantiate.vl_ala_carte import YamlTemplateVlAlaCarteInstantiateStep
+from onaptests.scenario.scenario_base import ScenarioBase
+from onaptests.steps.instantiate.vl_ala_carte import \
+    YamlTemplateVlAlaCarteInstantiateStep
 from onaptests.utils.exceptions import OnapTestException
+from xtesting.core import testcase
 
-class BasicNetwork(testcase.TestCase):
+
+class BasicNetwork(ScenarioBase):
     """Onboard then instantiate a simple Network with ONAP."""
 
     __logger = logging.getLogger(__name__)
@@ -18,10 +20,7 @@ class BasicNetwork(testcase.TestCase):
     def __init__(self, **kwargs):
         """Init Basic Network use case."""
         # import basic_network_nomulticloud_settings needed
-        if "case_name" not in kwargs:
-            kwargs["case_name"] = 'basic_network'
-        super(BasicNetwork, self).__init__(**kwargs)
-        self.__logger.debug("BasicNetwork init started")
+        super().__init__('basic_network', **kwargs)
         self.test = YamlTemplateVlAlaCarteInstantiateStep(
                 cleanup=settings.CLEANUP_FLAG)
         self.start_time = None

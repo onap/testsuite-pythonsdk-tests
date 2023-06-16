@@ -6,12 +6,13 @@ import time
 
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SDKException
-from xtesting.core import testcase
-
+from onaptests.scenario.scenario_base import ScenarioBase
 from onaptests.steps.base import BaseStep
 from onaptests.steps.onboard.cds import CbaProcessStep
-from onaptests.steps.simulator.cds_mockserver import CdsMockserverCnfConfigureStep
+from onaptests.steps.simulator.cds_mockserver import \
+    CdsMockserverCnfConfigureStep
 from onaptests.utils.exceptions import OnapTestException
+from xtesting.core import testcase
 
 
 class CDSResourceResolutionStep(BaseStep):
@@ -58,17 +59,14 @@ class CDSResourceResolutionStep(BaseStep):
         return "PythonSDK-tests"
 
 
-class CDSResourceResolution(testcase.TestCase):
+class CDSResourceResolution(ScenarioBase):
     """Enrich simple blueprint using CDS blueprintprocessor."""
 
     __logger = logging.getLogger(__name__)
 
     def __init__(self, **kwargs):
         """Init CDS resource resolution use case."""
-        if "case_name" not in kwargs:
-            kwargs["case_name"] = 'basic_cds'
-        super().__init__(**kwargs)
-        self.__logger.debug("CDS resource resolution initialization")
+        super().__init__('basic_cds', **kwargs)
         self.test = CDSResourceResolutionStep(
                 cleanup=settings.CLEANUP_FLAG)
         self.start_time = None
