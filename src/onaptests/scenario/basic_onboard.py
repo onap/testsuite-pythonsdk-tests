@@ -2,13 +2,15 @@
 """Basic Onboard test case."""
 import logging
 import time
-from xtesting.core import testcase
+
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SDKException
+from onaptests.scenario.scenario_base import ScenarioBase
 from onaptests.steps.onboard.service import YamlTemplateServiceOnboardStep
 from onaptests.utils.exceptions import OnapTestException
 
-class BasicOnboard(testcase.TestCase):
+
+class BasicOnboard(ScenarioBase):
     """Onboard a simple VM with ONAP."""
 
     __logger = logging.getLogger(__name__)
@@ -16,10 +18,7 @@ class BasicOnboard(testcase.TestCase):
     def __init__(self, **kwargs):
         """Init BasicOnboard."""
         # import basic_onboard_settings needed
-        if "case_name" not in kwargs:
-            kwargs["case_name"] = 'basic_onboard'
-        super(BasicOnboard, self).__init__(**kwargs)
-        self.__logger.debug("BasicOnboard init started")
+        super().__init__('basic_onboard', **kwargs)
         self.test = YamlTemplateServiceOnboardStep(
             cleanup=settings.CLEANUP_FLAG)
         self.start_time = None
