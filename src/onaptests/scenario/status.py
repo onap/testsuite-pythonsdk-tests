@@ -1,24 +1,22 @@
 import logging
 import time
-from xtesting.core import testcase
+
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SDKException
-
+from onaptests.scenario.scenario_base import ScenarioBase
 from onaptests.steps.cloud.check_status import CheckNamespaceStatusStep
 from onaptests.utils.exceptions import OnapTestException
+from xtesting.core import testcase
 
 
-class Status(testcase.TestCase):
+class Status(ScenarioBase):
     """Retrieve status of Kubernetes resources in the nemaspace."""
 
     __logger = logging.getLogger(__name__)
 
     def __init__(self, **kwargs):
         """Init the testcase."""
-        if "case_name" not in kwargs:
-            kwargs["case_name"] = 'status'
-        super().__init__(**kwargs)
-        self.__logger.debug("Status check init started")
+        super().__init__('status', **kwargs)
         self.test = CheckNamespaceStatusStep(
                 cleanup=settings.CLEANUP_FLAG)
         self.start_time = None

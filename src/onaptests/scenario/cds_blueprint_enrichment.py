@@ -6,23 +6,20 @@ import time
 
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SDKException
-from xtesting.core import testcase
-
+from onaptests.scenario.scenario_base import ScenarioBase
 from onaptests.steps.onboard.cds import CbaEnrichStep
 from onaptests.utils.exceptions import OnapTestException
+from xtesting.core import testcase
 
 
-class CDSBlueprintEnrichment(testcase.TestCase):
+class CDSBlueprintEnrichment(ScenarioBase):
     """Enrich simple blueprint using CDS blueprintprocessor."""
 
     __logger = logging.getLogger()
 
     def __init__(self, **kwargs):
         """Init CDS blueprint enrichment use case."""
-        if "case_name" not in kwargs:
-            kwargs["case_name"] = 'basic_cds'
-        super(CDSBlueprintEnrichment, self).__init__(**kwargs)
-        self.__logger.debug("CDS blueprint enrichment initialization")
+        super().__init__('basic_cds', **kwargs)
         self.test = CbaEnrichStep(
                 cleanup=settings.CLEANUP_FLAG)
         self.start_time = None

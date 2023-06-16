@@ -1,15 +1,15 @@
 import logging
 import time
 
-from xtesting.core import testcase
-
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SDKException
+from onaptests.scenario.scenario_base import ScenarioBase
 from onaptests.steps.instantiate.sdnc_service import TestSdncStep
 from onaptests.utils.exceptions import OnapTestException
+from xtesting.core import testcase
 
 
-class BasicSdnc(testcase.TestCase):
+class BasicSdnc(ScenarioBase):
     """Create SDNC service.
     Check and delete the service.
     """
@@ -18,10 +18,7 @@ class BasicSdnc(testcase.TestCase):
 
     def __init__(self, **kwargs):
         """Init Basic SDNC use case."""
-        if "case_name" not in kwargs:
-            kwargs["case_name"] = 'basic_SDNC'
-        super().__init__(**kwargs)
-        self.__logger.debug("Basic SDNC init started")
+        super().__init__('basic_sdnc', **kwargs)
         self.test = TestSdncStep(cleanup=settings.CLEANUP_FLAG)
 
     def run(self):

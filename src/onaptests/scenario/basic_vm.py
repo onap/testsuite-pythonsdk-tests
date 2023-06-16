@@ -3,24 +3,23 @@
 import logging
 import time
 
-from xtesting.core import testcase
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SDKException
-
-from onaptests.steps.instantiate.vf_module_ala_carte import YamlTemplateVfModuleAlaCarteInstantiateStep
+from onaptests.scenario.scenario_base import ScenarioBase
+from onaptests.steps.instantiate.vf_module_ala_carte import \
+    YamlTemplateVfModuleAlaCarteInstantiateStep
 from onaptests.utils.exceptions import OnapTestException
+from xtesting.core import testcase
 
-class BasicVm(testcase.TestCase):
+
+class BasicVm(ScenarioBase):
     """Onboard then instantiate a simple VM with ONAP."""
 
     __logger = logging.getLogger(__name__)
 
     def __init__(self, **kwargs):
         """Init BasicVM."""
-        if "case_name" not in kwargs:
-            kwargs["case_name"] = 'basic_vm'
-        super(BasicVm, self).__init__(**kwargs)
-        self.__logger.debug("BasicVm init started")
+        super().__init__('basic_vm', **kwargs)
         self.test = YamlTemplateVfModuleAlaCarteInstantiateStep(
                 cleanup=settings.CLEANUP_FLAG)
         self.start_time = None
