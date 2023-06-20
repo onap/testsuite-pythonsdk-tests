@@ -297,7 +297,23 @@
       {% endif %}
 
       {% if (ns.ingresses | length) > 0 %}
-      <div id="ingresses"></div>
+      <!-- Ingresses table -->
+      <div id="ingresses" class="table-container">
+        <table class="table is-fullwidth is-striped is-hoverable">
+          <thead>
+            <tr>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for ingress in ns.ingresses %}
+            <tr>
+              <td>{{ ingress.name }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
       {% endif %}
 
     </div>
