@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78691e18_63f80c72",
+        "filename": "src/onaptests/scenario/basic_clamp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-06-20T06:56:46Z",
+      "side": 1,
+      "message": "Comment for all changed files:\nthat import is unused and should be deleted (only scenario_base use it)",
+      "revId": "4abbe5fb1eae2a10d683bb7eab1a52c344e9c0b0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfc618d7_504542f0",
+        "filename": "src/onaptests/scenario/scenario_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-06-20T06:56:46Z",
+      "side": 1,
+      "message": "please use logging as it\u0027s configured to be stored on file and print won\u0027t",
+      "range": {
+        "startLine": 18,
+        "startChar": 12,
+        "endLine": 18,
+        "endChar": 17
+      },
+      "revId": "4abbe5fb1eae2a10d683bb7eab1a52c344e9c0b0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
