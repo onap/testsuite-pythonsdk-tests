@@ -16,6 +16,24 @@
       "revId": "d553ee4c89f602263f7a973654244f61b07fbca5",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3feeadec_b131805c",
+        "filename": "src/onaptests/steps/cloud/check_status.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 2701
+      },
+      "writtenOn": "2023-06-21T17:27:13Z",
+      "side": 1,
+      "message": "There is a concrete reason begind. Use of the decorator o execute()\nIt must be used by top level execute() (at least I understand itnlike that. Initially i just wanted it only in the CheckK8sResourcesStep. But then CheckK8sNamespace step\nNeeds own execute and it must inherit from CheckK8sResourcesStep so in\nConsequence what decorator does was executed twice for this particular step... so I dropped decorator\nIn execute of CheckK8sResourcesStep but then I had to add it on other classes\nThat inherit from CheckK8sResourcesStep. That\u0027s why empty execute in few places\nBut with declared decorator.",
+      "parentUuid": "4b4559ba_dc954838",
+      "revId": "d553ee4c89f602263f7a973654244f61b07fbca5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
