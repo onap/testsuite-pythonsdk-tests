@@ -2,13 +2,15 @@
 """Basic CPS test case."""
 import logging
 import time
-from xtesting.core import testcase
+
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SDKException
+from onaptests.scenario.scenario_base import ScenarioBase
 from onaptests.steps.onboard.cps import CreateCpsAnchorNodeStep
 from onaptests.utils.exceptions import OnapTestException
 
-class BasicCps(testcase.TestCase):
+
+class BasicCps(ScenarioBase):
     """Create CPS resources:
             - dataspace
             - schemaset
@@ -23,10 +25,7 @@ class BasicCps(testcase.TestCase):
 
     def __init__(self, **kwargs):
         """Init Basic CPS."""
-        if "case_name" not in kwargs:
-            kwargs["case_name"] = 'basic_cps'
-        super().__init__(**kwargs)
-        self.__logger.debug("BasicCps init started")
+        super().__init__('basic_cps', **kwargs)
         self.test = CreateCpsAnchorNodeStep(cleanup=settings.CLEANUP_FLAG)
         self.start_time = None
         self.stop_time = None

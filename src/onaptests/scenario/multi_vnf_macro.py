@@ -2,16 +2,15 @@
 import logging
 import time
 
-from yaml import load, SafeLoader
-
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SDKException
-from xtesting.core import testcase
-
+from onaptests.scenario.scenario_base import ScenarioBase
 from onaptests.steps.base import YamlTemplateBaseStep
+from onaptests.steps.instantiate.service_macro import \
+    YamlTemplateServiceMacroInstantiateStep
 from onaptests.steps.onboard.cds import CbaPublishStep
 from onaptests.utils.exceptions import OnapTestException
-from onaptests.steps.instantiate.service_macro import YamlTemplateServiceMacroInstantiateStep
+from yaml import SafeLoader, load
 
 
 class MultiVnfUbuntuMacroStep(YamlTemplateBaseStep):
@@ -103,17 +102,14 @@ class MultiVnfUbuntuMacroStep(YamlTemplateBaseStep):
         return settings.SERVICE_INSTANCE_NAME
 
 
-class MultiVnfUbuntuMacro(testcase.TestCase):
+class MultiVnfUbuntuMacro(ScenarioBase):
     """Instantiate a basic vm macro."""
 
     __logger = logging.getLogger(__name__)
 
     def __init__(self, **kwargs):
         """Init Basic Macro use case."""
-        if "case_name" not in kwargs:
-            kwargs["case_name"] = 'nso_ubuntu_macro'
-        super().__init__(**kwargs)
-        self.__logger.debug("NSO Ubuntu macro init started")
+        super().__init__('nso_ubuntu_macro', **kwargs)
         self.test = MultiVnfUbuntuMacroStep(cleanup=settings.CLEANUP_FLAG)
 
     def run(self):

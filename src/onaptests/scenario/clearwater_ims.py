@@ -3,14 +3,15 @@
 import logging
 import time
 
-from xtesting.core import testcase
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SDKException
-
-from onaptests.steps.instantiate.vf_module_ala_carte import YamlTemplateVfModuleAlaCarteInstantiateStep
+from onaptests.scenario.scenario_base import ScenarioBase
+from onaptests.steps.instantiate.vf_module_ala_carte import \
+    YamlTemplateVfModuleAlaCarteInstantiateStep
 from onaptests.utils.exceptions import OnapTestException
 
-class ClearwaterIms(testcase.TestCase):
+
+class ClearwaterIms(ScenarioBase):
     """Onboard then instantiate a clearwater vIMS with ONAP."""
 
     __logger = logging.getLogger(__name__)
@@ -18,10 +19,7 @@ class ClearwaterIms(testcase.TestCase):
     def __init__(self, **kwargs):
         """Init Clearwater IMS."""
         # import clearwater_ims_nomulticloud_settings needed
-        if "case_name" not in kwargs:
-            kwargs["case_name"] = 'clearwater_ims'
-        super(ClearwaterIms, self).__init__(**kwargs)
-        self.__logger.debug("vIMS init started")
+        super().__init__('clearwater_ims', **kwargs)
         self.test = YamlTemplateVfModuleAlaCarteInstantiateStep(
                 cleanup=settings.CLEANUP_FLAG)
         self.start_time = None

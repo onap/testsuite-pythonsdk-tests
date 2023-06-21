@@ -1,17 +1,18 @@
 """Instantiate service with PNF using SO macro flow."""
 import logging
 import time
-from yaml import load, SafeLoader
 
-from xtesting.core import testcase
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SDKException
-
+from onaptests.scenario.scenario_base import ScenarioBase
 from onaptests.steps.base import YamlTemplateBaseStep
+from onaptests.steps.instantiate.service_macro import \
+    YamlTemplateServiceMacroInstantiateStep
 from onaptests.steps.onboard.cds import CbaEnrichStep
-from onaptests.steps.simulator.pnf_simulator_cnf.pnf_register import PnfSimulatorCnfRegisterStep
-from onaptests.steps.instantiate.service_macro import YamlTemplateServiceMacroInstantiateStep
+from onaptests.steps.simulator.pnf_simulator_cnf.pnf_register import \
+    PnfSimulatorCnfRegisterStep
 from onaptests.utils.exceptions import OnapTestException
+from yaml import SafeLoader, load
 
 
 class PnfMacroScenarioStep(YamlTemplateBaseStep):
@@ -102,17 +103,14 @@ class PnfMacroScenarioStep(YamlTemplateBaseStep):
         return settings.SERVICE_INSTANCE_NAME
 
 
-class PnfMacro(testcase.TestCase):
+class PnfMacro(ScenarioBase):
     """Run PNF simulator and onboard then instantiate a service with PNF."""
 
     __logger = logging.getLogger(__name__)
 
     def __init__(self, **kwargs):
         """Init Basic Network use case."""
-        if "case_name" not in kwargs:
-            kwargs["case_name"] = 'pnf_macro'
-        super().__init__(**kwargs)
-        self.__logger.debug("PnfMacro init started")
+        super().__init__('pnf_macro', **kwargs)
         self.test = PnfMacroScenarioStep(cleanup=settings.CLEANUP_FLAG)
 
     def run(self):
