@@ -389,6 +389,26 @@ class CheckK8sPodsStep(CheckK8sResourcesUsingPodsStep):
             with open(self.res_dir + "/onap_versions.json", "w") as write_file:
                 json.dump(pod_versions, write_file)
 
+    def _get_container_logs(self, pod, container, full=True, previous=False):
+        logs = ""
+        limit_bytes = settings.MAX_LOG_BYTES
+        if full:
+            limit_bytes = settings.UNLIMITED_LOG_BYTES
+        try:
+            logs = self.core.read_namespaced_pod_log(
+                pod.name,
+                NAMESPACE,
+                container=container.name,
+                limit_bytes=limit_bytes,
+                previous=previous
+            )
+        except UnicodeDecodeError:
+            logs = "{0} has an unicode decode error...".format(pod.name)
+            self.__logger.error(
+                "{0} has an unicode decode error in the logs...", pod.name,
+            )
+        return logs
+
     def _parse_container(self, pod, k8s_container, init=False):
         """Get the logs of a container."""
         logs = ""
@@ -413,30 +433,15 @@ class CheckK8sPodsStep(CheckK8sResourcesUsingPodsStep):
         if settings.STORE_ARTIFACTS:
             try:
                 log_files = {}
-                logs = ""
-                try:
-                    logs = self.core.read_namespaced_pod_log(
-                        pod.name,
-                        NAMESPACE,
-                        container=container.name,
-                        limit_bytes=settings.MAX_LOG_BYTES,
-                    )
-                except UnicodeDecodeError:
-                    logs= "{0} has an unicode decode error...".format(pod.name)
-                    self.__logger.error(
-                        "{0} has an unicode decode error in the logs...", pod.name,
-                    )
+                logs = self._get_container_logs(pod=pod, container=container, full=False)
                 with open(
                         "{}/pod-{}-{}.log".format(self.res_dir,
                                                 pod.name, container.name),
                         'w') as log_result:
                     log_result.write(logs)
                 if (not container.ready) and container.restart_count > 0:
-                    old_logs = self.core.read_namespaced_pod_log(
-                        pod.name,
-                        NAMESPACE,
-                        container=container.name,
-                        previous=True)
+                    old_logs = self._get_container_logs(pod=pod, container=container,
+                                                        previous=True)
                     with open(
                             "{}/pod-{}-{}.old.log".format(self.res_dir,
                                                         pod.name,
@@ -444,8 +449,7 @@ class CheckK8sPodsStep(CheckK8sResourcesUsingPodsStep):
                             'w') as log_result:
                         log_result.write(old_logs)
                 if (container.name in settings.FULL_LOGS_CONTAINERS):
-                    logs = self.core.read_namespaced_pod_log(
-                        pod.name, NAMESPACE, container=container.name)
+                    logs = self._get_container_logs(pod=pod, container=container)
                     with open(
                             "{}/pod-{}-{}.log".format(self.res_dir,
                                                     pod.name, container.name),
