@@ -1,8 +1,7 @@
 import logging.config
 import onaptests.utils.exceptions as onap_test_exceptions
 from onapsdk.configuration import settings
-from onaptests.steps.cloud.check_status import CheckNamespaceStatusStep
-
+from onaptests.scenario.status import Status
 
 
 if __name__ == "__main__":
@@ -11,11 +10,9 @@ if __name__ == "__main__":
     logging.config.dictConfig(settings.LOG_CONFIG)
     logger = logging.getLogger("Status Check")
 
-    status = CheckNamespaceStatusStep(
-        cleanup=settings.CLEANUP_FLAG)
+    status = Status()
     try:
-        status.execute()
-        status.cleanup()
+        status.run()
+        status.clean()
     except onap_test_exceptions.TestConfigurationException:
         logger.error("Status Check configuration error")
-    status.reports_collection.generate_report()
