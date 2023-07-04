@@ -3,16 +3,16 @@ kind: Config
 current-context: default
 contexts:
 - name: default
-context:
+  context:
     cluster: cluster
     user: cluster-admin
     namespace: default
 clusters:
 - name: cluster
-cluster:
+  cluster:
     insecure-skip-tls-verify: true
     server: https://kubernetes.default.svc.cluster.local
 users:
 - name: cluster-admin
-user:
-token: {{ user_token_value }}
+  user:
+    token: {{ user_token_value }}
