@@ -67,6 +67,17 @@ class CheckK8sResourcesStep(BaseStep):
         """Parse the resources."""
         return []
 
+    def _add_failing_resource(self, resource):
+        if (resource.labels and settings.EXCLUDED_LABELS
+            and (resource.labels.keys() and settings.EXCLUDED_LABELS.keys())):
+            for label in resource.labels.items():
+                for waived_label in settings.EXCLUDED_LABELS.items():
+                    if label[0] in waived_label[0] and label[1] in waived_label[1]:
+                        return
+        self.__logger.warning("a {} is in error: {}".format(self.resource_type, resource.name))
+        self.failing_resources.append(resource)
+        self.failing = True
+
     def execute(self):
         super().execute()
         os.makedirs(self.res_dir, exist_ok=True)
@@ -163,9 +174,7 @@ class CheckK8sPvcsStep(CheckK8sResourcesStep):
                 field_selector=field_selector).items
 
             if k8s.status.phase != "Bound":
-                self.__logger.warning("a PVC is in error: {}".format(pvc.name))
-                self.failing_resources.append(pvc)
-                self.failing = True
+                self._add_failing_resource(pvc)
             self.all_resources.append(pvc)
 
     @BaseStep.store_state
@@ -247,11 +256,9 @@ class CheckK8sJobsStep(CheckK8sResourcesUsingPodsStep):
 
             # timemout job
             if not k8s.status.completion_time:
-                self.__logger.warning("a Job is in error: {}".format(job.name))
                 if any(
                     waiver_elt not in job.name for waiver_elt in settings.WAIVER_LIST):
-                    self.failing_resources.append(job)
-                    self.failing = True
+                    self._add_failing_resource(job)
             # completed job
             if any(waiver_elt not in job.name for waiver_elt in settings.WAIVER_LIST):
                 self.all_resources.append(job)
@@ -555,9 +562,7 @@ class CheckK8sDeploymentsStep(CheckK8sResourcesUsingPodsStep):
                     self.res_dir, deployment.name))
 
             if k8s.status.unavailable_replicas:
-                self.__logger.warning("a Deployment is in error: {}".format(deployment.name))
-                self.failing_resources.append(deployment)
-                self.failing = True
+                self._add_failing_resource(deployment)
 
             self.all_resources.append(deployment)
 
@@ -598,9 +603,7 @@ class CheckK8sResplicaSetsStep(CheckK8sResourcesUsingPodsStep):
 
             if (not k8s.status.ready_replicas 
                 or (k8s.status.ready_replicas < k8s.status.replicas)):
-                self.__logger.warning("a ReplicaSet is in error: {}".format(replicaset.name))
-                self.failing_resources.append(replicaset)
-                self.failing = True
+                self._add_failing_resource(replicaset)
 
             self.all_resources.append(replicaset)
 
@@ -641,9 +644,7 @@ class CheckK8sStatefulSetsStep(CheckK8sResourcesUsingPodsStep):
 
             if ((not k8s.status.ready_replicas)
                     or (k8s.status.ready_replicas < k8s.status.replicas)):
-                self.__logger.warning("a StatefulSet is in error: {}".format(statefulset.name))
-                self.failing_resources.append(statefulset)
-                self.failing = True
+                self._add_failing_resource(statefulset)
 
             self.all_resources.append(statefulset)
 
@@ -683,9 +684,7 @@ class CheckK8sDaemonSetsStep(CheckK8sResourcesUsingPodsStep):
                     self.res_dir, daemonset.name))
 
             if (k8s.status.number_ready < k8s.status.desired_number_scheduled):
-                self.__logger.warning("a DaemonSet is in error: {}".format(daemonset.name))
-                self.failing_resources.append(daemonset)
-                self.failing = True
+                self._add_failing_resource(daemonset)
 
             self.all_resources.append(daemonset)
 
@@ -782,6 +781,7 @@ class CheckNamespaceStatusStep(CheckK8sResourcesStep):
             details[step.resource_type] = {
                 'number_all': len(step.all_resources),
                 'number_failing': len(step.failing_resources),
+                'all': self.map_by_name(step.all_resources),
                 'failing': self.map_by_name(step.failing_resources)
             }
         with (Path(self.res_dir).joinpath(settings.STATUS_DETAILS_JSON)).open('w') as file:

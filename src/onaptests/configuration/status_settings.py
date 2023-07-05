@@ -20,6 +20,9 @@ FULL_LOGS_CONTAINERS = [
 # patterns to be excluded from the check
 WAIVER_LIST = ['integration']
 
+EXCLUDED_LABELS = {
+}
+
 SPECIFIC_LOGS_CONTAINERS = {
     'sdc-be': ['/var/log/onap/sdc/sdc-be/error.log'],
     'sdc-onboarding-be': ['/var/log/onap/sdc/sdc-onboarding-be/error.log'],

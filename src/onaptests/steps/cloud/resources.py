@@ -9,9 +9,17 @@ class K8sResource():
         self.k8s = k8s
         self.name = ""
         self.events = []
+        self.labels = None
+        self.annotations = None
         if self.k8s:
             self.name = self.k8s.metadata.name
+            self.labels = self.k8s.metadata.labels
+            self.annotations = self.k8s.metadata.annotations
             self.specific_k8s_init()
+        if not self.labels:
+            self.labels = {}
+        if not self.annotations:
+            self.annotations = {}
 
     def specific_k8s_init(self):
         """Do the specific part for k8s resource when k8s object is present."""
