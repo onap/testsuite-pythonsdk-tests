@@ -14,6 +14,7 @@ from onaptests.steps.simulator.cds_mockserver import \
 from onaptests.utils.exceptions import OnapTestException
 
 
+
 class CDSResourceResolutionStep(BaseStep):
     """Step created to run scenario and generate report."""
 

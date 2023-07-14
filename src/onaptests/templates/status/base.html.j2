@@ -97,7 +97,7 @@ is-danger
       {% if k8s.spec.selector.match_labels %}
       {{ key_value_description_list('Selector', k8s.spec.selector.match_labels) | indent(width=6) }}
       {% else %}
-      {{ key_value_description_list('Selector', k8s.spec.selector.to_dict()) | indent(width=6) }}
+      {{ key_value_description_list('Selector', {}) | indent(width=6) }}
       {% endif %}
       {% endif %}
       {% if k8s.phase %}
