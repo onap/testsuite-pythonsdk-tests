@@ -2,19 +2,20 @@ from pathlib import Path
 from uuid import uuid4
 
 from onaptests.utils.resources import get_resource_location
-from .settings import *  # pylint: disable=W0614
+from .settings import *  # noqa
 
 CLEANUP_FLAG = True
 SERVICE_NAME = "CDS resource resolution"
-CLOUD_REGION_CLOUD_OWNER = "basicnf-owner" # must not contain _
+CLOUD_REGION_CLOUD_OWNER = "basicnf-owner"  # must not contain _
 CLOUD_REGION_ID = "k8sregion-cds"
 CLOUD_REGION_TYPE = "k8s"
 CLOUD_REGION_VERSION = "1.0"
 CLOUD_OWNER_DEFINED_TYPE = "N/A"
 COMPLEX_PHYSICAL_LOCATION_ID = "sdktests"
 
-MSB_K8S_DEFINITION_ATRIFACT_FILE_PATH = Path(get_resource_location(
-                                             "templates/artifacts/cds-resource-resolution/cds-mock-server.tar.gz"))
+MSB_K8S_DEFINITION_ATRIFACT_FILE_PATH = Path(
+    get_resource_location(
+        "templates/artifacts/cds-resource-resolution/cds-mock-server.tar.gz"))
 MSB_K8S_RB_NAME = f"cds-ms-rb-{str(uuid4())}"
 MSB_K8S_RB_VERSION = "v1"
 MSB_K8S_PROFILE_ARTIFACT_FILE_PATH = Path(get_resource_location(
@@ -56,8 +57,10 @@ CDS_MOCKSERVER_EXPECTATIONS = [
     }
 ]
 
-CDS_DD_FILE = Path(get_resource_location("templates/artifacts/cds-resource-resolution/dd.json"))
-CDS_CBA_UNENRICHED = Path(get_resource_location("templates/artifacts/cds-resource-resolution/resource-resolution.zip"))
+CDS_DD_FILE = Path(get_resource_location(
+    "templates/artifacts/cds-resource-resolution/dd.json"))
+CDS_CBA_UNENRICHED = Path(get_resource_location(
+    "templates/artifacts/cds-resource-resolution/resource-resolution.zip"))
 CDS_CBA_ENRICHED = Path("/tmp/resource-resolution-enriched.zip")
 CDS_WORKFLOW_NAME = "resource-resolution"
 CDS_WORKFLOW_INPUT = {
@@ -71,11 +74,11 @@ CDS_WORKFLOW_INPUT = {
         "j_input": "ok"
     }
 }
-CDS_WORKFLOW_EXPECTED_OUTPUT  = {
+CDS_WORKFLOW_EXPECTED_OUTPUT = {
     "resource-resolution-response": {
         "meshed-template": {
-            "helloworld-velocity": "{\n  \"default\": \"ok\",\n  \"input\": \"ok\",\n  \"script\": {\n    \"python\": \"ok\",\n    \"kotlin\": \"ok\"\n  },\n  \"db\": \"ok\",\n  \"rest\": {\n    \"GET\": \"A046E51D-44DC-43AE-BBA2-86FCA86C5265\",\n    \"POST\": \"post:ok\",\n    \"PUT\": \"put:ok\",\n    \"PATCH\": \"patch:ok\",\n    \"DELETE\": \"delete:ok\"\n  }\n}\n",
-            "helloworld-jinja": "{\n  \"default\": \"ok\",\n  \"input\": \"ok\",\n  \"script\": {\n    \"python\": \"ok\",\n    \"kotlin\": {\n      \"base\": \"ok\"\n      \"from suspend function\": \"ok\"\n    }\n  },\n  \"db\": \"ok\",\n  \"rest\": {\n    \"GET\": \"A046E51D-44DC-43AE-BBA2-86FCA86C5265\",\n    \"GET_ID\": \"74FE67C6-50F5-4557-B717-030D79903908\",\n    \"POST\": \"post:ok\",\n    \"PUT\": \"put:ok\",\n    \"PATCH\": \"patch:ok\",\n    \"DELETE\": \"delete:ok\"\n  }\n}\n"
+            "helloworld-velocity": "{\n  \"default\": \"ok\",\n  \"input\": \"ok\",\n  \"script\": {\n    \"python\": \"ok\",\n    \"kotlin\": \"ok\"\n  },\n  \"db\": \"ok\",\n  \"rest\": {\n    \"GET\": \"A046E51D-44DC-43AE-BBA2-86FCA86C5265\",\n    \"POST\": \"post:ok\",\n    \"PUT\": \"put:ok\",\n    \"PATCH\": \"patch:ok\",\n    \"DELETE\": \"delete:ok\"\n  }\n}\n",  # noqa
+            "helloworld-jinja": "{\n  \"default\": \"ok\",\n  \"input\": \"ok\",\n  \"script\": {\n    \"python\": \"ok\",\n    \"kotlin\": {\n      \"base\": \"ok\"\n      \"from suspend function\": \"ok\"\n    }\n  },\n  \"db\": \"ok\",\n  \"rest\": {\n    \"GET\": \"A046E51D-44DC-43AE-BBA2-86FCA86C5265\",\n    \"GET_ID\": \"74FE67C6-50F5-4557-B717-030D79903908\",\n    \"POST\": \"post:ok\",\n    \"PUT\": \"put:ok\",\n    \"PATCH\": \"patch:ok\",\n    \"DELETE\": \"delete:ok\"\n  }\n}\n"  # noqa
         }
     }
 }

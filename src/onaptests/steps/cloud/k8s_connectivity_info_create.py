@@ -4,7 +4,6 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 from onapsdk.configuration import settings
 from onapsdk.exceptions import APIError
 from onapsdk.k8s import ConnectivityInfo
-from onapsdk.utils.jinja import jinja_env
 from onaptests.steps.base import BaseStep
 
 
@@ -31,7 +30,7 @@ class K8SConnectivityInfoStep(BaseStep):
          - K8S_CONFIG.
         """
         super().execute()
-        ######## Create Connectivity Info #########################################
+        # Create Connectivity Info #########################################
         try:
             self._logger.info("Check if k8s connectivity information exists")
             ConnectivityInfo.get_connectivity_info_by_region_id(

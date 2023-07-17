@@ -12,6 +12,7 @@ import onaptests.utils.exceptions as onap_test_exceptions
 from ..base import BaseStep
 from .vnf_ala_carte import YamlTemplateVnfAlaCarteInstantiateStep
 
+
 class K8SProfileStep(BaseStep):
     """CreateK8sProfileStep."""
 
@@ -116,8 +117,10 @@ class K8SProfileStep(BaseStep):
         self._logger.info("Create the k8s profile if it doesn't exist")
         super().execute()
         customer: Customer = Customer.get_by_global_customer_id(settings.GLOBAL_CUSTOMER_ID)
-        service_subscription: ServiceSubscription = customer.get_service_subscription_by_service_type(self.service_name)
-        self._service_instance: ServiceInstance = service_subscription.get_service_instance_by_name(self.service_instance_name)
+        service_subscription: ServiceSubscription = \
+            customer.get_service_subscription_by_service_type(self.service_name)
+        self._service_instance: ServiceInstance = \
+            service_subscription.get_service_instance_by_name(self.service_instance_name)
 
         for vnf_instance in self._service_instance.vnf_instances:
             # possible to have several modules for 1 VNF
@@ -140,15 +143,15 @@ class K8SProfileStep(BaseStep):
                     self._logger.error("Missing rb profile information")
                     raise onap_test_exceptions.ProfileInformationException
 
-                ######## Check profile for Definition ###################################
+                # Check profile for Definition
                 try:
                     rbdef.get_profile_by_name(k8s_profile_name)
                 except ResourceNotFound:
-                    ######## Create profile for Definition ###################################
+                    # Create profile for Definition
                     profile = rbdef.create_profile(k8s_profile_name,
                                                    k8s_profile_namespace,
                                                    settings.K8S_PROFILE_K8S_VERSION)
-                    ####### Upload artifact for created profile ##############################
+                    # Upload artifact for created profile
                     profile.upload_artifact(open(settings.K8S_PROFILE_ARTIFACT_PATH, 'rb').read())
 
     @BaseStep.store_state(cleanup=True)
@@ -172,7 +175,7 @@ class K8SProfileStep(BaseStep):
                 if k8s_profile_name == "":
                     self._logger.error("K8s profile deletion failed, missing rb profile name")
                     raise onap_test_exceptions.ProfileInformationException
-                ######## Delete profile for Definition ###################################
+                # Delete profile for Definition
                 try:
                     profile = rbdef.get_profile_by_name(k8s_profile_name)
                     profile.delete()

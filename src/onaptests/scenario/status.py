@@ -17,7 +17,7 @@ class Status(ScenarioBase):
         """Init the testcase."""
         super().__init__('status', **kwargs)
         self.test = CheckNamespaceStatusStep(
-                cleanup=settings.CLEANUP_FLAG)
+            cleanup=settings.CLEANUP_FLAG)
         self.start_time = None
         self.stop_time = None
         self.result = 0

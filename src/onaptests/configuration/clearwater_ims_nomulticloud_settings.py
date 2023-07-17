@@ -2,7 +2,7 @@ import os
 import openstack
 from yaml import load, SafeLoader
 from onaptests.utils.resources import get_resource_location
-from .settings import * # pylint: disable=W0614
+from .settings import *  # noqa
 
 """ Specific clearwater IMS without multicloud."""
 
@@ -11,7 +11,7 @@ from .settings import * # pylint: disable=W0614
 USE_MULTICLOUD = False
 # Set ONLY_INSTANTIATE to true to run an instantiation without repeating
 # onboarding and related AAI configuration (Cloud config)
-ONLY_INSTANTIATE= False
+ONLY_INSTANTIATE = False
 CLEANUP_FLAG = True
 CLEANUP_ACTIVITY_TIMER = 60  # nb of seconds before cleanup in case cleanup option is set
 VENDOR_NAME = "clearwater-ims_vendor"
@@ -28,7 +28,7 @@ try:
         yaml_config_file = load(yaml_template, SafeLoader)
         SERVICE_NAME = next(iter(yaml_config_file.keys()))
 except ValueError:
-    SERVICE_NAME = "" # Fill me
+    SERVICE_NAME = ""  # Fill me
 
 CLOUD_REGION_CLOUD_OWNER = "clearwater-ims-cloud-owner"
 CLOUD_REGION_TYPE = "openstack"
@@ -53,12 +53,12 @@ SERVICE_INSTANCE_NAME = "clearwater-ims_service_instance"
 # to retrieve cloud info and avoid data duplication
 TEST_CLOUD = os.getenv('OS_TEST_CLOUD')
 cloud = openstack.connect(cloud=TEST_CLOUD)
-VIM_USERNAME = cloud.config.auth.get('username','Fill me')
-VIM_PASSWORD = cloud.config.auth.get('password','Fill me')
-VIM_SERVICE_URL = cloud.config.auth.get('auth_url','Fill me')
-TENANT_ID = cloud.config.auth.get('project_id','Fill me')
-TENANT_NAME = cloud.config.auth.get('project_name','Fill me')
-CLOUD_REGION_ID = cloud.config.get('region_name','RegionOne')
-CLOUD_DOMAIN = cloud.config.auth.get('project_domain_name','Default')
+VIM_USERNAME = cloud.config.auth.get('username', 'Fill me')
+VIM_PASSWORD = cloud.config.auth.get('password', 'Fill me')
+VIM_SERVICE_URL = cloud.config.auth.get('auth_url', 'Fill me')
+TENANT_ID = cloud.config.auth.get('project_id', 'Fill me')
+TENANT_NAME = cloud.config.auth.get('project_name', 'Fill me')
+CLOUD_REGION_ID = cloud.config.get('region_name', 'RegionOne')
+CLOUD_DOMAIN = cloud.config.auth.get('project_domain_name', 'Default')
 
 MODEL_YAML_TEMPLATE = None

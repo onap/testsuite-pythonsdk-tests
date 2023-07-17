@@ -12,13 +12,23 @@ from onapsdk.aai.cloud_infrastructure.tenant import Tenant
 from onapsdk.configuration import settings
 from onapsdk.exceptions import ResourceNotFound
 from onapsdk.sdc.service import Service
-from onapsdk.so.instantiation import InstantiationParameter, ServiceInstantiation, VfmoduleParameters, VnfParameters, SoService
-from onaptests.steps.cloud.customer_service_subscription_create import CustomerServiceSubscriptionCreateStep
+from onapsdk.so.instantiation import (
+    InstantiationParameter,
+    ServiceInstantiation,
+    VfmoduleParameters,
+    VnfParameters,
+    SoService
+)
+from onaptests.steps.cloud.customer_service_subscription_create import (
+    CustomerServiceSubscriptionCreateStep
+)
 
 import onaptests.utils.exceptions as onap_test_exceptions
 from onaptests.steps.base import YamlTemplateBaseStep
 from onaptests.steps.onboard.service import YamlTemplateServiceOnboardStep
-from onaptests.steps.cloud.connect_service_subscription_to_cloud_region import ConnectServiceSubToCloudRegionStep
+from onaptests.steps.cloud.connect_service_subscription_to_cloud_region import (
+    ConnectServiceSubToCloudRegionStep
+)
 
 
 class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
@@ -47,7 +57,6 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
                 self.add_step(ConnectServiceSubToCloudRegionStep(cleanup))
             else:  # only pnfs
                 self.add_step(CustomerServiceSubscriptionCreateStep(cleanup))
-
 
     @property
     def description(self) -> str:
@@ -125,7 +134,7 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
         return self.parent.service_instance_name
 
     @YamlTemplateBaseStep.store_state
-    def execute(self):
+    def execute(self):  # noqa
         """Instantiate service.
 
         Use settings values:
@@ -143,7 +152,8 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
         super().execute()
         service = Service(self.service_name)
         customer: Customer = Customer.get_by_global_customer_id(settings.GLOBAL_CUSTOMER_ID)
-        service_subscription: ServiceSubscription = customer.get_service_subscription_by_service_type(service.name)
+        service_subscription: ServiceSubscription = \
+            customer.get_service_subscription_by_service_type(service.name)
         if any(
                 filter(lambda x: x in self.yaml_template[self.service_name].keys(),
                        ["vnfs", "networks"])):
@@ -153,8 +163,9 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
             )
             tenant: Tenant = cloud_region.get_tenant(settings.TENANT_ID)
         else:
-            cloud_region, tenant = None, None  # Only PNF is going to be instantiated so
-                                               # neither cloud_region nor tenant are needed
+            #  Only PNF is going to be instantiated so
+            #  neither cloud_region nor tenant are needed
+            cloud_region, tenant = None, None
         try:
             owning_entity = OwningEntity.get_by_owning_entity_name(
                 settings.OWNING_ENTITY)
@@ -171,12 +182,12 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
             distribution_completed = service.distributed
             if distribution_completed is True:
                 self._logger.info(
-                "Service Distribution for %s is sucessfully finished",
-                service.name)
+                    "Service Distribution for %s is sucessfully finished",
+                    service.name)
                 break
             self._logger.info(
                 "Service Distribution for %s ongoing, Wait for %d s",
-                service.name,settings.SERVICE_DISTRIBUTION_SLEEP_TIME)
+                service.name, settings.SERVICE_DISTRIBUTION_SLEEP_TIME)
             time.sleep(settings.SERVICE_DISTRIBUTION_SLEEP_TIME)
             nb_try += 1
 
@@ -190,16 +201,19 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
         if settings.MODEL_YAML_TEMPLATE:
             so_data = self.yaml_template[self.service_name]
             so_service = SoService(vnfs=so_data.get("vnfs", []),
-                                   subscription_service_type=so_data.get('subscription_service_type'))
+                                   subscription_service_type=so_data.get(
+                                       'subscription_service_type'))
         else:
             for vnf_data in self.yaml_template[self.service_name].get("vnfs", []):
                 vnf_params_list.append(VnfParameters(
                     vnf_data["vnf_name"],
-                    [InstantiationParameter(name=parameter["name"], value=parameter["value"]) for parameter in
+                    [InstantiationParameter(name=parameter["name"],
+                                            value=parameter["value"]) for parameter in
                      vnf_data.get("vnf_parameters", [])],
                     [VfmoduleParameters(vf_module_data["vf_module_name"],
-                                        [InstantiationParameter(name=parameter["name"], value=parameter["value"]) for
-                                         parameter in vf_module_data.get("parameters", [])]) \
+                                        [InstantiationParameter(name=parameter["name"],
+                                                                value=parameter["value"]) for
+                                         parameter in vf_module_data.get("parameters", [])])
                      for vf_module_data in vnf_data.get("vf_module_parameters", [])]
                 ))
 
@@ -227,8 +241,10 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
             self._logger.error("Service instantiation %s failed", self.service_instance_name)
             raise onap_test_exceptions.ServiceInstantiateException
 
-        service_subscription: ServiceSubscription = customer.get_service_subscription_by_service_type(self.service_name)
-        self._service_instance: ServiceInstance = service_subscription.get_service_instance_by_name(self.service_instance_name)
+        service_subscription: ServiceSubscription = \
+            customer.get_service_subscription_by_service_type(self.service_name)
+        self._service_instance: ServiceInstance = \
+            service_subscription.get_service_instance_by_name(self.service_instance_name)
 
     @YamlTemplateBaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:

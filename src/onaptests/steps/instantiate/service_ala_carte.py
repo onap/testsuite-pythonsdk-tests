@@ -188,7 +188,8 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         super().execute()
         service = Service(self.service_name)
         customer: Customer = Customer.get_by_global_customer_id(settings.GLOBAL_CUSTOMER_ID)
-        service_subscription: ServiceSubscription = customer.get_service_subscription_by_service_type(service.name)
+        service_subscription: ServiceSubscription = \
+            customer.get_service_subscription_by_service_type(service.name)
         cloud_region: CloudRegion = CloudRegion.get_by_id(
             cloud_owner=settings.CLOUD_REGION_CLOUD_OWNER,
             cloud_region_id=settings.CLOUD_REGION_ID,
@@ -210,8 +211,8 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
             distribution_completed = service.distributed
             if distribution_completed is True:
                 self._logger.info(
-                "Service Distribution for %s is sucessfully finished",
-                service.name)
+                    "Service Distribution for %s is sucessfully finished",
+                    service.name)
                 break
             self._logger.info(
                 "Service Distribution for %s ongoing, Wait for 60 s",
@@ -221,7 +222,7 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
 
         if distribution_completed is False:
             self._logger.error(
-                "Service Distribution for %s failed !!",service.name)
+                "Service Distribution for %s failed !!", service.name)
             raise onap_test_exceptions.ServiceDistributionException
 
         service_instantiation = ServiceInstantiation.instantiate_ala_carte(
@@ -243,8 +244,10 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
             self._logger.error("Service instantiation %s failed", self.service_instance_name)
             raise onap_test_exceptions.ServiceInstantiateException
         else:
-            service_subscription: ServiceSubscription = customer.get_service_subscription_by_service_type(self.service_name)
-            self._service_instance: ServiceInstance = service_subscription.get_service_instance_by_name(self.service_instance_name)
+            service_subscription: ServiceSubscription = \
+                customer.get_service_subscription_by_service_type(self.service_name)
+            self._service_instance: ServiceInstance = \
+                service_subscription.get_service_instance_by_name(self.service_instance_name)
 
     @YamlTemplateBaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:

@@ -52,8 +52,8 @@ class ConnectServiceSubToCloudRegionStep(BaseStep):
         super().execute()
         customer: Customer = Customer.get_by_global_customer_id(
             settings.GLOBAL_CUSTOMER_ID)
-        service_subscription: ServiceSubscription = customer.get_service_subscription_by_service_type(
-            settings.SERVICE_NAME)
+        service_subscription: ServiceSubscription = \
+            customer.get_service_subscription_by_service_type(settings.SERVICE_NAME)
         cloud_region: CloudRegion = CloudRegion.get_by_id(
             cloud_owner=settings.CLOUD_REGION_CLOUD_OWNER,
             cloud_region_id=settings.CLOUD_REGION_ID,
@@ -63,4 +63,6 @@ class ConnectServiceSubToCloudRegionStep(BaseStep):
         # for which we are sure that an availability zone has been created
         tenant: Tenant = cloud_region.get_tenant(settings.TENANT_ID)
 
-        service_subscription.link_to_cloud_region_and_tenant(cloud_region=cloud_region, tenant=tenant)
+        service_subscription.link_to_cloud_region_and_tenant(
+            cloud_region=cloud_region,
+            tenant=tenant)

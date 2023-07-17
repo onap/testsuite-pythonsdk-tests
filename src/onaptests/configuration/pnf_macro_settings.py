@@ -2,7 +2,7 @@ from pathlib import Path
 from uuid import uuid4
 
 from onaptests.utils.resources import get_resource_location
-from .settings import *  # pylint: disable=W0614
+from .settings import *  # noqa
 
 ONLY_INSTANTIATE = False
 CLEANUP_FLAG = True
@@ -17,7 +17,7 @@ CDS_DD_FILE = Path(get_resource_location("templates/artifacts/dd.json"))
 CDS_CBA_UNENRICHED = Path(get_resource_location("templates/artifacts/PNF_DEMO.zip"))
 CDS_CBA_ENRICHED = "/tmp/PNF_DEMO_enriched.zip"
 
-CLOUD_REGION_CLOUD_OWNER = "basicnf-owner" # must not contain _
+CLOUD_REGION_CLOUD_OWNER = "basicnf-owner"  # must not contain _
 CLOUD_REGION_ID = "k8sregion-pnf-macro"
 CLOUD_REGION_TYPE = "k8s"
 CLOUD_REGION_VERSION = "1.0"
@@ -31,10 +31,12 @@ PLATFORM = "pnf_macro_platform"
 
 INSTANTIATION_TIMEOUT = 600
 
-MSB_K8S_DEFINITION_ATRIFACT_FILE_PATH = Path(get_resource_location("templates/artifacts/pnf-simulator.tar.gz"))
+MSB_K8S_DEFINITION_ATRIFACT_FILE_PATH = Path(get_resource_location(
+    "templates/artifacts/pnf-simulator.tar.gz"))
 MSB_K8S_RB_NAME = f"pnf-cnf-rb-{str(uuid4())}"
 MSB_K8S_RB_VERSION = "v1"
-MSB_K8S_PROFILE_ARTIFACT_FILE_PATH = Path(get_resource_location("templates/artifacts/profile.tar.gz"))
+MSB_K8S_PROFILE_ARTIFACT_FILE_PATH = Path(get_resource_location(
+    "templates/artifacts/profile.tar.gz"))
 MSB_K8S_PROFILE_NAME = f"pnf-cnf-profile-{str(uuid4())}"
 K8S_VERSION = "1.0"
 K8S_CONFIG = get_resource_location("templates/artifacts/config")

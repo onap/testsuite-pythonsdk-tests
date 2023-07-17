@@ -8,85 +8,96 @@
 
 __author__ = ("Morgan Richomme <morgan.richomme@orange.com>")
 
-class  OnapTestException(Exception):
+
+class OnapTestException(Exception):
     """Parent Class for all Onap Test Exceptions."""
-    error_message='Generic OnapTest exception'
+    error_message = 'Generic OnapTest exception'
+
 
 class TestConfigurationException(OnapTestException):
     """Raise when configuration of the use case is incomplete or buggy."""
-    error_message='Configuration error'
+    error_message = 'Configuration error'
+
 
 class ServiceDistributionException(OnapTestException):
     """Service not properly distributed."""
-    error_message='Service not well distributed'
+    error_message = 'Service not well distributed'
 
 
 class ServiceInstantiateException(OnapTestException):
     """Service cannot be instantiated."""
-    error_message='Service instantiation error'
+    error_message = 'Service instantiation error'
 
 
 class ServiceCleanupException(OnapTestException):
     """Service cannot be cleaned."""
-    error_message='Service not well cleaned up'
+    error_message = 'Service not well cleaned up'
 
 
 class VnfInstantiateException(OnapTestException):
     """VNF cannot be instantiated."""
-    error_message='VNF instantiation error'
+    error_message = 'VNF instantiation error'
 
 
 class VnfCleanupException(OnapTestException):
     """VNF cannot be cleaned."""
-    error_message="VNF can't be cleaned"
+    error_message = "VNF can't be cleaned"
 
 
 class VfModuleInstantiateException(OnapTestException):
     """VF Module cannot be instantiated."""
-    error_message='VF Module instantiation error'
+    error_message = 'VF Module instantiation error'
 
 
 class VfModuleCleanupException(OnapTestException):
     """VF Module cannot be cleaned."""
-    error_message="VF Module can't be cleaned"
+    error_message = "VF Module can't be cleaned"
 
 
 class NetworkInstantiateException(OnapTestException):
     """Network cannot be instantiated."""
-    error_message='Network instantiation error'
+    error_message = 'Network instantiation error'
 
 
 class NetworkCleanupException(OnapTestException):
     """Network cannot be cleaned."""
-    error_message="Network can't be cleaned"
+    error_message = "Network can't be cleaned"
+
 
 class ProfileInformationException(OnapTestException):
     """Missing k8s profile information."""
-    error_message='Missing k8s profile information'
+    error_message = 'Missing k8s profile information'
+
 
 class ProfileCleanupException(OnapTestException):
     """K8s profile cannot be cleaned."""
-    error_message="Profile can't be cleaned"
+    error_message = "Profile can't be cleaned"
+
 
 class EnvironmentPreparationException(OnapTestException):
     """Test environment preparation exception."""
-    error_message="Test can't be run properly due to preparation error"
+    error_message = "Test can't be run properly due to preparation error"
+
 
 class SubstepExecutionException(OnapTestException):
     """Exception raised if substep execution fails."""
 
+
 class EnvironmentCleanupException(OnapTestException):
     """Test environment cleanup exception."""
-    error_message="Test couldn't finish a cleanup"
+    error_message = "Test couldn't finish a cleanup"
+
 
 class PolicyException(OnapTestException):
     """Policy exception."""
-    error_message="Problem with policy module"
+    error_message = "Problem with policy module"
+
 
 class DcaeException(OnapTestException):
     """DCAE exception."""
-    error_message="Problem with DCAE module"
+    error_message = "Problem with DCAE module"
+
 
 class StatusCheckException(OnapTestException):
     """Status Check exception."""
-    error_message="Namespace status check has failed"
+    error_message = "Namespace status check has failed"

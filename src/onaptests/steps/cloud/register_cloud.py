@@ -33,7 +33,7 @@ class RegisterCloudRegionStep(BaseStep):
         return "AAI"
 
     @BaseStep.store_state
-    def execute(self):
+    def execute(self):  # noqa
         """Register cloud region.
 
         Use settings values:
