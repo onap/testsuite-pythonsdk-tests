@@ -4,7 +4,7 @@ from pathlib import Path
 import openstack
 from jinja2 import Environment, PackageLoader
 from onaptests.utils.resources import get_resource_location
-from .settings import *  # pylint: disable=W0614
+from .settings import *  # noqa
 
 VNF_FILENAME_PREFIX = "multi-vnf-ubuntu"
 SERVICE_NAME = f"multivnfubuntu{str(uuid.uuid4().hex)[:6]}"

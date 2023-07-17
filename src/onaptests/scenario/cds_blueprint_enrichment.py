@@ -20,7 +20,7 @@ class CDSBlueprintEnrichment(ScenarioBase):
         """Init CDS blueprint enrichment use case."""
         super().__init__('basic_cds', **kwargs)
         self.test = CbaEnrichStep(
-                cleanup=settings.CLEANUP_FLAG)
+            cleanup=settings.CLEANUP_FLAG)
         self.start_time = None
         self.stop_time = None
         self.result = 0

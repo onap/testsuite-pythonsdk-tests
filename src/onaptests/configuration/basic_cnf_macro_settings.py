@@ -5,7 +5,7 @@ from yaml import load, SafeLoader
 
 from onaptests.utils.resources import get_resource_location
 import onaptests.utils.exceptions as onap_test_exceptions
-from .settings import *  # pylint: disable=W0614
+from .settings import *  # noqa
 
 """ Specific basic_cnf_macro with multicloud-k8s and yaml config scenario."""
 SERVICE_DETAILS = ("Onboarding, distribution and instantiation of a Apache CNF " +
@@ -63,7 +63,8 @@ TENANT_ID = '123456'
 TENANT_NAME = 'dummy_test'
 
 
-SERVICE_YAML_TEMPLATE = Path(get_resource_location("templates/vnf-services/basic_cnf_macro-service.yaml"))
+SERVICE_YAML_TEMPLATE = Path(get_resource_location(
+    "templates/vnf-services/basic_cnf_macro-service.yaml"))
 
 try:
     # Try to retrieve the SERVICE NAME from the yaml file

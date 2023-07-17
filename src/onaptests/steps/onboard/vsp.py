@@ -41,7 +41,9 @@ class VspOnboardStep(BaseStep):
         """
         super().execute()
         vendor: Vendor = Vendor(name=settings.VENDOR_NAME)
-        vsp: Vsp = Vsp(name=settings.VSP_NAME, vendor=vendor, package=open(settings.VSP_FILE_PATH, "rb"))
+        vsp: Vsp = Vsp(name=settings.VSP_NAME,
+                       vendor=vendor,
+                       package=open(settings.VSP_FILE_PATH, "rb"))
         vsp.onboard()
 
     @BaseStep.store_state(cleanup=True)
@@ -123,8 +125,8 @@ class YamlTemplateVspOnboardStep(YamlTemplateBaseStep):
                 if "heat_files_to_upload" in pnf:
                     with open(get_resource_location(pnf["heat_files_to_upload"]), "rb") as package:
                         vsp: Vsp = Vsp(name=f"{pnf['pnf_name']}_VSP",
-                                    vendor=vendor,
-                                    package=package)
+                                       vendor=vendor,
+                                       package=package)
                         vsp.onboard()
 
     @YamlTemplateBaseStep.store_state(cleanup=True)

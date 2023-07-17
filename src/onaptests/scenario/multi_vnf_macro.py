@@ -117,7 +117,8 @@ class MultiVnfUbuntuMacro(ScenarioBase):
         self.start_time = time.time()
         try:
             self.test.execute()
-            self.__logger.info("Starting to clean up in {} seconds".format(settings.CLEANUP_ACTIVITY_TIMER))
+            self.__logger.info("Starting to clean up in {} seconds".format(
+                settings.CLEANUP_ACTIVITY_TIMER))
             time.sleep(settings.CLEANUP_ACTIVITY_TIMER)
             self.test.cleanup()
             self.result = 100

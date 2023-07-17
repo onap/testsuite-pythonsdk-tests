@@ -2,7 +2,7 @@ import os
 from yaml import load, SafeLoader
 from onaptests.utils.resources import get_resource_location
 import onaptests.utils.exceptions as onap_test_exceptions
-from .settings import * # pylint: disable=W0614
+from .settings import *  # noqa
 
 """ Specific basic_cnf with multicloud-k8s and yaml config scenario."""
 SERVICE_DETAILS = ("Onboarding, distribution and instantiation of a CNF" +

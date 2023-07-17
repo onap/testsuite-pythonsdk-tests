@@ -20,7 +20,7 @@ class BasicCnf(ScenarioBase):
         """Init BasicCnf."""
         super().__init__('basic_cnf', **kwargs)
         self.test = YamlTemplateVfModuleAlaCarteInstantiateStep(
-                cleanup=settings.CLEANUP_FLAG)
+            cleanup=settings.CLEANUP_FLAG)
         self.start_time = None
         self.stop_time = None
         self.result = 0

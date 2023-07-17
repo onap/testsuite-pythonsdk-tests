@@ -67,7 +67,7 @@ class CDSResourceResolution(ScenarioBase):
         """Init CDS resource resolution use case."""
         super().__init__('basic_cds', **kwargs)
         self.test = CDSResourceResolutionStep(
-                cleanup=settings.CLEANUP_FLAG)
+            cleanup=settings.CLEANUP_FLAG)
         self.start_time = None
         self.stop_time = None
         self.result = 0

@@ -55,7 +55,8 @@ class ServiceOnboardStep(BaseStep):
 
         """
         super().execute()
-        service: Service = Service(name=settings.SERVICE_NAME, instantiation_type=settings.SERVICE_INSTANTIATION_TYPE)
+        service: Service = Service(name=settings.SERVICE_NAME,
+                                   instantiation_type=settings.SERVICE_INSTANTIATION_TYPE)
         if not service.created():
             service.create()
             if settings.VL_NAME != "":
@@ -70,7 +71,8 @@ class ServiceOnboardStep(BaseStep):
         # If the service is already distributed, do not try to checkin/onboard (replay of tests)
         # checkin is done if needed
         # If service is replayed, no need to try to re-onboard the model
-        # Double check because of: https://gitlab.com/Orange-OpenSource/lfn/onap/python-onapsdk/-/issues/176
+        # Double check because of:
+        # https://gitlab.com/Orange-OpenSource/lfn/onap/python-onapsdk/-/issues/176
         if not service.distributed and service.status != onapsdk_const.DISTRIBUTED:
             if service.status == onapsdk_const.DRAFT:
                 try:
@@ -186,7 +188,8 @@ class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
             # If the service is already distributed, do not try to checkin/onboard (replay of tests)
             # checkin is done if needed
             # If service is replayed, no need to try to re-onboard the model
-        # Double check because of: https://gitlab.com/Orange-OpenSource/lfn/onap/python-onapsdk/-/issues/176
+        # Double check because of:
+        # https://gitlab.com/Orange-OpenSource/lfn/onap/python-onapsdk/-/issues/176
         if not service.distributed and service.status != onapsdk_const.DISTRIBUTED:
             if service.status == onapsdk_const.DRAFT:
                 try:

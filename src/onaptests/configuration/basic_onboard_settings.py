@@ -6,7 +6,7 @@ from jinja2 import Environment, PackageLoader
 
 import onaptests.utils.exceptions as onap_test_exceptions
 from onaptests.utils.resources import get_resource_location
-from .settings import * # pylint: disable=W0614
+from .settings import * # noqa
 
 """ Creation of service to onboard"""
 
@@ -33,17 +33,18 @@ def generate_service_config_yaml_file():
     with open(SERVICE_YAML_TEMPLATE, 'w+') as file_to_write:
         file_to_write.write(rendered_template)
 
+
 """Basic onboard service to only onboard a service in SDC"""
 
 # pylint: disable=bad-whitespace
 # The ONAP part
-SERVICE_DETAILS="Onboarding of an Ubuntu VM"
-SERVICE_COMPONENTS="SDC"
+SERVICE_DETAILS = "Onboarding of an Ubuntu VM"
+SERVICE_COMPONENTS = "SDC"
 
-#USE_MULTICLOUD = False
+# USE_MULTICLOUD = False
 # Set ONLY_INSTANTIATE to true to run an instantiation without repeating
 # onboarding and related AAI configuration (Cloud config)
-#ONLY_INSTANTIATE= False
+# ONLY_INSTANTIATE= False
 
 # if a yaml file is define, retrieve info from this yaml files
 # if not declare the parameters in the settings
@@ -59,8 +60,8 @@ try:
 except (FileNotFoundError, ValueError):
     raise onap_test_exceptions.TestConfigurationException
 
-#CLEANUP_FLAG = True
-#CLEANUP_ACTIVITY_TIMER = 10  # nb of seconds before cleanup in case cleanup option is set
+# CLEANUP_FLAG = True
+# CLEANUP_ACTIVITY_TIMER = 10  # nb of seconds before cleanup in case cleanup option is set
 VENDOR_NAME = "basic_onboard_vendor"
 
 MODEL_YAML_TEMPLATE = None

@@ -4,6 +4,7 @@ import requests
 from onaptests.steps.base import BaseStep
 from onaptests.utils.exceptions import TestConfigurationException
 
+
 class SimulatorStartStep(BaseStep):
     """Basic operations on a docker container."""
 

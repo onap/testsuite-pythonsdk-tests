@@ -47,11 +47,11 @@ class CdsMockserverCnfConfigureStep(BaseStep):
                 response = requests.put(
                     "http://portal.api.simpledemo.onap.org:30726/mockserver/expectation",
                     json={
-                        "httpRequest" : {
+                        "httpRequest": {
                             "method": expectation["method"],
                             "path": expectation["path"]
                         },
-                        "httpResponse" : {
+                        "httpResponse": {
                             "body": expectation["response"]
                         }
                     }

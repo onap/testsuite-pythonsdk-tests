@@ -4,10 +4,9 @@ from avionix import ChartBuilder, ChartDependency, ChartInfo
 from avionix.errors import HelmError
 from onaptests.steps.base import BaseStep
 from onaptests.utils.resources import get_local_dir
-from onaptests.utils.exceptions import  (
+from onaptests.utils.exceptions import (
     EnvironmentPreparationException,
     EnvironmentCleanupException)
-
 
 
 class HelmChartStep(BaseStep):
@@ -36,7 +35,6 @@ class HelmChartStep(BaseStep):
             msg = f"{chart_info_file} not found."
             raise EnvironmentPreparationException(msg) from err
 
-
         try:
             for dependency in chart_info["dependencies"]:
                 dep = ChartDependency(
@@ -48,16 +46,16 @@ class HelmChartStep(BaseStep):
                 dependencies.append(dep)
 
             self.builder = ChartBuilder(
-                    chart_info=ChartInfo(
-                        api_version=chart_info["api_version"],
-                        name=chart_info["chart_name"],
-                        version=chart_info["version"],  # SemVer 2 version
-                        app_version=chart_info["app_version"],
-                        dependencies=dependencies
-                    ),
-                    kubernetes_objects=[],
-                    keep_chart=False
-                )
+                chart_info=ChartInfo(
+                    api_version=chart_info["api_version"],
+                    name=chart_info["chart_name"],
+                    version=chart_info["version"],  # SemVer 2 version
+                    app_version=chart_info["app_version"],
+                    dependencies=dependencies
+                ),
+                kubernetes_objects=[],
+                keep_chart=False
+            )
         except KeyError as err:
             msg = f"{chart_info_file} does not contain required keys."
             raise EnvironmentPreparationException(msg) from err
@@ -81,7 +79,6 @@ class HelmChartStep(BaseStep):
         except HelmError as err:
             msg = "Error during helm release installation."
             raise EnvironmentPreparationException(msg) from err
-
 
     def cleanup(self) -> None:
         """Uninstall helm release."""

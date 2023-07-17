@@ -10,6 +10,7 @@ from onapsdk.configuration import settings
 from ..base import YamlTemplateBaseStep
 from .service import YamlTemplateVfOnboardStep
 
+
 class OnboardClampStep(YamlTemplateBaseStep):
     """Onboard class to create CLAMP templates."""
 

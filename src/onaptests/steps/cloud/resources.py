@@ -37,6 +37,7 @@ class K8sResource():
         else:
             return False
 
+
 class K8sPodParentResource(K8sResource):
     """K8sPodParentResource class."""
 
@@ -138,8 +139,10 @@ class Job(K8sPodParentResource):
 class Deployment(K8sPodParentResource):
     """Deployment class."""
 
+
 class ReplicaSet(K8sPodParentResource):
     """ReplicaSet class."""
+
 
 class StatefulSet(K8sPodParentResource):
     """StatefulSet class."""
