@@ -176,7 +176,7 @@ class CheckK8sPvcsStep(CheckK8sResourcesStep):
         super()._parse_resources()
         for k8s in self.k8s_resources:
             pvc = Pvc(k8s=k8s)
-            field_selector = (f"involvedObject.name={pvc.name}, "
+            field_selector = (f"involvedObject.name={pvc.name},"
                               "involvedObject.kind=PersistentVolumeClaim")
             pvc.events = self.core.list_namespaced_event(
                 NAMESPACE,
