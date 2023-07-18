@@ -1,4 +1,4 @@
-from .settings import * # pylint: disable=W0614
+from .settings import *  # noqa
 
 """ Specific Status Check """
 SERVICE_NAME = "Status Check"
@@ -24,7 +24,6 @@ EXCLUDED_LABELS = {
 }
 
 SPECIFIC_LOGS_CONTAINERS = {
-    'sdc-be': ['/var/log/onap/sdc/sdc-be/error.log'],
     'sdc-onboarding-be': ['/var/log/onap/sdc/sdc-onboarding-be/error.log'],
     'aaf-cm': [
         '/opt/app/osaaf/logs/cm/cm-service.log',
@@ -97,4 +96,4 @@ GENERIC_NAMES = {
 
 MAX_LOG_BYTES = 512000
 
-UNLIMITED_LOG_BYTES = 10**10 # 10 GB
+UNLIMITED_LOG_BYTES = 10**10  # 10 GB

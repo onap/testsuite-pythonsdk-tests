@@ -69,11 +69,12 @@ class CreateProfileStep(BaseStep):
     def execute(self) -> None:
         """Create profile."""
         super().execute()
-        definition: Definition = Definition.get_definition_by_name_version(\
+        definition: Definition = Definition.get_definition_by_name_version(
             rb_name=settings.MSB_K8S_RB_NAME,
             rb_version=settings.MSB_K8S_RB_VERSION)
         with open(settings.MSB_K8S_PROFILE_ARTIFACT_FILE_PATH, "rb") as profile_file:
-            self.profile = definition.create_profile(profile_name=settings.MSB_K8S_PROFILE_NAME,
-                                                     namespace=settings.K8S_ADDITIONAL_RESOURCES_NAMESPACE,
-                                                     kubernetes_version=settings.K8S_VERSION)
+            self.profile = definition.create_profile(
+                profile_name=settings.MSB_K8S_PROFILE_NAME,
+                namespace=settings.K8S_ADDITIONAL_RESOURCES_NAMESPACE,
+                kubernetes_version=settings.K8S_VERSION)
             self.profile.upload_artifact(profile_file.read())

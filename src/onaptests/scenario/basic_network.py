@@ -21,7 +21,7 @@ class BasicNetwork(ScenarioBase):
         # import basic_network_nomulticloud_settings needed
         super().__init__('basic_network', **kwargs)
         self.test = YamlTemplateVlAlaCarteInstantiateStep(
-                cleanup=settings.CLEANUP_FLAG)
+            cleanup=settings.CLEANUP_FLAG)
         self.start_time = None
         self.stop_time = None
         self.result = 0

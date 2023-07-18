@@ -101,7 +101,7 @@ class YamlTemplateVlAlaCarteInstantiateStep(YamlTemplateBaseStep):
 
         """
         # workaround, as Network name differs from model name (added " 0")
-        network_name=re.sub(r"\s\d$", r"", network_name)
+        network_name = re.sub(r"\s\d$", r"", network_name)
         for net in self.yaml_template[self.service_name]["networks"]:
             if net["vl_name"] == network_name:
                 if net['subnets'] is None:
@@ -130,11 +130,13 @@ class YamlTemplateVlAlaCarteInstantiateStep(YamlTemplateBaseStep):
         super().execute()
         service: Service = Service(self.service_name)
         customer: Customer = Customer.get_by_global_customer_id(settings.GLOBAL_CUSTOMER_ID)
-        service_subscription: ServiceSubscription = customer.get_service_subscription_by_service_type(self.service_name)
-        service_instance: ServiceInstance = service_subscription.get_service_instance_by_name(self.service_instance_name)
+        service_subscription: ServiceSubscription = \
+            customer.get_service_subscription_by_service_type(self.service_name)
+        service_instance: ServiceInstance = \
+            service_subscription.get_service_instance_by_name(self.service_instance_name)
         self._service_instance = service_instance
         for idx, network in enumerate(service.networks):
-        #for network in self.yaml_template[self.service_name]["networks"]:
+            # for network in self.yaml_template[self.service_name]["networks"]:
             net_instantiation = service_instance.add_network(
                 network,
                 settings.LINE_OF_BUSINESS,
@@ -159,7 +161,7 @@ class YamlTemplateVlAlaCarteInstantiateStep(YamlTemplateBaseStep):
         """
         if self._cleanup:
             for net_instance in self._service_instance.network_instances:
-                self._logger.info("Start network deletion %s",net_instance.name)
+                self._logger.info("Start network deletion %s", net_instance.name)
                 net_deletion = net_instance.delete(a_la_carte=True)
                 try:
                     net_deletion.wait_for_finish(settings.ORCHESTRATION_REQUEST_TIMEOUT)

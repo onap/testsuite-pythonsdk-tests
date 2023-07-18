@@ -80,13 +80,12 @@ class ClampStep(YamlTemplateBaseStep):
         else:
             return self.parent.service_name
 
-
     def check(self, operational_policies: list, is_template: bool = False) -> str:
         """Check CLAMP requirements to create a loop."""
         self._logger.info("Check operational policy")
         for policy in operational_policies:
             exist = Clamp.check_policies(policy_name=policy["name"],
-                                         req_policies=30)# 30 required policy
+                                         req_policies=30)  # 30 required policy
             self._logger.info("Operational policy found.")
             if not exist:
                 raise ValueError("Couldn't load the policy %s", policy)
@@ -109,14 +108,14 @@ class ClampStep(YamlTemplateBaseStep):
 
     def loop_counter(self, action: str) -> None:
         """ Count number of loop instances."""
-        if  action == "plus":
+        if action == "plus":
             self.count += 1
-        if  action == "minus":
+        if action == "minus":
             self.count -= 1
 
     @YamlTemplateBaseStep.store_state
     def execute(self):
-        super().execute() # TODO work only the 1st time, not if already onboarded
+        super().execute()  # TODO work only the 1st time, not if already onboarded
 
         # Before instantiating, be sure that the service has been distributed
         service = Service(self.service_name)
@@ -128,8 +127,8 @@ class ClampStep(YamlTemplateBaseStep):
             distribution_completed = service.distributed
             if distribution_completed is True:
                 self._logger.info(
-                "Service Distribution for %s is sucessfully finished",
-                service.name)
+                    "Service Distribution for %s is sucessfully finished",
+                    service.name)
                 break
             self._logger.info(
                 "Service Distribution for %s ongoing, Wait for 60 s",
@@ -139,7 +138,7 @@ class ClampStep(YamlTemplateBaseStep):
 
         if distribution_completed is False:
             self._logger.error(
-                "Service Distribution for %s failed !!",service.name)
+                "Service Distribution for %s failed !!", service.name)
             raise onap_test_exceptions.ServiceDistributionException
 
         # time to wait for template load in CLAMP

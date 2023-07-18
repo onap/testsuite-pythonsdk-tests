@@ -15,6 +15,7 @@ class ReportStepStatus(Enum):
     FAIL = "FAIL"
     NOT_EXECUTED = "NOT EXECUTED"
 
+
 @dataclass
 class Report:
     """Step execution report."""
@@ -85,7 +86,8 @@ class ReportsCollection:
             details=details,
             components=components,
             log_path="./pythonsdk.debug.log").dump(
-                str(Path(settings.REPORTING_FILE_DIRECTORY).joinpath(settings.HTML_REPORTING_FILE_NAME)))
+                str(Path(settings.REPORTING_FILE_DIRECTORY).joinpath(
+                    settings.HTML_REPORTING_FILE_NAME)))
 
         report_dict = {
             'usecase': usecase,
@@ -101,5 +103,6 @@ class ReportsCollection:
                 for step_report in reversed(self.report)
             ]
         }
-        with (Path(settings.REPORTING_FILE_DIRECTORY).joinpath(settings.JSON_REPORTING_FILE_NAME)).open('w') as file:
+        with (Path(settings.REPORTING_FILE_DIRECTORY).joinpath(
+                settings.JSON_REPORTING_FILE_NAME)).open('w') as file:
             json.dump(report_dict, file, indent=4)

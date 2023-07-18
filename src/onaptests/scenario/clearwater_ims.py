@@ -21,7 +21,7 @@ class ClearwaterIms(ScenarioBase):
         # import clearwater_ims_nomulticloud_settings needed
         super().__init__('clearwater_ims', **kwargs)
         self.test = YamlTemplateVfModuleAlaCarteInstantiateStep(
-                cleanup=settings.CLEANUP_FLAG)
+            cleanup=settings.CLEANUP_FLAG)
         self.start_time = None
         self.stop_time = None
         self.result = 0
@@ -56,5 +56,5 @@ class ClearwaterIms(ScenarioBase):
         """Clean Additional resources if needed."""
         try:
             self.test.reports_collection.generate_report()
-        except:
+        except:  # noqa
             self.__logger.error("Impossible to generate reporting")

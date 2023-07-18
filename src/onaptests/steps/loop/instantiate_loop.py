@@ -13,9 +13,9 @@ class InstantiateLoop():
     """class instantiating a closed loop in clamp."""
 
     def __init__(self, template: str, loop_name: str, operational_policies: list):
-        self.template=template
-        self.loop_name=loop_name
-        self.operational_policies=operational_policies
+        self.template = template
+        self.loop_name = loop_name
+        self.operational_policies = operational_policies
 
         self._logger: logging.Logger = logging.getLogger("")
         logging.config.dictConfig(settings.LOG_CONFIG)
@@ -30,7 +30,6 @@ class InstantiateLoop():
                 self._logger.error("an error occured while adding an operational policy")
             self._logger.info("ADD OPERATION SUCCESSFULY DONE")
 
-
     def configure_policies(self, loop: LoopInstance) -> None:
         """Configure all policies."""
         self._logger.info("******** UPDATE MICROSERVICE POLICY *******")
@@ -38,8 +37,8 @@ class InstantiateLoop():
         loop.update_microservice_policy()
         self._logger.info("******** UPDATE OPERATIONAL POLICIES CONFIG *******")
         for policy in self.operational_policies:
-            #loop.add_op_policy_config(loop.LoopInstance.__dict__[policy["config_function"]])
-            #possible configurations for the moment
+            # loop.add_op_policy_config(loop.LoopInstance.__dict__[policy["config_function"]])
+            # possible configurations for the moment
             if policy["name"] == "MinMax":
                 loop.add_op_policy_config(loop.add_minmax_config)
             if policy["name"] == "Drools":
@@ -53,7 +52,7 @@ class InstantiateLoop():
         self._logger.info("******** SUBMIT POLICIES TO PE *******")
         submit = loop.act_on_loop_policy(loop.submit)
         self._logger.info("******** CHECK POLICIES SUBMITION *******")
-        if submit :
+        if submit:
             self._logger.info("Policies successfully submited to PE")
 
         else:

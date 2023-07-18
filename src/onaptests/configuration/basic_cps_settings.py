@@ -1,4 +1,4 @@
-from .settings import *
+from .settings import *  # noqa
 
 import json
 from pathlib import Path
@@ -7,36 +7,30 @@ from onaptests.utils.resources import get_resource_location
 
 CLEANUP_FLAG = True
 
-ANCHOR_DATA = json.dumps({
-    "bookstore": {
-      "bookstore-name": "Chapters",
-      "categories": [
-        {
-          "code": 1,
-          "name": "SciFi",
-          "books": [
-              {
-                "title": "2001: A Space Odyssey",
-                "price": 5
-              },
-              {
-                "title": "Dune",
-                "price": 5
-              }
-          ]
-        },
-        {
-          "code": 2,
-          "name": "Kids",
-          "books": [
-              {
-                "title": "Matilda"
-              }
-            ]
+ANCHOR_DATA = json.dumps(
+    {
+        "bookstore": {
+            "bookstore-name": "Chapters",
+            "categories": [{
+                "code": 1,
+                "name": "SciFi",
+                "books": [{
+                    "title": "2001: A Space Odyssey",
+                    "price": 5
+                }, {
+                    "title": "Dune",
+                    "price": 5
+                }]
+            }, {
+                "code": 2,
+                "name": "Kids",
+                "books": [{
+                    "title": "Matilda"
+                }]
+            }]
         }
-      ]
     }
-  })
+)
 ANCHOR_NAME = "basic-cps-test-anchor"
 DATASPACE_NAME = "basic-cps-test-dataspace"
 SCHEMA_SET_NAME = "basic-cps-test-schema-set"

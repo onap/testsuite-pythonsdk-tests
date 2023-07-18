@@ -163,13 +163,15 @@ class BaseStep(ABC):
     def store_state(cls, fun=None, *, cleanup=False):
         if fun is None:
             return functools.partial(cls.store_state, cleanup=cleanup)
+
         @functools.wraps(fun)
         def wrapper(self, *args, **kwargs):
             try:
                 if cleanup:
                     self._start_cleanup_time = time.time()
                     self._logger.info("*****************************************************")
-                    self._logger.info(f"START [{self.component}] {self.name} cleanup: {self.description}")
+                    self._logger.info(f"START [{self.component}] {self.name} cleanup: "
+                                      f"{self.description}")
                     self._logger.info("*****************************************************")
                 else:
                     self._logger.info("*****************************************************")
@@ -180,7 +182,8 @@ class BaseStep(ABC):
                 execution_status = ReportStepStatus.PASS
                 return ret
             except SubstepExecutionException:
-                execution_status = ReportStepStatus.PASS if cleanup else ReportStepStatus.NOT_EXECUTED
+                execution_status = (ReportStepStatus.PASS if cleanup else
+                                    ReportStepStatus.NOT_EXECUTED)
                 raise
             except (OnapTestException, SDKException):
                 execution_status = ReportStepStatus.FAIL
@@ -188,10 +191,12 @@ class BaseStep(ABC):
             finally:
                 if cleanup:
                     self._logger.info("*****************************************************")
-                    self._logger.info(f"STOP [{self.component}] {self.name} cleanup: {self.description}")
+                    self._logger.info(f"STOP [{self.component}] {self.name} cleanup: "
+                                      f"{self.description}")
                     self._logger.info("*****************************************************")
                     self._cleanup_report = Report(
-                        step_description=f"[{self.component}] {self.name} cleanup: {self.description}",
+                        step_description=(f"[{self.component}] {self.name} cleanup: "
+                                          f"{self.description}"),
                         step_execution_status=execution_status,
                         step_execution_duration=time.time() - self._start_cleanup_time,
                         step_component=self.component
@@ -202,12 +207,15 @@ class BaseStep(ABC):
                     self._logger.info("*****************************************************")
                     if not self._start_execution_time:
                         if execution_status != ReportStepStatus.NOT_EXECUTED:
-                            self._logger.error("No execution start time saved for %s step. Fix it by call `super.execute()` "
-                                               "in step class `execute()` method definition", self.name)
+                            self._logger.error("No execution start time saved for %s step. "
+                                               "Fix it by call `super.execute()` "
+                                               "in step class `execute()` method definition",
+                                               self.name)
                         self._start_execution_time = time.time()
                     self._execution_report = Report(
                         step_description=f"[{self.component}] {self.name}: {self.description}",
-                        step_execution_status=execution_status if execution_status else ReportStepStatus.FAIL,
+                        step_execution_status=(execution_status if execution_status else
+                                               ReportStepStatus.FAIL),
                         step_execution_duration=time.time() - self._start_execution_time,
                         step_component=self.component
                     )
