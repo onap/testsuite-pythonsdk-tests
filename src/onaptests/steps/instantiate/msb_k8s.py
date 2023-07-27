@@ -9,14 +9,14 @@ from onaptests.steps.onboard.msb_k8s import CreateProfileStep
 class CreateInstanceStep(BaseStep):
     """Create MSB k8s instance step."""
 
-    def __init__(self, cleanup: bool = False) -> None:
+    def __init__(self) -> None:
         """Initialize step.
 
         Substeps:
             - CreateProfileStep.
         """
-        super().__init__(cleanup=cleanup)
-        self.add_step(CreateProfileStep(cleanup=cleanup))
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
+        self.add_step(CreateProfileStep())
         self.instance: Instance = None
 
     @property

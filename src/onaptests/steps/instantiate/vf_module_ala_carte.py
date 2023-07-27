@@ -16,13 +16,13 @@ from .k8s_profile_create import K8SProfileStep
 class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
     """Instantiate vf module a'la carte using YAML template."""
 
-    def __init__(self, cleanup=False):
+    def __init__(self):
         """Initialize step.
 
         Substeps:
             - YamlTemplateVnfAlaCarteInstantiateStep.
         """
-        super().__init__(cleanup=cleanup)
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
 
         self._yaml_template: dict = None
         self._service_instance_name: str = None
@@ -30,9 +30,9 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
         if settings.CLOUD_REGION_TYPE == settings.K8S_REGION_TYPE:
             # K8SProfileStep creates the requested profile and then calls
             # YamlTemplateVnfAlaCarteInstantiateStep step
-            self.add_step(K8SProfileStep(cleanup))
+            self.add_step(K8SProfileStep())
         else:
-            self.add_step(YamlTemplateVnfAlaCarteInstantiateStep(cleanup))
+            self.add_step(YamlTemplateVnfAlaCarteInstantiateStep())
 
     @property
     def description(self) -> str:

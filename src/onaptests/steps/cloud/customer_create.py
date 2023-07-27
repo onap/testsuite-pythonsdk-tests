@@ -8,6 +8,10 @@ from ..base import BaseStep
 class CustomerCreateStep(BaseStep):
     """Customer creation step."""
 
+    def __init__(self):
+        """Initialize step."""
+        super().__init__(cleanup=BaseStep.HAS_NO_CLEANUP)
+
     @property
     def description(self) -> str:
         """Step description."""

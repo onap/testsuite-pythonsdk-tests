@@ -34,7 +34,7 @@ from onaptests.steps.cloud.connect_service_subscription_to_cloud_region import (
 class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
     """Instantiate service a'la carte using YAML template."""
 
-    def __init__(self, cleanup=False):
+    def __init__(self):
         """Initialize step.
 
         Substeps:
@@ -42,21 +42,21 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
             - ConnectServiceSubToCloudRegionStep,
             - CustomerServiceSubscriptionCreateStep.
         """
-        super().__init__(cleanup=cleanup)
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
         self._yaml_template: dict = None
         self._model_yaml_template: dict = None
         self._service_instance_name: str = None
         self._service_instance: str = None
         if not settings.ONLY_INSTANTIATE:
-            self.add_step(YamlTemplateServiceOnboardStep(cleanup))
+            self.add_step(YamlTemplateServiceOnboardStep())
 
             if any(
                 filter(lambda x: x in self.yaml_template[self.service_name].keys(),
                        ["vnfs", "networks"])):
                 # can additionally contain "pnfs", no difference
-                self.add_step(ConnectServiceSubToCloudRegionStep(cleanup))
+                self.add_step(ConnectServiceSubToCloudRegionStep())
             else:  # only pnfs
-                self.add_step(CustomerServiceSubscriptionCreateStep(cleanup))
+                self.add_step(CustomerServiceSubscriptionCreateStep())
 
     @property
     def description(self) -> str:

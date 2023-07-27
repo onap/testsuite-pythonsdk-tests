@@ -1,35 +1,25 @@
 """Instantiate basic cnf using SO macro flow."""
-import logging
-import time
-
 from onapsdk.configuration import settings
-from onapsdk.exceptions import SDKException
-from onaptests.scenario.scenario_base import ScenarioBase
-from onaptests.steps.base import YamlTemplateBaseStep
+from onaptests.scenario.scenario_base import BaseStep, ScenarioBase, YamlTemplateBaseScenarioStep
 from onaptests.steps.instantiate.service_macro import \
     YamlTemplateServiceMacroInstantiateStep
 from onaptests.steps.onboard.cds import CbaPublishStep
-from onaptests.utils.exceptions import OnapTestException
 from yaml import SafeLoader, load
 
 
-class BasicCnfMacroStep(YamlTemplateBaseStep):
+class BasicCnfMacroStep(YamlTemplateBaseScenarioStep):
 
-    def __init__(self, cleanup=False):
+    def __init__(self):
         """Initialize step.
 
         Substeps:
             - CbaPublishStep
             - YamlTemplateServiceMacroInstantiateStep.
         """
-        super().__init__(cleanup=cleanup)
+        super().__init__(cleanup=BaseStep.HAS_NO_CLEANUP)
         self._yaml_template: dict = None
-        self.add_step(CbaPublishStep(
-            cleanup=cleanup
-        ))
-        self.add_step(YamlTemplateServiceMacroInstantiateStep(
-            cleanup=cleanup
-        ))
+        self.add_step(CbaPublishStep())
+        self.add_step(YamlTemplateServiceMacroInstantiateStep())
 
     @property
     def description(self) -> str:
@@ -54,7 +44,7 @@ class BasicCnfMacroStep(YamlTemplateBaseStep):
             str: Component name
 
         """
-        return "PythonSDK-tests"
+        return "TEST"
 
     @property
     def yaml_template(self) -> dict:
@@ -101,29 +91,7 @@ class BasicCnfMacroStep(YamlTemplateBaseStep):
 class BasicCnfMacro(ScenarioBase):
     """Instantiate a basic cnf macro."""
 
-    __logger = logging.getLogger()
-
     def __init__(self, **kwargs):
         """Init Basic Cnf Macro use case."""
         super().__init__('basic_cnf_macro', **kwargs)
-        self.test = BasicCnfMacroStep(cleanup=settings.CLEANUP_FLAG)
-
-    def run(self):
-        """Run basic cnf macro test."""
-        self.start_time = time.time()
-        try:
-            self.test.execute()
-            self.test.cleanup()
-            self.result = 100
-        except OnapTestException as exc:
-            self.result = 0
-            self.__logger.exception(exc.error_message)
-        except SDKException:
-            self.result = 0
-            self.__logger.exception("SDK Exception")
-        finally:
-            self.stop_time = time.time()
-
-    def clean(self):
-        """Generate report."""
-        self.test.reports_collection.generate_report()
+        self.test = BasicCnfMacroStep()

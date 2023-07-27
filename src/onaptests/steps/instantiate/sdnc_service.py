@@ -3,9 +3,9 @@ from onapsdk.exceptions import APIError
 from onapsdk.sdnc import VfModulePreload
 from onapsdk.sdnc.preload import PreloadInformation
 from onapsdk.sdnc.services import Service
+from onaptests.scenario.scenario_base import BaseScenarioStep
+from onaptests.steps.base import BaseStep
 from onaptests.utils.exceptions import OnapTestException
-
-from ..base import BaseStep
 
 
 class BaseSdncStep(BaseStep):
@@ -32,9 +32,9 @@ class BaseSdncStep(BaseStep):
 class ServiceCreateStep(BaseSdncStep):
     """Service creation step."""
 
-    def __init__(self, service: Service = None, cleanup: bool = False):
+    def __init__(self, service: Service = None):
         """Initialize step."""
-        super().__init__(cleanup=cleanup)
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
         self.service = service
 
     @property
@@ -43,7 +43,7 @@ class ServiceCreateStep(BaseSdncStep):
         return "Create SDNC service."
 
     @BaseStep.store_state
-    def execute(self):
+    def execute(self) -> None:
         """Create service at SDNC."""
         super().execute()
         self._logger.info("Create new service instance in SDNC by GR-API")
@@ -61,7 +61,7 @@ class ServiceCreateStep(BaseSdncStep):
             else:
                 raise OnapTestException("SDNC service creation failed.")
 
-    @BaseStep.store_state()
+    @BaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
         """Cleanup Service."""
         if self.service is not None:
@@ -76,14 +76,14 @@ class UpdateSdncService(BaseSdncStep):
     The step needs in an existing SDNC service as a prerequisite.
     """
 
-    def __init__(self, cleanup=False):
+    def __init__(self):
         """Initialize step.
 
         Sub steps:
             - ServiceCreateStep.
         """
-        super().__init__(cleanup=cleanup)
-        self.add_step(ServiceCreateStep(cleanup=cleanup))
+        super().__init__(cleanup=BaseStep.HAS_NO_CLEANUP)
+        self.add_step(ServiceCreateStep())
 
     @property
     def description(self) -> str:
@@ -97,8 +97,8 @@ class UpdateSdncService(BaseSdncStep):
         """
         return "Update SDNC service"
 
-    @BaseStep.store_state
-    def execute(self):
+    @BaseSdncStep.store_state
+    def execute(self) -> None:
         super().execute()
         self._logger.info("Get existing SDNC service instance and update it over GR-API")
         try:
@@ -117,9 +117,9 @@ class UploadVfModulePreloadStep(BaseSdncStep):
     Upload preload information for VfModule over GR-API.
     """
 
-    def __init__(self, cleanup=False):
+    def __init__(self):
         """Initialize step."""
-        super().__init__(cleanup=cleanup)
+        super().__init__(cleanup=BaseStep.HAS_NO_CLEANUP)
 
     @property
     def description(self) -> str:
@@ -133,8 +133,8 @@ class UploadVfModulePreloadStep(BaseSdncStep):
         """
         return "Upload Preload information for VfModule"
 
-    @BaseStep.store_state
-    def execute(self):
+    @BaseSdncStep.store_state
+    def execute(self) -> None:
         super().execute()
         self._logger.info("Upload VfModule preload information over GR-API")
         VfModulePreload.upload_vf_module_preload(
@@ -153,14 +153,14 @@ class GetSdncPreloadStep(BaseSdncStep):
     Get preload information from SDNC over GR-API.
     """
 
-    def __init__(self, cleanup=False):
+    def __init__(self):
         """Initialize step.
 
         Sub steps:
             - UploadVfModulePreloadStep.
         """
-        super().__init__(cleanup=cleanup)
-        self.add_step(UploadVfModulePreloadStep(cleanup=cleanup))
+        super().__init__(cleanup=BaseStep.HAS_NO_CLEANUP)
+        self.add_step(UploadVfModulePreloadStep())
 
     @property
     def description(self) -> str:
@@ -174,8 +174,8 @@ class GetSdncPreloadStep(BaseSdncStep):
         """
         return "Get Preload information"
 
-    @BaseStep.store_state
-    def execute(self):
+    @BaseSdncStep.store_state
+    def execute(self) -> None:
         super().execute()
         self._logger.info("Get existing SDNC service instance and update it over GR-API")
         preloads = PreloadInformation.get_all()
@@ -183,22 +183,18 @@ class GetSdncPreloadStep(BaseSdncStep):
             print(preload_information)
 
 
-class TestSdncStep(BaseStep):
+class TestSdncStep(BaseScenarioStep):
     """Top level step for SDNC tests."""
 
-    def __init__(self, cleanup=False):
+    def __init__(self):
         """Initialize step.
 
         Sub steps:
             - UpdateSdncService.
         """
-        super().__init__(cleanup=cleanup)
-        self.add_step(
-            UpdateSdncService(cleanup=cleanup)
-        )
-        self.add_step(
-            GetSdncPreloadStep(cleanup=cleanup)
-        )
+        super().__init__(cleanup=BaseStep.HAS_NO_CLEANUP)
+        self.add_step(UpdateSdncService())
+        self.add_step(GetSdncPreloadStep())
 
     @property
     def description(self) -> str:
@@ -223,4 +219,4 @@ class TestSdncStep(BaseStep):
             str: Component name
 
         """
-        return "PythonSDK-tests"
+        return "TEST"

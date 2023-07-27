@@ -20,6 +20,10 @@ class CpsBaseStep(BaseStep, ABC):
 class CreateCpsDataspaceStep(CpsBaseStep):
     """Step to create a dataspace."""
 
+    def __init__(self) -> None:
+        """Initialize step."""
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
+
     @property
     def description(self) -> str:
         """Step description."""
@@ -47,14 +51,14 @@ class CreateCpsDataspaceStep(CpsBaseStep):
 class CreateCpsSchemaSetStep(CpsBaseStep):
     """Step to check schema-set creation."""
 
-    def __init__(self, cleanup: bool = False) -> None:
+    def __init__(self) -> None:
         """Initialize step.
 
         Substeps:
             - CreateCpsDataspaceStep.
         """
-        super().__init__(cleanup)
-        self.add_step(CreateCpsDataspaceStep(cleanup))
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
+        self.add_step(CreateCpsDataspaceStep())
 
     @property
     def description(self) -> str:
@@ -87,14 +91,14 @@ class CreateCpsSchemaSetStep(CpsBaseStep):
 class CreateCpsAnchorStep(CpsBaseStep):
     """Step to create an anchor."""
 
-    def __init__(self, cleanup: bool = False) -> None:
+    def __init__(self) -> None:
         """Initialize step.
 
         Substeps:
             - CreateCpsSchemaSetStep.
         """
-        super().__init__(cleanup)
-        self.add_step(CreateCpsSchemaSetStep(cleanup))
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
+        self.add_step(CreateCpsSchemaSetStep())
 
     @property
     def description(self) -> str:
@@ -130,14 +134,14 @@ class CreateCpsAnchorStep(CpsBaseStep):
 class CreateCpsAnchorNodeStep(CpsBaseStep):
     """Step to check node on anchor creation."""
 
-    def __init__(self, cleanup: bool = False) -> None:
+    def __init__(self) -> None:
         """Initialize step.
 
         Substeps:
             - CreateCpsAnchorStep.
         """
-        super().__init__(cleanup)
-        self.add_step(CreateCpsAnchorStep(cleanup))
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
+        self.add_step(CreateCpsAnchorStep())
 
     @property
     def description(self) -> str:

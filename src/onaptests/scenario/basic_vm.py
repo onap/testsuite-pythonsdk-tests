@@ -19,8 +19,7 @@ class BasicVm(ScenarioBase):
     def __init__(self, **kwargs):
         """Init BasicVM."""
         super().__init__('basic_vm', **kwargs)
-        self.test = YamlTemplateVfModuleAlaCarteInstantiateStep(
-            cleanup=settings.CLEANUP_FLAG)
+        self.test = YamlTemplateVfModuleAlaCarteInstantiateStep()
         self.start_time = None
         self.stop_time = None
         self.result = 0
