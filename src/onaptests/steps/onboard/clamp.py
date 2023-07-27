@@ -7,18 +7,18 @@ from onapsdk.sdc.vf import Vf
 
 from onapsdk.configuration import settings
 
-from ..base import YamlTemplateBaseStep
+from ..base import BaseStep, YamlTemplateBaseStep
 from .service import YamlTemplateVfOnboardStep
 
 
 class OnboardClampStep(YamlTemplateBaseStep):
     """Onboard class to create CLAMP templates."""
 
-    def __init__(self, cleanup=False):
+    def __init__(self):
         """Initialize Clamp Onboard object."""
-        super().__init__(cleanup=cleanup)
+        super().__init__(cleanup=BaseStep.HAS_NO_CLEANUP)
         self._yaml_template: dict = None
-        self.add_step(YamlTemplateVfOnboardStep(cleanup=cleanup))
+        self.add_step(YamlTemplateVfOnboardStep())
         # if "service_name" in kwargs:
         #     self.service_name = kwargs['service_name']
         # else:

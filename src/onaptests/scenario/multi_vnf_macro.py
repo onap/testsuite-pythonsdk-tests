@@ -1,36 +1,26 @@
 """Instantiate basic vm using SO macro flow."""
-import logging
-import time
-
 from onapsdk.configuration import settings
-from onapsdk.exceptions import SDKException
-from onaptests.scenario.scenario_base import ScenarioBase
-from onaptests.steps.base import YamlTemplateBaseStep
+from onaptests.scenario.scenario_base import BaseStep, ScenarioBase, YamlTemplateBaseScenarioStep
 from onaptests.steps.instantiate.service_macro import \
     YamlTemplateServiceMacroInstantiateStep
 from onaptests.steps.onboard.cds import CbaPublishStep
-from onaptests.utils.exceptions import OnapTestException
 from yaml import SafeLoader, load
 
 
-class MultiVnfUbuntuMacroStep(YamlTemplateBaseStep):
+class MultiVnfUbuntuMacroStep(YamlTemplateBaseScenarioStep):
 
-    def __init__(self, cleanup=False):
+    def __init__(self):
         """Initialize step.
 
         Substeps:
             - CbaPublishStep
             - YamlTemplateServiceAlaCarteInstantiateStep.
         """
-        super().__init__(cleanup=cleanup)
+        super().__init__(cleanup=BaseStep.HAS_NO_CLEANUP)
         self._yaml_template: dict = None
         self._model_yaml_template: dict = None
-        self.add_step(CbaPublishStep(
-            cleanup=settings.CLEANUP_FLAG
-        ))
-        self.add_step(YamlTemplateServiceMacroInstantiateStep(
-            cleanup=settings.CLEANUP_FLAG
-        ))
+        self.add_step(CbaPublishStep())
+        self.add_step(YamlTemplateServiceMacroInstantiateStep())
 
     @property
     def description(self) -> str:
@@ -105,32 +95,7 @@ class MultiVnfUbuntuMacroStep(YamlTemplateBaseStep):
 class MultiVnfUbuntuMacro(ScenarioBase):
     """Instantiate a basic vm macro."""
 
-    __logger = logging.getLogger(__name__)
-
     def __init__(self, **kwargs):
         """Init Basic Macro use case."""
         super().__init__('nso_ubuntu_macro', **kwargs)
-        self.test = MultiVnfUbuntuMacroStep(cleanup=settings.CLEANUP_FLAG)
-
-    def run(self):
-        """Run NSO Ubuntu macro test."""
-        self.start_time = time.time()
-        try:
-            self.test.execute()
-            self.__logger.info("Starting to clean up in {} seconds".format(
-                settings.CLEANUP_ACTIVITY_TIMER))
-            time.sleep(settings.CLEANUP_ACTIVITY_TIMER)
-            self.test.cleanup()
-            self.result = 100
-        except OnapTestException as exc:
-            self.result = 0
-            self.__logger.error(exc.error_message)
-        except SDKException:
-            self.result = 0
-            self.__logger.error("SDK Exception")
-        finally:
-            self.stop_time = time.time()
-
-    def clean(self):
-        """Generate report."""
-        self.test.reports_collection.generate_report()
+        self.test = MultiVnfUbuntuMacroStep()

@@ -7,6 +7,10 @@ from ..base import BaseStep
 class VendorOnboardStep(BaseStep):
     """Vendor onboard step."""
 
+    def __init__(self):
+        """Initialize step."""
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
+
     @property
     def description(self) -> str:
         """Step description."""
@@ -16,6 +20,13 @@ class VendorOnboardStep(BaseStep):
     def component(self) -> str:
         """Component name."""
         return "SDC"
+
+    def check_preconditions(self, cleanup=False) -> bool:
+        if not super().check_preconditions(cleanup):
+            return False
+        if cleanup:
+            return settings.SDC_CLEANUP
+        return True
 
     @BaseStep.store_state
     def execute(self):

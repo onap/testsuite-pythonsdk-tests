@@ -14,14 +14,14 @@ from onaptests.utils.exceptions import OnapTestException
 class CdsMockserverCnfConfigureStep(BaseStep):
     """Configure cds mockserver expectations."""
 
-    def __init__(self, cleanup: bool = False) -> None:
+    def __init__(self) -> None:
         """Initialize step.
 
         Substeps:
             - CreateInstanceStep.
         """
-        super().__init__(cleanup=cleanup)
-        self.add_step(CreateInstanceStep(cleanup=cleanup))
+        super().__init__(cleanup=BaseStep.HAS_NO_CLEANUP)
+        self.add_step(CreateInstanceStep())
 
     @property
     def description(self) -> str:
