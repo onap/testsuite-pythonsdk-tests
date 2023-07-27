@@ -20,17 +20,17 @@ from .vf import VfOnboardStep, YamlTemplateVfOnboardStep
 class ServiceOnboardStep(BaseStep):
     """Service onboard step."""
 
-    def __init__(self, cleanup=False):
+    def __init__(self):
         """Initialize step.
 
         Substeps:
             - VfOnboardStep.
         """
-        super().__init__(cleanup=cleanup)
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
         if settings.VF_NAME != "":
-            self.add_step(VfOnboardStep(cleanup=cleanup))
+            self.add_step(VfOnboardStep())
         if settings.PNF_NAME != "":
-            self.add_step(PnfOnboardStep(cleanup=cleanup))
+            self.add_step(PnfOnboardStep())
 
     @property
     def description(self) -> str:
@@ -97,19 +97,19 @@ class ServiceOnboardStep(BaseStep):
 class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
     """Service onboard using YAML template step."""
 
-    def __init__(self, cleanup=False):
+    def __init__(self):
         """Initialize step.
 
         Substeps:
             - YamlTemplateVfOnboardStep.
         """
-        super().__init__(cleanup=cleanup)
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
         self._yaml_template: dict = None
         self._model_yaml_template: dict = None
         if "vnfs" in self.yaml_template[self.service_name]:
-            self.add_step(YamlTemplateVfOnboardStep(cleanup=cleanup))
+            self.add_step(YamlTemplateVfOnboardStep())
         if "pnfs" in self.yaml_template[self.service_name]:
-            self.add_step(YamlTemplatePnfOnboardStep(cleanup=cleanup))
+            self.add_step(YamlTemplatePnfOnboardStep())
 
     @property
     def description(self) -> str:
@@ -153,7 +153,7 @@ class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
         if self.is_root:
             if not self._model_yaml_template:
                 with open(settings.MODEL_YAML_TEMPLATE, "r") as model_yaml_template:
-                    self._model_yaml_template: dict = load(model_yaml_template)
+                    self._model_yaml_template: dict = load(model_yaml_template, SafeLoader)
             return self._model_yaml_template
         return self.parent.model_yaml_template
 
@@ -269,9 +269,9 @@ class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
     @YamlTemplateBaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
         """Cleanup service onboard step."""
-        if settings.SDC_CLEANUP:
-            service: Service = Service(name=self.service_name)
-            if service.exists():
-                service.archive()
-                service.delete()
-            super().cleanup()
+        # if settings.SDC_CLEANUP:
+        service: Service = Service(name=self.service_name)
+        if service.exists():
+            service.archive()
+            service.delete()
+        super().cleanup()

@@ -4,8 +4,7 @@ import time
 
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SDKException
-from onaptests.scenario.scenario_base import ScenarioBase
-from onaptests.steps.base import YamlTemplateBaseStep
+from onaptests.scenario.scenario_base import ScenarioBase, YamlTemplateBaseScenarioStep
 from onaptests.steps.instantiate.service_macro import \
     YamlTemplateServiceMacroInstantiateStep
 from onaptests.steps.onboard.cds import CbaPublishStep
@@ -13,24 +12,20 @@ from onaptests.utils.exceptions import OnapTestException
 from yaml import SafeLoader, load
 
 
-class MultiVnfUbuntuMacroStep(YamlTemplateBaseStep):
+class MultiVnfUbuntuMacroStep(YamlTemplateBaseScenarioStep):
 
-    def __init__(self, cleanup=False):
+    def __init__(self):
         """Initialize step.
 
         Substeps:
             - CbaPublishStep
             - YamlTemplateServiceAlaCarteInstantiateStep.
         """
-        super().__init__(cleanup=cleanup)
+        super().__init__(cleanup=False)
         self._yaml_template: dict = None
         self._model_yaml_template: dict = None
-        self.add_step(CbaPublishStep(
-            cleanup=settings.CLEANUP_FLAG
-        ))
-        self.add_step(YamlTemplateServiceMacroInstantiateStep(
-            cleanup=settings.CLEANUP_FLAG
-        ))
+        self.add_step(CbaPublishStep())
+        self.add_step(YamlTemplateServiceMacroInstantiateStep())
 
     @property
     def description(self) -> str:
@@ -110,7 +105,7 @@ class MultiVnfUbuntuMacro(ScenarioBase):
     def __init__(self, **kwargs):
         """Init Basic Macro use case."""
         super().__init__('nso_ubuntu_macro', **kwargs)
-        self.test = MultiVnfUbuntuMacroStep(cleanup=settings.CLEANUP_FLAG)
+        self.test = MultiVnfUbuntuMacroStep()
 
     def run(self):
         """Run NSO Ubuntu macro test."""

@@ -7,6 +7,10 @@ from ..base import BaseStep
 class VendorOnboardStep(BaseStep):
     """Vendor onboard step."""
 
+    def __init__(self):
+        """Initialize step."""
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
+
     @property
     def description(self) -> str:
         """Step description."""

@@ -13,14 +13,14 @@ from .vsp import VspOnboardStep, YamlTemplateVspOnboardStep
 class VfOnboardStep(BaseStep):
     """Vf onboard step."""
 
-    def __init__(self, cleanup=False):
+    def __init__(self):
         """Initialize step.
 
         Substeps:
             - VspOnboardStep.
         """
-        super().__init__(cleanup=cleanup)
-        self.add_step(VspOnboardStep(cleanup=cleanup))
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
+        self.add_step(VspOnboardStep())
 
     @property
     def description(self) -> str:
@@ -59,14 +59,14 @@ class VfOnboardStep(BaseStep):
 class YamlTemplateVfOnboardStep(YamlTemplateBaseStep):
     """Vf onboard using YAML template step."""
 
-    def __init__(self, cleanup=False) -> None:
+    def __init__(self) -> None:
         """Initialize step.
 
         Substeps:
             - YamlTemplateVspOnboardStep.
         """
-        super().__init__(cleanup=cleanup)
-        self.add_step(YamlTemplateVspOnboardStep(cleanup=cleanup))
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
+        self.add_step(YamlTemplateVspOnboardStep())
 
     @property
     def description(self) -> str:

@@ -27,10 +27,10 @@ class ClampStep(YamlTemplateBaseStep):
 
     count: int = 0
 
-    def __init__(self, cleanup=False):
-        super().__init__(cleanup=cleanup)
+    def __init__(self):
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
         self._yaml_template: dict = None
-        self.add_step(OnboardClampStep(cleanup=cleanup))
+        self.add_step(OnboardClampStep())
         Clamp()
         self.loop_instance = None
 

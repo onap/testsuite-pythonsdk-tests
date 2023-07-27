@@ -9,14 +9,14 @@ from .customer_create import CustomerCreateStep
 class CustomerServiceSubscriptionCreateStep(BaseStep):
     """Cutomer service subsription creation step"""
 
-    def __init__(self, cleanup=False):
+    def __init__(self):
         """Initialize step.
 
         Substeps:
             - CustomerCreateStep.
         """
-        super().__init__(cleanup=cleanup)
-        self.add_step(CustomerCreateStep(cleanup=cleanup))
+        super().__init__(cleanup=False)
+        self.add_step(CustomerCreateStep())
 
     @property
     def description(self) -> str:

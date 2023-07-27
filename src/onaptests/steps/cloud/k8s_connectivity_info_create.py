@@ -10,6 +10,10 @@ from onaptests.steps.base import BaseStep
 class K8SConnectivityInfoStep(BaseStep):
     """CreateConnnectivityInfoStep."""
 
+    def __init__(self):
+        """Initialize step."""
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
+
     @property
     def description(self) -> str:
         """Step description."""
