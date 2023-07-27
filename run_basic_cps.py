@@ -1,7 +1,7 @@
 import logging.config
 import onaptests.utils.exceptions as onap_test_exceptions
 from onapsdk.configuration import settings
-from onaptests.steps.onboard.cps import CreateCpsAnchorStep, CreateCpsSchemaSetStep, CreateCpsDataspaceStep, CreateCpsAnchorNodeStep
+from onaptests.steps.onboard.cps import CreateCpsAnchorNodeStep
 
 
 

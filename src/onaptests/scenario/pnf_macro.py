@@ -1,9 +1,5 @@
 """Instantiate service with PNF using SO macro flow."""
-import logging
-import time
-
 from onapsdk.configuration import settings
-from onapsdk.exceptions import SDKException
 from onaptests.scenario.scenario_base import ScenarioBase
 from onaptests.steps.base import YamlTemplateBaseStep
 from onaptests.steps.instantiate.service_macro import \
@@ -11,7 +7,6 @@ from onaptests.steps.instantiate.service_macro import \
 from onaptests.steps.onboard.cds import CbaEnrichStep
 from onaptests.steps.simulator.pnf_simulator_cnf.pnf_register import \
     PnfSimulatorCnfRegisterStep
-from onaptests.utils.exceptions import OnapTestException
 from yaml import SafeLoader, load
 
 
@@ -106,28 +101,7 @@ class PnfMacroScenarioStep(YamlTemplateBaseStep):
 class PnfMacro(ScenarioBase):
     """Run PNF simulator and onboard then instantiate a service with PNF."""
 
-    __logger = logging.getLogger(__name__)
-
     def __init__(self, **kwargs):
         """Init Basic Network use case."""
         super().__init__('pnf_macro', **kwargs)
         self.test = PnfMacroScenarioStep(cleanup=settings.CLEANUP_FLAG)
-
-    def run(self):
-        """Run PNF macro test."""
-        self.start_time = time.time()
-        try:
-            for test_phase in (self.test.execute, self.test.cleanup):
-                try:
-                    test_phase()
-                    self.result += 50
-                except OnapTestException as exc:
-                    self.__logger.exception(exc.error_message)
-                except SDKException:
-                    self.__logger.exception("SDK Exception")
-        finally:
-            self.stop_time = time.time()
-
-    def clean(self):
-        """Generate report."""
-        self.test.reports_collection.generate_report()
