@@ -30,9 +30,9 @@ class CDSBaseStep(BaseStep, ABC):
 class ExposeCDSBlueprintprocessorNodePortStep(CDSBaseStep):
     """Expose CDS blueprintsprocessor port."""
 
-    def __init__(self, cleanup: bool) -> None:
+    def __init__(self) -> None:
         """Initialize step."""
-        super().__init__(cleanup=cleanup)
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
         self.service_name: str = "cds-blueprints-processor-http"
         if settings.IN_CLUSTER:
             config.load_incluster_config()
@@ -92,6 +92,7 @@ class ExposeCDSBlueprintprocessorNodePortStep(CDSBaseStep):
         else:
             self._logger.debug("Service already patched, skip")
 
+    @BaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
         """Step cleanup.
 
@@ -129,15 +130,15 @@ class ExposeCDSBlueprintprocessorNodePortStep(CDSBaseStep):
 class BootstrapBlueprintprocessor(CDSBaseStep):
     """Bootstrap blueprintsprocessor."""
 
-    def __init__(self, cleanup: bool = False) -> None:
+    def __init__(self) -> None:
         """Initialize step.
 
         Substeps:
             - ExposeCDSBlueprintprocessorNodePortStep.
         """
-        super().__init__(cleanup=cleanup)
+        super().__init__(cleanup=False)
         if settings.EXPOSE_SERVICES_NODE_PORTS:
-            self.add_step(ExposeCDSBlueprintprocessorNodePortStep(cleanup=cleanup))
+            self.add_step(ExposeCDSBlueprintprocessorNodePortStep())
 
     @property
     def description(self) -> str:
@@ -154,10 +155,10 @@ class BootstrapBlueprintprocessor(CDSBaseStep):
 class DataDictionaryUploadStep(CDSBaseStep):
     """Upload data dictionaries to CDS step."""
 
-    def __init__(self, cleanup: bool = False) -> None:
+    def __init__(self) -> None:
         """Initialize data dictionary upload step."""
-        super().__init__(cleanup=cleanup)
-        self.add_step(BootstrapBlueprintprocessor(cleanup=cleanup))
+        super().__init__(cleanup=False)
+        self.add_step(BootstrapBlueprintprocessor())
 
     @property
     def description(self) -> str:
@@ -180,10 +181,10 @@ class DataDictionaryUploadStep(CDSBaseStep):
 class CbaEnrichStep(CDSBaseStep):
     """Enrich CBA file step."""
 
-    def __init__(self, cleanup=False) -> None:
+    def __init__(self) -> None:
         """Initialize CBA enrichment step."""
-        super().__init__(cleanup=cleanup)
-        self.add_step(DataDictionaryUploadStep(cleanup=cleanup))
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
+        self.add_step(DataDictionaryUploadStep())
 
     @property
     def description(self) -> str:
@@ -217,14 +218,14 @@ class CbaEnrichStep(CDSBaseStep):
 class CbaPublishStep(CDSBaseStep):
     """Publish CBA file step."""
 
-    def __init__(self, cleanup=False) -> None:
+    def __init__(self) -> None:
         """Initialize CBA publish step."""
-        super().__init__(cleanup=cleanup)
+        super().__init__(cleanup=False)
         """Let's skip enrichment if enriched CBA is already present"""
         if Path.is_file(settings.CDS_CBA_UNENRICHED):
-            self.add_step(CbaEnrichStep(cleanup=cleanup))
+            self.add_step(CbaEnrichStep())
         elif settings.EXPOSE_SERVICES_NODE_PORTS:
-            self.add_step(ExposeCDSBlueprintprocessorNodePortStep(cleanup=cleanup))
+            self.add_step(ExposeCDSBlueprintprocessorNodePortStep())
 
     @property
     def description(self) -> str:
@@ -247,10 +248,10 @@ class CbaPublishStep(CDSBaseStep):
 class CbaProcessStep(CDSBaseStep):
     """Process CBA step."""
 
-    def __init__(self, cleanup=False) -> None:
+    def __init__(self) -> None:
         """Initialize CBA process step."""
-        super().__init__(cleanup=cleanup)
-        self.add_step(CbaPublishStep(cleanup=cleanup))
+        super().__init__(cleanup=False)
+        self.add_step(CbaPublishStep())
 
     @property
     def description(self) -> str:

@@ -10,14 +10,14 @@ from .vendor import VendorOnboardStep
 class VspOnboardStep(BaseStep):
     """Vsp onboard step."""
 
-    def __init__(self, cleanup=False):
+    def __init__(self):
         """Initialize step.
 
         Substeps:
             - VendorOnboardStep.
         """
-        super().__init__(cleanup=cleanup)
-        self.add_step(VendorOnboardStep(cleanup=cleanup))
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
+        self.add_step(VendorOnboardStep())
 
     @property
     def description(self) -> str:
@@ -58,14 +58,14 @@ class VspOnboardStep(BaseStep):
 class YamlTemplateVspOnboardStep(YamlTemplateBaseStep):
     """Vsp onboard using YAML template step."""
 
-    def __init__(self, cleanup=False):
+    def __init__(self):
         """Initialize step.
 
         Substeps:
             - VendorOnboardStep.
         """
-        super().__init__(cleanup=cleanup)
-        self.add_step(VendorOnboardStep(cleanup=cleanup))
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
+        self.add_step(VendorOnboardStep())
 
     @property
     def description(self) -> str:

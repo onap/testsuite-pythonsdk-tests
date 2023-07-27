@@ -12,7 +12,7 @@ from .k8s_connectivity_info_create import K8SConnectivityInfoStep
 class ConnectServiceSubToCloudRegionStep(BaseStep):
     """Connect service subscription to cloud region step."""
 
-    def __init__(self, cleanup=False):
+    def __init__(self):
         """Initialize step.
 
         Substeps:
@@ -21,12 +21,12 @@ class ConnectServiceSubToCloudRegionStep(BaseStep):
             - CustomerServiceSubscriptionCreateStep.
 
         """
-        super().__init__(cleanup=cleanup)
+        super().__init__(cleanup=False)
         if settings.CLOUD_REGION_TYPE == settings.K8S_REGION_TYPE:
-            self.add_step(K8SConnectivityInfoStep(cleanup=cleanup))
-        self.add_step(RegisterCloudRegionStep(cleanup=cleanup))
-        self.add_step(LinkCloudRegionToComplexStep(cleanup=cleanup))
-        self.add_step(CustomerServiceSubscriptionCreateStep(cleanup=cleanup))
+            self.add_step(K8SConnectivityInfoStep())
+        self.add_step(RegisterCloudRegionStep())
+        self.add_step(LinkCloudRegionToComplexStep())
+        self.add_step(CustomerServiceSubscriptionCreateStep())
 
     @property
     def description(self) -> str:
