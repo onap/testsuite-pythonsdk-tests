@@ -11,7 +11,7 @@ from .vsp import VspOnboardStep, YamlTemplateVspOnboardStep
 class PnfOnboardStep(BaseStep):
     """PNF onboard step."""
 
-    def __init__(self, cleanup: bool = False) -> None:
+    def __init__(self) -> None:
         """Step initialization.
 
         Substeps:
@@ -21,8 +21,8 @@ class PnfOnboardStep(BaseStep):
             cleanup(bool, optional): Determines if cleanup action should be called.
 
         """
-        super().__init__(cleanup=cleanup)
-        self.add_step(VspOnboardStep(cleanup=cleanup))
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
+        self.add_step(VspOnboardStep())
 
     @property
     def description(self) -> str:
@@ -72,7 +72,7 @@ class PnfOnboardStep(BaseStep):
 class YamlTemplatePnfOnboardStep(YamlTemplateBaseStep):
     """PNF onboard using YAML template step."""
 
-    def __init__(self, cleanup: bool = False) -> None:
+    def __init__(self) -> None:
         """Step initialization.
 
         Substeps:
@@ -82,8 +82,8 @@ class YamlTemplatePnfOnboardStep(YamlTemplateBaseStep):
             cleanup(bool, optional): Determines if cleanup action should be called.
 
         """
-        super().__init__(cleanup=cleanup)
-        self.add_step(YamlTemplateVspOnboardStep(cleanup=cleanup))
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
+        self.add_step(YamlTemplateVspOnboardStep())
 
     @property
     def description(self) -> str:

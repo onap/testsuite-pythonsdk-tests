@@ -20,8 +20,7 @@ class ClearwaterIms(ScenarioBase):
         """Init Clearwater IMS."""
         # import clearwater_ims_nomulticloud_settings needed
         super().__init__('clearwater_ims', **kwargs)
-        self.test = YamlTemplateVfModuleAlaCarteInstantiateStep(
-            cleanup=settings.CLEANUP_FLAG)
+        self.test = YamlTemplateVfModuleAlaCarteInstantiateStep()
         self.start_time = None
         self.stop_time = None
         self.result = 0
