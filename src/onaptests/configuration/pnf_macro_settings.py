@@ -50,3 +50,5 @@ PNF_REGISTRATION_NUMBER_OF_TRIES = 20
 
 # Disable YAML SDC model definition which means all SDC config reside in SERVICE_YAML_TEMPLATE
 MODEL_YAML_TEMPLATE = None
+USE_SIMULATOR = False
+VES_NODE_PORT = 30417
