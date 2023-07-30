@@ -82,3 +82,4 @@ CDS_WORKFLOW_EXPECTED_OUTPUT = {
         }
     }
 }
+CDS_NODE_PORT = 30449
