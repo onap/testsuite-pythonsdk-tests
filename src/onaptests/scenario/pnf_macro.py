@@ -4,15 +4,18 @@ import time
 
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SDKException
+from yaml import SafeLoader, load
+
 from onaptests.scenario.scenario_base import ScenarioBase
 from onaptests.steps.base import YamlTemplateBaseStep
+from onaptests.steps.instantiate.pnf_register_ves import \
+    SendPnfRegisterVesEvent
 from onaptests.steps.instantiate.service_macro import \
     YamlTemplateServiceMacroInstantiateStep
 from onaptests.steps.onboard.cds import CbaEnrichStep
+from onaptests.utils.exceptions import OnapTestException
 from onaptests.steps.simulator.pnf_simulator_cnf.pnf_register import \
     PnfSimulatorCnfRegisterStep
-from onaptests.utils.exceptions import OnapTestException
-from yaml import SafeLoader, load
 
 
 class PnfMacroScenarioStep(YamlTemplateBaseStep):
@@ -26,9 +29,12 @@ class PnfMacroScenarioStep(YamlTemplateBaseStep):
         """
         super().__init__(cleanup=cleanup)
         self._yaml_template: dict = None
-        self.add_step(PnfSimulatorCnfRegisterStep(
-            cleanup=cleanup
-        ))
+        if settings.USE_SIMULATOR:
+            self.add_step(PnfSimulatorCnfRegisterStep(
+            ))
+        else:
+            self.add_step(SendPnfRegisterVesEvent(
+            ))
         self.add_step(CbaEnrichStep(
             cleanup=cleanup
         ))
