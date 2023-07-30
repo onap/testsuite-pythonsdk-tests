@@ -1,12 +1,15 @@
 """Instantiate service with PNF using SO macro flow."""
 from onapsdk.configuration import settings
+from yaml import SafeLoader, load
+
 from onaptests.scenario.scenario_base import BaseStep, ScenarioBase, YamlTemplateBaseScenarioStep
+from onaptests.steps.instantiate.pnf_register_ves import \
+    SendPnfRegisterVesEvent
 from onaptests.steps.instantiate.service_macro import \
     YamlTemplateServiceMacroInstantiateStep
 from onaptests.steps.onboard.cds import CbaEnrichStep
 from onaptests.steps.simulator.pnf_simulator_cnf.pnf_register import \
     PnfSimulatorCnfRegisterStep
-from yaml import SafeLoader, load
 
 
 class PnfMacroScenarioStep(YamlTemplateBaseScenarioStep):
@@ -20,7 +23,10 @@ class PnfMacroScenarioStep(YamlTemplateBaseScenarioStep):
         """
         super().__init__(cleanup=BaseStep.HAS_NO_CLEANUP)
         self._yaml_template: dict = None
-        self.add_step(PnfSimulatorCnfRegisterStep())
+        if settings.USE_SIMULATOR:
+            self.add_step(PnfSimulatorCnfRegisterStep())
+        else:
+            self.add_step(SendPnfRegisterVesEvent())
         self.add_step(CbaEnrichStep())
         self.add_step(YamlTemplateServiceMacroInstantiateStep())
 
