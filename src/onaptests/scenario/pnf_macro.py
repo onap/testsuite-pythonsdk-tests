@@ -9,8 +9,8 @@ from onaptests.steps.base import YamlTemplateBaseStep
 from onaptests.steps.instantiate.service_macro import \
     YamlTemplateServiceMacroInstantiateStep
 from onaptests.steps.onboard.cds import CbaEnrichStep
-from onaptests.steps.simulator.pnf_simulator_cnf.pnf_register import \
-    PnfSimulatorCnfRegisterStep
+from onaptests.steps.instantiate.pnf_register_ves import \
+    SendPnfRegisterVesEvent
 from onaptests.utils.exceptions import OnapTestException
 from yaml import SafeLoader, load
 
@@ -26,7 +26,7 @@ class PnfMacroScenarioStep(YamlTemplateBaseStep):
         """
         super().__init__(cleanup=cleanup)
         self._yaml_template: dict = None
-        self.add_step(PnfSimulatorCnfRegisterStep(
+        self.add_step(SendPnfRegisterVesEvent(
             cleanup=cleanup
         ))
         self.add_step(CbaEnrichStep(
