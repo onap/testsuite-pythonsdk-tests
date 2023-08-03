@@ -52,6 +52,24 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "48f844ae_2a21d76b",
+        "filename": "run_test.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2701
+      },
+      "writtenOn": "2023-08-03T18:38:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "076d3871_a400dc31",
+      "revId": "7c82389a915ce924af4bc9938811aa0095b5fd45",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "25814741_03847d2e",
@@ -65,6 +83,24 @@
       "writtenOn": "2023-08-03T12:21:31Z",
       "side": 1,
       "message": "By default cleanup is False",
+      "revId": "7c82389a915ce924af4bc9938811aa0095b5fd45",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "606e39d4_1ad5bb5d",
+        "filename": "src/onaptests/scenario/basic_cnf_macro.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2701
+      },
+      "writtenOn": "2023-08-03T18:38:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25814741_03847d2e",
       "revId": "7c82389a915ce924af4bc9938811aa0095b5fd45",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
@@ -86,6 +122,24 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "915b1091_e73c93ce",
+        "filename": "src/onaptests/scenario/basic_vm_macro.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2701
+      },
+      "writtenOn": "2023-08-03T18:38:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "600b8936_8cdcd429",
+      "revId": "7c82389a915ce924af4bc9938811aa0095b5fd45",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1c6b06dd_ef03b862",
@@ -99,6 +153,24 @@
       "writtenOn": "2023-08-03T12:21:31Z",
       "side": 1,
       "message": "cleanup is False by default",
+      "revId": "7c82389a915ce924af4bc9938811aa0095b5fd45",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2733093c_91a839b4",
+        "filename": "src/onaptests/scenario/cds_resource_resolution.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2701
+      },
+      "writtenOn": "2023-08-03T18:38:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c6b06dd_ef03b862",
       "revId": "7c82389a915ce924af4bc9938811aa0095b5fd45",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
@@ -120,6 +192,24 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "14131849_10051a86",
+        "filename": "src/onaptests/steps/base.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 2701
+      },
+      "writtenOn": "2023-08-03T18:38:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d533f822_ef31ae98",
+      "revId": "7c82389a915ce924af4bc9938811aa0095b5fd45",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "43250b7c_d697bd1c",
@@ -137,6 +227,24 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "86bbd5b7_a9c8ef44",
+        "filename": "src/onaptests/steps/base.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2701
+      },
+      "writtenOn": "2023-08-03T18:38:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43250b7c_d697bd1c",
+      "revId": "7c82389a915ce924af4bc9938811aa0095b5fd45",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7380cef3_8db43fde",
@@ -150,6 +258,24 @@
       "writtenOn": "2023-08-03T12:21:31Z",
       "side": 1,
       "message": "why you are not using that flag always but only on some cases? is it related that in these cases you want to be able to disable/enable cleanup?",
+      "revId": "7c82389a915ce924af4bc9938811aa0095b5fd45",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0270a6a4_d9a8b8b4",
+        "filename": "src/onaptests/steps/instantiate/k8s_profile_create.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 2701
+      },
+      "writtenOn": "2023-08-03T18:38:36Z",
+      "side": 1,
+      "message": "The cleanup flag indicates now if cleanup method is implemented in the Step, If not, False is chosen.",
+      "parentUuid": "7380cef3_8db43fde",
       "revId": "7c82389a915ce924af4bc9938811aa0095b5fd45",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     }
