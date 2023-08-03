@@ -16,6 +16,142 @@
       "message": "oom_redeploy",
       "revId": "7c82389a915ce924af4bc9938811aa0095b5fd45",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7770c86_71aa4953",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-08-03T12:21:31Z",
+      "side": 1,
+      "message": "Some small comments. Cleanup\u003dFalse is default behavior for steps but on some cases you set it explicitly",
+      "revId": "7c82389a915ce924af4bc9938811aa0095b5fd45",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "076d3871_a400dc31",
+        "filename": "run_test.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-08-03T12:21:31Z",
+      "side": 1,
+      "message": "Please add comments how to run it or add it into README",
+      "revId": "7c82389a915ce924af4bc9938811aa0095b5fd45",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25814741_03847d2e",
+        "filename": "src/onaptests/scenario/basic_cnf_macro.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-08-03T12:21:31Z",
+      "side": 1,
+      "message": "By default cleanup is False",
+      "revId": "7c82389a915ce924af4bc9938811aa0095b5fd45",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "600b8936_8cdcd429",
+        "filename": "src/onaptests/scenario/basic_vm_macro.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-08-03T12:21:31Z",
+      "side": 1,
+      "message": "cleanup is False by default",
+      "revId": "7c82389a915ce924af4bc9938811aa0095b5fd45",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c6b06dd_ef03b862",
+        "filename": "src/onaptests/scenario/cds_resource_resolution.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-08-03T12:21:31Z",
+      "side": 1,
+      "message": "cleanup is False by default",
+      "revId": "7c82389a915ce924af4bc9938811aa0095b5fd45",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d533f822_ef31ae98",
+        "filename": "src/onaptests/steps/base.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-08-03T12:21:31Z",
+      "side": 1,
+      "message": "shouldn\u0027t be a part of utils.execptions?",
+      "revId": "7c82389a915ce924af4bc9938811aa0095b5fd45",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43250b7c_d697bd1c",
+        "filename": "src/onaptests/steps/base.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-08-03T12:21:31Z",
+      "side": 1,
+      "message": "pass is not required if there is a doc",
+      "revId": "7c82389a915ce924af4bc9938811aa0095b5fd45",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7380cef3_8db43fde",
+        "filename": "src/onaptests/steps/instantiate/k8s_profile_create.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-08-03T12:21:31Z",
+      "side": 1,
+      "message": "why you are not using that flag always but only on some cases? is it related that in these cases you want to be able to disable/enable cleanup?",
+      "revId": "7c82389a915ce924af4bc9938811aa0095b5fd45",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     }
   ]
 }
