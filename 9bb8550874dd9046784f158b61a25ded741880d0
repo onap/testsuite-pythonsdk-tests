@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bc12da3_290a6bfa",
+        "filename": "src/onaptests/steps/instantiate/pnf_register_ves.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-08-04T14:09:58Z",
+      "side": 1,
+      "message": "can we configure at least node_port?",
+      "revId": "9bb8550874dd9046784f158b61a25ded741880d0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73392889_4557f166",
+        "filename": "src/onaptests/steps/instantiate/pnf_register_ves.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-08-04T14:09:58Z",
+      "side": 1,
+      "message": "I\u0027d prefer keep credentials in config file",
+      "revId": "9bb8550874dd9046784f158b61a25ded741880d0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe72a317_10a75582",
+        "filename": "src/onaptests/steps/onboard/cds.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-08-04T14:09:58Z",
+      "side": 1,
+      "message": "same as for VES -- I think we could configure node port",
+      "revId": "9bb8550874dd9046784f158b61a25ded741880d0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
