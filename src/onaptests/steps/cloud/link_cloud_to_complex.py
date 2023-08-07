@@ -8,15 +8,15 @@ from .complex_create import ComplexCreateStep
 class LinkCloudRegionToComplexStep(BaseStep):
     """Link cloud region to complex step"""
 
-    def __init__(self, cleanup=False):
+    def __init__(self):
         """Initialize step.
 
         Substeps:
             - ComplexCreateStep,
             - CloudRegionCreateStep.
         """
-        super().__init__(cleanup=cleanup)
-        self.add_step(ComplexCreateStep(cleanup=cleanup))
+        super().__init__(cleanup=BaseStep.HAS_NO_CLEANUP)
+        self.add_step(ComplexCreateStep())
 
     @property
     def description(self) -> str:

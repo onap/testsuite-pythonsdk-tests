@@ -13,14 +13,14 @@ from onaptests.steps.cloud.cloud_region_create import CloudRegionCreateStep
 class RegisterCloudRegionStep(BaseStep):
     """Cloud region registration step."""
 
-    def __init__(self, cleanup: bool) -> None:
+    def __init__(self) -> None:
         """Initialize step.
 
         Substeps:
             - CloudRegionCreateStep.
         """
-        super().__init__(cleanup=cleanup)
-        self.add_step(CloudRegionCreateStep(cleanup=cleanup))
+        super().__init__(cleanup=BaseStep.HAS_NO_CLEANUP)
+        self.add_step(CloudRegionCreateStep())
 
     @property
     def description(self) -> str:

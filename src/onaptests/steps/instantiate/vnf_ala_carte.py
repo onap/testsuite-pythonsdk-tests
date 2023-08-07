@@ -14,17 +14,17 @@ from .service_ala_carte import YamlTemplateServiceAlaCarteInstantiateStep
 class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
     """Instantiate vnf a'la carte using YAML template."""
 
-    def __init__(self, cleanup=False):
+    def __init__(self):
         """Initialize step.
 
         Substeps:
             - YamlTemplateServiceAlaCarteInstantiateStep.
         """
-        super().__init__(cleanup=cleanup)
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
         self._yaml_template: dict = None
         self._service_instance_name: str = None
         self._service_instance: ServiceInstance = None
-        self.add_step(YamlTemplateServiceAlaCarteInstantiateStep(cleanup))
+        self.add_step(YamlTemplateServiceAlaCarteInstantiateStep())
 
     @property
     def description(self) -> str:

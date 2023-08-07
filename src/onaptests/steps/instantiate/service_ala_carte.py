@@ -92,20 +92,20 @@ class ServiceAlaCarteInstantiateStep(BaseStep):
 class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
     """Instantiate service a'la carte using YAML template."""
 
-    def __init__(self, cleanup=False):
+    def __init__(self):
         """Initialize step.
 
         Substeps:
             - YamlTemplateServiceOnboardStep,
             - ConnectServiceSubToCloudRegionStep.
         """
-        super().__init__(cleanup=cleanup)
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
         self._yaml_template: dict = None
         self._service_instance_name: str = None
         self._service_instance: str = None
         if not settings.ONLY_INSTANTIATE:
-            self.add_step(YamlTemplateServiceOnboardStep(cleanup))
-            self.add_step(ConnectServiceSubToCloudRegionStep(cleanup))
+            self.add_step(YamlTemplateServiceOnboardStep())
+            self.add_step(ConnectServiceSubToCloudRegionStep())
 
     @property
     def description(self) -> str:

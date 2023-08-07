@@ -14,6 +14,15 @@ class OnapTestException(Exception):
     error_message = 'Generic OnapTest exception'
 
 
+class OnapTestExceptionGroup(ExceptionGroup, OnapTestException):  # noqa
+    """Group of Onap Test Exceptions."""
+    error_message = 'Generic OnapTest exception group'
+
+
+class SkipExecutionException(OnapTestException):
+    """Used only for validation purposes"""
+
+
 class TestConfigurationException(OnapTestException):
     """Raise when configuration of the use case is incomplete or buggy."""
     error_message = 'Configuration error'
@@ -81,6 +90,10 @@ class EnvironmentPreparationException(OnapTestException):
 
 class SubstepExecutionException(OnapTestException):
     """Exception raised if substep execution fails."""
+
+
+class SubstepExecutionExceptionGroup(ExceptionGroup, SubstepExecutionException):  # noqa
+    """Group of Substep Exceptions."""
 
 
 class EnvironmentCleanupException(OnapTestException):

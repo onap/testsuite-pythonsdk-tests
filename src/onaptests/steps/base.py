@@ -2,20 +2,122 @@ import functools
 import itertools
 import logging
 import logging.config
+import os
 import time
-
 from abc import ABC, abstractmethod
 from typing import Iterator, List, Optional
+
 from onapsdk.aai.business import Customer
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SDKException, SettingsError
+from onaptests.steps.reports_collection import (Report, ReportsCollection,
+                                                ReportStepStatus)
+from onaptests.utils.exceptions import (OnapTestException,
+                                        OnapTestExceptionGroup,
+                                        SkipExecutionException,
+                                        SubstepExecutionException,
+                                        SubstepExecutionExceptionGroup)
 
-from onaptests.steps.reports_collection import Report, ReportsCollection, ReportStepStatus
-from onaptests.utils.exceptions import OnapTestException, SubstepExecutionException
+
+IF_VALIDATION = "PYTHON_SDK_TESTS_VALIDATION"
 
 
-class BaseStep(ABC):
+class StoreStateHandler(ABC):
+
+    @classmethod
+    def store_state(cls, fun=None, *, cleanup=False):
+        if fun is None:
+            return functools.partial(cls.store_state, cleanup=cleanup)
+
+        @functools.wraps(fun)
+        def wrapper(self, *args, **kwargs):
+            if (cleanup and self._state_clean) or (not cleanup and self._state_execute):
+                raise RuntimeError(f"Sate of {self._step_title(cleanup)} already stored")
+            if cleanup:
+                self._state_clean = True
+            else:
+                self._state_execute = True
+            initial_exception = None
+            try:
+                execution_status: Optional[ReportStepStatus] = ReportStepStatus.FAIL
+                if cleanup:
+                    self._start_cleanup_time = time.time()
+                    try:
+                        if (self._executed and self._cleanup and
+                                (self._is_validation_only or
+                                    self.check_preconditions(cleanup=True))):
+                            self._log_execution_state("START", cleanup)
+                            if not self._is_validation_only:
+                                fun(self, *args, **kwargs)
+                            self._cleaned_up = True
+                            execution_status = ReportStepStatus.PASS
+                        else:
+                            execution_status = ReportStepStatus.NOT_EXECUTED
+                    except (OnapTestException, SDKException) as test_exc:
+                        initial_exception = test_exc
+                    finally:
+                        self._log_execution_state(execution_status.name, cleanup)
+                        self._cleanup_substeps()
+                    if initial_exception:
+                        new_exception = initial_exception
+                        initial_exception = None
+                        raise new_exception
+                else:
+                    if self._is_validation_only or self.check_preconditions():
+                        self._log_execution_state("START", cleanup)
+                        fun(self, *args, **kwargs)
+                        execution_status = ReportStepStatus.PASS
+                        self._executed = True
+                    else:
+                        execution_status = ReportStepStatus.NOT_EXECUTED
+            except SkipExecutionException:
+                execution_status = ReportStepStatus.PASS
+                self._executed = True
+            except SubstepExecutionException as substep_exc:
+                if not cleanup:
+                    execution_status = ReportStepStatus.NOT_EXECUTED
+                if initial_exception:
+                    substep_exc = OnapTestExceptionGroup("Cleanup Exceptions",
+                                                         [initial_exception, substep_exc])
+                raise substep_exc
+            except (OnapTestException, SDKException) as test_exc:
+                if initial_exception:
+                    test_exc = OnapTestExceptionGroup("Cleanup Exceptions",
+                                                      [initial_exception, test_exc])
+                raise test_exc
+            finally:
+                if not cleanup:
+                    self._log_execution_state(execution_status.name, cleanup)
+                if cleanup:
+                    self._cleanup_report = Report(
+                        step_description=self._step_title(cleanup),
+                        step_execution_status=execution_status,
+                        step_execution_duration=time.time() - self._start_cleanup_time,
+                        step_component=self.component
+                    )
+                else:
+                    if not self._start_execution_time:
+                        if execution_status != ReportStepStatus.NOT_EXECUTED:
+                            self._logger.error("No execution start time saved for %s step. "
+                                               "Fix it by call `super.execute()` "
+                                               "in step class `execute()` method definition",
+                                               self.name)
+                        self._start_execution_time = time.time()
+                    self._execution_report = Report(
+                        step_description=self._step_title(cleanup),
+                        step_execution_status=(execution_status if execution_status else
+                                               ReportStepStatus.FAIL),
+                        step_execution_duration=time.time() - self._start_execution_time,
+                        step_component=self.component
+                    )
+        return wrapper
+
+
+class BaseStep(StoreStateHandler, ABC):
     """Base step class."""
+
+    """Indicates that Step has no dedicated cleanup method"""
+    HAS_NO_CLEANUP = False
 
     _logger: logging.Logger = logging.getLogger("")
 
@@ -33,11 +135,13 @@ class BaseStep(ABC):
         except SettingsError:
             pass
 
-    def __init__(self, cleanup: bool = False) -> None:
+    def __init__(self, cleanup: bool = False, break_on_error=True) -> None:
         """Step initialization.
 
         Args:
             cleanup(bool, optional): Determines if cleanup action should be called.
+            break_on_error(bool, optional): Determines if fail on execution should
+                result with continuation of further steps
 
         """
         self._steps: List["BaseStep"] = []
@@ -48,6 +152,13 @@ class BaseStep(ABC):
         self._start_cleanup_time: float = None
         self._execution_report: ReportStepStatus = None
         self._cleanup_report: ReportStepStatus = None
+        self._executed: bool = False
+        self._cleaned_up: bool = False
+        self._state_execute: bool = False
+        self._state_clean: bool = False
+        self._nesting_level: int = 0
+        self._break_on_error: bool = break_on_error
+        self._is_validation_only = os.environ.get(IF_VALIDATION) is not None
 
     def add_step(self, step: "BaseStep") -> None:
         """Add substep.
@@ -59,6 +170,16 @@ class BaseStep(ABC):
         """
         self._steps.append(step)
         step._parent: "BaseStep" = self
+        step._update_nesting_level()
+
+    def _update_nesting_level(self) -> None:
+        """Update step nesting level.
+
+        Step nesting level allows to display relatino of steps during validation
+        """
+        self._nesting_level = 1 + self._parent._nesting_level
+        for step in self._steps:
+            step._update_nesting_level()
 
     @property
     def parent(self) -> "BaseStep":
@@ -67,6 +188,18 @@ class BaseStep(ABC):
         If parent is not set the step is a root one.
         """
         return self._parent
+
+    @property
+    def is_executed(self) -> bool:
+        """Is step executed.
+
+        Step is executed if execute() method was completed without errors
+
+        Returns:
+            bool: True if step is executed, False otherwise
+
+        """
+        return self._executed
 
     @property
     def is_root(self) -> bool:
@@ -126,8 +259,8 @@ class BaseStep(ABC):
         if self._cleanup:
             if self._cleanup_report:
                 yield self._cleanup_report
-            for step in self._steps:
-                yield from step.cleanup_reports
+        for step in reversed(self._steps):
+            yield from step.cleanup_reports
 
     @property
     def name(self) -> str:
@@ -159,67 +292,28 @@ class BaseStep(ABC):
 
         """
 
-    @classmethod
-    def store_state(cls, fun=None, *, cleanup=False):
-        if fun is None:
-            return functools.partial(cls.store_state, cleanup=cleanup)
+    def _step_title(self, cleanup=False):
+        cleanup_label = " Cleanup:" if cleanup else ":"
+        return f"[{self.component}] {self.name}{cleanup_label} {self.description}"
 
-        @functools.wraps(fun)
-        def wrapper(self, *args, **kwargs):
-            try:
-                if cleanup:
-                    self._start_cleanup_time = time.time()
-                    self._logger.info("*****************************************************")
-                    self._logger.info(f"START [{self.component}] {self.name} cleanup: "
-                                      f"{self.description}")
-                    self._logger.info("*****************************************************")
-                else:
-                    self._logger.info("*****************************************************")
-                    self._logger.info(f"START [{self.component}] {self.name}: {self.description}")
-                    self._logger.info("*****************************************************")
-                execution_status: Optional[ReportStepStatus] = None
-                ret = fun(self, *args, **kwargs)
-                execution_status = ReportStepStatus.PASS
-                return ret
-            except SubstepExecutionException:
-                execution_status = (ReportStepStatus.PASS if cleanup else
-                                    ReportStepStatus.NOT_EXECUTED)
-                raise
-            except (OnapTestException, SDKException):
-                execution_status = ReportStepStatus.FAIL
-                raise
-            finally:
-                if cleanup:
-                    self._logger.info("*****************************************************")
-                    self._logger.info(f"STOP [{self.component}] {self.name} cleanup: "
-                                      f"{self.description}")
-                    self._logger.info("*****************************************************")
-                    self._cleanup_report = Report(
-                        step_description=(f"[{self.component}] {self.name} cleanup: "
-                                          f"{self.description}"),
-                        step_execution_status=execution_status,
-                        step_execution_duration=time.time() - self._start_cleanup_time,
-                        step_component=self.component
-                    )
-                else:
-                    self._logger.info("*****************************************************")
-                    self._logger.info(f"STOP [{self.component}] {self.name}: {self.description}")
-                    self._logger.info("*****************************************************")
-                    if not self._start_execution_time:
-                        if execution_status != ReportStepStatus.NOT_EXECUTED:
-                            self._logger.error("No execution start time saved for %s step. "
-                                               "Fix it by call `super.execute()` "
-                                               "in step class `execute()` method definition",
-                                               self.name)
-                        self._start_execution_time = time.time()
-                    self._execution_report = Report(
-                        step_description=f"[{self.component}] {self.name}: {self.description}",
-                        step_execution_status=(execution_status if execution_status else
-                                               ReportStepStatus.FAIL),
-                        step_execution_duration=time.time() - self._start_execution_time,
-                        step_component=self.component
-                    )
-        return wrapper
+    def _log_execution_state(self, state: str, cleanup=False):
+        nesting_label = "" + "  " * self._nesting_level
+        description = f"| {state} {self._step_title(cleanup)} |"
+        self._logger.info(nesting_label + "*" * len(description))
+        self._logger.info(nesting_label + description)
+        self._logger.info(nesting_label + "*" * len(description))
+
+    def check_preconditions(self, cleanup=False) -> bool:
+        """Check preconditions.
+
+        Check if step preconditions are satisfied. If not, step is skipped
+        without further consequences. If yes, execution is initiated
+
+        Returns:
+            bool: True if preconditions are satisfied, False otherwise
+
+        """
+        return True
 
     def execute(self) -> None:
         """Step's action execution.
@@ -228,16 +322,48 @@ class BaseStep(ABC):
         Override this method and remember to call `super().execute()` before.
 
         """
+        substep_error = False
         for step in self._steps:
             try:
                 step.execute()
             except (OnapTestException, SDKException) as substep_err:
-                raise SubstepExecutionException from substep_err
+                substep_error = True
+                if step._break_on_error:
+                    raise SubstepExecutionException from substep_err
+                else:
+                    self._logger.exception(substep_err)
         if self._steps:
-            self._logger.info("*****************************************************")
-            self._logger.info(f"CONTINUE [{self.component}] {self.name}: {self.description}")
-            self._logger.info("*****************************************************")
+            if substep_error and self._break_on_error:
+                raise SubstepExecutionException("Cannot continue due to failed substeps")
+            self._log_execution_state("CONTINUE")
         self._start_execution_time = time.time()
+        if self._is_validation_only:
+            raise SkipExecutionException()
+
+    def _cleanup_substeps(self) -> None:
+        """Substeps' cleanup.
+
+        Substeps are cleaned-up in reversed order.
+        We also try to cleanup steps if others failed
+
+        """
+        exceptions_to_raise = []
+        for step in reversed(self._steps):
+            try:
+                if step._cleanup:
+                    step.cleanup()
+                else:
+                    step._default_cleanup_handler()
+            except (OnapTestException, SDKException) as substep_err:
+                try:
+                    raise SubstepExecutionException from substep_err
+                except Exception as e:
+                    exceptions_to_raise.append(e)
+        if len(exceptions_to_raise) > 0:
+            if len(exceptions_to_raise) == 1:
+                raise exceptions_to_raise[0]
+            else:
+                raise SubstepExecutionExceptionGroup("Substep Exceptions", exceptions_to_raise)
 
     def cleanup(self) -> None:
         """Step's cleanup.
@@ -245,12 +371,14 @@ class BaseStep(ABC):
         Not all steps has to have cleanup method
 
         """
-        if self._cleanup:
-            for step in self._steps:
-                try:
-                    step.cleanup()
-                except (OnapTestException, SDKException) as substep_err:
-                    raise SubstepExecutionException from substep_err
+        # Step itself was cleaned-up, now time for children
+        if not self._cleanup:
+            # in this case we just make sure that store_state is run
+            self._default_cleanup_handler()
+
+    @StoreStateHandler.store_state(cleanup=True)
+    def _default_cleanup_handler(self):
+        pass
 
     @classmethod
     def set_proxy(cls, sock_http):
@@ -259,6 +387,15 @@ class BaseStep(ABC):
         onap_proxy['http'] = sock_http
         onap_proxy['https'] = sock_http
         Customer.set_proxy(onap_proxy)
+
+    def validate_execution(self):
+        if self._is_validation_only:
+            self._log_execution_state(f"VALIDATE [{self._executed}, {self._cleanup}]")
+            if self._executed and self._cleanup and not self._cleaned_up:
+                self._logger.error(f"{self._step_title()} Cleanup Not Executed")
+                assert self._cleaned_up
+            for step in reversed(self._steps):
+                step.validate_execution()
 
 
 class YamlTemplateBaseStep(BaseStep, ABC):

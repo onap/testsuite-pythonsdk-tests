@@ -10,16 +10,16 @@ from onaptests.steps.cloud.k8s_connectivity_info_create import K8SConnectivityIn
 class CreateDefinitionStep(BaseStep):
     """Create definition step initialization."""
 
-    def __init__(self, cleanup: bool = False) -> None:
+    def __init__(self) -> None:
         """Initialize step.
 
         Substeps:
             - CloudRegionCreateStep,
             - K8SConnectivityInfoStep.
         """
-        super().__init__(cleanup=cleanup)
-        self.add_step(CloudRegionCreateStep(cleanup=cleanup))
-        self.add_step(K8SConnectivityInfoStep(cleanup=cleanup))
+        super().__init__(cleanup=BaseStep.HAS_NO_CLEANUP)
+        self.add_step(CloudRegionCreateStep())
+        self.add_step(K8SConnectivityInfoStep())
         self.definition: Definition = None
 
     @property
@@ -45,14 +45,14 @@ class CreateDefinitionStep(BaseStep):
 class CreateProfileStep(BaseStep):
     """Create profile step."""
 
-    def __init__(self, cleanup: bool = False) -> None:
+    def __init__(self) -> None:
         """Initialize step.
 
         Substeps:
             - CreateDefinitionStep.
         """
-        super().__init__(cleanup=cleanup)
-        self.add_step(CreateDefinitionStep(cleanup=cleanup))
+        super().__init__(cleanup=BaseStep.HAS_NO_CLEANUP)
+        self.add_step(CreateDefinitionStep())
         self.profile: Profile = None
 
     @property

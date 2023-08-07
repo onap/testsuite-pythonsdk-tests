@@ -29,9 +29,9 @@ class CheckK8sResourcesStep(BaseStep):
 
     __logger = logging.getLogger(__name__)
 
-    def __init__(self, resource_type: str, **kwargs):
+    def __init__(self, resource_type: str, break_on_error=False):
         """Init CheckK8sResourcesStep."""
-        super().__init__(cleanup=False)
+        super().__init__(cleanup=BaseStep.HAS_NO_CLEANUP, break_on_error=break_on_error)
         self.core = client.CoreV1Api()
         self.batch = client.BatchV1Api()
         self.app = client.AppsV1Api()
@@ -61,7 +61,9 @@ class CheckK8sResourcesStep(BaseStep):
         return f"Check status of all k8s {self.resource_type}s in the {NAMESPACE} namespace."
 
     def _init_resources(self):
-        self.__logger.debug(f"Loading all k8s {self.resource_type}s in the {NAMESPACE} namespace")
+        if self.resource_type != "":
+            self.__logger.debug(f"Loading all k8s {self.resource_type}s"
+                                " in the {NAMESPACE} namespace")
 
     def _parse_resources(self):
         """Parse the resources."""
@@ -92,16 +94,17 @@ class CheckK8sResourcesStep(BaseStep):
                                    len(self.all_resources),
                                    self.resource_type,
                                    len(self.failing_resources))
-        except (ConnectionRefusedError, MaxRetryError, NewConnectionError):
+                if self.failing:
+                    raise StatusCheckException(f"{self.resource_type} test failed")
+        except (ConnectionRefusedError, MaxRetryError, NewConnectionError) as e:
             self.__logger.error("Test of k8s %ss failed.", self.resource_type)
             self.__logger.error("Cannot connect to Kubernetes.")
+            raise StatusCheckException from e
 
 
 class CheckBasicK8sResourcesStep(CheckK8sResourcesStep):
 
-    __logger = logging.getLogger(__name__)
-
-    def __init__(self, resource_type: str, k8s_res_class, cleanup: bool = False, **kwargs):
+    def __init__(self, resource_type: str, k8s_res_class):
         """Init CheckBasicK8sResourcesStep."""
         super().__init__(resource_type)
         self.k8s_res_class = k8s_res_class
@@ -120,9 +123,7 @@ class CheckBasicK8sResourcesStep(CheckK8sResourcesStep):
 
 class CheckK8sConfigMapsStep(CheckBasicK8sResourcesStep):
 
-    __logger = logging.getLogger(__name__)
-
-    def __init__(self, cleanup: bool = False, **kwargs):
+    def __init__(self):
         """Init CheckK8sConfigMapsStep."""
         super().__init__("configmap", ConfigMap)
 
@@ -133,9 +134,7 @@ class CheckK8sConfigMapsStep(CheckBasicK8sResourcesStep):
 
 class CheckK8sSecretsStep(CheckBasicK8sResourcesStep):
 
-    __logger = logging.getLogger(__name__)
-
-    def __init__(self, cleanup: bool = False, **kwargs):
+    def __init__(self):
         """Init CheckK8sSecretsStep."""
         super().__init__("secret", Secret)
 
@@ -146,9 +145,7 @@ class CheckK8sSecretsStep(CheckBasicK8sResourcesStep):
 
 class CheckK8sIngressesStep(CheckBasicK8sResourcesStep):
 
-    __logger = logging.getLogger(__name__)
-
-    def __init__(self, cleanup: bool = False, **kwargs):
+    def __init__(self):
         """Init CheckK8sIngressesStep."""
         super().__init__("ingress", Ingress)
 
@@ -159,9 +156,7 @@ class CheckK8sIngressesStep(CheckBasicK8sResourcesStep):
 
 class CheckK8sPvcsStep(CheckK8sResourcesStep):
 
-    __logger = logging.getLogger(__name__)
-
-    def __init__(self, cleanup: bool = False, **kwargs):
+    def __init__(self):
         """Init CheckK8sPvcsStep."""
         super().__init__("pvc")
 
@@ -193,9 +188,7 @@ class CheckK8sPvcsStep(CheckK8sResourcesStep):
 
 class CheckK8sResourcesUsingPodsStep(CheckK8sResourcesStep):
 
-    __logger = logging.getLogger(__name__)
-
-    def __init__(self, resource_type: str, pods_source, cleanup: bool = False, **kwargs):
+    def __init__(self, resource_type: str, pods_source):
         """Init CheckK8sResourcesUsingPodsStep."""
         super().__init__(resource_type)
         self.pods_source = pods_source
@@ -232,9 +225,7 @@ class CheckK8sResourcesUsingPodsStep(CheckK8sResourcesStep):
 
 class CheckK8sJobsStep(CheckK8sResourcesUsingPodsStep):
 
-    __logger = logging.getLogger(__name__)
-
-    def __init__(self, cleanup: bool = False, **kwargs):
+    def __init__(self):
         """Init CheckK8sJobsStep."""
         super().__init__("job", None)
 
@@ -279,7 +270,7 @@ class CheckK8sPodsStep(CheckK8sResourcesUsingPodsStep):
 
     __logger = logging.getLogger(__name__)
 
-    def __init__(self, pods, cleanup: bool = False, **kwargs):
+    def __init__(self, pods):
         """Init CheckK8sPodsStep."""
         super().__init__("pod", pods)
 
@@ -516,9 +507,7 @@ class CheckK8sPodsStep(CheckK8sResourcesUsingPodsStep):
 
 class CheckK8sServicesStep(CheckK8sResourcesUsingPodsStep):
 
-    __logger = logging.getLogger(__name__)
-
-    def __init__(self, pods, cleanup: bool = False, **kwargs):
+    def __init__(self, pods):
         """Init CheckK8sServicesStep."""
         super().__init__("service", pods)
 
@@ -543,9 +532,7 @@ class CheckK8sServicesStep(CheckK8sResourcesUsingPodsStep):
 
 class CheckK8sDeploymentsStep(CheckK8sResourcesUsingPodsStep):
 
-    __logger = logging.getLogger(__name__)
-
-    def __init__(self, pods, cleanup: bool = False, **kwargs):
+    def __init__(self, pods):
         """Init CheckK8sDeploymentsStep."""
         super().__init__("deployment", pods)
 
@@ -581,12 +568,10 @@ class CheckK8sDeploymentsStep(CheckK8sResourcesUsingPodsStep):
             self.all_resources.append(deployment)
 
 
-class CheckK8sResplicaSetsStep(CheckK8sResourcesUsingPodsStep):
+class CheckK8sReplicaSetsStep(CheckK8sResourcesUsingPodsStep):
 
-    __logger = logging.getLogger(__name__)
-
-    def __init__(self, pods, cleanup: bool = False, **kwargs):
-        """Init CheckK8sResplicaSetsStep."""
+    def __init__(self, pods):
+        """Init CheckK8sReplicaSetsStep."""
         super().__init__("replicaset", pods)
 
     def _init_resources(self):
@@ -625,9 +610,7 @@ class CheckK8sResplicaSetsStep(CheckK8sResourcesUsingPodsStep):
 
 class CheckK8sStatefulSetsStep(CheckK8sResourcesUsingPodsStep):
 
-    __logger = logging.getLogger(__name__)
-
-    def __init__(self, pods, cleanup: bool = False, **kwargs):
+    def __init__(self, pods):
         """Init CheckK8sStatefulSetsStep."""
         super().__init__("statefulset", pods)
 
@@ -667,9 +650,7 @@ class CheckK8sStatefulSetsStep(CheckK8sResourcesUsingPodsStep):
 
 class CheckK8sDaemonSetsStep(CheckK8sResourcesUsingPodsStep):
 
-    __logger = logging.getLogger(__name__)
-
-    def __init__(self, pods, cleanup: bool = False, **kwargs):
+    def __init__(self, pods):
         """Init CheckK8sDaemonSetsStep."""
         super().__init__("daemonset", pods)
 
@@ -711,9 +692,9 @@ class CheckNamespaceStatusStep(CheckK8sResourcesStep):
 
     __logger = logging.getLogger(__name__)
 
-    def __init__(self, cleanup: bool = False, **kwargs):
+    def __init__(self):
         """Init CheckNamespaceStatusStep."""
-        super().__init__("")
+        super().__init__(resource_type="")
         self.__logger.debug("%s namespace status test init started", NAMESPACE)
         if settings.IN_CLUSTER:
             config.load_incluster_config()
@@ -724,7 +705,7 @@ class CheckNamespaceStatusStep(CheckK8sResourcesStep):
         self.pod_list_step = CheckK8sPodsStep(self.job_list_step)
         self.service_list_step = CheckK8sServicesStep(self.pod_list_step)
         self.deployment_list_step = CheckK8sDeploymentsStep(self.pod_list_step)
-        self.replicaset_list_step = CheckK8sResplicaSetsStep(self.pod_list_step)
+        self.replicaset_list_step = CheckK8sReplicaSetsStep(self.pod_list_step)
         self.statefulset_list_step = CheckK8sStatefulSetsStep(self.pod_list_step)
         self.daemonset_list_step = CheckK8sDaemonSetsStep(self.pod_list_step)
         self.configmap_list_step = CheckK8sConfigMapsStep()
@@ -799,11 +780,13 @@ class CheckNamespaceStatusStep(CheckK8sResourcesStep):
                                    step.resource_type,
                                    len(step.failing_resources))
             details[step.resource_type] = {
-                'number_all': len(step.all_resources),
                 'number_failing': len(step.failing_resources),
-                'all': self.map_by_name(step.all_resources),
                 'failing': self.map_by_name(step.failing_resources)
             }
+            if settings.INCLUDE_ALL_RES_IN_DETAILS:
+                details[step.resource_type]['all'] = self.map_by_name(step.all_resources)
+                details[step.resource_type]['number_all'] = len(step.all_resources)
+
         with (Path(self.res_dir).joinpath(settings.STATUS_DETAILS_JSON)).open('w') as file:
             json.dump(details, file, indent=4)
         if self.failing:
