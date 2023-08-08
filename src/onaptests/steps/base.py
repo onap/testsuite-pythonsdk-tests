@@ -25,7 +25,7 @@ IF_VALIDATION = "PYTHON_SDK_TESTS_VALIDATION"
 class StoreStateHandler(ABC):
 
     @classmethod
-    def store_state(cls, fun=None, *, cleanup=False):
+    def store_state(cls, fun=None, *, cleanup=False):  # noqa
         if fun is None:
             return functools.partial(cls.store_state, cleanup=cleanup)
 

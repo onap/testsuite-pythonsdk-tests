@@ -22,7 +22,9 @@ class SendPnfRegisterVesEvent(BaseStep):
         super().__init__(cleanup=BaseStep.HAS_NO_CLEANUP)
         if settings.EXPOSE_SERVICES_NODE_PORTS:
             self.add_step(ExposeServiceNodePortStep(component="VES-Collector",
-                service_name="dcae-ves-collector", port=8080, node_port=settings.VES_NODE_PORT))
+                          service_name="dcae-ves-collector",
+                          port=8080,
+                          node_port=settings.VES_NODE_PORT))
 
     @property
     def description(self) -> str:

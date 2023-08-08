@@ -29,7 +29,10 @@ class ExposeCDSBlueprintprocessorNodePortStep(CDSBaseStep, ExposeServiceNodePort
     """Expose CDS blueprintsprocessor port."""
     def __init__(self) -> None:
         """Initialize step."""
-        super().__init__(component = "CDS", service_name="cds-blueprints-processor-http", port=8080, node_port=settings.CDS_NODE_PORT)
+        super().__init__(component="CDS",
+                         service_name="cds-blueprints-processor-http",
+                         port=8080,
+                         node_port=settings.CDS_NODE_PORT)
 
 
 class BootstrapBlueprintprocessor(CDSBaseStep):

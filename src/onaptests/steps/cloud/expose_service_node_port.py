@@ -73,7 +73,9 @@ class ExposeServiceNodePortStep(BaseStep):
                 self.k8s_client.patch_namespaced_service(
                     self.service_name,
                     settings.K8S_ONAP_NAMESPACE,
-                    {"spec": {"ports": [{"port": self.port, "nodePort": self.node_port}], "type": "NodePort"}}
+                    {"spec": {"ports": [{"port": self.port,
+                                         "nodePort": self.node_port}],
+                              "type": "NodePort"}}
                 )
             except ApiException:
                 self._logger.exception("Kubernetes API exception")
