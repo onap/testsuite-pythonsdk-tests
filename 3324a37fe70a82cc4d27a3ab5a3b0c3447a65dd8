@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77af160d_ed5d5e74",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-08-08T04:25:44Z",
+      "side": 1,
+      "message": "oom_redeploy",
+      "revId": "3324a37fe70a82cc4d27a3ab5a3b0c3447a65dd8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
