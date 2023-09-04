@@ -261,7 +261,10 @@ class CheckPostgressDataBaseConnectionStep(CpsBaseStep):
         return "Establish connection with Postgress and execute the query"
 
     def get_database_credentials(self):
-        config.load_kube_config()
+        if settings.IN_CLUSTER:
+            config.load_incluster_config()
+        else:
+            config.load_kube_config(config_file=settings.K8S_CONFIG)
         api_instance = client.CoreV1Api()
         try:
             secret = api_instance.read_namespaced_secret(
