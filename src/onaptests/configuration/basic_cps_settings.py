@@ -73,3 +73,4 @@ DB_PRIMARY_HOST = "cps-core-pg-primary"
 DB_PORT = 5432
 DB_LOGIN = "login"
 DB_PASSWORD = "password"
+CHECK_POSTGRESQL = False

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 """Basic CPS test case."""
+from onapsdk.configuration import settings
 from onaptests.scenario.scenario_base import BaseStep, ScenarioBase
 from onaptests.steps.onboard.cps import (CheckPostgressDataBaseConnectionStep,
                                          QueryCpsAnchorNodeStep)
@@ -15,7 +16,8 @@ class BasicCpsStep(BaseStep):
         """
         super().__init__(cleanup=BaseStep.HAS_NO_CLEANUP)
         self.add_step(QueryCpsAnchorNodeStep())
-        self.add_step(CheckPostgressDataBaseConnectionStep())
+        if settings.CHECK_POSTGRESQL:
+            self.add_step(CheckPostgressDataBaseConnectionStep())
 
     @property
     def description(self) -> str:
