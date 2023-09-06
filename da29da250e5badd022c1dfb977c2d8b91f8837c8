@@ -16,6 +16,23 @@
       "message": "oom_redeploy",
       "revId": "da29da250e5badd022c1dfb977c2d8b91f8837c8",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b591804_e41b637b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 481
+      },
+      "writtenOn": "2023-09-06T21:22:15Z",
+      "side": 1,
+      "message": "remerge",
+      "revId": "da29da250e5badd022c1dfb977c2d8b91f8837c8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     }
   ],
   "submitRequirementResults": [
