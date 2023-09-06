@@ -33,6 +33,23 @@
       "message": "oom_redeploy",
       "revId": "a4f1e17b09928656c7cec2f120c9127eaf087c9d",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35819c61_ba7d5f68",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-09-06T08:44:49Z",
+      "side": 1,
+      "message": "let\u0027s wait for gating",
+      "revId": "a4f1e17b09928656c7cec2f120c9127eaf087c9d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     }
   ]
 }
