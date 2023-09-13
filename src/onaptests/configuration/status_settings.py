@@ -10,6 +10,7 @@ CHECK_POD_VERSIONS = True
 IGNORE_EMPTY_REPLICAS = False
 STATUS_DETAILS_JSON = "status-details.json"
 INCLUDE_ALL_RES_IN_DETAILS = True
+EXTRA_NAMESPACE_LIST = []
 
 FULL_LOGS_CONTAINERS = [
     'dcae-bootstrap', 'dcae-cloudify-manager', 'aai-resources',
