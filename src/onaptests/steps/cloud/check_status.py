@@ -22,25 +22,27 @@ from .resources import (ConfigMap, Container, DaemonSet, Deployment, Ingress,
                         Job, Pod, Pvc, ReplicaSet, Secret, Service,
                         StatefulSet)
 
-NAMESPACE = settings.K8S_ONAP_NAMESPACE
-
 
 class CheckK8sResourcesStep(BaseStep):
 
     __logger = logging.getLogger(__name__)
 
-    def __init__(self, resource_type: str, break_on_error=False):
+    def __init__(self, namespace: str, resource_type: str, break_on_error=False):
         """Init CheckK8sResourcesStep."""
         super().__init__(cleanup=BaseStep.HAS_NO_CLEANUP, break_on_error=break_on_error)
         self.core = client.CoreV1Api()
         self.batch = client.BatchV1Api()
         self.app = client.AppsV1Api()
         self.networking = client.NetworkingV1Api()
+        self.namespace = namespace
 
         if settings.STATUS_RESULTS_DIRECTORY:
             self.res_dir = f"{settings.STATUS_RESULTS_DIRECTORY}"
         else:
             self.res_dir = f"{testcase.TestCase.dir_results}/kubernetes-status"
+
+        if not self.is_primary:
+            self.res_dir = f"{self.res_dir}/{self.namespace}"
 
         self.failing = False
         self.resource_type = resource_type
@@ -58,7 +60,12 @@ class CheckK8sResourcesStep(BaseStep):
     @property
     def description(self) -> str:
         """Step description."""
-        return f"Check status of all k8s {self.resource_type}s in the {NAMESPACE} namespace."
+        return f"Check status of all k8s {self.resource_type}s in the {self.namespace} namespace."
+
+    @property
+    def is_primary(self) -> bool:
+        """Does step analyses primary namespace."""
+        return self.namespace == settings.K8S_ONAP_NAMESPACE
 
     def _init_resources(self):
         if self.resource_type != "":
@@ -104,9 +111,9 @@ class CheckK8sResourcesStep(BaseStep):
 
 class CheckBasicK8sResourcesStep(CheckK8sResourcesStep):
 
-    def __init__(self, resource_type: str, k8s_res_class):
+    def __init__(self, namespace: str, resource_type: str, k8s_res_class):
         """Init CheckBasicK8sResourcesStep."""
-        super().__init__(resource_type)
+        super().__init__(namespace=namespace, resource_type=resource_type)
         self.k8s_res_class = k8s_res_class
 
     def _parse_resources(self):
@@ -123,46 +130,46 @@ class CheckBasicK8sResourcesStep(CheckK8sResourcesStep):
 
 class CheckK8sConfigMapsStep(CheckBasicK8sResourcesStep):
 
-    def __init__(self):
+    def __init__(self, namespace: str):
         """Init CheckK8sConfigMapsStep."""
-        super().__init__("configmap", ConfigMap)
+        super().__init__(namespace=namespace, resource_type="configmap", k8s_res_class=ConfigMap)
 
     def _init_resources(self):
         super()._init_resources()
-        self.k8s_resources = self.core.list_namespaced_config_map(NAMESPACE).items
+        self.k8s_resources = self.core.list_namespaced_config_map(self.namespace).items
 
 
 class CheckK8sSecretsStep(CheckBasicK8sResourcesStep):
 
-    def __init__(self):
+    def __init__(self, namespace: str):
         """Init CheckK8sSecretsStep."""
-        super().__init__("secret", Secret)
+        super().__init__(namespace=namespace, resource_type="secret", k8s_res_class=Secret)
 
     def _init_resources(self):
         super()._init_resources()
-        self.k8s_resources = self.core.list_namespaced_secret(NAMESPACE).items
+        self.k8s_resources = self.core.list_namespaced_secret(self.namespace).items
 
 
 class CheckK8sIngressesStep(CheckBasicK8sResourcesStep):
 
-    def __init__(self):
+    def __init__(self, namespace: str):
         """Init CheckK8sIngressesStep."""
-        super().__init__("ingress", Ingress)
+        super().__init__(namespace=namespace, resource_type="ingress", k8s_res_class=Ingress)
 
     def _init_resources(self):
         super()._init_resources()
-        self.k8s_resources = self.networking.list_namespaced_ingress(NAMESPACE).items
+        self.k8s_resources = self.networking.list_namespaced_ingress(self.namespace).items
 
 
 class CheckK8sPvcsStep(CheckK8sResourcesStep):
 
-    def __init__(self):
+    def __init__(self, namespace: str):
         """Init CheckK8sPvcsStep."""
-        super().__init__("pvc")
+        super().__init__(namespace=namespace, resource_type="pvc")
 
     def _init_resources(self):
         super()._init_resources()
-        self.k8s_resources = self.core.list_namespaced_persistent_volume_claim(NAMESPACE).items
+        self.k8s_resources = self.core.list_namespaced_persistent_volume_claim(self.namespace).items
 
     def _parse_resources(self):
         """Parse the jobs.
@@ -174,7 +181,7 @@ class CheckK8sPvcsStep(CheckK8sResourcesStep):
             field_selector = (f"involvedObject.name={pvc.name},"
                               "involvedObject.kind=PersistentVolumeClaim")
             pvc.events = self.core.list_namespaced_event(
-                NAMESPACE,
+                self.namespace,
                 field_selector=field_selector).items
 
             if k8s.status.phase != "Bound":
@@ -188,9 +195,9 @@ class CheckK8sPvcsStep(CheckK8sResourcesStep):
 
 class CheckK8sResourcesUsingPodsStep(CheckK8sResourcesStep):
 
-    def __init__(self, resource_type: str, pods_source):
+    def __init__(self, namespace: str, resource_type: str, pods_source):
         """Init CheckK8sResourcesUsingPodsStep."""
-        super().__init__(resource_type)
+        super().__init__(namespace=namespace, resource_type=resource_type)
         self.pods_source = pods_source
 
     def _get_used_pods(self):
@@ -209,7 +216,7 @@ class CheckK8sResourcesUsingPodsStep(CheckK8sResourcesStep):
                 raw_selector += key + '=' + value + ','
             raw_selector = raw_selector[:-1]
             pods = self.core.list_namespaced_pod(
-                NAMESPACE, label_selector=raw_selector).items
+                self.namespace, label_selector=raw_selector).items
             for pod in pods:
                 for known_pod in pods_used:
                     if known_pod.name == pod.metadata.name:
@@ -225,13 +232,13 @@ class CheckK8sResourcesUsingPodsStep(CheckK8sResourcesStep):
 
 class CheckK8sJobsStep(CheckK8sResourcesUsingPodsStep):
 
-    def __init__(self):
+    def __init__(self, namespace: str):
         """Init CheckK8sJobsStep."""
-        super().__init__("job", None)
+        super().__init__(namespace=namespace, resource_type="job", pods_source=None)
 
     def _init_resources(self):
         super()._init_resources()
-        self.k8s_resources = self.batch.list_namespaced_job(NAMESPACE).items
+        self.k8s_resources = self.batch.list_namespaced_job(self.namespace).items
 
     def _parse_resources(self):
         """Parse the jobs.
@@ -250,7 +257,7 @@ class CheckK8sJobsStep(CheckK8sResourcesUsingPodsStep):
             field_selector = "involvedObject.name={}".format(job.name)
             field_selector += ",involvedObject.kind=Job"
             job.events = self.core.list_namespaced_event(
-                NAMESPACE,
+                self.namespace,
                 field_selector=field_selector).items
 
             self.jinja_env.get_template('job.html.j2').stream(job=job).dump(
@@ -270,13 +277,13 @@ class CheckK8sPodsStep(CheckK8sResourcesUsingPodsStep):
 
     __logger = logging.getLogger(__name__)
 
-    def __init__(self, pods):
+    def __init__(self, namespace: str, pods):
         """Init CheckK8sPodsStep."""
-        super().__init__("pod", pods)
+        super().__init__(namespace=namespace, resource_type="pod", pods_source=pods)
 
     def _init_resources(self):
         super()._init_resources()
-        self.k8s_resources = self.core.list_namespaced_pod(NAMESPACE).items
+        self.k8s_resources = self.core.list_namespaced_pod(self.namespace).items
 
     def _parse_resources(self):  # noqa
         """Parse the pods."""
@@ -290,15 +297,19 @@ class CheckK8sPodsStep(CheckK8sResourcesUsingPodsStep):
             # check version firstly
             if settings.CHECK_POD_VERSIONS:
                 pod_component = k8s.metadata.name
-                if 'app' in k8s.metadata.labels:
-                    pod_component = k8s.metadata.labels['app']
-                else:
-                    if 'app.kubernetes.io/name' in k8s.metadata.labels:
-                        pod_component = k8s.metadata.labels[
-                            'app.kubernetes.io/name']
+                pod_component_from_label = None
+                if hasattr(k8s.metadata, "labels") and k8s.metadata.labels is not None:
+                    if 'app' in k8s.metadata.labels:
+                        pod_component_from_label = k8s.metadata.labels['app']
                     else:
-                        self.__logger.error("pod %s has no 'app' or 'app.kubernetes.io/name' "
-                                            "in metadata: %s", pod_component, k8s.metadata.labels)
+                        if 'app.kubernetes.io/name' in k8s.metadata.labels:
+                            pod_component_from_label = k8s.metadata.labels[
+                                'app.kubernetes.io/name']
+                if pod_component_from_label is None:
+                    self.__logger.error("pod %s has no 'app' or 'app.kubernetes.io/name' "
+                                        "in metadata: %s", pod_component, k8s.metadata.labels)
+                else:
+                    pod_component = pod_component_from_label
 
                 # looks for docker version
                 for container in k8s.spec.containers:
@@ -379,7 +390,7 @@ class CheckK8sPodsStep(CheckK8sResourcesUsingPodsStep):
                     pod.running_containers += self._parse_container(
                         pod, k8s_container)
             pod.events = self.core.list_namespaced_event(
-                NAMESPACE,
+                self.namespace,
                 field_selector="involvedObject.name={}".format(pod.name)).items
             self.jinja_env.get_template('pod.html.j2').stream(pod=pod).dump(
                 '{}/pod-{}.html'.format(self.res_dir, pod.name))
@@ -407,7 +418,7 @@ class CheckK8sPodsStep(CheckK8sResourcesUsingPodsStep):
         try:
             logs = self.core.read_namespaced_pod_log(
                 pod.name,
-                NAMESPACE,
+                self.namespace,
                 container=container.name,
                 limit_bytes=limit_bytes,
                 previous=previous
@@ -471,7 +482,7 @@ class CheckK8sPodsStep(CheckK8sResourcesUsingPodsStep):
                         log_files[log_file] = stream(
                             self.core.connect_get_namespaced_pod_exec,
                             pod.name,
-                            NAMESPACE,
+                            self.namespace,
                             container=container.name,
                             command=exec_command,
                             stderr=True,
@@ -507,13 +518,13 @@ class CheckK8sPodsStep(CheckK8sResourcesUsingPodsStep):
 
 class CheckK8sServicesStep(CheckK8sResourcesUsingPodsStep):
 
-    def __init__(self, pods):
+    def __init__(self, namespace: str, pods):
         """Init CheckK8sServicesStep."""
-        super().__init__("service", pods)
+        super().__init__(namespace=namespace, resource_type="service", pods_source=pods)
 
     def _init_resources(self):
         super()._init_resources()
-        self.k8s_resources = self.core.list_namespaced_service(NAMESPACE).items
+        self.k8s_resources = self.core.list_namespaced_service(self.namespace).items
 
     def _parse_resources(self):
         """Parse the services."""
@@ -532,13 +543,13 @@ class CheckK8sServicesStep(CheckK8sResourcesUsingPodsStep):
 
 class CheckK8sDeploymentsStep(CheckK8sResourcesUsingPodsStep):
 
-    def __init__(self, pods):
+    def __init__(self, namespace: str, pods):
         """Init CheckK8sDeploymentsStep."""
-        super().__init__("deployment", pods)
+        super().__init__(namespace=namespace, resource_type="deployment", pods_source=pods)
 
     def _init_resources(self):
         super()._init_resources()
-        self.k8s_resources = self.app.list_namespaced_deployment(NAMESPACE).items
+        self.k8s_resources = self.app.list_namespaced_deployment(self.namespace).items
 
     def _parse_resources(self):
         """Parse the deployments."""
@@ -555,7 +566,7 @@ class CheckK8sDeploymentsStep(CheckK8sResourcesUsingPodsStep):
             field_selector = "involvedObject.name={}".format(deployment.name)
             field_selector += ",involvedObject.kind=Deployment"
             deployment.events = self.core.list_namespaced_event(
-                NAMESPACE,
+                self.namespace,
                 field_selector=field_selector).items
 
             self.jinja_env.get_template('deployment.html.j2').stream(
@@ -570,13 +581,13 @@ class CheckK8sDeploymentsStep(CheckK8sResourcesUsingPodsStep):
 
 class CheckK8sReplicaSetsStep(CheckK8sResourcesUsingPodsStep):
 
-    def __init__(self, pods):
+    def __init__(self, namespace: str, pods):
         """Init CheckK8sReplicaSetsStep."""
-        super().__init__("replicaset", pods)
+        super().__init__(namespace=namespace, resource_type="replicaset", pods_source=pods)
 
     def _init_resources(self):
         super()._init_resources()
-        self.k8s_resources = self.app.list_namespaced_replica_set(NAMESPACE).items
+        self.k8s_resources = self.app.list_namespaced_replica_set(self.namespace).items
 
     def _parse_resources(self):
         """Parse the replicasets."""
@@ -594,7 +605,7 @@ class CheckK8sReplicaSetsStep(CheckK8sResourcesUsingPodsStep):
             field_selector = "involvedObject.name={}".format(replicaset.name)
             field_selector += ",involvedObject.kind=ReplicaSet"
             replicaset.events = self.core.list_namespaced_event(
-                NAMESPACE,
+                self.namespace,
                 field_selector=field_selector).items
 
             self.jinja_env.get_template('replicaset.html.j2').stream(
@@ -610,13 +621,13 @@ class CheckK8sReplicaSetsStep(CheckK8sResourcesUsingPodsStep):
 
 class CheckK8sStatefulSetsStep(CheckK8sResourcesUsingPodsStep):
 
-    def __init__(self, pods):
+    def __init__(self, namespace: str, pods):
         """Init CheckK8sStatefulSetsStep."""
-        super().__init__("statefulset", pods)
+        super().__init__(namespace=namespace, resource_type="statefulset", pods_source=pods)
 
     def _init_resources(self):
         super()._init_resources()
-        self.k8s_resources = self.app.list_namespaced_stateful_set(NAMESPACE).items
+        self.k8s_resources = self.app.list_namespaced_stateful_set(self.namespace).items
 
     def _parse_resources(self):
         """Parse the statefulsets."""
@@ -634,7 +645,7 @@ class CheckK8sStatefulSetsStep(CheckK8sResourcesUsingPodsStep):
             field_selector = "involvedObject.name={}".format(statefulset.name)
             field_selector += ",involvedObject.kind=StatefulSet"
             statefulset.events = self.core.list_namespaced_event(
-                NAMESPACE,
+                self.namespace,
                 field_selector=field_selector).items
 
             self.jinja_env.get_template('statefulset.html.j2').stream(
@@ -650,13 +661,13 @@ class CheckK8sStatefulSetsStep(CheckK8sResourcesUsingPodsStep):
 
 class CheckK8sDaemonSetsStep(CheckK8sResourcesUsingPodsStep):
 
-    def __init__(self, pods):
+    def __init__(self, namespace: str, pods):
         """Init CheckK8sDaemonSetsStep."""
-        super().__init__("daemonset", pods)
+        super().__init__(namespace=namespace, resource_type="daemonset", pods_source=pods)
 
     def _init_resources(self):
         super()._init_resources()
-        self.k8s_resources = self.app.list_namespaced_daemon_set(NAMESPACE).items
+        self.k8s_resources = self.app.list_namespaced_daemon_set(self.namespace).items
 
     def _parse_resources(self):
         """Parse the daemonsets."""
@@ -674,7 +685,7 @@ class CheckK8sDaemonSetsStep(CheckK8sResourcesUsingPodsStep):
             field_selector = "involvedObject.name={}".format(daemonset.name)
             field_selector += ",involvedObject.kind=DaemonSet"
             daemonset.events = self.core.list_namespaced_event(
-                NAMESPACE,
+                self.namespace,
                 field_selector=field_selector).items
 
             self.jinja_env.get_template('daemonset.html.j2').stream(
@@ -694,24 +705,27 @@ class CheckNamespaceStatusStep(CheckK8sResourcesStep):
 
     def __init__(self):
         """Init CheckNamespaceStatusStep."""
-        super().__init__(resource_type="")
-        self.__logger.debug("%s namespace status test init started", NAMESPACE)
+        super().__init__(namespace=settings.K8S_ONAP_NAMESPACE, resource_type="")
+        self.__logger.debug("K8s namespaces status test init started")
         if settings.IN_CLUSTER:
             config.load_incluster_config()
         else:
             config.load_kube_config(config_file=settings.K8S_CONFIG)
+        for namespace in ([self.namespace] + settings.EXTRA_NAMESPACE_LIST):
+            self._init_namespace_steps(namespace)
 
-        self.job_list_step = CheckK8sJobsStep()
-        self.pod_list_step = CheckK8sPodsStep(self.job_list_step)
-        self.service_list_step = CheckK8sServicesStep(self.pod_list_step)
-        self.deployment_list_step = CheckK8sDeploymentsStep(self.pod_list_step)
-        self.replicaset_list_step = CheckK8sReplicaSetsStep(self.pod_list_step)
-        self.statefulset_list_step = CheckK8sStatefulSetsStep(self.pod_list_step)
-        self.daemonset_list_step = CheckK8sDaemonSetsStep(self.pod_list_step)
-        self.configmap_list_step = CheckK8sConfigMapsStep()
-        self.secret_list_step = CheckK8sSecretsStep()
-        self.ingress_list_step = CheckK8sIngressesStep()
-        self.pvc_list_step = CheckK8sPvcsStep()
+    def _init_namespace_steps(self, namespace: str):
+        self.job_list_step = CheckK8sJobsStep(namespace)
+        self.pod_list_step = CheckK8sPodsStep(namespace, self.job_list_step)
+        self.service_list_step = CheckK8sServicesStep(namespace, self.pod_list_step)
+        self.deployment_list_step = CheckK8sDeploymentsStep(namespace, self.pod_list_step)
+        self.replicaset_list_step = CheckK8sReplicaSetsStep(namespace, self.pod_list_step)
+        self.statefulset_list_step = CheckK8sStatefulSetsStep(namespace, self.pod_list_step)
+        self.daemonset_list_step = CheckK8sDaemonSetsStep(namespace, self.pod_list_step)
+        self.configmap_list_step = CheckK8sConfigMapsStep(namespace)
+        self.secret_list_step = CheckK8sSecretsStep(namespace)
+        self.ingress_list_step = CheckK8sIngressesStep(namespace)
+        self.pvc_list_step = CheckK8sPvcsStep(namespace)
         self.add_step(self.job_list_step)
         self.add_step(self.pod_list_step)
         self.add_step(self.service_list_step)
@@ -727,7 +741,7 @@ class CheckNamespaceStatusStep(CheckK8sResourcesStep):
     @property
     def description(self) -> str:
         """Step description."""
-        return "Check status of all k8s resources in the selected namespace."
+        return "Check status of all k8s resources in the selected namespaces."
 
     @property
     def component(self) -> str:
@@ -736,13 +750,16 @@ class CheckNamespaceStatusStep(CheckK8sResourcesStep):
 
     @BaseStep.store_state
     def execute(self):
-        """Check status of all k8s resources in the selected namespace.
+        """Check status of all k8s resources in the selected namespaces.
 
         Use settings values:
          - K8S_ONAP_NAMESPACE
          - STATUS_RESULTS_DIRECTORY
          - STORE_ARTIFACTS
          - CHECK_POD_VERSIONS
+         - EXTRA_NAMESPACE_LIST
+         - IGNORE_EMPTY_REPLICAS
+         - INCLUDE_ALL_RES_IN_DETAILS
         """
         super().execute()
 
@@ -769,23 +786,37 @@ class CheckNamespaceStatusStep(CheckK8sResourcesStep):
             ns=self,
             delta=delta).dump('{}/index.html'.format(self.res_dir))
         self.jinja_env.get_template('raw_output.txt.j2').stream(
-            ns=self, namespace=NAMESPACE).dump('{}/onap-k8s.log'.format(
+            ns=self, namespace=self.namespace).dump('{}/onap-k8s.log'.format(
                 self.res_dir))
 
-        details = {}
+        details = {"namespace": {
+            "all": settings.EXTRA_NAMESPACE_LIST,
+            "resources": {}
+        }}
+
+        def store_results(result_dict, step):
+            result_dict[step.resource_type] = {
+                'number_failing': len(step.failing_resources),
+                'failing': self.map_by_name(step.failing_resources)
+            }
+            if settings.INCLUDE_ALL_RES_IN_DETAILS:
+                result_dict[step.resource_type]['all'] = self.map_by_name(step.all_resources)
+                result_dict[step.resource_type]['number_all'] = len(step.all_resources)
+
         for step in self._steps:
             if step.failing:
                 self.failing = True
                 self.__logger.info("%s failing: %s",
                                    step.resource_type,
                                    len(step.failing_resources))
-            details[step.resource_type] = {
-                'number_failing': len(step.failing_resources),
-                'failing': self.map_by_name(step.failing_resources)
-            }
-            if settings.INCLUDE_ALL_RES_IN_DETAILS:
-                details[step.resource_type]['all'] = self.map_by_name(step.all_resources)
-                details[step.resource_type]['number_all'] = len(step.all_resources)
+            if step.is_primary:
+                store_results(details, step)
+            else:
+                ns_details = details["namespace"]["resources"]
+                if step.namespace not in ns_details:
+                    ns_details[step.namespace] = {}
+                ns_details = ns_details[step.namespace]
+                store_results(ns_details, step)
 
         with (Path(self.res_dir).joinpath(settings.STATUS_DETAILS_JSON)).open('w') as file:
             json.dump(details, file, indent=4)
