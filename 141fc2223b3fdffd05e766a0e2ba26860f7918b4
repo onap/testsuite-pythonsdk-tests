@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfacea85_aeaa5c41",
+        "filename": "src/onaptests/steps/cloud/check_status.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-09-18T15:30:27Z",
+      "side": 1,
+      "message": "missing namespace parameter type",
+      "revId": "141fc2223b3fdffd05e766a0e2ba26860f7918b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dae55dce_cfb3ef1e",
+        "filename": "src/onaptests/steps/cloud/check_status.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-09-18T15:30:27Z",
+      "side": 1,
+      "message": "missing namespace parameter type",
+      "revId": "141fc2223b3fdffd05e766a0e2ba26860f7918b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c2c51d4_27f44c72",
+        "filename": "src/onaptests/steps/cloud/check_status.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-09-18T15:30:27Z",
+      "side": 1,
+      "message": "missing namespace parameter type",
+      "revId": "141fc2223b3fdffd05e766a0e2ba26860f7918b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b6a1ac1_41e3641e",
+        "filename": "src/onaptests/steps/cloud/check_status.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-09-18T15:30:27Z",
+      "side": 1,
+      "message": "missing namespace parameter type",
+      "revId": "141fc2223b3fdffd05e766a0e2ba26860f7918b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25114029_c7f6494a",
+        "filename": "src/onaptests/steps/cloud/check_status.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-09-18T15:30:27Z",
+      "side": 1,
+      "message": "missing namespace parameter type",
+      "revId": "141fc2223b3fdffd05e766a0e2ba26860f7918b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "071c7ae0_3fb79f07",
+        "filename": "src/onaptests/steps/cloud/check_status.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-09-18T15:30:27Z",
+      "side": 1,
+      "message": "missing namespace parameter type",
+      "revId": "141fc2223b3fdffd05e766a0e2ba26860f7918b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6dde741b_1ab7f521",
+        "filename": "src/onaptests/steps/cloud/check_status.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-09-18T15:30:27Z",
+      "side": 1,
+      "message": "missing namespace parameter type",
+      "revId": "141fc2223b3fdffd05e766a0e2ba26860f7918b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88de3ca4_cf4c1863",
+        "filename": "src/onaptests/steps/cloud/check_status.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-09-18T15:30:27Z",
+      "side": 1,
+      "message": "missing namespace parameter type",
+      "revId": "141fc2223b3fdffd05e766a0e2ba26860f7918b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f610a98d_05588fd0",
+        "filename": "src/onaptests/steps/cloud/check_status.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-09-18T15:30:27Z",
+      "side": 1,
+      "message": "missing namespace parameter type",
+      "revId": "141fc2223b3fdffd05e766a0e2ba26860f7918b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd1adc3d_255ffbcd",
+        "filename": "src/onaptests/steps/cloud/check_status.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2023-09-18T15:30:27Z",
+      "side": 1,
+      "message": "missing namespace parameter type",
+      "revId": "141fc2223b3fdffd05e766a0e2ba26860f7918b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
