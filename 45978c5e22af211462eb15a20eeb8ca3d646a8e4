@@ -1,0 +1,8 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Verified+1: ONAP Required GHA <releng+onap.required.gha@linuxfoundation.org>
+Code-Review+2: Micha? Jagie??o <michal.jagiello@t-mobile.pl>
+Submitted-by: Micha? Jagie??o <michal.jagiello@t-mobile.pl>
+Submitted-at: Mon, 18 Sep 2023 15:30:32 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/testsuite/pythonsdk-tests/+/135962
+Project: testsuite/pythonsdk-tests
+Branch: refs/heads/master
