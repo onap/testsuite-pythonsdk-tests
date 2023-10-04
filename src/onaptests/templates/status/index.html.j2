@@ -214,11 +214,11 @@
           {% for ds in ns.daemonsets %}
             <tr>
               <td><a href="./daemoset-{{ ds.name }}.html" title="{{ ds.name }}">{{ ds.name }}</a></td>
-              <td>{{ sts.k8s.status.desired_number_scheduled }}</td>
-              <td>{{ number_ok(sts.k8s.status.current_number_scheduled, '0', total=sts.k8s.spec.desired_number_scheduled) }}</td>
-              <td>{{ number_ok(sts.k8s.status.number_ready, '0', total=sts.k8s.spec.desired_number_scheduled) }}</td>
-              <td>{{ number_ok(sts.k8s.status.updated_number_scheduled, '0', total=sts.k8s.spec.desired_number_scheduled) }}</td>
-              <td>{{ number_ok(sts.k8s.status.number_available, '0', total=sts.k8s.spec.desired_number_scheduled) }}</td>
+              <td>{{ ds.k8s.status.desired_number_scheduled }}</td>
+              <td>{{ number_ok(ds.k8s.status.current_number_scheduled, '0', total=ds.k8s.spec.desired_number_scheduled) }}</td>
+              <td>{{ number_ok(ds.k8s.status.number_ready, '0', total=ds.k8s.spec.desired_number_scheduled) }}</td>
+              <td>{{ number_ok(ds.k8s.status.updated_number_scheduled, '0', total=ds.k8s.spec.desired_number_scheduled) }}</td>
+              <td>{{ number_ok(ds.k8s.status.number_available, '0', total=ds.k8s.spec.desired_number_scheduled) }}</td>
             </tr>
           {% endfor %}
           </tbody>

@@ -232,6 +232,8 @@ class CheckK8sResourcesUsingPodsStep(CheckK8sResourcesStep):
 
 class CheckK8sJobsStep(CheckK8sResourcesUsingPodsStep):
 
+    __logger = logging.getLogger(__name__)
+
     def __init__(self, namespace: str):
         """Init CheckK8sJobsStep."""
         super().__init__(namespace=namespace, resource_type="job", pods_source=None)
@@ -265,11 +267,14 @@ class CheckK8sJobsStep(CheckK8sResourcesUsingPodsStep):
 
             # timemout job
             if not k8s.status.completion_time:
-                if any(waiver_elt not in job.name for waiver_elt in settings.WAIVER_LIST):
+                if not any(waiver_elt in job.name for waiver_elt in settings.WAIVER_LIST):
                     self._add_failing_resource(job)
             # completed job
-            if any(waiver_elt not in job.name for waiver_elt in settings.WAIVER_LIST):
+            if not any(waiver_elt in job.name for waiver_elt in settings.WAIVER_LIST):
                 self.all_resources.append(job)
+            else:
+                self.__logger.warn(
+                    "Waiver pattern found in job, exclude %s", job.name)
             jobs_pods += job_pods
 
 
@@ -674,9 +679,6 @@ class CheckK8sDaemonSetsStep(CheckK8sResourcesUsingPodsStep):
         super()._parse_resources()
         for k8s in self.k8s_resources:
             daemonset = DaemonSet(k8s=k8s)
-
-            if settings.IGNORE_EMPTY_REPLICAS and k8s.spec.replicas == 0:
-                continue
 
             if k8s.spec.selector and k8s.spec.selector.match_labels:
                 (daemonset.pods,
