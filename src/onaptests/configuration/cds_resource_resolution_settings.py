@@ -21,6 +21,7 @@ MSB_K8S_RB_VERSION = "v1"
 MSB_K8S_PROFILE_ARTIFACT_FILE_PATH = Path(get_resource_location(
                                           "templates/artifacts/profile.tar.gz"))
 MSB_K8S_PROFILE_NAME = f"cds-ms-prof-{str(uuid4())}"
+MSB_K8S_OVERRIDE_VALUES = None
 K8S_VERSION = "1.0"
 K8S_CONFIG = get_resource_location("templates/artifacts/config")
 K8S_ADDITIONAL_RESOURCES_NAMESPACE = "onap-tests"

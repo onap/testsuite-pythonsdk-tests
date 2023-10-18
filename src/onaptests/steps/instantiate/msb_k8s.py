@@ -36,7 +36,8 @@ class CreateInstanceStep(BaseStep):
         self.instance = Instance.create(cloud_region_id=settings.CLOUD_REGION_ID,
                                         profile_name=settings.MSB_K8S_PROFILE_NAME,
                                         rb_name=settings.MSB_K8S_RB_NAME,
-                                        rb_version=settings.MSB_K8S_RB_VERSION)
+                                        rb_version=settings.MSB_K8S_RB_VERSION,
+                                        override_values=settings.MSB_K8S_OVERRIDE_VALUES)
 
     @BaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
