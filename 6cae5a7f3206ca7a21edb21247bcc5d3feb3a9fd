@@ -1,0 +1,9 @@
+Code-Review+2: Andreas Geissler <andreas-geissler@telekom.de>
+Verified+1: ONAP Required GHA <releng+onap.required.gha@linuxfoundation.org>
+Verified+1: Andreas Geissler <andreas-geissler@telekom.de>
+Code-Review+2: Marek Szwa?kiewicz <marek.szwalkiewicz@external.t-mobile.pl>
+Submitted-by: Andreas Geissler <andreas-geissler@telekom.de>
+Submitted-at: Mon, 25 Dec 2023 13:30:58 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/testsuite/pythonsdk-tests/+/136897
+Project: testsuite/pythonsdk-tests
+Branch: refs/heads/master
