@@ -3,7 +3,7 @@ from uuid import uuid4
 from yaml import load, SafeLoader
 
 from onapsdk.aai.cloud_infrastructure import CloudRegion, Tenant
-from onapsdk.aai.business import Customer, ServiceInstance, ServiceSubscription
+from onapsdk.aai.business import Customer
 from onapsdk.aai.business.owning_entity import OwningEntity as AaiOwningEntity
 from onapsdk.configuration import settings
 from onapsdk.exceptions import ResourceNotFound
@@ -102,7 +102,6 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         super().__init__(cleanup=settings.CLEANUP_FLAG)
         self._yaml_template: dict = None
         self._service_instance_name: str = None
-        self._service_instance: str = None
         if not settings.ONLY_INSTANTIATE:
             self.add_step(YamlTemplateServiceOnboardStep())
             self.add_step(ConnectServiceSubToCloudRegionStep())
@@ -139,20 +138,6 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         return {}
 
     @property
-    def service_name(self) -> str:
-        """Service name.
-
-        Get from YAML template if it's a root step, get from parent otherwise.
-
-        Returns:
-            str: Service name
-
-        """
-        if self.is_root:
-            return next(iter(self.yaml_template.keys()))
-        return self.parent.service_name
-
-    @property
     def service_instance_name(self) -> str:
         """Service instance name.
 
@@ -187,9 +172,7 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         """
         super().execute()
         service = Service(self.service_name)
-        customer: Customer = Customer.get_by_global_customer_id(settings.GLOBAL_CUSTOMER_ID)
-        service_subscription: ServiceSubscription = \
-            customer.get_service_subscription_by_service_type(service.name)
+        self._load_customer_and_subscription()
         cloud_region: CloudRegion = CloudRegion.get_by_id(
             cloud_owner=settings.CLOUD_REGION_CLOUD_OWNER,
             cloud_region_id=settings.CLOUD_REGION_ID,
@@ -229,10 +212,10 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
             service,
             cloud_region,
             tenant,
-            customer,
+            self._customer,
             owning_entity,
             settings.PROJECT,
-            service_subscription,
+            self._service_subscription,
             service_instance_name=self.service_instance_name
         )
         try:
@@ -244,10 +227,8 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
             self._logger.error("Service instantiation %s failed", self.service_instance_name)
             raise onap_test_exceptions.ServiceInstantiateException
         else:
-            service_subscription: ServiceSubscription = \
-                customer.get_service_subscription_by_service_type(self.service_name)
-            self._service_instance: ServiceInstance = \
-                service_subscription.get_service_instance_by_name(self.service_instance_name)
+            self._load_customer_and_subscription(reload=True)
+            self._load_service_instance()
 
     @YamlTemplateBaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
@@ -257,15 +238,18 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
             Exception: Service cleaning failed
 
         """
-        service_deletion = self._service_instance.delete(a_la_carte=True)
-        try:
-            service_deletion.wait_for_finish(settings.ORCHESTRATION_REQUEST_TIMEOUT)
-        except TimeoutError:
-            self._logger.error("Service deletion %s timed out", self._service_instance_name)
-            raise onap_test_exceptions.ServiceCleanupException
-        if service_deletion.finished:
-            self._logger.info("Service %s deleted", self._service_instance_name)
-        else:
-            self._logger.error("Service deletion %s failed", self._service_instance_name)
-            raise onap_test_exceptions.ServiceCleanupException
+        self._load_customer_and_subscription()
+        self._load_service_instance()
+        if self._service_instance:
+            service_deletion = self._service_instance.delete(a_la_carte=True)
+            try:
+                service_deletion.wait_for_finish(settings.ORCHESTRATION_REQUEST_TIMEOUT)
+            except TimeoutError:
+                self._logger.error("Service deletion %s timed out", self._service_instance_name)
+                raise onap_test_exceptions.ServiceCleanupException
+            if service_deletion.finished:
+                self._logger.info("Service %s deleted", self._service_instance_name)
+            else:
+                self._logger.error("Service deletion %s failed", self._service_instance_name)
+                raise onap_test_exceptions.ServiceCleanupException
         super().cleanup()

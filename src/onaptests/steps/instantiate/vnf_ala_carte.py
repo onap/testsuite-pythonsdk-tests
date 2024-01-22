@@ -2,7 +2,6 @@ from uuid import uuid4
 from yaml import load, SafeLoader
 
 from onapsdk.aai.cloud_infrastructure import CloudRegion, Tenant
-from onapsdk.aai.business import Customer, ServiceInstance, ServiceSubscription
 from onapsdk.configuration import settings
 from onapsdk.sdc.service import Service
 
@@ -23,7 +22,6 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
         super().__init__(cleanup=settings.CLEANUP_FLAG)
         self._yaml_template: dict = None
         self._service_instance_name: str = None
-        self._service_instance: ServiceInstance = None
         self.add_step(YamlTemplateServiceAlaCarteInstantiateStep())
 
     @property
@@ -58,20 +56,6 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
         return {}
 
     @property
-    def service_name(self) -> str:
-        """Service name.
-
-        Get from YAML template if it's a root step, get from parent otherwise.
-
-        Returns:
-            str: Service name
-
-        """
-        if self.is_root:
-            return next(iter(self.yaml_template.keys()))
-        return self.parent.service_name
-
-    @property
     def service_instance_name(self) -> str:
         """Service instance name.
 
@@ -102,11 +86,8 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
         """
         super().execute()
         service: Service = Service(self.service_name)
-        customer: Customer = Customer.get_by_global_customer_id(settings.GLOBAL_CUSTOMER_ID)
-        service_subscription: ServiceSubscription = \
-            customer.get_service_subscription_by_service_type(self.service_name)
-        self._service_instance: ServiceInstance = \
-            service_subscription.get_service_instance_by_name(self.service_instance_name)
+        self._load_customer_and_subscription()
+        self._load_service_instance()
         cloud_region: CloudRegion = CloudRegion.get_by_id(
             cloud_owner=settings.CLOUD_REGION_CLOUD_OWNER,
             cloud_region_id=settings.CLOUD_REGION_ID,
@@ -137,15 +118,16 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
             Exception: VNF cleaning failed
 
         """
-        for vnf_instance in self._service_instance.vnf_instances:
-            vnf_deletion = vnf_instance.delete(a_la_carte=True)
+        if self._service_instance:
+            for vnf_instance in self._service_instance.vnf_instances:
+                vnf_deletion = vnf_instance.delete(a_la_carte=True)
 
-            try:
-                vnf_deletion.wait_for_finish(settings.ORCHESTRATION_REQUEST_TIMEOUT)
-                if vnf_deletion.failed:
-                    self._logger.error("VNF deletion %s failed", vnf_instance.name)
+                try:
+                    vnf_deletion.wait_for_finish(settings.ORCHESTRATION_REQUEST_TIMEOUT)
+                    if vnf_deletion.failed:
+                        self._logger.error("VNF deletion %s failed", vnf_instance.name)
+                        raise onap_test_exceptions.VnfCleanupException
+                except TimeoutError:
+                    self._logger.error("VNF deletion %s timed out", vnf_instance.name)
                     raise onap_test_exceptions.VnfCleanupException
-            except TimeoutError:
-                self._logger.error("VNF deletion %s timed out", vnf_instance.name)
-                raise onap_test_exceptions.VnfCleanupException
         super().cleanup()

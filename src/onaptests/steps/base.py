@@ -7,7 +7,7 @@ import time
 from abc import ABC, abstractmethod
 from typing import Iterator, List, Optional
 
-from onapsdk.aai.business import Customer
+from onapsdk.aai.business import Customer, ServiceInstance, ServiceSubscription
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SDKException, SettingsError
 from onaptests.steps.reports_collection import (Report, ReportsCollection,
@@ -400,6 +400,54 @@ class BaseStep(StoreStateHandler, ABC):
 
 class YamlTemplateBaseStep(BaseStep, ABC):
     """Base YAML template step."""
+
+    def __init__(self, cleanup: bool):
+        """Initialize step."""
+
+        super().__init__(cleanup=cleanup)
+        self._service_instance: ServiceInstance = None
+        self._service_subscription: ServiceSubscription = None
+        self._customer: Customer = None
+
+    def _load_customer_and_subscription(self, reload: bool = False):
+        if self._customer is None:
+            self._customer: Customer = \
+                Customer.get_by_global_customer_id(settings.GLOBAL_CUSTOMER_ID)
+        if self._service_subscription is None or reload:
+            self._service_subscription: ServiceSubscription = \
+                self._customer.get_service_subscription_by_service_type(self.service_name)
+
+    def _load_service_instance(self):
+        if self._service_instance is None:
+            self._service_instance: ServiceInstance = \
+                self._service_subscription.get_service_instance_by_name(self.service_instance_name)
+
+    @property
+    def service_name(self) -> str:
+        """Service name.
+
+        Get from YAML template if it's a root step, get from parent otherwise.
+
+        Returns:
+            str: Service name
+
+        """
+        if self.is_root:
+            return next(iter(self.yaml_template.keys()))
+        return self.parent.service_name
+
+    @property
+    def service_instance_name(self) -> str:
+        """Service instance name.
+
+        Generate service instance name.
+        If not applicable None is returned
+
+        Returns:
+            str: Service instance name
+
+        """
+        return None
 
     @property
     @abstractmethod
