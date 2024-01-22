@@ -23,10 +23,13 @@ def get_entrypoints():
         }
     return entry_points_result
 
-def run_test(test_name, validation, entry_point, settings_module):
+def run_test(test_name, validation, force_cleanup, entry_point, settings_module):
     settings_env = "ONAP_PYTHON_SDK_SETTINGS"
     if validation:
         validation_env = "PYTHON_SDK_TESTS_VALIDATION"
+        os.environ[validation_env] = "True"
+    if force_cleanup:
+        validation_env = "PYTHON_SDK_TESTS_FORCE_CLEANUP"
         os.environ[validation_env] = "True"
     os.environ[settings_env] = f"onaptests.configuration.{test_name}_settings"
     if not settings_module:
@@ -71,15 +74,16 @@ def main(argv):
         print("\nExample: python run_test.py basic_cps\n")
         exit(1)
     validation = len(argv) > 1
+    force_cleanup = len(argv) > 2
     test_name = argv[0]
     entry_points = get_entrypoints()
     if test_name == "all":
         settings_module = None
         for test_name, entry_point in entry_points.items():
-            settings_module = run_test(test_name, validation, entry_point, settings_module)
+            settings_module = run_test(test_name, validation, force_cleanup, entry_point, settings_module)
     else:
         entry_point = entry_points[test_name]
-        run_test(test_name, validation, entry_point, None)
+        run_test(test_name, validation, force_cleanup, entry_point, None)
 
 if __name__ == "__main__":
     main(sys.argv[1:])

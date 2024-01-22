@@ -3,7 +3,6 @@ from uuid import uuid4
 from yaml import load, SafeLoader
 
 from onapsdk.aai.cloud_infrastructure import CloudRegion, Tenant
-from onapsdk.aai.business import Customer, ServiceInstance, ServiceSubscription
 from onapsdk.configuration import settings
 from onapsdk.so.instantiation import InstantiationParameter
 
@@ -26,7 +25,6 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
 
         self._yaml_template: dict = None
         self._service_instance_name: str = None
-        self._service_instance: ServiceInstance = None
         if settings.CLOUD_REGION_TYPE == settings.K8S_REGION_TYPE:
             # K8SProfileStep creates the requested profile and then calls
             # YamlTemplateVnfAlaCarteInstantiateStep step
@@ -64,20 +62,6 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
     @property
     def model_yaml_template(self) -> dict:
         return {}
-
-    @property
-    def service_name(self) -> str:
-        """Service name.
-
-        Get from YAML template if it's a root step, get from parent otherwise.
-
-        Returns:
-            str: Service name
-
-        """
-        if self.is_root:
-            return next(iter(self.yaml_template.keys()))
-        return self.parent.service_name
 
     @property
     def service_instance_name(self) -> str:
@@ -129,11 +113,8 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
 
         """
         super().execute()
-        customer: Customer = Customer.get_by_global_customer_id(settings.GLOBAL_CUSTOMER_ID)
-        service_subscription: ServiceSubscription = \
-            customer.get_service_subscription_by_service_type(self.service_name)
-        self._service_instance: ServiceInstance = \
-            service_subscription.get_service_instance_by_name(self.service_instance_name)
+        self._load_customer_and_subscription()
+        self._load_service_instance()
         cloud_region: CloudRegion = CloudRegion.get_by_id(
             cloud_owner=settings.CLOUD_REGION_CLOUD_OWNER,
             cloud_region_id=settings.CLOUD_REGION_ID,
@@ -166,22 +147,23 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
             Exception: Vf module cleaning failed
 
         """
-        for vnf_instance in self._service_instance.vnf_instances:
-            self._logger.debug("VNF instance %s found in Service Instance ",
-                               vnf_instance.name)
-            self._logger.info("Get VF Modules")
-            for vf_module in vnf_instance.vf_modules:
-                self._logger.info("Delete VF Module %s",
-                                  vf_module.name)
-                vf_module_deletion = vf_module.delete(a_la_carte=True)
+        if self._service_instance:
+            for vnf_instance in self._service_instance.vnf_instances:
+                self._logger.debug("VNF instance %s found in Service Instance ",
+                                   vnf_instance.name)
+                self._logger.info("Get VF Modules")
+                for vf_module in vnf_instance.vf_modules:
+                    self._logger.info("Delete VF Module %s",
+                                      vf_module.name)
+                    vf_module_deletion = vf_module.delete(a_la_carte=True)
 
-                try:
-                    vf_module_deletion.wait_for_finish(settings.ORCHESTRATION_REQUEST_TIMEOUT)
-                    if vf_module_deletion.failed:
-                        self._logger.error("VfModule deletion %s failed", vf_module.name)
+                    try:
+                        vf_module_deletion.wait_for_finish(settings.ORCHESTRATION_REQUEST_TIMEOUT)
+                        if vf_module_deletion.failed:
+                            self._logger.error("VfModule deletion %s failed", vf_module.name)
+                            raise onap_test_exceptions.VfModuleCleanupException
+                        self._logger.info("VfModule %s deleted", vf_module.name)
+                    except TimeoutError:
+                        self._logger.error("VfModule deletion %s timed out", vf_module.name)
                         raise onap_test_exceptions.VfModuleCleanupException
-                    self._logger.info("VfModule %s deleted", vf_module.name)
-                except TimeoutError:
-                    self._logger.error("VfModule deletion %s timed out", vf_module.name)
-                    raise onap_test_exceptions.VfModuleCleanupException
         super().cleanup()

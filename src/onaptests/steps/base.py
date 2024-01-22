@@ -7,7 +7,7 @@ import time
 from abc import ABC, abstractmethod
 from typing import Iterator, List, Optional
 
-from onapsdk.aai.business import Customer
+from onapsdk.aai.business import Customer, ServiceInstance, ServiceSubscription
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SDKException, SettingsError
 from onaptests.steps.reports_collection import (Report, ReportsCollection,
@@ -20,6 +20,7 @@ from onaptests.utils.exceptions import (OnapTestException,
 
 
 IF_VALIDATION = "PYTHON_SDK_TESTS_VALIDATION"
+IF_FORCE_CLEANUP = "PYTHON_SDK_TESTS_FORCE_CLEANUP"
 
 
 class StoreStateHandler(ABC):
@@ -43,11 +44,11 @@ class StoreStateHandler(ABC):
                 if cleanup:
                     self._start_cleanup_time = time.time()
                     try:
-                        if (self._executed and self._cleanup and
+                        if (self._cleanup and self._state_execute and
                                 (self._is_validation_only or
                                     self.check_preconditions(cleanup=True))):
                             self._log_execution_state("START", cleanup)
-                            if not self._is_validation_only:
+                            if not self._is_validation_only or self._is_force_cleanup:
                                 fun(self, *args, **kwargs)
                             self._cleaned_up = True
                             execution_status = ReportStepStatus.PASS
@@ -159,6 +160,7 @@ class BaseStep(StoreStateHandler, ABC):
         self._nesting_level: int = 0
         self._break_on_error: bool = break_on_error
         self._is_validation_only = os.environ.get(IF_VALIDATION) is not None
+        self._is_force_cleanup = os.environ.get(IF_FORCE_CLEANUP) is not None
 
     def add_step(self, step: "BaseStep") -> None:
         """Add substep.
@@ -400,6 +402,54 @@ class BaseStep(StoreStateHandler, ABC):
 
 class YamlTemplateBaseStep(BaseStep, ABC):
     """Base YAML template step."""
+
+    def __init__(self, cleanup: bool):
+        """Initialize step."""
+
+        super().__init__(cleanup=cleanup)
+        self._service_instance: ServiceInstance = None
+        self._service_subscription: ServiceSubscription = None
+        self._customer: Customer = None
+
+    def _load_customer_and_subscription(self, reload: bool = False):
+        if self._customer is None:
+            self._customer: Customer = \
+                Customer.get_by_global_customer_id(settings.GLOBAL_CUSTOMER_ID)
+        if self._service_subscription is None or reload:
+            self._service_subscription: ServiceSubscription = \
+                self._customer.get_service_subscription_by_service_type(self.service_name)
+
+    def _load_service_instance(self):
+        if self._service_instance is None:
+            self._service_instance: ServiceInstance = \
+                self._service_subscription.get_service_instance_by_name(self.service_instance_name)
+
+    @property
+    def service_name(self) -> str:
+        """Service name.
+
+        Get from YAML template if it's a root step, get from parent otherwise.
+
+        Returns:
+            str: Service name
+
+        """
+        if self.is_root:
+            return next(iter(self.yaml_template.keys()))
+        return self.parent.service_name
+
+    @property
+    def service_instance_name(self) -> str:
+        """Service instance name.
+
+        Generate service instance name.
+        If not applicable None is returned
+
+        Returns:
+            str: Service instance name
+
+        """
+        return None
 
     @property
     @abstractmethod

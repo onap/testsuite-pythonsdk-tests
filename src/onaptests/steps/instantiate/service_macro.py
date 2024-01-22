@@ -2,10 +2,8 @@
 import time
 from typing import List
 from uuid import uuid4
-from onapsdk.aai.business.service import ServiceInstance
 from yaml import load, SafeLoader
 
-from onapsdk.aai.business.customer import Customer, ServiceSubscription
 from onapsdk.aai.business.owning_entity import OwningEntity
 from onapsdk.aai.cloud_infrastructure.cloud_region import CloudRegion
 from onapsdk.aai.cloud_infrastructure.tenant import Tenant
@@ -46,7 +44,6 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
         self._yaml_template: dict = None
         self._model_yaml_template: dict = None
         self._service_instance_name: str = None
-        self._service_instance: str = None
         if not settings.ONLY_INSTANTIATE:
             self.add_step(YamlTemplateServiceOnboardStep())
 
@@ -103,20 +100,6 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
         return self.parent.model_yaml_template
 
     @property
-    def service_name(self) -> str:
-        """Service name.
-
-        Get from YAML template if it's a root step, get from parent otherwise.
-
-        Returns:
-            str: Service name
-
-        """
-        if self.is_root:
-            return next(iter(self.yaml_template.keys()))
-        return self.parent.service_name
-
-    @property
     def service_instance_name(self) -> str:
         """Service instance name.
 
@@ -151,9 +134,7 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
         """
         super().execute()
         service = Service(self.service_name)
-        customer: Customer = Customer.get_by_global_customer_id(settings.GLOBAL_CUSTOMER_ID)
-        service_subscription: ServiceSubscription = \
-            customer.get_service_subscription_by_service_type(service.name)
+        self._load_customer_and_subscription()
         if any(
                 filter(lambda x: x in self.yaml_template[self.service_name].keys(),
                        ["vnfs", "networks"])):
@@ -219,14 +200,14 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
 
         service_instantiation = ServiceInstantiation.instantiate_macro(
             sdc_service=service,
-            customer=customer,
+            customer=self._customer,
             owning_entity=owning_entity,
             project=settings.PROJECT,
             line_of_business=settings.LINE_OF_BUSINESS,
             platform=settings.PLATFORM,
             cloud_region=cloud_region,
             tenant=tenant,
-            service_subscription=service_subscription,
+            service_subscription=self._service_subscription,
             service_instance_name=self.service_instance_name,
             vnf_parameters=vnf_params_list,
             enable_multicloud=settings.USE_MULTICLOUD,
@@ -241,10 +222,8 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
             self._logger.error("Service instantiation %s failed", self.service_instance_name)
             raise onap_test_exceptions.ServiceInstantiateException
 
-        service_subscription: ServiceSubscription = \
-            customer.get_service_subscription_by_service_type(self.service_name)
-        self._service_instance: ServiceInstance = \
-            service_subscription.get_service_instance_by_name(self.service_instance_name)
+        self._load_customer_and_subscription(reload=True)
+        self._load_service_instance()
 
     @YamlTemplateBaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
@@ -254,6 +233,8 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
             Exception: Service cleaning failed
 
         """
+        self._load_customer_and_subscription()
+        self._load_service_instance()
         if self._service_instance:
             service_deletion = self._service_instance.delete(a_la_carte=False)
             try:

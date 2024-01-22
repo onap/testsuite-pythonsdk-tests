@@ -65,21 +65,6 @@ class ClampStep(YamlTemplateBaseStep):
     def model_yaml_template(self) -> dict:
         return {}
 
-    @property
-    def service_name(self) -> str:
-        """Service name.
-
-        Get from YAML template if it's a root step, get from parent otherwise.
-
-        Returns:
-            str: Service name
-
-        """
-        if self.is_root:
-            return next(iter(self.yaml_template.keys()))
-        else:
-            return self.parent.service_name
-
     def check(self, operational_policies: list, is_template: bool = False) -> str:
         """Check CLAMP requirements to create a loop."""
         self._logger.info("Check operational policy")

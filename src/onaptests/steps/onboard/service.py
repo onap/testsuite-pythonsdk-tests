@@ -171,20 +171,6 @@ class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
             return self._model_yaml_template
         return self.parent.model_yaml_template
 
-    @property
-    def service_name(self) -> str:
-        """Service name.
-
-        Get from YAML template if it's a root step, get from parent otherwise.
-
-        Returns:
-            str: Service name
-
-        """
-        if self.is_root:
-            return next(iter(self.yaml_template.keys()))
-        return self.parent.service_name
-
     @YamlTemplateBaseStep.store_state
     def execute(self):
         """Onboard service."""

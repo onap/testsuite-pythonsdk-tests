@@ -3,7 +3,6 @@ from typing import Iterable
 from uuid import uuid4
 from yaml import load, SafeLoader
 
-from onapsdk.aai.business import Customer, ServiceInstance, ServiceSubscription
 from onapsdk.configuration import settings
 from onapsdk.so.instantiation import Subnet
 from onapsdk.sdc.service import Service
@@ -25,7 +24,6 @@ class YamlTemplateVlAlaCarteInstantiateStep(YamlTemplateBaseStep):
         super().__init__(cleanup=settings.CLEANUP_FLAG)
         self._yaml_template: dict = None
         self._service_instance_name: str = None
-        self._service_instance: ServiceInstance = None
         self.add_step(YamlTemplateServiceAlaCarteInstantiateStep())
 
     @property
@@ -58,20 +56,6 @@ class YamlTemplateVlAlaCarteInstantiateStep(YamlTemplateBaseStep):
     @property
     def model_yaml_template(self) -> dict:
         return {}
-
-    @property
-    def service_name(self) -> str:
-        """Service name.
-
-        Get from YAML template if it's a root step, get from parent otherwise.
-
-        Returns:
-            str: Service name
-
-        """
-        if self.is_root:
-            return next(iter(self.yaml_template.keys()))
-        return self.parent.service_name
 
     @property
     def service_instance_name(self) -> str:
@@ -129,15 +113,11 @@ class YamlTemplateVlAlaCarteInstantiateStep(YamlTemplateBaseStep):
         """
         super().execute()
         service: Service = Service(self.service_name)
-        customer: Customer = Customer.get_by_global_customer_id(settings.GLOBAL_CUSTOMER_ID)
-        service_subscription: ServiceSubscription = \
-            customer.get_service_subscription_by_service_type(self.service_name)
-        service_instance: ServiceInstance = \
-            service_subscription.get_service_instance_by_name(self.service_instance_name)
-        self._service_instance = service_instance
+        self._load_customer_and_subscription()
+        self._load_service_instance()
         for idx, network in enumerate(service.networks):
             # for network in self.yaml_template[self.service_name]["networks"]:
-            net_instantiation = service_instance.add_network(
+            net_instantiation = self._service_instance.add_network(
                 network,
                 settings.LINE_OF_BUSINESS,
                 settings.PLATFORM,
@@ -159,7 +139,7 @@ class YamlTemplateVlAlaCarteInstantiateStep(YamlTemplateBaseStep):
         Raises:
             Exception: VL cleaning failed
         """
-        if self._cleanup:
+        if self._service_instance:
             for net_instance in self._service_instance.network_instances:
                 self._logger.info("Start network deletion %s", net_instance.name)
                 net_deletion = net_instance.delete(a_la_carte=True)
@@ -171,4 +151,4 @@ class YamlTemplateVlAlaCarteInstantiateStep(YamlTemplateBaseStep):
                 except TimeoutError:
                     self._logger.error("VL deletion %s timed out", net_instance.name)
                     raise onap_test_exceptions.NetworkCleanupException
-            super().cleanup()
+        super().cleanup()

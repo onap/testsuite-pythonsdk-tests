@@ -70,18 +70,6 @@ class MultiVnfUbuntuMacroStep(YamlTemplateBaseScenarioStep):
         return self._model_yaml_template
 
     @property
-    def service_name(self) -> dict:
-        """Service name.
-
-        Get from YAML template.
-
-        Returns:
-            str: Service name
-
-        """
-        return next(iter(self.yaml_template.keys()))
-
-    @property
     def service_instance_name(self) -> str:
         """Service instance name.
 
