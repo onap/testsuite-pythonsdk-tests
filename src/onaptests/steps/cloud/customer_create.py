@@ -33,4 +33,4 @@ class CustomerCreateStep(BaseStep):
         try:
             Customer.create(settings.GLOBAL_CUSTOMER_ID, settings.GLOBAL_CUSTOMER_ID, "INFRA")
         except APIError:
-            self._logger.warn("Try to update the Customer failed.")
+            self._logger.warning("Try to update the Customer failed.")

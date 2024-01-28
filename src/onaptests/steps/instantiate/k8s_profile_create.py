@@ -48,7 +48,7 @@ class K8SProfileStep(BaseStep):
         """
         if self.is_root:
             if not self._yaml_template:
-                with open(settings.SERVICE_YAML_TEMPLATE, "r") as yaml_template:
+                with open(settings.SERVICE_YAML_TEMPLATE, "r", encoding="utf-8") as yaml_template:
                     self._yaml_template: dict = load(yaml_template, SafeLoader)
             return self._yaml_template
         return self.parent.yaml_template
@@ -152,7 +152,8 @@ class K8SProfileStep(BaseStep):
                                                    k8s_profile_namespace,
                                                    settings.K8S_PROFILE_K8S_VERSION)
                     # Upload artifact for created profile
-                    profile.upload_artifact(open(settings.K8S_PROFILE_ARTIFACT_PATH, 'rb').read())
+                    with open(settings.K8S_PROFILE_ARTIFACT_PATH, 'rb') as k8s_profile:
+                        profile.upload_artifact(k8s_profile.read())
 
     @BaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
@@ -179,7 +180,7 @@ class K8SProfileStep(BaseStep):
                 try:
                     profile = rbdef.get_profile_by_name(k8s_profile_name)
                     profile.delete()
-                except APIError:
+                except APIError as exc:
                     self._logger.error("K8s profile deletion %s failed", k8s_profile_name)
-                    raise onap_test_exceptions.ProfileCleanupException
+                    raise onap_test_exceptions.ProfileCleanupException from exc
         super().cleanup()

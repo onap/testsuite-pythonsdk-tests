@@ -3,15 +3,13 @@ from onaptests.utils.resources import get_resource_location
 
 from .settings import *  # noqa
 
-""" Specific Basic clamp settings."""
+
 CLEANUP_FLAG = False
 CLAMP_DISTRIBUTION_TIMER = 10
 
-# pylint: disable=bad-whitespace
 # The ONAP part
 SERVICE_DETAILS = ("Onboarding, enriching a model with TCA." +
                    "Design a loop with Clamp and deploy it in Policy and DCAE")
-SERVICE_COMPONENTS = "SDC, CLAMP, POLICY, DCAE, DMAAP"
 
 VENDOR_NAME = "basiclamp_vendor"
 
@@ -44,7 +42,7 @@ CONFIGURATION_PATH = get_resource_location("configuration/")
 
 try:
     # Try to retrieve the SERVICE NAME from the yaml file
-    with open(SERVICE_YAML_TEMPLATE, "r") as yaml_template:
+    with open(SERVICE_YAML_TEMPLATE, "r", encoding="utf-8") as yaml_template:
         yaml_config_file = load(yaml_template, SafeLoader)
         SERVICE_NAME = next(iter(yaml_config_file.keys()))
         VF_NAME = SERVICE_NAME

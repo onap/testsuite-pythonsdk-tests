@@ -29,7 +29,7 @@ class HelmChartStep(BaseStep):
         chart_info_path = get_local_dir() / chart_info_file
 
         try:
-            with open(chart_info_path, 'r') as stream:
+            with open(chart_info_path, 'r', encoding="utf-8") as stream:
                 chart_info = yaml.safe_load(stream)
         except IOError as err:
             msg = f"{chart_info_file} not found."
@@ -80,6 +80,7 @@ class HelmChartStep(BaseStep):
             msg = "Error during helm release installation."
             raise EnvironmentPreparationException(msg) from err
 
+    @BaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
         """Uninstall helm release."""
         try:

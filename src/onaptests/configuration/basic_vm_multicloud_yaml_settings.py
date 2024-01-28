@@ -1,10 +1,10 @@
 from onaptests.utils.resources import get_resource_location
 from .settings import *  # noqa
 
-""" Specific Basic VM with multicloud and yaml config scenario."""
+
+# Specific Basic VM with multicloud and yaml config scenario.
 SERVICE_DETAILS = ("Onboarding, distribution and instantiation of a VM" +
                    "using à la carte and Multicloud module")
-SERVICE_COMPONENTS = "SDC, DMAAP, AAI, SO, SDNC, Multicloud"
 
 USE_MULTICLOUD = True
 # Set ONLY_INSTANTIATE to true to run an instantiation without repeating

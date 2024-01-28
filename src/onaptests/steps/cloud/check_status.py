@@ -24,6 +24,7 @@ from .resources import (ConfigMap, Container, DaemonSet, Deployment, Ingress,
 
 
 class CheckK8sResourcesStep(BaseStep):
+    """Base step for check of k8s resources in the selected namespace."""
 
     __logger = logging.getLogger(__name__)
 
@@ -110,6 +111,7 @@ class CheckK8sResourcesStep(BaseStep):
 
 
 class CheckBasicK8sResourcesStep(CheckK8sResourcesStep):
+    """Basic check of k8s resources in the selected namespace."""
 
     def __init__(self, namespace: str, resource_type: str, k8s_res_class):
         """Init CheckBasicK8sResourcesStep."""
@@ -129,6 +131,7 @@ class CheckBasicK8sResourcesStep(CheckK8sResourcesStep):
 
 
 class CheckK8sConfigMapsStep(CheckBasicK8sResourcesStep):
+    """Check of k8s configmap in the selected namespace."""
 
     def __init__(self, namespace: str):
         """Init CheckK8sConfigMapsStep."""
@@ -140,6 +143,7 @@ class CheckK8sConfigMapsStep(CheckBasicK8sResourcesStep):
 
 
 class CheckK8sSecretsStep(CheckBasicK8sResourcesStep):
+    """Check of k8s secrets in the selected namespace."""
 
     def __init__(self, namespace: str):
         """Init CheckK8sSecretsStep."""
@@ -151,6 +155,7 @@ class CheckK8sSecretsStep(CheckBasicK8sResourcesStep):
 
 
 class CheckK8sIngressesStep(CheckBasicK8sResourcesStep):
+    """Check of k8s ingress in the selected namespace."""
 
     def __init__(self, namespace: str):
         """Init CheckK8sIngressesStep."""
@@ -162,6 +167,7 @@ class CheckK8sIngressesStep(CheckBasicK8sResourcesStep):
 
 
 class CheckK8sPvcsStep(CheckK8sResourcesStep):
+    """Check of k8s pvcs in the selected namespace."""
 
     def __init__(self, namespace: str):
         """Init CheckK8sPvcsStep."""
@@ -194,6 +200,7 @@ class CheckK8sPvcsStep(CheckK8sResourcesStep):
 
 
 class CheckK8sResourcesUsingPodsStep(CheckK8sResourcesStep):
+    """Check of k8s respurces with pods in the selected namespace."""
 
     def __init__(self, namespace: str, resource_type: str, pods_source):
         """Init CheckK8sResourcesUsingPodsStep."""
@@ -231,6 +238,7 @@ class CheckK8sResourcesUsingPodsStep(CheckK8sResourcesStep):
 
 
 class CheckK8sJobsStep(CheckK8sResourcesUsingPodsStep):
+    """Check of k8s jobs in the selected namespace."""
 
     __logger = logging.getLogger(__name__)
 
@@ -273,12 +281,13 @@ class CheckK8sJobsStep(CheckK8sResourcesUsingPodsStep):
             if not any(waiver_elt in job.name for waiver_elt in settings.WAIVER_LIST):
                 self.all_resources.append(job)
             else:
-                self.__logger.warn(
+                self.__logger.warning(
                     "Waiver pattern found in job, exclude %s", job.name)
             jobs_pods += job_pods
 
 
 class CheckK8sPodsStep(CheckK8sResourcesUsingPodsStep):
+    """Check of k8s pods in the selected namespace."""
 
     __logger = logging.getLogger(__name__)
 
@@ -400,7 +409,7 @@ class CheckK8sPodsStep(CheckK8sResourcesUsingPodsStep):
             self.jinja_env.get_template('pod.html.j2').stream(pod=pod).dump(
                 '{}/pod-{}.html'.format(self.res_dir, pod.name))
             if any(waiver_elt in pod.name for waiver_elt in settings.WAIVER_LIST):
-                self.__logger.warn("Waiver pattern found in pod, exclude %s", pod.name)
+                self.__logger.warning("Waiver pattern found in pod, exclude %s", pod.name)
             else:
                 self.all_resources.append(pod)
 
@@ -412,7 +421,7 @@ class CheckK8sPodsStep(CheckK8sResourcesUsingPodsStep):
                 containers=containers).dump('{}/container_versions.html'.format(
                     self.res_dir))
             # create a json file for version tracking
-            with open(self.res_dir + "/onap_versions.json", "w") as write_file:
+            with open(self.res_dir + "/onap_versions.json", "w", encoding="utf-8") as write_file:
                 json.dump(pod_versions, write_file)
 
     def _get_container_logs(self, pod, container, full=True, previous=False):
@@ -430,9 +439,7 @@ class CheckK8sPodsStep(CheckK8sResourcesUsingPodsStep):
             )
         except UnicodeDecodeError:
             logs = "{0} has an unicode decode error...".format(pod.name)
-            self.__logger.error(
-                "{0} has an unicode decode error in the logs...", pod.name,
-            )
+            self.__logger.error(logs)
         return logs
 
     def _parse_container(self, pod, k8s_container, init=False):  # noqa
@@ -463,7 +470,7 @@ class CheckK8sPodsStep(CheckK8sResourcesUsingPodsStep):
                 with open(
                         "{}/pod-{}-{}.log".format(self.res_dir,
                                                   pod.name, container.name),
-                        'w') as log_result:
+                        'w', encoding="utf-8") as log_result:
                     log_result.write(logs)
                 if (not container.ready) and container.restart_count > 0:
                     old_logs = self._get_container_logs(pod=pod, container=container,
@@ -472,16 +479,16 @@ class CheckK8sPodsStep(CheckK8sResourcesUsingPodsStep):
                             "{}/pod-{}-{}.old.log".format(self.res_dir,
                                                           pod.name,
                                                           container.name),
-                            'w') as log_result:
+                            'w', encoding="utf-8") as log_result:
                         log_result.write(old_logs)
-                if (container.name in settings.FULL_LOGS_CONTAINERS):
+                if container.name in settings.FULL_LOGS_CONTAINERS:
                     logs = self._get_container_logs(pod=pod, container=container)
                     with open(
                             "{}/pod-{}-{}.log".format(self.res_dir,
                                                       pod.name, container.name),
-                            'w') as log_result:
+                            'w', encoding="utf-8") as log_result:
                         log_result.write(logs)
-                if (container.name in settings.SPECIFIC_LOGS_CONTAINERS):
+                if container.name in settings.SPECIFIC_LOGS_CONTAINERS:
                     for log_file in settings.SPECIFIC_LOGS_CONTAINERS[container.name]:
                         exec_command = ['/bin/sh', '-c', "cat {}".format(log_file)]
                         log_files[log_file] = stream(
@@ -499,7 +506,7 @@ class CheckK8sPodsStep(CheckK8sResourcesUsingPodsStep):
                                 "{}/pod-{}-{}-{}.log".format(
                                     self.res_dir, pod.name,
                                     container.name, log_file_slug),
-                                'w') as log_result:
+                                'w', encoding="utf-8") as log_result:
                             log_result.write(log_files[log_file])
             except client.rest.ApiException as exc:
                 self.__logger.warning("%scontainer %s of pod %s has an exception: %s",
@@ -512,7 +519,7 @@ class CheckK8sPodsStep(CheckK8sResourcesUsingPodsStep):
                 log_files=log_files).dump('{}/pod-{}-{}-logs.html'.format(
                     self.res_dir, pod.name, container.name))
         if any(waiver_elt in container.name for waiver_elt in settings.WAIVER_LIST):
-            self.__logger.warn(
+            self.__logger.warning(
                 "Waiver pattern found in container, exclude %s", container.name)
         else:
             containers_list.append(container)
@@ -522,6 +529,7 @@ class CheckK8sPodsStep(CheckK8sResourcesUsingPodsStep):
 
 
 class CheckK8sServicesStep(CheckK8sResourcesUsingPodsStep):
+    """Check of k8s services in the selected namespace."""
 
     def __init__(self, namespace: str, pods):
         """Init CheckK8sServicesStep."""
@@ -547,6 +555,7 @@ class CheckK8sServicesStep(CheckK8sResourcesUsingPodsStep):
 
 
 class CheckK8sDeploymentsStep(CheckK8sResourcesUsingPodsStep):
+    """Check of k8s deployments in the selected namespace."""
 
     def __init__(self, namespace: str, pods):
         """Init CheckK8sDeploymentsStep."""
@@ -585,6 +594,7 @@ class CheckK8sDeploymentsStep(CheckK8sResourcesUsingPodsStep):
 
 
 class CheckK8sReplicaSetsStep(CheckK8sResourcesUsingPodsStep):
+    """Check of k8s replicasets in the selected namespace."""
 
     def __init__(self, namespace: str, pods):
         """Init CheckK8sReplicaSetsStep."""
@@ -625,6 +635,7 @@ class CheckK8sReplicaSetsStep(CheckK8sResourcesUsingPodsStep):
 
 
 class CheckK8sStatefulSetsStep(CheckK8sResourcesUsingPodsStep):
+    """Check of k8s statefulsets in the selected namespace."""
 
     def __init__(self, namespace: str, pods):
         """Init CheckK8sStatefulSetsStep."""
@@ -665,6 +676,7 @@ class CheckK8sStatefulSetsStep(CheckK8sResourcesUsingPodsStep):
 
 
 class CheckK8sDaemonSetsStep(CheckK8sResourcesUsingPodsStep):
+    """Check of k8s daemonsets in the selected namespace."""
 
     def __init__(self, namespace: str, pods):
         """Init CheckK8sDaemonSetsStep."""
@@ -694,7 +706,7 @@ class CheckK8sDaemonSetsStep(CheckK8sResourcesUsingPodsStep):
                 daemonset=daemonset).dump('{}/daemonset-{}.html'.format(
                     self.res_dir, daemonset.name))
 
-            if (k8s.status.number_ready < k8s.status.desired_number_scheduled):
+            if k8s.status.number_ready < k8s.status.desired_number_scheduled:
                 self._add_failing_resource(daemonset)
 
             self.all_resources.append(daemonset)
@@ -715,6 +727,24 @@ class CheckNamespaceStatusStep(CheckK8sResourcesStep):
             config.load_kube_config(config_file=settings.K8S_CONFIG)
         for namespace in ([self.namespace] + settings.EXTRA_NAMESPACE_LIST):
             self._init_namespace_steps(namespace)
+
+        self.pods = []
+        self.services = []
+        self.jobs = []
+        self.deployments = []
+        self.replicasets = []
+        self.statefulsets = []
+        self.daemonsets = []
+        self.pvcs = []
+        self.configmaps = []
+        self.secrets = []
+        self.ingresses = []
+        self.failing_statefulsets = []
+        self.failing_jobs = []
+        self.failing_deployments = []
+        self.failing_replicasets = []
+        self.failing_daemonsets = []
+        self.failing_pvcs = []
 
     def _init_namespace_steps(self, namespace: str):
         self.job_list_step = CheckK8sJobsStep(namespace)
@@ -820,10 +850,12 @@ class CheckNamespaceStatusStep(CheckK8sResourcesStep):
                 ns_details = ns_details[step.namespace]
                 store_results(ns_details, step)
 
-        with (Path(self.res_dir).joinpath(settings.STATUS_DETAILS_JSON)).open('w') as file:
+        with (Path(self.res_dir).joinpath(settings.STATUS_DETAILS_JSON)
+              ).open('w', encoding="utf-8") as file:
             json.dump(details, file, indent=4)
         if self.failing:
             raise StatusCheckException
 
     def map_by_name(self, resources):
+        """Get resources' names."""
         return list(map(lambda resource: resource.name, resources))

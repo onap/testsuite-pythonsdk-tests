@@ -5,13 +5,14 @@ import time
 from typing import Tuple
 
 import requests
-from kubernetes import client, config, watch
-from onapsdk.configuration import settings
 import urllib3
+from kubernetes import client, config, watch
 
+from onapsdk.configuration import settings
 from onaptests.steps.base import BaseStep
 from onaptests.steps.instantiate.msb_k8s import CreateInstanceStep
-from onaptests.utils.exceptions import EnvironmentPreparationException, OnapTestException
+from onaptests.utils.exceptions import (EnvironmentPreparationException,
+                                        OnapTestException)
 
 
 class PnfSimulatorCnfRegisterStep(BaseStep):
@@ -64,9 +65,9 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
                     if event["object"].status.phase == "Running":
                         return True
             return status
-        except urllib3.exceptions.HTTPError:
+        except urllib3.exceptions.HTTPError as exc:
             self._logger.error("Can't connect with k8s")
-            raise OnapTestException
+            raise OnapTestException from exc
 
     def get_ves_protocol_ip_and_port(self) -> Tuple[str, str, str]:
         """Static method to get VES protocol, ip address and port.
@@ -92,9 +93,9 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
                         proto = "https"
                     return proto, service.spec.cluster_ip, service.spec.ports[0].port
             raise EnvironmentPreparationException("Couldn't get VES protocol, ip and port")
-        except Exception:
+        except Exception as exc:
             self._logger.exception("Can't connect with k8s")
-            raise OnapTestException
+            raise OnapTestException from exc
 
     @BaseStep.store_state
     def execute(self) -> None:
@@ -131,7 +132,8 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
                                 }
                             }
                         }
-                    }
+                    },
+                    timeout=settings.DEFAULT_REQUEST_TIMEOUT
                 )
                 response.raise_for_status()
                 registered_successfully = True

@@ -5,6 +5,8 @@ from .settings import *  # noqa
 
 SERVICE_NAME = "CDS blueprint enrichment"
 
+SERVICE_DETAILS = "Tests CDS blueprint enrichment and its upload to blueprint processor"
+
 CLEANUP_FLAG = True
 
 CDS_DD_FILE = Path(get_resource_location("templates/artifacts/dd.json"))

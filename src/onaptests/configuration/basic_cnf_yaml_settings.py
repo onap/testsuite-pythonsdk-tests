@@ -4,10 +4,10 @@ from onaptests.utils.resources import get_resource_location
 import onaptests.utils.exceptions as onap_test_exceptions
 from .settings import *  # noqa
 
-""" Specific basic_cnf with multicloud-k8s and yaml config scenario."""
+
+# Specific basic_cnf with multicloud-k8s and yaml config scenario.
 SERVICE_DETAILS = ("Onboarding, distribution and instantiation of a CNF" +
                    "using à la carte and Multicloud K8S module")
-SERVICE_COMPONENTS = "SDC, DMAAP, AAI, SO, SDNC, Multicloud K8S"
 # This scenario uses multicloud-k8s and not multicloud
 # (no registration requested)
 USE_MULTICLOUD = False
@@ -21,11 +21,11 @@ SERVICE_YAML_TEMPLATE = get_resource_location("templates/vnf-services/basic_cnf-
 
 try:
     # Try to retrieve the SERVICE NAME from the yaml file
-    with open(SERVICE_YAML_TEMPLATE, "r") as yaml_template:
+    with open(SERVICE_YAML_TEMPLATE, "r", encoding="utf-8") as yaml_template:
         yaml_config_file = load(yaml_template, SafeLoader)
         SERVICE_NAME = next(iter(yaml_config_file.keys()))
-except (FileNotFoundError, ValueError):
-    raise onap_test_exceptions.TestConfigurationException
+except (FileNotFoundError, ValueError) as exc:
+    raise onap_test_exceptions.TestConfigurationException from exc
 
 CLEANUP_FLAG = True
 # nb of seconds before cleanup in case cleanup option is set

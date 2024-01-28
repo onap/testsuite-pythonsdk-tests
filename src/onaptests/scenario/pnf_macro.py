@@ -1,8 +1,9 @@
 """Instantiate service with PNF using SO macro flow."""
-from onapsdk.configuration import settings
 from yaml import SafeLoader, load
 
-from onaptests.scenario.scenario_base import BaseStep, ScenarioBase, YamlTemplateBaseScenarioStep
+from onapsdk.configuration import settings
+from onaptests.scenario.scenario_base import (BaseStep, ScenarioBase,
+                                              YamlTemplateBaseScenarioStep)
 from onaptests.steps.instantiate.pnf_register_ves import \
     SendPnfRegisterVesEvent
 from onaptests.steps.instantiate.service_macro import \
@@ -66,7 +67,7 @@ class PnfMacroScenarioStep(YamlTemplateBaseScenarioStep):
 
         """
         if not self._yaml_template:
-            with open(settings.SERVICE_YAML_TEMPLATE, "r") as yaml_template:
+            with open(settings.SERVICE_YAML_TEMPLATE, "r", encoding="utf-8") as yaml_template:
                 self._yaml_template: dict = load(yaml_template, SafeLoader)
         return self._yaml_template
 

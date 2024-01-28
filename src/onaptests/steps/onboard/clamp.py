@@ -49,7 +49,7 @@ class OnboardClampStep(YamlTemplateBaseStep):
         """
         if self.is_root:
             if not self._yaml_template:
-                with open(settings.SERVICE_YAML_TEMPLATE, "r") as yaml_template:
+                with open(settings.SERVICE_YAML_TEMPLATE, "r", encoding="utf-8") as yaml_template:
                     self._yaml_template: dict = load(yaml_template, SafeLoader)
             return self._yaml_template
         return self.parent.yaml_template
@@ -79,14 +79,14 @@ class OnboardClampStep(YamlTemplateBaseStep):
 
             # we add the artifact to the first VNF
             self._logger.info("Try to add blueprint to %s", vf.name)
-            payload_file = open(settings.CONFIGURATION_PATH + 'tca-microservice.yaml', 'rb')
-            data = payload_file.read()
-            self._logger.info("DCAE INVENTORY BLUEPRINT file retrieved")
-            service.add_artifact_to_vf(vnf_name=vf.name,
-                                       artifact_type="DCAE_INVENTORY_BLUEPRINT",
-                                       artifact_name="tca-microservice.yaml",
-                                       artifact=data)
-            payload_file.close()
+            with open(settings.CONFIGURATION_PATH + 'tca-microservice.yaml',
+                      'rb') as payload_file:
+                data = payload_file.read()
+                self._logger.info("DCAE INVENTORY BLUEPRINT file retrieved")
+                service.add_artifact_to_vf(vnf_name=vf.name,
+                                           artifact_type="DCAE_INVENTORY_BLUEPRINT",
+                                           artifact_name="tca-microservice.yaml",
+                                           artifact=data)
             service.checkin()
             service.onboard()
             self._logger.info("DCAE INVENTORY BLUEPRINT ADDED")

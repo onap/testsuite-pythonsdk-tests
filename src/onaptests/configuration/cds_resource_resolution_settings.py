@@ -6,6 +6,7 @@ from .settings import *  # noqa
 
 CLEANUP_FLAG = True
 SERVICE_NAME = "CDS resource resolution"
+SERVICE_DETAILS = "Tests execution or resource resolution in CDS"
 CLOUD_REGION_CLOUD_OWNER = "basicnf-owner"  # must not contain _
 CLOUD_REGION_ID = "k8sregion-cds"
 CLOUD_REGION_TYPE = "k8s"
@@ -82,4 +83,3 @@ CDS_WORKFLOW_EXPECTED_OUTPUT = {
         }
     }
 }
-CDS_NODE_PORT = 30449

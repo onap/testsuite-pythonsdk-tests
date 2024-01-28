@@ -1,13 +1,16 @@
 """Instantiate basic cnf using SO macro flow."""
+from yaml import SafeLoader, load
+
 from onapsdk.configuration import settings
-from onaptests.scenario.scenario_base import BaseStep, ScenarioBase, YamlTemplateBaseScenarioStep
+from onaptests.scenario.scenario_base import (BaseStep, ScenarioBase,
+                                              YamlTemplateBaseScenarioStep)
 from onaptests.steps.instantiate.service_macro import \
     YamlTemplateServiceMacroInstantiateStep
 from onaptests.steps.onboard.cds import CbaPublishStep
-from yaml import SafeLoader, load
 
 
 class BasicCnfMacroStep(YamlTemplateBaseScenarioStep):
+    """Main basic cnf macro scenario step."""
 
     def __init__(self):
         """Initialize step.
@@ -57,7 +60,7 @@ class BasicCnfMacroStep(YamlTemplateBaseScenarioStep):
 
         """
         if not self._yaml_template:
-            with open(settings.SERVICE_YAML_TEMPLATE, "r") as yaml_template:
+            with open(settings.SERVICE_YAML_TEMPLATE, "r", encoding="utf-8") as yaml_template:
                 self._yaml_template: dict = load(yaml_template, SafeLoader)
         return self._yaml_template
 

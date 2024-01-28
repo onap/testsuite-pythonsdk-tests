@@ -129,7 +129,7 @@ class CbaPublishStep(CDSBaseStep):
     def __init__(self) -> None:
         """Initialize CBA publish step."""
         super().__init__(cleanup=BaseStep.HAS_NO_CLEANUP)
-        """Let's skip enrichment if enriched CBA is already present"""
+        # Let's skip enrichment if enriched CBA is already present
         if Path.is_file(settings.CDS_CBA_UNENRICHED):
             self.add_step(CbaEnrichStep())
         elif settings.EXPOSE_SERVICES_NODE_PORTS:

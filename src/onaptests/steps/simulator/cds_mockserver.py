@@ -54,9 +54,10 @@ class CdsMockserverCnfConfigureStep(BaseStep):
                         "httpResponse": {
                             "body": expectation["response"]
                         }
-                    }
+                    },
+                    timeout=settings.DEFAULT_REQUEST_TIMEOUT
                 )
                 response.raise_for_status()
             except (requests.ConnectionError, requests.HTTPError) as http_error:
                 self._logger.debug(f"Can't register cds-mockserver expectation: {str(http_error)}")
-                raise OnapTestException("CDS mockserver not configured")
+                raise OnapTestException("CDS mockserver not configured") from http_error

@@ -104,8 +104,7 @@ class YamlTemplateVfOnboardStep(YamlTemplateBaseStep):
         """
         if settings.MODEL_YAML_TEMPLATE:
             return self.model_yaml_template
-        else:
-            return self.parent.yaml_template[self.parent.service_name]
+        return self.parent.yaml_template[self.parent.service_name]
 
     @property
     def model_yaml_template(self) -> dict:
@@ -128,10 +127,10 @@ class YamlTemplateVfOnboardStep(YamlTemplateBaseStep):
                 vsp: Vsp = Vsp(name=f"{vnf['vnf_name']}_VSP")
                 vf: Vf = Vf(name=vnf['vnf_name'], vsp=vsp)
                 if not vf.created():
-                    if all([x in vnf for x in ["vnf_artifact_type",
-                                               "vnf_artifact_name",
-                                               "vnf_artifact_label",
-                                               "vnf_artifact_file_path"]]):
+                    if all(x in vnf for x in ["vnf_artifact_type",
+                                              "vnf_artifact_name",
+                                              "vnf_artifact_label",
+                                              "vnf_artifact_file_path"]):
                         vf.create()
                         artifact_file_path: Path = Path(vnf["vnf_artifact_file_path"])
                         if not artifact_file_path.exists():

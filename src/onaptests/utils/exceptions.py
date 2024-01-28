@@ -6,7 +6,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 """Module to define pythonsdk-test exceptions."""
 
-__author__ = ("Morgan Richomme <morgan.richomme@orange.com>")
+__author__ = "Morgan Richomme <morgan.richomme@orange.com>"
 
 
 class OnapTestException(Exception):

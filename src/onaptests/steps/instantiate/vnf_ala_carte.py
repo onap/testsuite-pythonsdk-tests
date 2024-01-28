@@ -46,7 +46,7 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
         """
         if self.is_root:
             if not self._yaml_template:
-                with open(settings.SERVICE_YAML_TEMPLATE, "r") as yaml_template:
+                with open(settings.SERVICE_YAML_TEMPLATE, "r", encoding="utf-8") as yaml_template:
                     self._yaml_template: dict = load(yaml_template, SafeLoader)
             return self._yaml_template
         return self.parent.yaml_template
@@ -106,9 +106,9 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
                 if vnf_instantiation.failed:
                     self._logger.error("VNF instantiation %s failed", vnf.name)
                     raise onap_test_exceptions.VnfInstantiateException
-            except TimeoutError:
+            except TimeoutError as exc:
                 self._logger.error("VNF instantiation %s timed out", vnf.name)
-                raise onap_test_exceptions.VnfInstantiateException
+                raise onap_test_exceptions.VnfInstantiateException from exc
 
     @YamlTemplateBaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
@@ -127,7 +127,7 @@ class YamlTemplateVnfAlaCarteInstantiateStep(YamlTemplateBaseStep):
                     if vnf_deletion.failed:
                         self._logger.error("VNF deletion %s failed", vnf_instance.name)
                         raise onap_test_exceptions.VnfCleanupException
-                except TimeoutError:
+                except TimeoutError as exc:
                     self._logger.error("VNF deletion %s timed out", vnf_instance.name)
-                    raise onap_test_exceptions.VnfCleanupException
+                    raise onap_test_exceptions.VnfCleanupException from exc
         super().cleanup()

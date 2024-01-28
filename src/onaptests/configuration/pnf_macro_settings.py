@@ -10,6 +10,7 @@ USE_MULTICLOUD = False
 
 VENDOR_NAME = "pnf_macro_vendor"
 SERVICE_NAME = "test_pnf_macro"
+SERVICE_DETAILS = "Onboarding, distribution and registration of PNF using macro"
 SERVICE_INSTANCE_NAME = "TestPNFMacroInstantiation"
 SERVICE_YAML_TEMPLATE = Path(get_resource_location("templates/vnf-services/pnf-service.yaml"))
 

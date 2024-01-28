@@ -1,4 +1,4 @@
-"""Specific settings module."""  # pylint: disable=bad-whitespace
+"""Specific settings module."""
 
 ######################
 #                    #
@@ -56,5 +56,7 @@ ORCHESTRATION_REQUEST_TIMEOUT = 60.0 * 15  # 15 minutes in seconds
 SERVICE_DISTRIBUTION_NUMBER_OF_TRIES = 30
 SERVICE_DISTRIBUTION_SLEEP_TIME = 60
 EXPOSE_SERVICES_NODE_PORTS = True
+CDS_NODE_PORT = 30449
 IN_CLUSTER = False
 VES_BASIC_AUTH = {'username': 'sample1', 'password': 'sample1'}
+IF_VALIDATION = False

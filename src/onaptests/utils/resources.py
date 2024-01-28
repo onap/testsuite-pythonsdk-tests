@@ -5,6 +5,14 @@ import onaptests
 
 
 def get_resource_location(relative_path: str):
+    """Get location of resource files.
+
+    Arguments:
+        relative_path (str): relative path of the resource
+
+    Returns:
+        full_path (Path): full path of the resource
+    """
     return os.path.join(os.path.dirname(os.path.realpath(onaptests.__file__)),
                         relative_path)
 

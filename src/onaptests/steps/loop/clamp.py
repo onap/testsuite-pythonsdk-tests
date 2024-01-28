@@ -6,20 +6,19 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 """Clamp Scenario class."""
-from yaml import load, SafeLoader
 import random
 import string
 import time
 
-from onapsdk.clamp.clamp_element import Clamp
-from onapsdk.sdc.service import Service
+from yaml import SafeLoader, load
 
 import onaptests.utils.exceptions as onap_test_exceptions
+from onapsdk.clamp.clamp_element import Clamp
 from onapsdk.configuration import settings
-from onaptests.steps.onboard.clamp import OnboardClampStep
+from onapsdk.sdc.service import Service
+from onaptests.steps.base import YamlTemplateBaseStep
 from onaptests.steps.loop.instantiate_loop import InstantiateLoop
-
-from ..base import YamlTemplateBaseStep
+from onaptests.steps.onboard.clamp import OnboardClampStep
 
 
 class ClampStep(YamlTemplateBaseStep):
@@ -56,7 +55,7 @@ class ClampStep(YamlTemplateBaseStep):
         """
         if self.is_root:
             if not self._yaml_template:
-                with open(settings.SERVICE_YAML_TEMPLATE, "r") as yaml_template:
+                with open(settings.SERVICE_YAML_TEMPLATE, "r", encoding="utf-8") as yaml_template:
                     self._yaml_template: dict = load(yaml_template, SafeLoader)
             return self._yaml_template
         return self.parent.yaml_template
@@ -73,13 +72,14 @@ class ClampStep(YamlTemplateBaseStep):
                                          req_policies=30)  # 30 required policy
             self._logger.info("Operational policy found.")
             if not exist:
-                raise ValueError("Couldn't load the policy %s", policy)
+                raise ValueError("Couldn't load the policy %s" % policy)
         # retrieve the service..based on service name
         service: Service = Service(self.service_name)
         if is_template:
             loop_template = Clamp.check_loop_template(service=service)
             self._logger.info("Loop template checked.")
             return loop_template
+        return None
 
     def instantiate_clamp(self, loop_template: str, loop_name: str, operational_policies: list):
         """Instantite a closed loopin CLAMP."""
@@ -116,9 +116,9 @@ class ClampStep(YamlTemplateBaseStep):
                     service.name)
                 break
             self._logger.info(
-                "Service Distribution for %s ongoing, Wait for 60 s",
-                service.name)
-            time.sleep(60)
+                "Service Distribution for %s ongoing, Wait for %d s",
+                service.name, settings.SERVICE_DISTRIBUTION_SLEEP_TIME)
+            time.sleep(settings.SERVICE_DISTRIBUTION_SLEEP_TIME)
             nb_try += 1
 
         if distribution_completed is False:

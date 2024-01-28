@@ -16,14 +16,16 @@ from onaptests.utils.exceptions import (OnapTestException,
                                         OnapTestExceptionGroup,
                                         SkipExecutionException,
                                         SubstepExecutionException,
-                                        SubstepExecutionExceptionGroup)
+                                        SubstepExecutionExceptionGroup,
+                                        TestConfigurationException)
 
 
-IF_VALIDATION = "PYTHON_SDK_TESTS_VALIDATION"
+# pylint: disable=protected-access
 IF_FORCE_CLEANUP = "PYTHON_SDK_TESTS_FORCE_CLEANUP"
 
 
 class StoreStateHandler(ABC):
+    """Decorator for storing the state of executed test step."""
 
     @classmethod
     def store_state(cls, fun=None, *, cleanup=False):  # noqa
@@ -117,7 +119,7 @@ class StoreStateHandler(ABC):
 class BaseStep(StoreStateHandler, ABC):
     """Base step class."""
 
-    """Indicates that Step has no dedicated cleanup method"""
+    # Indicates that Step has no dedicated cleanup method
     HAS_NO_CLEANUP = False
 
     _logger: logging.Logger = logging.getLogger("")
@@ -159,7 +161,7 @@ class BaseStep(StoreStateHandler, ABC):
         self._state_clean: bool = False
         self._nesting_level: int = 0
         self._break_on_error: bool = break_on_error
-        self._is_validation_only = os.environ.get(IF_VALIDATION) is not None
+        self._is_validation_only = settings.IF_VALIDATION
         self._is_force_cleanup = os.environ.get(IF_FORCE_CLEANUP) is not None
 
     def add_step(self, step: "BaseStep") -> None:
@@ -228,7 +230,7 @@ class BaseStep(StoreStateHandler, ABC):
         if not self.is_root:
             return self.parent.reports_collection
         if not self._reports_collection:
-            self._reports_collection = ReportsCollection()
+            self._reports_collection = ReportsCollection(self._component_list())
             for step_report in itertools.chain(self.execution_reports, self.cleanup_reports):
                 self._reports_collection.put(step_report)
         return self._reports_collection
@@ -294,6 +296,16 @@ class BaseStep(StoreStateHandler, ABC):
 
         """
 
+    def _component_list(self, components: dict = None):
+        if not components:
+            components = {}
+        for step in self._steps:
+            components[step.component] = step.component
+            step._component_list(components)
+        if not self.is_root or not components:
+            components[self.component] = self.component
+        return list(components)
+
     def _step_title(self, cleanup=False):
         cleanup_label = " Cleanup:" if cleanup else ":"
         return f"[{self.component}] {self.name}{cleanup_label} {self.description}"
@@ -332,8 +344,7 @@ class BaseStep(StoreStateHandler, ABC):
                 substep_error = True
                 if step._break_on_error:
                     raise SubstepExecutionException from substep_err
-                else:
-                    self._logger.exception(substep_err)
+                self._logger.exception(substep_err)
         if self._steps:
             if substep_error and self._break_on_error:
                 raise SubstepExecutionException("Cannot continue due to failed substeps")
@@ -364,8 +375,7 @@ class BaseStep(StoreStateHandler, ABC):
         if len(exceptions_to_raise) > 0:
             if len(exceptions_to_raise) == 1:
                 raise exceptions_to_raise[0]
-            else:
-                raise SubstepExecutionExceptionGroup("Substep Exceptions", exceptions_to_raise)
+            raise SubstepExecutionExceptionGroup("Substep Exceptions", exceptions_to_raise)
 
     def cleanup(self) -> None:
         """Step's cleanup.
@@ -391,13 +401,28 @@ class BaseStep(StoreStateHandler, ABC):
         Customer.set_proxy(onap_proxy)
 
     def validate_execution(self):
+        """Validate if each step was executed by decorator."""
+
         if self._is_validation_only:
-            self._log_execution_state(f"VALIDATE [{self._executed}, {self._cleanup}]")
-            if self._executed and self._cleanup and not self._cleaned_up:
-                self._logger.error(f"{self._step_title()} Cleanup Not Executed")
-                assert self._cleaned_up
-            for step in reversed(self._steps):
+            self._log_execution_state(f"VALIDATE EXECUTION [{self._state_execute}]")
+            if not self._state_execute:
+                raise TestConfigurationException(
+                    f"{self._step_title()} - Execute decorator was not called")
+            for step in self._steps:
                 step.validate_execution()
+
+    def validate_cleanup(self):
+        """Validate if each step was cleaned by decorator."""
+
+        if self._is_validation_only:
+            for step in reversed(self._steps):
+                step.validate_cleanup()
+            if self._cleanup:
+                self._log_execution_state(
+                    f"VALIDATE CLEANUP [{self._state_clean}, {self._cleanup}]")
+                if not self._state_clean:
+                    raise TestConfigurationException(
+                        f"{self._step_title()} - Cleanup decorator was not called")
 
 
 class YamlTemplateBaseStep(BaseStep, ABC):

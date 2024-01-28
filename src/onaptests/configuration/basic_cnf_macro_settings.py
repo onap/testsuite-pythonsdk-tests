@@ -7,10 +7,10 @@ from onaptests.utils.resources import get_resource_location
 import onaptests.utils.exceptions as onap_test_exceptions
 from .settings import *  # noqa
 
-""" Specific basic_cnf_macro with multicloud-k8s and yaml config scenario."""
+
+# Specific basic_cnf_macro with multicloud-k8s and yaml config scenario.
 SERVICE_DETAILS = ("Onboarding, distribution and instantiation of a Apache CNF " +
                    "using macro and native CNF path: cnf-adapter + K8sPlugin")
-SERVICE_COMPONENTS = "SDC, DMAAP, AAI, SO, SDNC, CDS, Multicloud K8S"
 
 CLEANUP_FLAG = True
 
@@ -68,11 +68,11 @@ SERVICE_YAML_TEMPLATE = Path(get_resource_location(
 
 try:
     # Try to retrieve the SERVICE NAME from the yaml file
-    with open(SERVICE_YAML_TEMPLATE, "r") as yaml_template:
+    with open(SERVICE_YAML_TEMPLATE, "r", encoding="utf-8") as yaml_template:
         yaml_config_file = load(yaml_template, SafeLoader)
         SERVICE_NAME = next(iter(yaml_config_file.keys()))
-except (FileNotFoundError, ValueError):
-    raise onap_test_exceptions.TestConfigurationException
+except (FileNotFoundError, ValueError) as exc:
+    raise onap_test_exceptions.TestConfigurationException from exc
 
 SERVICE_INSTANCE_NAME = f"basic_cnf_macro_{str(uuid4())}"
 

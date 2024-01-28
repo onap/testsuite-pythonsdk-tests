@@ -1,13 +1,16 @@
 """Instantiate basic vm using SO macro flow."""
+from yaml import SafeLoader, load
+
 from onapsdk.configuration import settings
-from onaptests.scenario.scenario_base import BaseStep, ScenarioBase, YamlTemplateBaseScenarioStep
+from onaptests.scenario.scenario_base import (BaseStep, ScenarioBase,
+                                              YamlTemplateBaseScenarioStep)
 from onaptests.steps.instantiate.service_macro import \
     YamlTemplateServiceMacroInstantiateStep
 from onaptests.steps.onboard.cds import CbaPublishStep
-from yaml import SafeLoader, load
 
 
 class MultiVnfUbuntuMacroStep(YamlTemplateBaseScenarioStep):
+    """Main step for multi vnf instantiation with macro method."""
 
     def __init__(self):
         """Initialize step.
@@ -58,15 +61,15 @@ class MultiVnfUbuntuMacroStep(YamlTemplateBaseScenarioStep):
 
         """
         if not self._yaml_template:
-            with open(settings.SERVICE_YAML_TEMPLATE, "r") as yaml_template:
+            with open(settings.SERVICE_YAML_TEMPLATE, "r", encoding="utf-8") as yaml_template:
                 self._yaml_template: dict = load(yaml_template, SafeLoader)
         return self._yaml_template
 
     @property
     def model_yaml_template(self) -> dict:
         if not self._model_yaml_template:
-            with open(settings.MODEL_YAML_TEMPLATE, "r") as model_yaml_template:
-                self._model_yaml_template: dict = load(model_yaml_template)
+            with open(settings.MODEL_YAML_TEMPLATE, "r", encoding="utf-8") as model_yaml_template:
+                self._model_yaml_template: dict = load(model_yaml_template, SafeLoader)
         return self._model_yaml_template
 
     @property

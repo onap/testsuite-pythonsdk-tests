@@ -54,7 +54,7 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
         """
         if self.is_root:
             if not self._yaml_template:
-                with open(settings.SERVICE_YAML_TEMPLATE, "r") as yaml_template:
+                with open(settings.SERVICE_YAML_TEMPLATE, "r", encoding="utf-8") as yaml_template:
                     self._yaml_template: dict = load(yaml_template, SafeLoader)
             return self._yaml_template
         return self.parent.yaml_template
@@ -135,9 +135,9 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
                     if vf_module_instantiation.failed:
                         self._logger.error("VfModule instantiation %s failed", vf_module.name)
                         raise onap_test_exceptions.VfModuleInstantiateException
-                except TimeoutError:
+                except TimeoutError as exc:
                     self._logger.error("VfModule instantiation %s timed out", vf_module.name)
-                    raise onap_test_exceptions.VfModuleInstantiateException
+                    raise onap_test_exceptions.VfModuleInstantiateException from exc
 
     @YamlTemplateBaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
@@ -163,7 +163,7 @@ class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):
                             self._logger.error("VfModule deletion %s failed", vf_module.name)
                             raise onap_test_exceptions.VfModuleCleanupException
                         self._logger.info("VfModule %s deleted", vf_module.name)
-                    except TimeoutError:
+                    except TimeoutError as exc:
                         self._logger.error("VfModule deletion %s timed out", vf_module.name)
-                        raise onap_test_exceptions.VfModuleCleanupException
+                        raise onap_test_exceptions.VfModuleCleanupException from exc
         super().cleanup()

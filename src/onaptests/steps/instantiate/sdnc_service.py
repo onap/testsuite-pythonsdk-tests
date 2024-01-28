@@ -1,3 +1,5 @@
+import logging
+
 from onapsdk.configuration import settings
 from onapsdk.exceptions import APIError
 from onapsdk.sdnc import VfModulePreload
@@ -59,7 +61,7 @@ class ServiceCreateStep(BaseSdncStep):
             if exc.response_status_code == 409:
                 self._logger.warning("SDNC service already exists.")
             else:
-                raise OnapTestException("SDNC service creation failed.")
+                raise OnapTestException("SDNC service creation failed.") from exc
 
     @BaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
@@ -107,8 +109,8 @@ class UpdateSdncService(BaseSdncStep):
             service.service_data = settings.SERVICE_CHANGED_DATA
             service.update()
             self._logger.info("SDNC service update is completed.")
-        except APIError:
-            raise OnapTestException("SDNC service update is failed.")
+        except APIError as exc:
+            raise OnapTestException("SDNC service update is failed.") from exc
 
 
 class UploadVfModulePreloadStep(BaseSdncStep):
@@ -153,6 +155,8 @@ class GetSdncPreloadStep(BaseSdncStep):
     Get preload information from SDNC over GR-API.
     """
 
+    __logger = logging.getLogger(__name__)
+
     def __init__(self):
         """Initialize step.
 
@@ -180,7 +184,7 @@ class GetSdncPreloadStep(BaseSdncStep):
         self._logger.info("Get existing SDNC service instance and update it over GR-API")
         preloads = PreloadInformation.get_all()
         for preload_information in preloads:
-            print(preload_information)
+            self.__logger.debug(preload_information)
 
 
 class TestSdncStep(BaseScenarioStep):

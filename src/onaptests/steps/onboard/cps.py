@@ -254,6 +254,8 @@ class CheckPostgressDataBaseConnectionStep(CpsBaseStep):
     def __init__(self) -> None:
         """Initialize step."""
         super().__init__(cleanup=BaseStep.HAS_NO_CLEANUP)
+        self.login = None
+        self.password = None
 
     @property
     def description(self) -> str:
@@ -261,6 +263,8 @@ class CheckPostgressDataBaseConnectionStep(CpsBaseStep):
         return "Establish connection with Postgress and execute the query"
 
     def get_database_credentials(self):
+        """Resolve CPS datbase credentials from k8s secret."""
+
         if settings.IN_CLUSTER:
             config.load_incluster_config()
         else:
@@ -286,6 +290,8 @@ class CheckPostgressDataBaseConnectionStep(CpsBaseStep):
             raise EnvironmentPreparationException("Error accessing secret") from e
 
     def connect_to_postgress(self):
+        """Connect to CPS database and execute select query."""
+
         self.get_database_credentials()
         if self.login and self.password:
             db_params = {

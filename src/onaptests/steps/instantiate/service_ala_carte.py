@@ -3,7 +3,6 @@ from uuid import uuid4
 from yaml import load, SafeLoader
 
 from onapsdk.aai.cloud_infrastructure import CloudRegion, Tenant
-from onapsdk.aai.business import Customer
 from onapsdk.aai.business.owning_entity import OwningEntity as AaiOwningEntity
 from onapsdk.configuration import settings
 from onapsdk.exceptions import ResourceNotFound
@@ -11,82 +10,9 @@ from onapsdk.sdc.service import Service
 from onapsdk.so.instantiation import ServiceInstantiation
 
 import onaptests.utils.exceptions as onap_test_exceptions
-from ..base import BaseStep, YamlTemplateBaseStep
+from ..base import YamlTemplateBaseStep
 from ..cloud.connect_service_subscription_to_cloud_region import ConnectServiceSubToCloudRegionStep
-from ..onboard.service import ServiceOnboardStep, YamlTemplateServiceOnboardStep
-
-
-class ServiceAlaCarteInstantiateStep(BaseStep):
-    """Instantiate service a'la carte."""
-
-    def __init__(self, cleanup=False):
-        """Initialize step.
-
-        Substeps:
-            - ServiceOnboardStep,
-            - ConnectServiceSubToCloudRegionStep.
-        """
-        super().__init__(cleanup=cleanup)
-        if not settings.ONLY_INSTANTIATE:
-            self.add_step(ServiceOnboardStep(cleanup))
-            self.add_step(ConnectServiceSubToCloudRegionStep(cleanup))
-
-    @property
-    def description(self) -> str:
-        """Step description."""
-        return "Instantiate service using SO a'la carte method."
-
-    @property
-    def component(self) -> str:
-        """Component name."""
-        return "SO"
-
-    @BaseStep.store_state
-    def execute(self):
-        """Instantiate service.
-
-        Use settings values:
-         - SERVICE_NAME,
-         - GLOBAL_CUSTOMER_ID,
-         - CLOUD_REGION_CLOUD_OWNER,
-         - CLOUD_REGION_ID,
-         - TENANT_ID,
-         - OWNING_ENTITY,
-         - PROJECT,
-         - SERVICE_INSTANCE_NAME.
-        """
-        super().execute()
-        service = Service(settings.SERVICE_NAME)
-        customer: Customer = Customer.get_by_global_customer_id(settings.GLOBAL_CUSTOMER_ID)
-        cloud_region: CloudRegion = CloudRegion.get_by_id(
-            cloud_owner=settings.CLOUD_REGION_CLOUD_OWNER,
-            cloud_region_id=settings.CLOUD_REGION_ID,
-        )
-        tenant: Tenant = cloud_region.get_tenant(settings.TENANT_ID)
-        try:
-            owning_entity = AaiOwningEntity.get_by_owning_entity_name(
-                settings.OWNING_ENTITY)
-        except ResourceNotFound:
-            self._logger.info("Owning entity not found, create it")
-            owning_entity = AaiOwningEntity.create(settings.OWNING_ENTITY)
-
-        service_instantiation = ServiceInstantiation.instantiate_ala_carte(
-            service,
-            cloud_region,
-            tenant,
-            customer,
-            owning_entity,
-            settings.PROJECT,
-            service_instance_name=settings.SERVICE_INSTANCE_NAME
-        )
-        try:
-            service_instantiation.wait_for_finish(settings.ORCHESTRATION_REQUEST_TIMEOUT)
-        except TimeoutError:
-            self._logger.error("Service instantiation %s timed out", self.service_instance_name)
-            raise onap_test_exceptions.ServiceInstantiateException
-        if service_instantiation.failed:
-            self._logger.error("Service instantiation %s failed", self.service_instance_name)
-            raise onap_test_exceptions.ServiceInstantiateException
+from ..onboard.service import YamlTemplateServiceOnboardStep
 
 
 class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
@@ -128,7 +54,7 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         """
         if self.is_root:
             if not self._yaml_template:
-                with open(settings.SERVICE_YAML_TEMPLATE, "r") as yaml_template:
+                with open(settings.SERVICE_YAML_TEMPLATE, "r", encoding="utf-8") as yaml_template:
                     self._yaml_template: dict = load(yaml_template, SafeLoader)
             return self._yaml_template
         return self.parent.yaml_template
@@ -198,9 +124,9 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
                     service.name)
                 break
             self._logger.info(
-                "Service Distribution for %s ongoing, Wait for 60 s",
-                service.name)
-            time.sleep(60)
+                "Service Distribution for %s ongoing, Wait for %d s",
+                service.name, settings.SERVICE_DISTRIBUTION_SLEEP_TIME)
+            time.sleep(settings.SERVICE_DISTRIBUTION_SLEEP_TIME)
             nb_try += 1
 
         if distribution_completed is False:
@@ -220,15 +146,14 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         )
         try:
             service_instantiation.wait_for_finish(settings.ORCHESTRATION_REQUEST_TIMEOUT)
-        except TimeoutError:
+        except TimeoutError as exc:
             self._logger.error("Service instantiation %s timed out", self.service_instance_name)
-            raise onap_test_exceptions.ServiceCleanupException
+            raise onap_test_exceptions.ServiceCleanupException from exc
         if service_instantiation.failed:
             self._logger.error("Service instantiation %s failed", self.service_instance_name)
             raise onap_test_exceptions.ServiceInstantiateException
-        else:
-            self._load_customer_and_subscription(reload=True)
-            self._load_service_instance()
+        self._load_customer_and_subscription(reload=True)
+        self._load_service_instance()
 
     @YamlTemplateBaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
@@ -244,9 +169,9 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
             service_deletion = self._service_instance.delete(a_la_carte=True)
             try:
                 service_deletion.wait_for_finish(settings.ORCHESTRATION_REQUEST_TIMEOUT)
-            except TimeoutError:
+            except TimeoutError as exc:
                 self._logger.error("Service deletion %s timed out", self._service_instance_name)
-                raise onap_test_exceptions.ServiceCleanupException
+                raise onap_test_exceptions.ServiceCleanupException from exc
             if service_deletion.finished:
                 self._logger.info("Service %s deleted", self._service_instance_name)
             else:

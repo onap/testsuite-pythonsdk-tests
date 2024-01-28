@@ -147,9 +147,9 @@ class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
         """
         if settings.MODEL_YAML_TEMPLATE:
             return self.model_yaml_template
-        elif self.is_root:
+        if self.is_root:
             if not self._yaml_template:
-                with open(settings.SERVICE_YAML_TEMPLATE, "r") as yaml_template:
+                with open(settings.SERVICE_YAML_TEMPLATE, "r", encoding="utf-8") as yaml_template:
                     self._yaml_template: dict = load(yaml_template, SafeLoader)
             return self._yaml_template
         return self.parent.yaml_template
@@ -166,7 +166,8 @@ class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
         """
         if self.is_root:
             if not self._model_yaml_template:
-                with open(settings.MODEL_YAML_TEMPLATE, "r") as model_yaml_template:
+                with open(settings.MODEL_YAML_TEMPLATE, "r",
+                          encoding="utf-8") as model_yaml_template:
                     self._model_yaml_template: dict = load(model_yaml_template, SafeLoader)
             return self._model_yaml_template
         return self.parent.model_yaml_template

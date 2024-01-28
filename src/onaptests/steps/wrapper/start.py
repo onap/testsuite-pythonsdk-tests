@@ -1,6 +1,7 @@
 """Start simulators via simulators' API."""
 from typing import Union, Optional, Dict
 import requests
+from onapsdk.configuration import settings
 from onaptests.steps.base import BaseStep
 from onaptests.utils.exceptions import TestConfigurationException
 
@@ -62,4 +63,5 @@ class SimulatorStartStep(BaseStep):
     def execute(self) -> None:
         """Send a start command to the simulator application."""
         super().execute()
-        requests.request(self.method.upper(), self.url, **self.data)
+        requests.request(self.method.upper(), self.url, **self.data,
+                         timeout=settings.DEFAULT_REQUEST_TIMEOUT)

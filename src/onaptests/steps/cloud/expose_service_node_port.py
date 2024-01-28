@@ -22,10 +22,6 @@ class ExposeServiceNodePortStep(BaseStep):
         self.service_name = service_name
         self.port = port
         self.node_port = node_port
-        if settings.IN_CLUSTER:
-            config.load_incluster_config()
-        else:
-            config.load_kube_config(config_file=settings.K8S_CONFIG)
         self.k8s_client: client.CoreV1Api = client.CoreV1Api()
 
     @property
@@ -53,9 +49,9 @@ class ExposeServiceNodePortStep(BaseStep):
                 settings.K8S_ONAP_NAMESPACE
             )
             return service_data.spec.type == "NodePort"
-        except ApiException:
+        except ApiException as exc:
             self._logger.exception("Kubernetes API exception")
-            raise OnapTestException
+            raise OnapTestException from exc
 
     @BaseStep.store_state
     def execute(self) -> None:
@@ -68,6 +64,10 @@ class ExposeServiceNodePortStep(BaseStep):
 
         """
         super().execute()
+        if settings.IN_CLUSTER:
+            config.load_incluster_config()
+        else:
+            config.load_kube_config(config_file=settings.K8S_CONFIG)
         if not self.is_service_node_port_type():
             try:
                 self.k8s_client.patch_namespaced_service(
@@ -77,15 +77,16 @@ class ExposeServiceNodePortStep(BaseStep):
                                          "nodePort": self.node_port}],
                               "type": "NodePort"}}
                 )
-            except ApiException:
+            except ApiException as exc:
                 self._logger.exception("Kubernetes API exception")
-                raise OnapTestException
-            except urllib3.exceptions.HTTPError:
+                raise OnapTestException from exc
+            except urllib3.exceptions.HTTPError as exc:
                 self._logger.exception("Can't connect with k8s")
-                raise OnapTestException
+                raise OnapTestException from exc
         else:
             self._logger.debug("Service already patched, skip")
 
+    @BaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
         """Step cleanup.
 
@@ -109,12 +110,12 @@ class ExposeServiceNodePortStep(BaseStep):
                         }
                     ]
                 )
-            except ApiException:
+            except ApiException as exc:
                 self._logger.exception("Kubernetes API exception")
-                raise OnapTestException
-            except urllib3.exceptions.HTTPError:
+                raise OnapTestException from exc
+            except urllib3.exceptions.HTTPError as exc:
                 self._logger.exception("Can't connect with k8s")
-                raise OnapTestException
+                raise OnapTestException from exc
         else:
             self._logger.debug("Service is not 'NodePort' type, skip")
         return super().cleanup()

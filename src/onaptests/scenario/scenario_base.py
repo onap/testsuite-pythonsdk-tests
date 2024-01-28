@@ -1,11 +1,13 @@
 import logging
 import time
 
-from onapsdk.configuration import settings
-from onapsdk.exceptions import SDKException
-from onaptests.steps.base import BaseStep, YamlTemplateBaseStep
-from onaptests.utils.exceptions import OnapTestException
 from xtesting.core import testcase
+
+from onapsdk.configuration import settings
+from onapsdk.exceptions import SDKException, SettingsError
+from onaptests.steps.base import BaseStep, YamlTemplateBaseStep
+from onaptests.utils.exceptions import (OnapTestException,
+                                        TestConfigurationException)
 
 
 class ScenarioBase(testcase.TestCase):
@@ -17,18 +19,20 @@ class ScenarioBase(testcase.TestCase):
         """Init base scenario."""
         if "case_name" not in kwargs:
             kwargs["case_name"] = case_name_override
-        self.scenario_name = kwargs["case_name"].replace("_", " ")
+        self.case_name = kwargs["case_name"]
+        self.scenario_name = self.case_name.replace("_", " ")
         self.scenario_name = str.title(self.scenario_name)
 
         self.__logger.info("%s Global Configuration:", self.scenario_name)
-        for val in settings._settings:
-            self.__logger.info("%s: %s", val, settings._settings[val])
+        for val_name, val in settings._settings.items():
+            self.__logger.info("%s: %s", val_name, val)
 
         self.__logger.debug("%s init started", self.scenario_name)
         super().__init__(**kwargs)
         self.general_exception = None
+        self.test: BaseStep = None
 
-    def run(self):
+    def run(self, **kwargs):
         """Run scenario and cleanup resources afterwards"""
         self.start_time = time.time()
         try:
@@ -62,11 +66,29 @@ class ScenarioBase(testcase.TestCase):
         self.__logger.info("Generate %s Test report", self.scenario_name)
         self.test.reports_collection.generate_report()
 
-    def validate_execution(self):
+    def validate(self):
+        """Validate implementation of the scenario."""
+
+        self._validate_service_details()
         self.test.validate_execution()
+        self.test.validate_cleanup()
+
+    def _validate_service_details(self):
+        self._check_setting("SERVICE_NAME")
+        self._check_setting("SERVICE_DETAILS")
+
+    def _check_setting(self, name: str):
+        try:
+            if getattr(settings, name) == "":
+                raise TestConfigurationException(
+                    f"[{self.case_name}] {name} setting is not defined")
+        except (KeyError, AttributeError, SettingsError) as exc:
+            raise TestConfigurationException(
+                f"[{self.case_name}] {name} setting is not defined") from exc
 
 
 class BaseScenarioStep(BaseStep):
+    """Main scenario step that has no own execution method."""
 
     def __init__(self, cleanup=False):
         """Initialize BaseScenarioStep step."""
@@ -78,6 +100,7 @@ class BaseScenarioStep(BaseStep):
 
 
 class YamlTemplateBaseScenarioStep(YamlTemplateBaseStep, BaseScenarioStep):
+    """Main scenario yaml template step that has no own execution method."""
 
     def __init__(self, cleanup=False):
         """Initialize YamlTemplateBaseScenarioStep step."""

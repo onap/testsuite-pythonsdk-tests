@@ -1,9 +1,8 @@
 from .settings import *  # noqa
 
-""" Specific Status Check """
+
 SERVICE_NAME = "Status Check"
 SERVICE_DETAILS = "Checks status of all k8s resources in the selected namespace"
-SERVICE_COMPONENTS = "ALL"
 STATUS_RESULTS_DIRECTORY = "/tmp"
 STORE_ARTIFACTS = True
 CHECK_POD_VERSIONS = True

@@ -48,10 +48,11 @@ class VspOnboardStep(BaseStep):
         """
         super().execute()
         vendor: Vendor = Vendor(name=settings.VENDOR_NAME)
-        vsp: Vsp = Vsp(name=settings.VSP_NAME,
-                       vendor=vendor,
-                       package=open(settings.VSP_FILE_PATH, "rb"))
-        vsp.onboard()
+        with open(settings.VSP_FILE_PATH, "rb") as vsp_file:
+            vsp: Vsp = Vsp(name=settings.VSP_NAME,
+                           vendor=vendor,
+                           package=vsp_file)
+            vsp.onboard()
 
     @BaseStep.store_state(cleanup=True)
     def cleanup(self):
@@ -103,8 +104,7 @@ class YamlTemplateVspOnboardStep(YamlTemplateBaseStep):
         """
         if settings.MODEL_YAML_TEMPLATE:
             return self.model_yaml_template
-        else:
-            return self.parent.yaml_template
+        return self.parent.yaml_template
 
     @property
     def model_yaml_template(self) -> dict:

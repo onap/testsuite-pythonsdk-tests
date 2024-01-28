@@ -4,7 +4,7 @@ CLEANUP_FLAG = True
 
 SERVICE_NAME = "Basic SDNC test"
 
-SERVICE_COMPONENTS = "SDNC"
+SERVICE_DETAILS = "Test basic functionality of SDNC controller"
 
 SERVICE_ID = "pythonsdk-tests-service-01"
 

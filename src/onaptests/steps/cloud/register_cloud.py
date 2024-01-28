@@ -5,9 +5,9 @@ from uuid import uuid4
 from onapsdk.aai.cloud_infrastructure import CloudRegion
 from onapsdk.configuration import settings
 from onapsdk.exceptions import ResourceNotFound
+from onaptests.steps.cloud.cloud_region_create import CloudRegionCreateStep
 
 from ..base import BaseStep
-from onaptests.steps.cloud.cloud_region_create import CloudRegionCreateStep
 
 
 class RegisterCloudRegionStep(BaseStep):

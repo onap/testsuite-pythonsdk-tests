@@ -1,9 +1,9 @@
-from .settings import *  # noqa
-
 import json
 from pathlib import Path
 
 from onaptests.utils.resources import get_resource_location
+
+from .settings import *  # noqa
 
 CLEANUP_FLAG = True
 
@@ -63,7 +63,7 @@ SCHEMA_SET_NAME = "basic-cps-test-schema-set"
 SCHEMA_SET_FILE = Path(get_resource_location("templates/artifacts/cps/bookstore.yang"))
 
 SERVICE_NAME = "Basic CPS test"
-SERVICE_COMPONENTS = "CPS"
+SERVICE_DETAILS = "Validation of the most important CPS REST API requests"
 QUERY_1 = "/bookstore/categories[@code='1']/books"
 QUERY_2 = "//categories[@code='1']/books[@price=5 and @title='Dune']"
 QUERY_3 = "//bookstore"

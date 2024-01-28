@@ -23,7 +23,6 @@ class K8sResource():
 
     def specific_k8s_init(self):
         """Do the specific part for k8s resource when k8s object is present."""
-        pass
 
     def __repr__(self):
         return self.name
@@ -32,10 +31,9 @@ class K8sResource():
         return self.name
 
     def __eq__(self, other):
-        if (isinstance(other, K8sResource)):
+        if isinstance(other, K8sResource):
             return self.name == other.name
-        else:
-            return False
+        return False
 
 
 class K8sPodParentResource(K8sResource):

@@ -42,7 +42,7 @@ class K8SConnectivityInfoStep(BaseStep):
         except APIError:
             if settings.IN_CLUSTER:
                 token_file = "/var/run/secrets/kubernetes.io/serviceaccount/token"
-                with open(token_file, "r") as file:
+                with open(token_file, "r", encoding="utf-8") as file:
                     user_token_value = file.read().strip()
                 jinja_env = Environment(autoescape=select_autoescape(['json.j2']),
                                         loader=PackageLoader('onaptests.templates', 'kubeconfig'))
@@ -56,9 +56,10 @@ class K8SConnectivityInfoStep(BaseStep):
                                         kubeconfig_data.encode('utf-8'))
             else:
                 self._logger.info("Create the k8s connectivity information")
-                ConnectivityInfo.create(settings.CLOUD_REGION_ID,
-                                        settings.CLOUD_REGION_CLOUD_OWNER,
-                                        open(settings.K8S_CONFIG, 'rb').read())
+                with open(settings.K8S_CONFIG, 'rb') as k8s_config:
+                    ConnectivityInfo.create(settings.CLOUD_REGION_ID,
+                                            settings.CLOUD_REGION_CLOUD_OWNER,
+                                            k8s_config.read())
 
     @BaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:

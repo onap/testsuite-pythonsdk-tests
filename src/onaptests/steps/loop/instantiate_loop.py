@@ -9,6 +9,7 @@ from onapsdk.configuration import settings
 import onaptests.utils.exceptions as onap_test_exceptions
 
 
+# pylint: disable=protected-access
 class InstantiateLoop():
     """class instantiating a closed loop in clamp."""
 
@@ -71,8 +72,8 @@ class InstantiateLoop():
         loop = LoopInstance(template=self.template,
                             name=self.loop_name,
                             details={})
-        details = loop.create()
-        if details:
+        loop.create()
+        if loop.details:
             self._logger.info("Loop instance %s successfully created !!", self.loop_name)
         else:
             self._logger.error("An error occured while creating the loop instance")

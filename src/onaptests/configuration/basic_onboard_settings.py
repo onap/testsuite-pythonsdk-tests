@@ -8,8 +8,6 @@ import onaptests.utils.exceptions as onap_test_exceptions
 from onaptests.utils.resources import get_resource_location
 from .settings import * # noqa
 
-""" Creation of service to onboard"""
-
 
 # We need to create a service file with a random service name,
 # to be sure that we force onboarding
@@ -30,16 +28,12 @@ def generate_service_config_yaml_file():
 
     rendered_template = template.render(service_name=service_name)
 
-    with open(SERVICE_YAML_TEMPLATE, 'w+') as file_to_write:
+    with open(SERVICE_YAML_TEMPLATE, 'w+', encoding="utf-8") as file_to_write:
         file_to_write.write(rendered_template)
 
 
-"""Basic onboard service to only onboard a service in SDC"""
-
-# pylint: disable=bad-whitespace
 # The ONAP part
-SERVICE_DETAILS = "Onboarding of an Ubuntu VM"
-SERVICE_COMPONENTS = "SDC"
+SERVICE_DETAILS = "Basic onboard service to only onboard a service in SDC"
 
 # USE_MULTICLOUD = False
 # Set ONLY_INSTANTIATE to true to run an instantiation without repeating
@@ -54,11 +48,11 @@ generate_service_config_yaml_file()
 
 try:
     # Try to retrieve the SERVICE NAME from the yaml file
-    with open(SERVICE_YAML_TEMPLATE, "r") as yaml_template:
+    with open(SERVICE_YAML_TEMPLATE, "r", encoding="utf-8") as yaml_template:
         yaml_config_file = load(yaml_template, SafeLoader)
         SERVICE_NAME = next(iter(yaml_config_file.keys()))
-except (FileNotFoundError, ValueError):
-    raise onap_test_exceptions.TestConfigurationException
+except (FileNotFoundError, ValueError) as exc:
+    raise onap_test_exceptions.TestConfigurationException from exc
 
 # CLEANUP_FLAG = True
 # CLEANUP_ACTIVITY_TIMER = 10  # nb of seconds before cleanup in case cleanup option is set

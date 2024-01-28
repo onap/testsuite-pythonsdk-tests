@@ -28,9 +28,10 @@ class Report:
 class ReportsCollection:
     """Collection to store steps execution statuses."""
 
-    def __init__(self) -> None:
+    def __init__(self, components: list) -> None:
         """Initialize collection."""
         self._collection: list = []
+        self._components = components
 
     def put(self, item: Report) -> None:
         """Put execution status dictionary.
@@ -65,16 +66,18 @@ class ReportsCollection:
                     step_report.step_execution_status == ReportStepStatus.FAIL))
 
     def generate_report(self) -> None:
+        """Generate report files after execution of the test."""
+
         usecase = settings.SERVICE_NAME
         try:
             details = settings.SERVICE_DETAILS
         except (KeyError, AttributeError, SettingsError):
             details = ""
 
-        try:
-            components = settings.SERVICE_COMPONENTS
-        except (KeyError, AttributeError, SettingsError):
-            components = ""
+        components = ""
+        for component in self._components:
+            components = f"{component}, {components}"
+        components = components.rstrip(", ")
 
         jinja_env = Environment(
             autoescape=select_autoescape(['html']),
@@ -104,5 +107,5 @@ class ReportsCollection:
             ]
         }
         with (Path(settings.REPORTING_FILE_DIRECTORY).joinpath(
-                settings.JSON_REPORTING_FILE_NAME)).open('w') as file:
+                settings.JSON_REPORTING_FILE_NAME)).open('w', encoding="utf-8") as file:
             json.dump(report_dict, file, indent=4)

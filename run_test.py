@@ -4,8 +4,21 @@ import logging.config
 import os
 import sys
 
+from onapsdk.exceptions import ModuleError
 import onaptests.utils.exceptions as onap_test_exceptions
 
+SETTING_FILE_EXCEPTIONS = {
+    "clearwater_ims": "clearwater_ims_nomulticloud_settings",
+    "basic_cnf": "basic_cnf_yaml_settings",
+    "basic_cds": "cba_enrichment_settings",
+    "basic_network": "basic_network_nomulticloud_settings",
+    "multi_vnf_macro": "multi_vnf_ubuntu_settings"
+}
+
+MODULES_TO_RELOAD = [
+    "onapsdk",
+    "onaptests"
+]
 
 def get_entrypoints():
     config = configparser.ConfigParser()
@@ -23,37 +36,57 @@ def get_entrypoints():
         }
     return entry_points_result
 
-def run_test(test_name, validation, force_cleanup, entry_point, settings_module):
+def run_test(test_name, validation, force_cleanup, entry_point):
     settings_env = "ONAP_PYTHON_SDK_SETTINGS"
-    if validation:
-        validation_env = "PYTHON_SDK_TESTS_VALIDATION"
-        os.environ[validation_env] = "True"
     if force_cleanup:
         validation_env = "PYTHON_SDK_TESTS_FORCE_CLEANUP"
         os.environ[validation_env] = "True"
-    os.environ[settings_env] = f"onaptests.configuration.{test_name}_settings"
-    if not settings_module:
+
+    setting_file_name = f"{test_name}_settings"
+    if test_name in SETTING_FILE_EXCEPTIONS:
+        setting_file_name = SETTING_FILE_EXCEPTIONS[test_name]
+    os.environ[settings_env] = f"onaptests.configuration.{setting_file_name}"
+    try:
+        basic_settings = importlib.import_module("onaptests.configuration.settings")
+        if validation:
+            basic_settings.IF_VALIDATION = True
         settings_module = importlib.import_module("onapsdk.configuration")
-    else:
-        settings_module = importlib.reload(settings_module)
-    settings = settings_module.settings
+    except ModuleError:
+        raise onap_test_exceptions.TestConfigurationException(
+            f"Expected setting file {os.environ[settings_env]} not found")
+
+    if validation:
+        settings_module.settings.CLEANUP_FLAG = True
+        settings_module.settings.CLEANUP_ACTIVITY_TIMER = 1
+        settings_module.settings.SDC_CLEANUP = True
+        settings_module.settings.SERVICE_DISTRIBUTION_SLEEP_TIME = 1
+
     # logging configuration for onapsdk, it is not requested for onaptests
     # Correction requested in onapsdk to avoid having this duplicate code
-    logging.config.dictConfig(settings.LOG_CONFIG)
+    logging.config.dictConfig(settings_module.settings.LOG_CONFIG)
     logger = logging.getLogger(test_name)
     logger.info(f"Running {test_name} test")
 
     test_module = importlib.import_module(entry_point["module"])
 
     test_instance = getattr(test_module, entry_point["class"])()
-    try:
-        test_instance.run()
-        test_instance.clean()
-        if validation:
-            test_instance.validate_execution()
-    except onap_test_exceptions.TestConfigurationException:
-        logger.error("Status Check configuration error")
-    return settings_module
+    if validation:
+        validate_scenario_base_class(test_name, test_instance)
+    test_instance.run()
+    test_instance.clean()
+    if validation:
+        logger.info(f"Validating {test_name} test")
+        test_instance.validate()
+
+def validate_scenario_base_class(test_name, scenario):
+    has_scenario_base = False
+    for base in scenario.__class__.__bases__:
+        if base.__name__ in "ScenarioBase":
+            has_scenario_base = True
+            break
+    if not has_scenario_base:
+        raise TestConfigurationException(
+            f"[{test_name}] {scenario.__class__.__name__} class does not inherit from ScenarioBase")
 
 def main(argv):
     """Script is used to run one or all the tests.
@@ -78,12 +111,26 @@ def main(argv):
     test_name = argv[0]
     entry_points = get_entrypoints()
     if test_name == "all":
-        settings_module = None
+        modules_reload = False
         for test_name, entry_point in entry_points.items():
-            settings_module = run_test(test_name, validation, force_cleanup, entry_point, settings_module)
+            if modules_reload:
+                modules_to_keep = dict()
+                for module in sys.modules:
+                    reload_module = False
+                    for module_to_reload in MODULES_TO_RELOAD:
+                        if module_to_reload in module:
+                            reload_module = True
+                            break
+                    if not reload_module:
+                        modules_to_keep[module] = sys.modules[module]
+                sys.modules.clear()
+                sys.modules.update(modules_to_keep)
+            run_test(
+                test_name, validation, force_cleanup, entry_point)
+            modules_reload = True
     else:
         entry_point = entry_points[test_name]
-        run_test(test_name, validation, force_cleanup, entry_point, None)
+        run_test(test_name, validation, force_cleanup, entry_point)
 
 if __name__ == "__main__":
     main(sys.argv[1:])

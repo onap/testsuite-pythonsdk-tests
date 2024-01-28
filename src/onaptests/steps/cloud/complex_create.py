@@ -38,4 +38,4 @@ class ComplexCreateStep(BaseStep):
                 data_center_code=settings.COMPLEX_DATA_CENTER_CODE,
                 name=settings.COMPLEX_PHYSICAL_LOCATION_ID)
         except APIError:
-            self._logger.warn("Try to update the complex failed.")
+            self._logger.warning("Try to update the complex failed.")

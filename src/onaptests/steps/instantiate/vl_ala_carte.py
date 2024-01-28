@@ -48,7 +48,7 @@ class YamlTemplateVlAlaCarteInstantiateStep(YamlTemplateBaseStep):
         """
         if self.is_root:
             if not self._yaml_template:
-                with open(settings.SERVICE_YAML_TEMPLATE, "r") as yaml_template:
+                with open(settings.SERVICE_YAML_TEMPLATE, "r", encoding="utf-8") as yaml_template:
                     self._yaml_template: dict = load(yaml_template, SafeLoader)
             return self._yaml_template
         return self.parent.yaml_template
@@ -89,7 +89,7 @@ class YamlTemplateVlAlaCarteInstantiateStep(YamlTemplateBaseStep):
         for net in self.yaml_template[self.service_name]["networks"]:
             if net["vl_name"] == network_name:
                 if net['subnets'] is None:
-                    print("No Subnet defined")
+                    self._logger.warning("No Subnet defined")
                 else:
                     for subnet in net['subnets']:
                         yield Subnet(
@@ -128,9 +128,9 @@ class YamlTemplateVlAlaCarteInstantiateStep(YamlTemplateBaseStep):
                 if net_instantiation.failed:
                     self._logger.error("VL instantiation %s failed", net_instantiation.name)
                     raise onap_test_exceptions.NetworkInstantiateException
-            except TimeoutError:
+            except TimeoutError as exc:
                 self._logger.error("VL instantiation %s timed out", net_instantiation.name)
-                raise onap_test_exceptions.NetworkInstantiateException
+                raise onap_test_exceptions.NetworkInstantiateException from exc
 
     @YamlTemplateBaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
@@ -148,7 +148,7 @@ class YamlTemplateVlAlaCarteInstantiateStep(YamlTemplateBaseStep):
                     if net_deletion.failed:
                         self._logger.error("VL deletion %s failed", net_instance.name)
                         raise onap_test_exceptions.NetworkCleanupException
-                except TimeoutError:
+                except TimeoutError as exc:
                     self._logger.error("VL deletion %s timed out", net_instance.name)
-                    raise onap_test_exceptions.NetworkCleanupException
+                    raise onap_test_exceptions.NetworkCleanupException from exc
         super().cleanup()
