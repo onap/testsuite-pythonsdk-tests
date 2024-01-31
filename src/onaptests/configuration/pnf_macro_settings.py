@@ -13,6 +13,9 @@ SERVICE_NAME = "test_pnf_macro"
 SERVICE_DETAILS = "Onboarding, distribution and registration of PNF using macro"
 SERVICE_INSTANCE_NAME = "TestPNFMacroInstantiation"
 SERVICE_YAML_TEMPLATE = Path(get_resource_location("templates/vnf-services/pnf-service.yaml"))
+generate_service_config_yaml_file(service_name="pnf_macro",
+                                  service_template="pnf-service.yaml.j2",
+                                  service_config=SERVICE_YAML_TEMPLATE)
 
 CDS_DD_FILE = Path(get_resource_location("templates/artifacts/dd.json"))
 CDS_CBA_UNENRICHED = Path(get_resource_location("templates/artifacts/PNF_DEMO.zip"))

@@ -4,7 +4,7 @@ from onapsdk.sdc.vsp import Vsp
 from onaptests.utils.resources import get_resource_location
 
 from ..base import BaseStep, YamlTemplateBaseStep
-from .vendor import VendorOnboardStep
+from .vendor import VendorOnboardStep, YamlTemplateVendorOnboardStep
 
 
 class VspOnboardStep(BaseStep):
@@ -73,7 +73,7 @@ class YamlTemplateVspOnboardStep(YamlTemplateBaseStep):
             - VendorOnboardStep.
         """
         super().__init__(cleanup=settings.CLEANUP_FLAG)
-        self.add_step(VendorOnboardStep())
+        self.add_step(YamlTemplateVendorOnboardStep())
 
     @property
     def description(self) -> str:
@@ -126,12 +126,11 @@ class YamlTemplateVspOnboardStep(YamlTemplateBaseStep):
          - VENDOR_NAME.
         """
         super().execute()
-        vendor: Vendor = Vendor(name=settings.VENDOR_NAME)
         if "vnfs" in self.yaml_template:
             for vnf in self.yaml_template["vnfs"]:
                 with open(get_resource_location(vnf["heat_files_to_upload"]), "rb") as package:
                     vsp: Vsp = Vsp(name=f"{vnf['vnf_name']}_VSP",
-                                   vendor=vendor,
+                                   vendor=Vendor(name=f"{vnf['vnf_name']}"),
                                    package=package)
                     vsp.onboard()
         elif "pnfs" in self.yaml_template:
@@ -139,7 +138,7 @@ class YamlTemplateVspOnboardStep(YamlTemplateBaseStep):
                 if "heat_files_to_upload" in pnf:
                     with open(get_resource_location(pnf["heat_files_to_upload"]), "rb") as package:
                         vsp: Vsp = Vsp(name=f"{pnf['pnf_name']}_VSP",
-                                       vendor=vendor,
+                                       vendor=Vendor(name=f"{pnf['pnf_name']}"),
                                        package=package)
                         vsp.onboard()
 

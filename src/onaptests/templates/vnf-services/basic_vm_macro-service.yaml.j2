@@ -1,8 +1,8 @@
 ---
-basic_vm_macro:
+{{ service }}:
     instantiation_type: "Macro"
     vnfs:
-        - vnf_name: basic_vm_macro
+        - vnf_name: {{ service }}
           properties:
               controller_actor: "CDS"
               skip_post_instantiation_configuration: False

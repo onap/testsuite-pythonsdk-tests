@@ -2,7 +2,9 @@ from pathlib import Path
 import time
 
 from onapsdk.configuration import settings
-from onapsdk.sdc.vf import Vf
+from onapsdk.exceptions import ResourceNotFound
+from onapsdk.sdc2.vf import Vf
+from onapsdk.sdc2.sdc_resource import LifecycleOperation, LifecycleState
 from onapsdk.sdc.vsp import Vsp
 from onaptests.utils.resources import get_resource_location
 
@@ -49,17 +51,23 @@ class VfOnboardStep(BaseStep):
 
         """
         super().execute()
-        vsp: Vsp = Vsp(name=settings.VSP_NAME)
-        vf: Vf = Vf(name=settings.VF_NAME, vsp=vsp)
-        if not vf.created():
-            vf.onboard()
+        try:
+            vf: Vf = Vf.get_by_name(name=settings.VF_NAME)
+            if vf.lifecycle_state == LifecycleState.CERTIFIED:
+                return
+        except ResourceNotFound:
+            vsp: Vsp = Vsp(name=settings.VSP_NAME)
+            vf = Vf.create(settings.VF_NAME, vsp=vsp)
+        vf.lifecycle_operation(LifecycleOperation.CERTIFY)
 
     @BaseStep.store_state(cleanup=True)
     def cleanup(self):
-        vf: Vf = Vf(name=settings.VF_NAME)
-        if vf.exists():
+        try:
+            vf = Vf.get_by_name(settings.VF_NAME)
             vf.archive()
             vf.delete()
+        except ResourceNotFound:
+            self._logger.warning("VF not created")
         super().cleanup()
 
 
@@ -125,13 +133,17 @@ class YamlTemplateVfOnboardStep(YamlTemplateBaseStep):
         if "vnfs" in self.yaml_template:
             for vnf in self.yaml_template["vnfs"]:
                 vsp: Vsp = Vsp(name=f"{vnf['vnf_name']}_VSP")
-                vf: Vf = Vf(name=vnf['vnf_name'], vsp=vsp)
-                if not vf.created():
-                    if all(x in vnf for x in ["vnf_artifact_type",
-                                              "vnf_artifact_name",
-                                              "vnf_artifact_label",
-                                              "vnf_artifact_file_path"]):
-                        vf.create()
+                try:
+                    vf: Vf = Vf.get_by_name(name=vnf['vnf_name'])
+                    if vf.lifecycle_state == LifecycleState.CERTIFIED:
+                        self._logger.info("VF already certified")
+                        return
+                except ResourceNotFound:
+                    vf: Vf = Vf.create(name=vnf['vnf_name'], vsp=vsp, vendor=vsp.vendor)
+                    if all([x in vnf for x in ["vnf_artifact_type",
+                                               "vnf_artifact_name",
+                                               "vnf_artifact_label",
+                                               "vnf_artifact_file_path"]]):
                         artifact_file_path: Path = Path(vnf["vnf_artifact_file_path"])
                         if not artifact_file_path.exists():
                             artifact_file_path = Path(get_resource_location(artifact_file_path))
@@ -139,17 +151,19 @@ class YamlTemplateVfOnboardStep(YamlTemplateBaseStep):
                             artifact_type=vnf["vnf_artifact_type"],
                             artifact_name=vnf["vnf_artifact_name"],
                             artifact_label=vnf["vnf_artifact_label"],
-                            artifact=str(artifact_file_path)
+                            artifact_file_path=str(artifact_file_path)
                         )
-                    time.sleep(10)
-                    vf.onboard()
+                time.sleep(10)
+                vf.lifecycle_operation(LifecycleOperation.CERTIFY)
 
     @YamlTemplateBaseStep.store_state(cleanup=True)
     def cleanup(self):
         if "vnfs" in self.yaml_template:
             for vnf in self.yaml_template["vnfs"]:
-                vf_obj: Vf = Vf(name=vnf["vnf_name"])
-                if vf_obj.exists():
+                try:
+                    vf_obj: Vf = Vf.get_by_name(name=vnf["vnf_name"])
                     vf_obj.archive()
                     vf_obj.delete()
+                except ResourceNotFound:
+                    self._logger.warning(f"VF {vnf['vnf_name']} does not exist")
         super().cleanup()
