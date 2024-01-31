@@ -1,12 +1,13 @@
 import os
 from pathlib import Path
 from uuid import uuid4
-from yaml import load, SafeLoader
 
-from onaptests.utils.resources import get_resource_location
+from yaml import SafeLoader, load
+
 import onaptests.utils.exceptions as onap_test_exceptions
-from .settings import *  # noqa
+from onaptests.utils.resources import get_resource_location
 
+from .settings import *  # noqa
 
 # Specific basic_cnf_macro with multicloud-k8s and yaml config scenario.
 SERVICE_DETAILS = ("Onboarding, distribution and instantiation of a Apache CNF " +

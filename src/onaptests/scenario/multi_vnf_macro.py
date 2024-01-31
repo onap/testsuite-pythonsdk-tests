@@ -1,7 +1,7 @@
 """Instantiate basic vm using SO macro flow."""
+from onapsdk.configuration import settings
 from yaml import SafeLoader, load
 
-from onapsdk.configuration import settings
 from onaptests.scenario.scenario_base import (BaseStep, ScenarioBase,
                                               YamlTemplateBaseScenarioStep)
 from onaptests.steps.instantiate.service_macro import \

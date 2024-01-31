@@ -2,7 +2,6 @@
 import time
 from typing import List
 from uuid import uuid4
-from yaml import load, SafeLoader
 
 from onapsdk.aai.business.owning_entity import OwningEntity
 from onapsdk.aai.cloud_infrastructure.cloud_region import CloudRegion
@@ -10,23 +9,18 @@ from onapsdk.aai.cloud_infrastructure.tenant import Tenant
 from onapsdk.configuration import settings
 from onapsdk.exceptions import ResourceNotFound
 from onapsdk.sdc.service import Service
-from onapsdk.so.instantiation import (
-    InstantiationParameter,
-    ServiceInstantiation,
-    VfmoduleParameters,
-    VnfParameters,
-    SoService
-)
-from onaptests.steps.cloud.customer_service_subscription_create import (
-    CustomerServiceSubscriptionCreateStep
-)
+from onapsdk.so.instantiation import (InstantiationParameter,
+                                      ServiceInstantiation, SoService,
+                                      VfmoduleParameters, VnfParameters)
+from yaml import SafeLoader, load
 
 import onaptests.utils.exceptions as onap_test_exceptions
 from onaptests.steps.base import YamlTemplateBaseStep
-from onaptests.steps.onboard.service import YamlTemplateServiceOnboardStep
-from onaptests.steps.cloud.connect_service_subscription_to_cloud_region import (
+from onaptests.steps.cloud.connect_service_subscription_to_cloud_region import \
     ConnectServiceSubToCloudRegionStep
-)
+from onaptests.steps.cloud.customer_service_subscription_create import \
+    CustomerServiceSubscriptionCreateStep
+from onaptests.steps.onboard.service import YamlTemplateServiceOnboardStep
 
 
 class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):

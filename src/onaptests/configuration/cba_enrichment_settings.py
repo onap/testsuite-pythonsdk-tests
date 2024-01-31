@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from onaptests.utils.resources import get_resource_location
+
 from .settings import *  # noqa
 
 SERVICE_NAME = "CDS blueprint enrichment"

@@ -11,10 +11,10 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 from kubernetes import client, config
 from kubernetes.stream import stream
 from natural.date import delta
+from onapsdk.configuration import settings
 from urllib3.exceptions import MaxRetryError, NewConnectionError
 from xtesting.core import testcase
 
-from onapsdk.configuration import settings
 from onaptests.utils.exceptions import StatusCheckException
 
 from ..base import BaseStep
@@ -721,13 +721,25 @@ class CheckNamespaceStatusStep(CheckK8sResourcesStep):
         """Init CheckNamespaceStatusStep."""
         super().__init__(namespace=settings.K8S_ONAP_NAMESPACE, resource_type="")
         self.__logger.debug("K8s namespaces status test init started")
-        if settings.IN_CLUSTER:
-            config.load_incluster_config()
-        else:
-            config.load_kube_config(config_file=settings.K8S_CONFIG)
+
+        self.job_list_step = None
+        self.pod_list_step = None
+        self.service_list_step = None
+        self.deployment_list_step = None
+        self.replicaset_list_step = None
+        self.statefulset_list_step = None
+        self.daemonset_list_step = None
+        self.configmap_list_step = None
+        self.secret_list_step = None
+        self.ingress_list_step = None
+        self.pvc_list_step = None
+        if not settings.IF_VALIDATION:
+            if settings.IN_CLUSTER:
+                config.load_incluster_config()
+            else:
+                config.load_kube_config(config_file=settings.K8S_CONFIG)
         for namespace in ([self.namespace] + settings.EXTRA_NAMESPACE_LIST):
             self._init_namespace_steps(namespace)
-
         self.pods = []
         self.services = []
         self.jobs = []
@@ -747,17 +759,18 @@ class CheckNamespaceStatusStep(CheckK8sResourcesStep):
         self.failing_pvcs = []
 
     def _init_namespace_steps(self, namespace: str):
-        self.job_list_step = CheckK8sJobsStep(namespace)
-        self.pod_list_step = CheckK8sPodsStep(namespace, self.job_list_step)
-        self.service_list_step = CheckK8sServicesStep(namespace, self.pod_list_step)
-        self.deployment_list_step = CheckK8sDeploymentsStep(namespace, self.pod_list_step)
-        self.replicaset_list_step = CheckK8sReplicaSetsStep(namespace, self.pod_list_step)
-        self.statefulset_list_step = CheckK8sStatefulSetsStep(namespace, self.pod_list_step)
-        self.daemonset_list_step = CheckK8sDaemonSetsStep(namespace, self.pod_list_step)
-        self.configmap_list_step = CheckK8sConfigMapsStep(namespace)
-        self.secret_list_step = CheckK8sSecretsStep(namespace)
-        self.ingress_list_step = CheckK8sIngressesStep(namespace)
-        self.pvc_list_step = CheckK8sPvcsStep(namespace)
+        if namespace == settings.K8S_ONAP_NAMESPACE:
+            self.job_list_step = CheckK8sJobsStep(namespace)
+            self.pod_list_step = CheckK8sPodsStep(namespace, self.job_list_step)
+            self.service_list_step = CheckK8sServicesStep(namespace, self.pod_list_step)
+            self.deployment_list_step = CheckK8sDeploymentsStep(namespace, self.pod_list_step)
+            self.replicaset_list_step = CheckK8sReplicaSetsStep(namespace, self.pod_list_step)
+            self.statefulset_list_step = CheckK8sStatefulSetsStep(namespace, self.pod_list_step)
+            self.daemonset_list_step = CheckK8sDaemonSetsStep(namespace, self.pod_list_step)
+            self.configmap_list_step = CheckK8sConfigMapsStep(namespace)
+            self.secret_list_step = CheckK8sSecretsStep(namespace)
+            self.ingress_list_step = CheckK8sIngressesStep(namespace)
+            self.pvc_list_step = CheckK8sPvcsStep(namespace)
         self.add_step(self.job_list_step)
         self.add_step(self.pod_list_step)
         self.add_step(self.service_list_step)

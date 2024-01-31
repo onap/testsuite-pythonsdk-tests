@@ -1,12 +1,14 @@
 
 import random
 import string
-from yaml import load, SafeLoader
+
 from jinja2 import Environment, PackageLoader
+from yaml import SafeLoader, load
 
 import onaptests.utils.exceptions as onap_test_exceptions
 from onaptests.utils.resources import get_resource_location
-from .settings import * # noqa
+
+from .settings import *  # noqa
 
 
 # We need to create a service file with a random service name,

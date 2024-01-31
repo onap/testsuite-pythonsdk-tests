@@ -1,6 +1,6 @@
 from onaptests.utils.resources import get_resource_location
-from .settings import *  # noqa
 
+from .settings import *  # noqa
 
 # Specific Basic VM with multicloud and yaml config scenario.
 SERVICE_DETAILS = ("Onboarding, distribution and instantiation of a VM" +

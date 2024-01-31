@@ -22,7 +22,7 @@ class ExposeServiceNodePortStep(BaseStep):
         self.service_name = service_name
         self.port = port
         self.node_port = node_port
-        self.k8s_client: client.CoreV1Api = client.CoreV1Api()
+        self.k8s_client: client.CoreV1Api = None
 
     @property
     def component(self) -> str:
@@ -68,6 +68,7 @@ class ExposeServiceNodePortStep(BaseStep):
             config.load_incluster_config()
         else:
             config.load_kube_config(config_file=settings.K8S_CONFIG)
+        self.k8s_client: client.CoreV1Api = client.CoreV1Api()
         if not self.is_service_node_port_type():
             try:
                 self.k8s_client.patch_namespaced_service(

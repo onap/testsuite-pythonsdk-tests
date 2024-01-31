@@ -1,6 +1,7 @@
 from onapsdk.configuration import settings
 from onapsdk.sdc.vendor import Vendor
 from onapsdk.sdc.vsp import Vsp
+
 from onaptests.utils.resources import get_resource_location
 
 from ..base import BaseStep, YamlTemplateBaseStep

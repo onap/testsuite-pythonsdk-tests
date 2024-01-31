@@ -1,13 +1,14 @@
 import re
 from typing import Iterable
 from uuid import uuid4
-from yaml import load, SafeLoader
 
 from onapsdk.configuration import settings
-from onapsdk.so.instantiation import Subnet
 from onapsdk.sdc.service import Service
+from onapsdk.so.instantiation import Subnet
+from yaml import SafeLoader, load
 
 import onaptests.utils.exceptions as onap_test_exceptions
+
 from ..base import YamlTemplateBaseStep
 from .service_ala_carte import YamlTemplateServiceAlaCarteInstantiateStep
 

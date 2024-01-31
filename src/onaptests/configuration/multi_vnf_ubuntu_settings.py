@@ -1,12 +1,14 @@
-import uuid
 import os
+import uuid
 from pathlib import Path
+
 import openstack
 from jinja2 import Environment, PackageLoader
-from onaptests.utils.resources import get_resource_location
-from .settings import IF_VALIDATION
-from .settings import *  # noqa
 
+from onaptests.utils.resources import get_resource_location
+
+from .settings import *  # noqa
+from .settings import IF_VALIDATION
 
 VNF_FILENAME_PREFIX = "multi-vnf-ubuntu"
 SERVICE_NAME = f"multivnfubuntu{str(uuid.uuid4().hex)[:6]}"

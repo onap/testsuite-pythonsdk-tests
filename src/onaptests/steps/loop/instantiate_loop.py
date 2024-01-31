@@ -6,6 +6,7 @@ import logging.config
 
 from onapsdk.clamp.loop_instance import LoopInstance
 from onapsdk.configuration import settings
+
 import onaptests.utils.exceptions as onap_test_exceptions
 
 

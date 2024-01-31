@@ -2,11 +2,11 @@
 import yaml
 from avionix import ChartBuilder, ChartDependency, ChartInfo
 from avionix.errors import HelmError
+
 from onaptests.steps.base import BaseStep
+from onaptests.utils.exceptions import (EnvironmentCleanupException,
+                                        EnvironmentPreparationException)
 from onaptests.utils.resources import get_local_dir
-from onaptests.utils.exceptions import (
-    EnvironmentPreparationException,
-    EnvironmentCleanupException)
 
 
 class HelmChartStep(BaseStep):

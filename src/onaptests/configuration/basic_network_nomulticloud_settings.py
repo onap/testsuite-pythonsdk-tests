@@ -1,11 +1,13 @@
 import os
-import openstack
-from yaml import load, SafeLoader
-from onaptests.utils.resources import get_resource_location
-import onaptests.utils.exceptions as onap_test_exceptions
-from .settings import IF_VALIDATION
-from .settings import *  # noqa
 
+import openstack
+from yaml import SafeLoader, load
+
+import onaptests.utils.exceptions as onap_test_exceptions
+from onaptests.utils.resources import get_resource_location
+
+from .settings import *  # noqa
+from .settings import IF_VALIDATION
 
 # The ONAP part
 SERVICE_DETAILS = "Onboarding, distribution and instantiation of Basic Network using à la carte"

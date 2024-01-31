@@ -1,15 +1,16 @@
 from typing import Iterable
 from uuid import uuid4
-from yaml import load, SafeLoader
 
 from onapsdk.aai.cloud_infrastructure import CloudRegion, Tenant
 from onapsdk.configuration import settings
 from onapsdk.so.instantiation import InstantiationParameter
+from yaml import SafeLoader, load
 
 import onaptests.utils.exceptions as onap_test_exceptions
+
 from ..base import YamlTemplateBaseStep
-from .vnf_ala_carte import YamlTemplateVnfAlaCarteInstantiateStep
 from .k8s_profile_create import K8SProfileStep
+from .vnf_ala_carte import YamlTemplateVnfAlaCarteInstantiateStep
 
 
 class YamlTemplateVfModuleAlaCarteInstantiateStep(YamlTemplateBaseStep):

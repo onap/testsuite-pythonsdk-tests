@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 """Basic CPS test case."""
 from onapsdk.configuration import settings
-from onaptests.scenario.scenario_base import BaseStep, ScenarioBase, BaseScenarioStep
+
+from onaptests.scenario.scenario_base import (BaseScenarioStep, BaseStep,
+                                              ScenarioBase)
 from onaptests.steps.onboard.cps import (CheckPostgressDataBaseConnectionStep,
                                          QueryCpsAnchorNodeStep)
 

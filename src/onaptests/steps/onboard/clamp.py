@@ -1,11 +1,10 @@
 #!/usr/bin/python
 # http://www.apache.org/licenses/LICENSE-2.0
 """Clamp Onboard service class."""
-from yaml import load, SafeLoader
+from onapsdk.configuration import settings
 from onapsdk.sdc.service import Service
 from onapsdk.sdc.vf import Vf
-
-from onapsdk.configuration import settings
+from yaml import SafeLoader, load
 
 from ..base import BaseStep, YamlTemplateBaseStep
 from .service import YamlTemplateVfOnboardStep

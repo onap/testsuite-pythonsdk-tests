@@ -1,10 +1,10 @@
 import logging
 import time
 
-from xtesting.core import testcase
-
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SDKException, SettingsError
+from xtesting.core import testcase
+
 from onaptests.steps.base import BaseStep, YamlTemplateBaseStep
 from onaptests.utils.exceptions import (OnapTestException,
                                         TestConfigurationException)

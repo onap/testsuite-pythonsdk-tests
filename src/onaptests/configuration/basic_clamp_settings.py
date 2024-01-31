@@ -1,8 +1,8 @@
-from yaml import load, SafeLoader
+from yaml import SafeLoader, load
+
 from onaptests.utils.resources import get_resource_location
 
 from .settings import *  # noqa
-
 
 CLEANUP_FLAG = False
 CLAMP_DISTRIBUTION_TIMER = 10

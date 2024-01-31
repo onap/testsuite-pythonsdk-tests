@@ -1,11 +1,13 @@
+import json
 from dataclasses import dataclass
 from enum import Enum
-import json
 from pathlib import Path
 from typing import List
+
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SettingsError
+
 from onaptests.utils.resources import get_resource_location
 
 

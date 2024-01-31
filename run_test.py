@@ -1,8 +1,10 @@
 import configparser
 import importlib
+import importlib.util
 import logging.config
 import os
 import sys
+import glob
 
 from onapsdk.exceptions import ModuleError
 import onaptests.utils.exceptions as onap_test_exceptions
@@ -12,7 +14,8 @@ SETTING_FILE_EXCEPTIONS = {
     "basic_cnf": "basic_cnf_yaml_settings",
     "basic_cds": "cba_enrichment_settings",
     "basic_network": "basic_network_nomulticloud_settings",
-    "multi_vnf_macro": "multi_vnf_ubuntu_settings"
+    "multi_vnf_macro": "multi_vnf_ubuntu_settings",
+    "add_pnf_in_running_service": "instantiate_pnf_without_registration_event_settings"
 }
 
 MODULES_TO_RELOAD = [
@@ -23,7 +26,7 @@ MODULES_TO_RELOAD = [
 def get_entrypoints():
     config = configparser.ConfigParser()
     config.read('setup.cfg')
-    entry_points = config['entry_points']['xtesting.testcase']
+    entry_points = config['options.entry_points']['xtesting.testcase']
     config = configparser.ConfigParser()
     config.read_string(f"[entry_points]\n{entry_points}")
     entry_points = config['entry_points']
@@ -36,7 +39,24 @@ def get_entrypoints():
         }
     return entry_points_result
 
+def check_scenarios(scenarios, entry_points):
+    path = importlib.util.find_spec(scenarios.__name__).submodule_search_locations
+    modules = glob.glob(f"{path._path[0]}/*.py")
+    all_mods = [ os.path.basename(f)[:-3] for f in modules if os.path.isfile(f) and not f.endswith('__init__.py')]
+    for mod_name in all_mods:
+        full_mod_name = f"{scenarios.__name__}.{mod_name}"
+        if mod_name != "scenario_base":
+            exists = False
+            for test_name, entry_point in entry_points.items():
+                if entry_point["module"] == full_mod_name:
+                    exists = True
+                    break
+            if not exists:
+                raise onap_test_exceptions.TestConfigurationException(
+                    f"Scenario defined in {full_mod_name}.py is not added to setup.cfg file")
+
 def run_test(test_name, validation, force_cleanup, entry_point):
+    print(f"Configuring {test_name} test")
     settings_env = "ONAP_PYTHON_SDK_SETTINGS"
     if force_cleanup:
         validation_env = "PYTHON_SDK_TESTS_FORCE_CLEANUP"
@@ -67,25 +87,36 @@ def run_test(test_name, validation, force_cleanup, entry_point):
     logger = logging.getLogger(test_name)
     logger.info(f"Running {test_name} test")
 
+    scenarios = importlib.import_module("onaptests.scenario")
     test_module = importlib.import_module(entry_point["module"])
 
     test_instance = getattr(test_module, entry_point["class"])()
     if validation:
-        validate_scenario_base_class(test_name, test_instance)
+        validate_scenario_base_class(test_name, test_instance, scenarios)
     test_instance.run()
     test_instance.clean()
     if validation:
         logger.info(f"Validating {test_name} test")
         test_instance.validate()
+    return scenarios
 
-def validate_scenario_base_class(test_name, scenario):
+def validate_scenario_base_class(test_name, scenario, scenarios):
     has_scenario_base = False
+    if test_name != scenario.case_name:
+        raise onap_test_exceptions.TestConfigurationException(
+            f"[{test_name}] Mismatch of scenario case name: {test_name} != {scenario.case_name}")
+    if scenario.__class__.run != scenarios.scenario_base.ScenarioBase.run:
+        raise onap_test_exceptions.TestConfigurationException(
+            f"[{test_name}] scenario class overrides run() method what is forbidden")
+    if scenario.__class__.clean != scenarios.scenario_base.ScenarioBase.clean:
+        raise onap_test_exceptions.TestConfigurationException(
+            f"[{test_name}] scenario class overrides clean() method what is forbidden")
     for base in scenario.__class__.__bases__:
         if base.__name__ in "ScenarioBase":
             has_scenario_base = True
             break
     if not has_scenario_base:
-        raise TestConfigurationException(
+        raise onap_test_exceptions.TestConfigurationException(
             f"[{test_name}] {scenario.__class__.__name__} class does not inherit from ScenarioBase")
 
 def main(argv):
@@ -112,6 +143,7 @@ def main(argv):
     entry_points = get_entrypoints()
     if test_name == "all":
         modules_reload = False
+        scenarios = None
         for test_name, entry_point in entry_points.items():
             if modules_reload:
                 modules_to_keep = dict()
@@ -125,9 +157,11 @@ def main(argv):
                         modules_to_keep[module] = sys.modules[module]
                 sys.modules.clear()
                 sys.modules.update(modules_to_keep)
-            run_test(
+            scenarios = run_test(
                 test_name, validation, force_cleanup, entry_point)
             modules_reload = True
+        if validation:
+            check_scenarios(scenarios, entry_points)
     else:
         entry_point = entry_points[test_name]
         run_test(test_name, validation, force_cleanup, entry_point)

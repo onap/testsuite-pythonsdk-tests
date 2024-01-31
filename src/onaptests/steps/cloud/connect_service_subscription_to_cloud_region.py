@@ -3,10 +3,11 @@ from onapsdk.aai.cloud_infrastructure import CloudRegion, Tenant
 from onapsdk.configuration import settings
 
 from ..base import BaseStep
-from .customer_service_subscription_create import CustomerServiceSubscriptionCreateStep
+from .customer_service_subscription_create import \
+    CustomerServiceSubscriptionCreateStep
+from .k8s_connectivity_info_create import K8SConnectivityInfoStep
 from .link_cloud_to_complex import LinkCloudRegionToComplexStep
 from .register_cloud import RegisterCloudRegionStep
-from .k8s_connectivity_info_create import K8SConnectivityInfoStep
 
 
 class ConnectServiceSubToCloudRegionStep(BaseStep):

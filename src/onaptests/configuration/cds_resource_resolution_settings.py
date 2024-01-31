@@ -2,6 +2,7 @@ from pathlib import Path
 from uuid import uuid4
 
 from onaptests.utils.resources import get_resource_location
+
 from .settings import *  # noqa
 
 CLEANUP_FLAG = True

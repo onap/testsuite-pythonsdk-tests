@@ -1,7 +1,9 @@
 """Start simulators via simulators' API."""
-from typing import Union, Optional, Dict
+from typing import Dict, Optional, Union
+
 import requests
 from onapsdk.configuration import settings
+
 from onaptests.steps.base import BaseStep
 from onaptests.utils.exceptions import TestConfigurationException
 

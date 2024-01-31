@@ -10,12 +10,12 @@ import random
 import string
 import time
 
-from yaml import SafeLoader, load
-
-import onaptests.utils.exceptions as onap_test_exceptions
 from onapsdk.clamp.clamp_element import Clamp
 from onapsdk.configuration import settings
 from onapsdk.sdc.service import Service
+from yaml import SafeLoader, load
+
+import onaptests.utils.exceptions as onap_test_exceptions
 from onaptests.steps.base import YamlTemplateBaseStep
 from onaptests.steps.loop.instantiate_loop import InstantiateLoop
 from onaptests.steps.onboard.clamp import OnboardClampStep

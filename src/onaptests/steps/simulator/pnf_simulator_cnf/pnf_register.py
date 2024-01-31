@@ -7,8 +7,8 @@ from typing import Tuple
 import requests
 import urllib3
 from kubernetes import client, config, watch
-
 from onapsdk.configuration import settings
+
 from onaptests.steps.base import BaseStep
 from onaptests.steps.instantiate.msb_k8s import CreateInstanceStep
 from onaptests.utils.exceptions import (EnvironmentPreparationException,

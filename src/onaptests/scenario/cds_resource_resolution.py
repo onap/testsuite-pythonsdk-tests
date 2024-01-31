@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """CDS resource resolution test scenario."""
-from onaptests.scenario.scenario_base import BaseStep, ScenarioBase, BaseScenarioStep
+from onaptests.scenario.scenario_base import (BaseScenarioStep, BaseStep,
+                                              ScenarioBase)
 from onaptests.steps.onboard.cds import CbaProcessStep
 from onaptests.steps.simulator.cds_mockserver import \
     CdsMockserverCnfConfigureStep

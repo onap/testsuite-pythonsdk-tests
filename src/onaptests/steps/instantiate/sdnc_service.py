@@ -5,6 +5,7 @@ from onapsdk.exceptions import APIError
 from onapsdk.sdnc import VfModulePreload
 from onapsdk.sdnc.preload import PreloadInformation
 from onapsdk.sdnc.services import Service
+
 from onaptests.scenario.scenario_base import BaseScenarioStep
 from onaptests.steps.base import BaseStep
 from onaptests.utils.exceptions import OnapTestException

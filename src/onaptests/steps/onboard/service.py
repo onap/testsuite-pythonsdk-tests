@@ -1,6 +1,5 @@
 import time
 from typing import Any, Dict
-from yaml import load, SafeLoader
 
 import onapsdk.constants as onapsdk_const
 from onapsdk.configuration import settings
@@ -11,6 +10,7 @@ from onapsdk.sdc.properties import ComponentProperty
 from onapsdk.sdc.service import Service, ServiceInstantiationType
 from onapsdk.sdc.vf import Vf
 from onapsdk.sdc.vl import Vl
+from yaml import SafeLoader, load
 
 from ..base import BaseStep, YamlTemplateBaseStep
 from .pnf import PnfOnboardStep, YamlTemplatePnfOnboardStep

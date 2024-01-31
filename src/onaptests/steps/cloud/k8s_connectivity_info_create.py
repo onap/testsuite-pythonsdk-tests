@@ -1,9 +1,9 @@
 """Connectivity info creation module."""
 from jinja2 import Environment, PackageLoader, select_autoescape
-
 from onapsdk.configuration import settings
 from onapsdk.exceptions import APIError
 from onapsdk.k8s import ConnectivityInfo
+
 from onaptests.steps.base import BaseStep
 
 

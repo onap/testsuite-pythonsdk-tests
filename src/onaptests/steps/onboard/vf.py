@@ -1,9 +1,10 @@
-from pathlib import Path
 import time
+from pathlib import Path
 
 from onapsdk.configuration import settings
 from onapsdk.sdc.vf import Vf
 from onapsdk.sdc.vsp import Vsp
+
 from onaptests.utils.resources import get_resource_location
 
 from ..base import BaseStep, YamlTemplateBaseStep

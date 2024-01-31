@@ -1,17 +1,19 @@
 import time
 from uuid import uuid4
-from yaml import load, SafeLoader
 
-from onapsdk.aai.cloud_infrastructure import CloudRegion, Tenant
 from onapsdk.aai.business.owning_entity import OwningEntity as AaiOwningEntity
+from onapsdk.aai.cloud_infrastructure import CloudRegion, Tenant
 from onapsdk.configuration import settings
 from onapsdk.exceptions import ResourceNotFound
 from onapsdk.sdc.service import Service
 from onapsdk.so.instantiation import ServiceInstantiation
+from yaml import SafeLoader, load
 
 import onaptests.utils.exceptions as onap_test_exceptions
+
 from ..base import YamlTemplateBaseStep
-from ..cloud.connect_service_subscription_to_cloud_region import ConnectServiceSubToCloudRegionStep
+from ..cloud.connect_service_subscription_to_cloud_region import \
+    ConnectServiceSubToCloudRegionStep
 from ..onboard.service import YamlTemplateServiceOnboardStep
 
 

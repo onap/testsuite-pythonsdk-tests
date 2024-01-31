@@ -1,14 +1,15 @@
 from typing import Iterable
 from uuid import uuid4
-from yaml import load, SafeLoader
 
 from onapsdk.aai.business import Customer, ServiceInstance, ServiceSubscription
 from onapsdk.configuration import settings
 from onapsdk.exceptions import APIError, ResourceNotFound
 from onapsdk.k8s import Definition
 from onapsdk.so.instantiation import InstantiationParameter
+from yaml import SafeLoader, load
 
 import onaptests.utils.exceptions as onap_test_exceptions
+
 from ..base import BaseStep
 from .vnf_ala_carte import YamlTemplateVnfAlaCarteInstantiateStep
 

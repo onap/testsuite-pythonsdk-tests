@@ -4,7 +4,8 @@ from onapsdk.k8s import Definition, Profile
 
 from onaptests.steps.base import BaseStep
 from onaptests.steps.cloud.cloud_region_create import CloudRegionCreateStep
-from onaptests.steps.cloud.k8s_connectivity_info_create import K8SConnectivityInfoStep
+from onaptests.steps.cloud.k8s_connectivity_info_create import \
+    K8SConnectivityInfoStep
 
 
 class CreateDefinitionStep(BaseStep):

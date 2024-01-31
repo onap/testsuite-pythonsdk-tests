@@ -4,6 +4,7 @@ from onapsdk.configuration import settings
 from onapsdk.sdc.pnf import Pnf
 from onapsdk.sdc.vendor import Vendor
 from onapsdk.sdc.vsp import Vsp
+
 from ..base import BaseStep, YamlTemplateBaseStep
 from .vsp import VspOnboardStep, YamlTemplateVspOnboardStep
 

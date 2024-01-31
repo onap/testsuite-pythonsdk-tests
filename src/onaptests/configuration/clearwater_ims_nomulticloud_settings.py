@@ -1,10 +1,12 @@
 import os
-import openstack
-from yaml import load, SafeLoader
-from onaptests.utils.resources import get_resource_location
-from .settings import IF_VALIDATION
-from .settings import *  # noqa
 
+import openstack
+from yaml import SafeLoader, load
+
+from onaptests.utils.resources import get_resource_location
+
+from .settings import *  # noqa
+from .settings import IF_VALIDATION
 
 SERVICE_DETAILS = "Onboarding, distribution and instantiation of a Clearwater IMS"
 # The ONAP part

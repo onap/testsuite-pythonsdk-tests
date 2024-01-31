@@ -10,6 +10,7 @@ from typing import Iterator, List, Optional
 from onapsdk.aai.business import Customer, ServiceInstance, ServiceSubscription
 from onapsdk.configuration import settings
 from onapsdk.exceptions import SDKException, SettingsError
+
 from onaptests.steps.reports_collection import (Report, ReportsCollection,
                                                 ReportStepStatus)
 from onaptests.utils.exceptions import (OnapTestException,
@@ -18,7 +19,6 @@ from onaptests.utils.exceptions import (OnapTestException,
                                         SubstepExecutionException,
                                         SubstepExecutionExceptionGroup,
                                         TestConfigurationException)
-
 
 # pylint: disable=protected-access
 IF_FORCE_CLEANUP = "PYTHON_SDK_TESTS_FORCE_CLEANUP"
