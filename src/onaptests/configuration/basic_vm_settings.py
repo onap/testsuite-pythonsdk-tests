@@ -20,6 +20,9 @@ ONLY_INSTANTIATE = False
 # if a yaml file is define, retrieve info from this yaml files
 # if not declare the parameters in the settings
 SERVICE_YAML_TEMPLATE = get_resource_location("templates/vnf-services/basic_vm-service.yaml")
+generate_service_config_yaml_file(service_name="basic_vm",  # noqa
+                                  service_template="basic_vm-service.yaml.j2",
+                                  service_config=SERVICE_YAML_TEMPLATE)
 
 try:
     # Try to retrieve the SERVICE NAME from the yaml file

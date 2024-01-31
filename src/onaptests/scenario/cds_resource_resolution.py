@@ -52,5 +52,5 @@ class CDSResourceResolution(ScenarioBase):
 
     def __init__(self, **kwargs):
         """Init CDS resource resolution use case."""
-        super().__init__('basic_cds', **kwargs)
+        super().__init__('cds_resource_resolution', **kwargs)
         self.test = CDSResourceResolutionStep()
