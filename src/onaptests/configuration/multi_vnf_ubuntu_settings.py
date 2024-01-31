@@ -3,7 +3,6 @@ import uuid
 from pathlib import Path
 
 import openstack
-from jinja2 import Environment, PackageLoader
 
 from onaptests.utils.resources import get_resource_location
 
@@ -13,25 +12,6 @@ from .settings import IF_VALIDATION
 VNF_FILENAME_PREFIX = "multi-vnf-ubuntu"
 SERVICE_NAME = f"multivnfubuntu{str(uuid.uuid4().hex)[:6]}"
 SERVICE_DETAILS = "Onboarding, distribution and instanitation of an Mutli VM service using macro"
-
-
-# We need to create a service file with a random service name,
-# to be sure that we force onboarding
-def generate_service_config_yaml_file(filename):
-    """generate the service file with a random service name
-     from a jinja template"""
-
-    env = Environment(
-        loader=PackageLoader('onaptests', 'templates/vnf-services'),
-    )
-    template = env.get_template(f"{filename}.yaml.j2")
-
-    rendered_template = template.render(service_name=SERVICE_NAME)
-
-    file_name = get_resource_location(f"templates/vnf-services/{filename}.yaml")
-
-    with open(file_name, 'w+', encoding="utf-8") as file_to_write:
-        file_to_write.write(rendered_template)
 
 
 CLEANUP_FLAG = True
@@ -81,7 +61,11 @@ MODEL_YAML_TEMPLATE = Path(get_resource_location("templates/vnf-services/" +
                            f"{VNF_FILENAME_PREFIX}-model.yaml"))
 
 
-generate_service_config_yaml_file(f"{VNF_FILENAME_PREFIX}-service")
-generate_service_config_yaml_file(f"{VNF_FILENAME_PREFIX}-model")
+generate_service_config_yaml_file(f"{VNF_FILENAME_PREFIX}-service",  # noqa
+                                  f"{VNF_FILENAME_PREFIX}-service.yaml.j2",
+                                  str(SERVICE_YAML_TEMPLATE))
+generate_service_config_yaml_file(f"{VNF_FILENAME_PREFIX}-model",  # noqa
+                                  f"{VNF_FILENAME_PREFIX}-model.yaml.j2",
+                                  str(MODEL_YAML_TEMPLATE))
 
 SERVICE_INSTANCE_NAME = f"{SERVICE_NAME}_svc"

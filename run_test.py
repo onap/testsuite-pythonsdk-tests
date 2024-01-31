@@ -26,7 +26,7 @@ MODULES_TO_RELOAD = [
 def get_entrypoints():
     config = configparser.ConfigParser()
     config.read('setup.cfg')
-    entry_points = config['options.entry_points']['xtesting.testcase']
+    entry_points = config['entry_points']['xtesting.testcase']
     config = configparser.ConfigParser()
     config.read_string(f"[entry_points]\n{entry_points}")
     entry_points = config['entry_points']
@@ -121,7 +121,7 @@ def validate_scenario_base_class(test_name, scenario, scenarios):
 
 def main(argv):
     """Script is used to run one or all the tests.
-    
+
     You need to specify a name of the test like 'basic_cps' or
     keyword 'all' that tells to run all the tests. You can also
     pass a second argument of any value that tells the script to run

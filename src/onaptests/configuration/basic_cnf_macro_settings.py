@@ -66,6 +66,9 @@ TENANT_NAME = 'dummy_test'
 
 SERVICE_YAML_TEMPLATE = Path(get_resource_location(
     "templates/vnf-services/basic_cnf_macro-service.yaml"))
+generate_service_config_yaml_file(service_name="basic_cnf_macro",  # noqa
+                                  service_template="basic_cnf_macro-service.yaml.j2",
+                                  service_config=SERVICE_YAML_TEMPLATE)
 
 try:
     # Try to retrieve the SERVICE NAME from the yaml file

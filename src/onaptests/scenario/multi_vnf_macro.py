@@ -88,5 +88,5 @@ class MultiVnfUbuntuMacro(ScenarioBase):
 
     def __init__(self, **kwargs):
         """Init Basic Macro use case."""
-        super().__init__('nso_ubuntu_macro', **kwargs)
+        super().__init__('multi_vnf_macro', **kwargs)
         self.test = MultiVnfUbuntuMacroStep()

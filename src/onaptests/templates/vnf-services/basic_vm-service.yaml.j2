@@ -1,7 +1,7 @@
 ---
-basic_vm:
+{{ service_name }}:
     vnfs:
-        - vnf_name: basic_vm
+        - vnf_name: {{ service_name }}
           heat_files_to_upload: templates/heat-files/ubuntu20/ubuntu20agent.zip
           vnf_parameters: [
               {"name": "ubuntu20_image_name",
