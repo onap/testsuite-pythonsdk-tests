@@ -17,7 +17,7 @@ SERVICE_DETAILS = "Onboarding, distribution and instanitation of an Mutli VM ser
 
 # We need to create a service file with a random service name,
 # to be sure that we force onboarding
-def generate_service_config_yaml_file(filename):
+def generate_multi_vm_service_config_yaml_file(filename):
     """generate the service file with a random service name
      from a jinja template"""
 
@@ -81,7 +81,7 @@ MODEL_YAML_TEMPLATE = Path(get_resource_location("templates/vnf-services/" +
                            f"{VNF_FILENAME_PREFIX}-model.yaml"))
 
 
-generate_service_config_yaml_file(f"{VNF_FILENAME_PREFIX}-service")
-generate_service_config_yaml_file(f"{VNF_FILENAME_PREFIX}-model")
+generate_multi_vm_service_config_yaml_file(f"{VNF_FILENAME_PREFIX}-service")
+generate_multi_vm_service_config_yaml_file(f"{VNF_FILENAME_PREFIX}-model")
 
 SERVICE_INSTANCE_NAME = f"{SERVICE_NAME}_svc"

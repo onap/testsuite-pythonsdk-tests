@@ -6,6 +6,9 @@
 #                    #
 ######################
 
+import random
+import string
+from jinja2 import Environment, PackageLoader
 
 # Variables to set logger information
 # Possible values for logging levels in onapsdk: INFO, DEBUG , WARNING, ERROR
@@ -60,3 +63,28 @@ CDS_NODE_PORT = 30449
 IN_CLUSTER = False
 VES_BASIC_AUTH = {'username': 'sample1', 'password': 'sample1'}
 IF_VALIDATION = False
+
+
+# We need to create a service file with a random service name,
+# to be sure that we force onboarding
+def generate_service_config_yaml_file(service_name: str,
+                                      service_template: str,
+                                      service_config: str):
+    """ generate the service file with a random service name
+     from a jinja template"""
+
+    env = Environment(
+        loader=PackageLoader('onaptests', 'templates/vnf-services'),
+    )
+    template = env.get_template(service_template)
+
+    # get a random string to randomize the vnf name
+    # Random string with the combination of lower and upper case
+    letters = string.ascii_letters
+    result_str = ''.join(random.choice(letters) for i in range(6))
+    service_name = f"{service_name}_{result_str}"
+
+    rendered_template = template.render(service=service_name)
+
+    with open(service_config, 'w+', encoding="utf-8") as file_to_write:
+        file_to_write.write(rendered_template)
