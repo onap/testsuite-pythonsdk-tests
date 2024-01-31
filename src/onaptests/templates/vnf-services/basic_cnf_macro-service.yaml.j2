@@ -1,10 +1,10 @@
 ---
-basic_cnf_macro:
+{{ service_name }}:
     tosca_file_from_SDC: service-basic_cnf_macro-template
     version: "1.0"
     subscription_type: "basic_cnf_macro"
     vnfs:
-        - vnf_name: basic_cnf_macro
+        - vnf_name: {{ service_name }}
           properties:
               controller_actor: "CDS"
               skip_post_instantiation_configuration: False
