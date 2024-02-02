@@ -15,7 +15,6 @@ from onaptests.steps.reports_collection import (Report, ReportsCollection,
                                                 ReportStepStatus)
 from onaptests.utils.exceptions import (OnapTestException,
                                         OnapTestExceptionGroup,
-                                        SkipExecutionException,
                                         SubstepExecutionException,
                                         SubstepExecutionExceptionGroup,
                                         TestConfigurationException)
@@ -35,7 +34,7 @@ class StoreStateHandler(ABC):
         @functools.wraps(fun)
         def wrapper(self, *args, **kwargs):
             if (cleanup and self._state_clean) or (not cleanup and self._state_execute):
-                raise RuntimeError(f"Sate of {self._step_title(cleanup)} already stored")
+                raise RuntimeError("%s step executed twice" % self._step_title(cleanup))
             if cleanup:
                 self._state_clean = True
             else:
@@ -68,14 +67,13 @@ class StoreStateHandler(ABC):
                 else:
                     if self._is_validation_only or self.check_preconditions():
                         self._log_execution_state("START", cleanup)
-                        fun(self, *args, **kwargs)
+                        self._execute_substeps()
+                        if not self._is_validation_only:
+                            fun(self, *args, **kwargs)
                         execution_status = ReportStepStatus.PASS
                         self._executed = True
                     else:
                         execution_status = ReportStepStatus.NOT_EXECUTED
-            except SkipExecutionException:
-                execution_status = ReportStepStatus.PASS
-                self._executed = True
             except SubstepExecutionException as substep_exc:
                 if not cleanup:
                     execution_status = ReportStepStatus.NOT_EXECUTED
@@ -113,6 +111,7 @@ class StoreStateHandler(ABC):
                         step_execution_duration=time.time() - self._start_execution_time,
                         step_component=self.component
                     )
+            wrapper._is_wrapped = True
         return wrapper
 
 
@@ -329,7 +328,7 @@ class BaseStep(StoreStateHandler, ABC):
         """
         return True
 
-    def execute(self) -> None:
+    def _execute_substeps(self) -> None:
         """Step's action execution.
 
         Run all substeps action before it's own action.
@@ -350,8 +349,6 @@ class BaseStep(StoreStateHandler, ABC):
                 raise SubstepExecutionException("Cannot continue due to failed substeps")
             self._log_execution_state("CONTINUE")
         self._start_execution_time = time.time()
-        if self._is_validation_only:
-            raise SkipExecutionException()
 
     def _cleanup_substeps(self) -> None:
         """Substeps' cleanup.
@@ -377,6 +374,13 @@ class BaseStep(StoreStateHandler, ABC):
                 raise exceptions_to_raise[0]
             raise SubstepExecutionExceptionGroup("Substep Exceptions", exceptions_to_raise)
 
+    def execute(self) -> None:
+        """Step's execute.
+
+        Must be implemented in the steps with store_state decorator
+
+        """
+
     def cleanup(self) -> None:
         """Step's cleanup.
 
@@ -399,6 +403,18 @@ class BaseStep(StoreStateHandler, ABC):
         onap_proxy['http'] = sock_http
         onap_proxy['https'] = sock_http
         Customer.set_proxy(onap_proxy)
+
+    def validate_step_implementation(self):
+        """Validate is step addes store_state decorators."""
+
+        if not getattr(self.execute, "_is_wrapped", False):
+            raise TestConfigurationException(
+                f"{self._step_title()} - store_state decorator not present in execute() method")
+        if self._cleanup and not getattr(self.cleanup, "_is_wrapped", False):
+            raise TestConfigurationException(
+                f"{self._step_title()} - store_state decorator not present in cleanup() method")
+        for step in self._steps:
+            step.validate_step_implementation()
 
     def validate_execution(self):
         """Validate if each step was executed by decorator."""

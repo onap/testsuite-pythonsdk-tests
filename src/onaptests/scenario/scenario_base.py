@@ -70,6 +70,7 @@ class ScenarioBase(testcase.TestCase):
         """Validate implementation of the scenario."""
 
         self._validate_service_details()
+        self.test.validate_step_implementation()
         self.test.validate_execution()
         self.test.validate_cleanup()
 
