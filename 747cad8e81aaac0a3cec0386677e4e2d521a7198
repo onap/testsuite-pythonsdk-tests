@@ -1,0 +1,8 @@
+Verified+1: Lukasz Rajewski <lukasz.rajewski@t-mobile.pl>
+Verified+1: ONAP Required GHA <releng+onap.required.gha@linuxfoundation.org>
+Code-Review+2: Lukasz Rajewski <lukasz.rajewski@t-mobile.pl>
+Submitted-by: Lukasz Rajewski <lukasz.rajewski@t-mobile.pl>
+Submitted-at: Fri, 02 Feb 2024 16:35:50 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/testsuite/pythonsdk-tests/+/137114
+Project: testsuite/pythonsdk-tests
+Branch: refs/heads/master
