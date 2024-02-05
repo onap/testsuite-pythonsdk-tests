@@ -10,6 +10,7 @@ from onapsdk.so.instantiation import ServiceInstantiation
 from yaml import SafeLoader, load
 
 import onaptests.utils.exceptions as onap_test_exceptions
+from onaptests.steps.instantiate.sdnc_service import TestSdncStep
 
 from ..base import YamlTemplateBaseStep
 from ..cloud.connect_service_subscription_to_cloud_region import \
@@ -33,6 +34,7 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         if not settings.ONLY_INSTANTIATE:
             self.add_step(YamlTemplateServiceOnboardStep())
             self.add_step(ConnectServiceSubToCloudRegionStep())
+        self.add_step(TestSdncStep(full=False))
 
     @property
     def description(self) -> str:
