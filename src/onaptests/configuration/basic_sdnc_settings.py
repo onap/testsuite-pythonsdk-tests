@@ -73,3 +73,12 @@ VF_MODULE_NAME = "sdnc-sanity-vf-module"
 VNF_NAME = "sdnc-sanity-vnf-name"
 
 VNF_TYPE = "sdnc-sanity-vnf-type"
+
+QUERY = "SELECT * FROM svc_logic LIMIT 1;"
+SECRET_NAME = "onap-sdnc-db-secret"
+DATABASE = "sdnctl"
+DB_PRIMARY_HOST = "sdnc-db.onap.svc.cluster.local"
+DB_PORT = 3306
+DB_LOGIN = "login"
+DB_PASSWORD = "password"
+CHECK_MARIADB = True

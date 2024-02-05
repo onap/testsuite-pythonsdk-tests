@@ -20,6 +20,7 @@ from onaptests.steps.cloud.connect_service_subscription_to_cloud_region import \
     ConnectServiceSubToCloudRegionStep
 from onaptests.steps.cloud.customer_service_subscription_create import \
     CustomerServiceSubscriptionCreateStep
+from onaptests.steps.instantiate.sdnc_service import TestSdncStep
 from onaptests.steps.onboard.service import YamlTemplateServiceOnboardStep
 
 
@@ -48,6 +49,7 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
                 self.add_step(ConnectServiceSubToCloudRegionStep())
             else:  # only pnfs
                 self.add_step(CustomerServiceSubscriptionCreateStep())
+        self.add_step(TestSdncStep(full=False))
 
     @property
     def description(self) -> str:
