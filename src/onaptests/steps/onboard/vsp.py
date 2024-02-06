@@ -59,7 +59,10 @@ class VspOnboardStep(BaseStep):
     def cleanup(self):
         vsp: Vsp = Vsp(name=settings.VSP_NAME)
         if vsp.exists():
-            vsp.archive()
+            try:
+                vsp.archive()
+            except Exception:
+                self._logger.warning(f"Vsp {settings.VSP_NAME} archive failed")
             vsp.delete()
         super().cleanup()
 
@@ -143,18 +146,21 @@ class YamlTemplateVspOnboardStep(YamlTemplateBaseStep):
                                        package=package)
                         vsp.onboard()
 
+    def _cleanup_vsp(self, name):
+        vsp: Vsp = Vsp(name=name)
+        if vsp.exists():
+            try:
+                vsp.archive()
+            except Exception:
+                self._logger.warning(f"Vsp {name} archive failed")
+            vsp.delete()
+
     @YamlTemplateBaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
         if "vnfs" in self.yaml_template:
             for vnf in self.yaml_template["vnfs"]:
-                vsp: Vsp = Vsp(name=f"{vnf['vnf_name']}_VSP")
-                if vsp.exists():
-                    vsp.archive()
-                    vsp.delete()
+                self._cleanup_vsp(f"{vnf['vnf_name']}_VSP")
         elif "pnfs" in self.yaml_template:
             for pnf in self.yaml_template["pnfs"]:
-                vsp: Vsp = Vsp(name=f"{pnf['pnf_name']}_VSP")
-                if vsp.exists():
-                    vsp.archive()
-                    vsp.delete()
+                self._cleanup_vsp(f"{pnf['pnf_name']}_VSP")
         super().cleanup()

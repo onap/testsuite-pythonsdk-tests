@@ -81,7 +81,10 @@ class PnfOnboardStep(BaseStep):
     def cleanup(self):
         try:
             pnf = Pnf.get_by_name(settings.PNF_NAME)
-            pnf.archive()
+            try:
+                pnf.archive()
+            except Exception:
+                self._logger.warning(f"PNF {settings.PNF_NAME} archive failed")
             pnf.delete()
         except ResourceNotFound:
             self._logger.warning("VF not created")
@@ -178,7 +181,10 @@ class YamlTemplatePnfOnboardStep(YamlTemplateBaseStep):
             for pnf in self.yaml_template["pnfs"]:
                 try:
                     pnf_obj: Pnf = Pnf.get_by_name(name=pnf["pnf_name"])
-                    pnf_obj.archive()
+                    try:
+                        pnf_obj.archive()
+                    except Exception:
+                        self._logger.warning(f"PNF {pnf['pnf_name']} archive failed")
                     pnf_obj.delete()
                 except ResourceNotFound:
                     self._logger.warning(f"PNF {pnf['pnf_name']} does not exist")

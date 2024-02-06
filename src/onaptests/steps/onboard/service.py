@@ -85,7 +85,10 @@ class ServiceOnboardStep(BaseStep):
         """Cleanup service onboard step."""
         try:
             service: Service = Service.get_by_name(name=settings.SERVICE_NAME)
-            service.archive()
+            try:
+                service.archive()
+            except Exception:
+                self._logger.warning(f"Service {settings.SERVICE_NAME} archive failed")
             service.delete()
         except ResourceNotFound:
             self._logger.info(f"Service {settings.SERVICE_NAME} not found")
@@ -252,7 +255,10 @@ class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
         """Cleanup service onboard step."""
         try:
             service: Service = Service.get_by_name(name=self.service_name)
-            service.archive()
+            try:
+                service.archive()
+            except Exception:
+                self._logger.warning(f"Service {settings.SERVICE_NAME} archive failed")
             service.delete()
         except ResourceNotFound:
             self._logger.info(f"Service {self.service_name} not found")

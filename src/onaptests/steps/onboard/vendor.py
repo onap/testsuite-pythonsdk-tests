@@ -44,7 +44,10 @@ class VendorOnboardStep(BaseStep):
     def cleanup(self) -> None:
         vendor: Vendor = Vendor(name=settings.VENDOR_NAME)
         if vendor.exists():
-            vendor.archive()
+            try:
+                vendor.archive()
+            except Exception:
+                self._logger.warning(f"Vendor {settings.VENDOR_NAME} archive failed")
             vendor.delete()
         super().cleanup()
 
@@ -116,18 +119,21 @@ class YamlTemplateVendorOnboardStep(YamlTemplateBaseStep):
                 vendor: Vendor = Vendor(name=f"{pnf['pnf_name']}")
                 vendor.onboard()
 
+    def _cleanup_vendor(self, name):
+        vendor: Vendor = Vendor(name=name)
+        if vendor.exists():
+            try:
+                vendor.archive()
+            except Exception:
+                self._logger.warning(f"Vendor {name} archive failed")
+            vendor.delete()
+
     @YamlTemplateBaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
         if "vnfs" in self.yaml_template:
             for vnf in self.yaml_template["vnfs"]:
-                vendor: Vendor = Vendor(name=f"{vnf['vnf_name']}")
-                if vendor.exists():
-                    vendor.archive()
-                    vendor.delete()
+                self._cleanup_vendor(f"{vnf['vnf_name']}")
         elif "pnfs" in self.yaml_template:
             for pnf in self.yaml_template["pnfs"]:
-                vendor: Vendor = Vendor(name=f"{pnf['pnf_name']}")
-                if vendor.exists():
-                    vendor.archive()
-                    vendor.delete()
+                self._cleanup_vendor(f"{pnf['pnf_name']}")
         super().cleanup()

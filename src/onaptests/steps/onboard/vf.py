@@ -65,7 +65,10 @@ class VfOnboardStep(BaseStep):
     def cleanup(self):
         try:
             vf = Vf.get_by_name(settings.VF_NAME)
-            vf.archive()
+            try:
+                vf.archive()
+            except Exception:
+                self._logger.warning(f"Vf {settings.VF_NAME} archive failed")
             vf.delete()
         except ResourceNotFound:
             self._logger.warning("VF not created")
@@ -163,7 +166,10 @@ class YamlTemplateVfOnboardStep(YamlTemplateBaseStep):
             for vnf in self.yaml_template["vnfs"]:
                 try:
                     vf_obj: Vf = Vf.get_by_name(name=vnf["vnf_name"])
-                    vf_obj.archive()
+                    try:
+                        vf_obj.archive()
+                    except Exception:
+                        self._logger.warning(f"Vf {vnf['vnf_name']} archive failed")
                     vf_obj.delete()
                 except ResourceNotFound:
                     self._logger.warning(f"VF {vnf['vnf_name']} does not exist")
