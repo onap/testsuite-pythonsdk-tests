@@ -1,3 +1,4 @@
+import onapsdk.constants as const
 from onapsdk.configuration import settings
 from onapsdk.sdc.vendor import Vendor
 from onapsdk.sdc.vsp import Vsp
@@ -59,7 +60,8 @@ class VspOnboardStep(BaseStep):
     def cleanup(self):
         vsp: Vsp = Vsp(name=settings.VSP_NAME)
         if vsp.exists():
-            vsp.archive()
+            if vsp.status == const.CERTIFIED:
+                vsp.archive()
             vsp.delete()
         super().cleanup()
 
@@ -143,18 +145,19 @@ class YamlTemplateVspOnboardStep(YamlTemplateBaseStep):
                                        package=package)
                         vsp.onboard()
 
+    def _cleanup_vsp(self, name):
+        vsp: Vsp = Vsp(name=name)
+        if vsp.exists():
+            if vsp.status == const.CERTIFIED:
+                vsp.archive()
+            vsp.delete()
+
     @YamlTemplateBaseStep.store_state(cleanup=True)
     def cleanup(self) -> None:
         if "vnfs" in self.yaml_template:
             for vnf in self.yaml_template["vnfs"]:
-                vsp: Vsp = Vsp(name=f"{vnf['vnf_name']}_VSP")
-                if vsp.exists():
-                    vsp.archive()
-                    vsp.delete()
+                self._cleanup_vsp(f"{vnf['vnf_name']}_VSP")
         elif "pnfs" in self.yaml_template:
             for pnf in self.yaml_template["pnfs"]:
-                vsp: Vsp = Vsp(name=f"{pnf['pnf_name']}_VSP")
-                if vsp.exists():
-                    vsp.archive()
-                    vsp.delete()
+                self._cleanup_vsp(f"{pnf['pnf_name']}_VSP")
         super().cleanup()

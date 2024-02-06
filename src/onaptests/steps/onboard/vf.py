@@ -3,8 +3,8 @@ from pathlib import Path
 
 from onapsdk.configuration import settings
 from onapsdk.exceptions import ResourceNotFound
-from onapsdk.sdc2.vf import Vf
 from onapsdk.sdc2.sdc_resource import LifecycleOperation, LifecycleState
+from onapsdk.sdc2.vf import Vf
 from onapsdk.sdc.vsp import Vsp
 
 from onaptests.utils.resources import get_resource_location
@@ -65,7 +65,8 @@ class VfOnboardStep(BaseStep):
     def cleanup(self):
         try:
             vf = Vf.get_by_name(settings.VF_NAME)
-            vf.archive()
+            if vf.lifecycle_state == LifecycleState.CERTIFIED:
+                vf.archive()
             vf.delete()
         except ResourceNotFound:
             self._logger.warning("VF not created")
@@ -163,7 +164,8 @@ class YamlTemplateVfOnboardStep(YamlTemplateBaseStep):
             for vnf in self.yaml_template["vnfs"]:
                 try:
                     vf_obj: Vf = Vf.get_by_name(name=vnf["vnf_name"])
-                    vf_obj.archive()
+                    if vf_obj.lifecycle_state == LifecycleState.CERTIFIED:
+                        vf_obj.archive()
                     vf_obj.delete()
                 except ResourceNotFound:
                     self._logger.warning(f"VF {vnf['vnf_name']} does not exist")

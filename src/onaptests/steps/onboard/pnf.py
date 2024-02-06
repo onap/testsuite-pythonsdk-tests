@@ -11,6 +11,7 @@ from onapsdk.sdc.vendor import Vendor
 from onapsdk.sdc.vsp import Vsp
 
 from onaptests.utils.resources import get_resource_location
+
 from ..base import BaseStep, YamlTemplateBaseStep
 from .vsp import VspOnboardStep, YamlTemplateVspOnboardStep
 
@@ -81,7 +82,8 @@ class PnfOnboardStep(BaseStep):
     def cleanup(self):
         try:
             pnf = Pnf.get_by_name(settings.PNF_NAME)
-            pnf.archive()
+            if pnf.lifecycle_state == LifecycleState.CERTIFIED:
+                pnf.archive()
             pnf.delete()
         except ResourceNotFound:
             self._logger.warning("VF not created")
@@ -178,7 +180,8 @@ class YamlTemplatePnfOnboardStep(YamlTemplateBaseStep):
             for pnf in self.yaml_template["pnfs"]:
                 try:
                     pnf_obj: Pnf = Pnf.get_by_name(name=pnf["pnf_name"])
-                    pnf_obj.archive()
+                    if pnf_obj.lifecycle_state == LifecycleState.CERTIFIED:
+                        pnf_obj.archive()
                     pnf_obj.delete()
                 except ResourceNotFound:
                     self._logger.warning(f"PNF {pnf['pnf_name']} does not exist")

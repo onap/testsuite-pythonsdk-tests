@@ -1,14 +1,15 @@
 from typing import Any, Dict
-from yaml import SafeLoader, load
 
 from onapsdk.configuration import settings
 from onapsdk.exceptions import ResourceNotFound
+from onapsdk.sdc2.component_instance import (ComponentInstance,
+                                             ComponentInstanceInput)
 from onapsdk.sdc2.pnf import Pnf
-from onapsdk.sdc2.component_instance import ComponentInstance, ComponentInstanceInput
 from onapsdk.sdc2.sdc_resource import LifecycleOperation, LifecycleState
 from onapsdk.sdc2.service import Service, ServiceInstantiationType
 from onapsdk.sdc2.vf import Vf
 from onapsdk.sdc2.vl import Vl
+from yaml import SafeLoader, load
 
 from ..base import BaseStep, YamlTemplateBaseStep
 from .pnf import PnfOnboardStep, YamlTemplatePnfOnboardStep
@@ -85,7 +86,8 @@ class ServiceOnboardStep(BaseStep):
         """Cleanup service onboard step."""
         try:
             service: Service = Service.get_by_name(name=settings.SERVICE_NAME)
-            service.archive()
+            if service.lifecycle_state == LifecycleState.CERTIFIED:
+                service.archive()
             service.delete()
         except ResourceNotFound:
             self._logger.info(f"Service {settings.SERVICE_NAME} not found")
@@ -252,7 +254,8 @@ class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
         """Cleanup service onboard step."""
         try:
             service: Service = Service.get_by_name(name=self.service_name)
-            service.archive()
+            if service.lifecycle_state == LifecycleState.CERTIFIED:
+                service.archive()
             service.delete()
         except ResourceNotFound:
             self._logger.info(f"Service {self.service_name} not found")
