@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42853a80_c27fd6c2",
+        "filename": "src/onaptests/steps/instantiate/sdnc_service.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2024-02-06T12:19:48Z",
+      "side": 1,
+      "message": "maybe connect_to_mariadb is not needed to be standalone method but code of it can be here?",
+      "revId": "cdfb46d2749819a45a11c6fabeeceb6478651185",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b327a465_01ce0010",
+        "filename": "src/onaptests/steps/instantiate/sdnc_service.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2024-02-06T12:19:48Z",
+      "side": 1,
+      "message": "would be great to add `full` into documentation",
+      "revId": "cdfb46d2749819a45a11c6fabeeceb6478651185",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ec729ac_5c5bfc5b",
+        "filename": "src/onaptests/steps/instantiate/sdnc_service.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2024-02-06T12:19:48Z",
+      "side": 1,
+      "message": "Checking maria can be configured using settings but steps below not. Looks inconsistent",
+      "revId": "cdfb46d2749819a45a11c6fabeeceb6478651185",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
