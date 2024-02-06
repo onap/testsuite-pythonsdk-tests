@@ -93,13 +93,13 @@ class CheckSdncDbStep(BaseSdncStep):
         conn = None
         try:
             conn = mysql.connect(
-                database=settings.DATABASE,
-                host=settings.DB_PRIMARY_HOST,
-                port=settings.DB_PORT,
+                database=self.SDNC_DATABASE,
+                host=settings.SDNC_DB_PRIMARY_HOST,
+                port=settings.SDNC_DB_PORT,
                 user=self.login,
                 password=self.password)
             cursor = conn.cursor()
-            cursor.execute(settings.QUERY)
+            cursor.execute(self.SDNC_QUERY)
         except Exception as e:
             raise OnapTestException("Cannot connect to SDNC Database") from e
         finally:
