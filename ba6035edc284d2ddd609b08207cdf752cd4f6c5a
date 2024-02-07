@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68cb3a3b_c2a61f2f",
+        "filename": "src/onaptests/steps/onboard/pnf.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 6079
+      },
+      "writtenOn": "2024-02-07T06:37:22Z",
+      "side": 1,
+      "message": "There some check of current lifecycle state would be good idea to verify if object can be archived. As far as I understand certified object should be deleted before cleanup? So could you check if pnf.lifecycle_state \u003d\u003d LifecycleState.CERTIFIED? Then we wouldn\u0027t need to try/except (as exception can be raised for mutliple reasons and now we are catching everything)",
+      "revId": "ba6035edc284d2ddd609b08207cdf752cd4f6c5a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
