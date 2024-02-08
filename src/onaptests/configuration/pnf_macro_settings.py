@@ -1,6 +1,9 @@
 from pathlib import Path
 from uuid import uuid4
 
+from yaml import SafeLoader, load
+
+import onaptests.utils.exceptions as onap_test_exceptions
 from onaptests.utils.resources import get_resource_location
 
 from .settings import *  # noqa
@@ -10,13 +13,21 @@ CLEANUP_FLAG = True
 USE_MULTICLOUD = False
 
 VENDOR_NAME = "pnf_macro_vendor"
-SERVICE_NAME = "test_pnf_macro"
 SERVICE_DETAILS = "Onboarding, distribution and registration of PNF using macro"
 SERVICE_INSTANCE_NAME = "TestPNFMacroInstantiation"
+
 SERVICE_YAML_TEMPLATE = Path(get_resource_location("templates/vnf-services/pnf-service.yaml"))
 generate_service_config_yaml_file(service_name="pnf_macro",  # noqa
                                   service_template="pnf-service.yaml.j2",
                                   service_config=SERVICE_YAML_TEMPLATE)
+
+try:
+    # Try to retrieve the SERVICE NAME from the yaml file
+    with open(SERVICE_YAML_TEMPLATE, "r", encoding="utf-8") as yaml_template:
+        yaml_config_file = load(yaml_template, SafeLoader)
+        SERVICE_NAME = next(iter(yaml_config_file.keys()))
+except (FileNotFoundError, ValueError) as exc:
+    raise onap_test_exceptions.TestConfigurationException from exc
 
 CDS_DD_FILE = Path(get_resource_location("templates/artifacts/dd.json"))
 CDS_CBA_UNENRICHED = Path(get_resource_location("templates/artifacts/PNF_DEMO.zip"))
