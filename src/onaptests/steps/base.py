@@ -46,6 +46,7 @@ class StoreStateHandler(ABC):
                     self._start_cleanup_time = time.time()
                     try:
                         if (self._cleanup and self._state_execute and
+                                (not self.has_substeps or self._substeps_executed) and
                                 (self._is_validation_only or
                                     self.check_preconditions(cleanup=True))):
                             self._log_execution_state("START", cleanup)
@@ -160,6 +161,7 @@ class BaseStep(StoreStateHandler, ABC):
         self._state_clean: bool = False
         self._nesting_level: int = 0
         self._break_on_error: bool = break_on_error
+        self._substeps_executed: bool = False
         self._is_validation_only = settings.IF_VALIDATION
         self._is_force_cleanup = os.environ.get(IF_FORCE_CLEANUP) is not None
 
@@ -191,6 +193,18 @@ class BaseStep(StoreStateHandler, ABC):
         If parent is not set the step is a root one.
         """
         return self._parent
+
+    @property
+    def has_substeps(self) -> bool:
+        """Has step substeps.
+
+        If sdc has substeps.
+
+        Returns:
+            bool: True if step has substeps
+
+        """
+        return len(self._steps) > 0
 
     @property
     def is_executed(self) -> bool:
@@ -348,6 +362,7 @@ class BaseStep(StoreStateHandler, ABC):
             if substep_error and self._break_on_error:
                 raise SubstepExecutionException("Cannot continue due to failed substeps")
             self._log_execution_state("CONTINUE")
+        self._substeps_executed = True
         self._start_execution_time = time.time()
 
     def _cleanup_substeps(self) -> None:
