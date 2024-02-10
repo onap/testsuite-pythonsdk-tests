@@ -1,4 +1,3 @@
-import time
 from uuid import uuid4
 
 from onapsdk.aai.business.owning_entity import OwningEntity as AaiOwningEntity
@@ -15,7 +14,8 @@ from onaptests.steps.instantiate.sdnc_service import TestSdncStep
 from ..base import YamlTemplateBaseStep
 from ..cloud.connect_service_subscription_to_cloud_region import \
     ConnectServiceSubToCloudRegionStep
-from ..onboard.service import YamlTemplateServiceOnboardStep
+from ..onboard.service import (VerifyServiceDistributionStep,
+                               YamlTemplateServiceOnboardStep)
 
 
 class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
@@ -27,6 +27,8 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         Substeps:
             - YamlTemplateServiceOnboardStep,
             - ConnectServiceSubToCloudRegionStep.
+            - VerifyServiceDistributionStep
+            - TestSdncStep
         """
         super().__init__(cleanup=settings.CLEANUP_FLAG)
         self._yaml_template: dict = None
@@ -34,6 +36,7 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         if not settings.ONLY_INSTANTIATE:
             self.add_step(YamlTemplateServiceOnboardStep())
             self.add_step(ConnectServiceSubToCloudRegionStep())
+        self.add_step(VerifyServiceDistributionStep())
         self.add_step(TestSdncStep(full=False))
 
     @property
@@ -114,29 +117,6 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         except ResourceNotFound:
             self._logger.info("Owning entity not found, create it")
             owning_entity = AaiOwningEntity.create(settings.OWNING_ENTITY)
-
-        # Before instantiating, be sure that the service has been distributed
-        self._logger.info("******** Check Service Distribution *******")
-        distribution_completed = False
-        nb_try = 0
-        nb_try_max = 10
-        while distribution_completed is False and nb_try < nb_try_max:
-            distribution_completed = service.distributed
-            if distribution_completed is True:
-                self._logger.info(
-                    "Service Distribution for %s is sucessfully finished",
-                    service.name)
-                break
-            self._logger.info(
-                "Service Distribution for %s ongoing, Wait for %d s",
-                service.name, settings.SERVICE_DISTRIBUTION_SLEEP_TIME)
-            time.sleep(settings.SERVICE_DISTRIBUTION_SLEEP_TIME)
-            nb_try += 1
-
-        if distribution_completed is False:
-            self._logger.error(
-                "Service Distribution for %s failed !!", service.name)
-            raise onap_test_exceptions.ServiceDistributionException
 
         service_instantiation = ServiceInstantiation.instantiate_ala_carte(
             service,

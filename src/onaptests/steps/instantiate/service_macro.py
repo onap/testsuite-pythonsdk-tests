@@ -21,7 +21,8 @@ from onaptests.steps.cloud.connect_service_subscription_to_cloud_region import \
 from onaptests.steps.cloud.customer_service_subscription_create import \
     CustomerServiceSubscriptionCreateStep
 from onaptests.steps.instantiate.sdnc_service import TestSdncStep
-from onaptests.steps.onboard.service import YamlTemplateServiceOnboardStep
+from onaptests.steps.onboard.service import (VerifyServiceDistributionStep,
+                                             YamlTemplateServiceOnboardStep)
 
 
 class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
@@ -34,6 +35,8 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
             - YamlTemplateServiceOnboardStep,
             - ConnectServiceSubToCloudRegionStep,
             - CustomerServiceSubscriptionCreateStep.
+            - VerifyServiceDistributionStep
+            - TestSdncStep
         """
         super().__init__(cleanup=settings.CLEANUP_FLAG)
         self._yaml_template: dict = None
@@ -49,6 +52,7 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
                 self.add_step(ConnectServiceSubToCloudRegionStep())
             else:  # only pnfs
                 self.add_step(CustomerServiceSubscriptionCreateStep())
+        self.add_step(VerifyServiceDistributionStep())
         self.add_step(TestSdncStep(full=False))
 
     @property
@@ -150,29 +154,6 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
         except ResourceNotFound:
             self._logger.info("Owning entity not found, create it")
             owning_entity = OwningEntity.create(settings.OWNING_ENTITY)
-
-        # Before instantiating, be sure that the service has been distributed
-        self._logger.info("******** Check Service Distribution *******")
-        distribution_completed = False
-        nb_try = 0
-        while distribution_completed is False and \
-                nb_try < settings.SERVICE_DISTRIBUTION_NUMBER_OF_TRIES:
-            distribution_completed = service.distributed
-            if distribution_completed is True:
-                self._logger.info(
-                    "Service Distribution for %s is sucessfully finished",
-                    service.name)
-                break
-            self._logger.info(
-                "Service Distribution for %s ongoing, Wait for %d s",
-                service.name, settings.SERVICE_DISTRIBUTION_SLEEP_TIME)
-            time.sleep(settings.SERVICE_DISTRIBUTION_SLEEP_TIME)
-            nb_try += 1
-
-        if distribution_completed is False:
-            self._logger.error(
-                "Service Distribution for %s failed !!", service.name)
-            raise onap_test_exceptions.ServiceDistributionException
 
         so_service = None
         vnf_params_list: List[VnfParameters] = []

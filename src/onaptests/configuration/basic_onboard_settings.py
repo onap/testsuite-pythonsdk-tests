@@ -7,7 +7,6 @@ from onaptests.utils.resources import get_resource_location
 
 from .settings import *  # noqa
 
-
 # The ONAP part
 SERVICE_DETAILS = "Basic onboard service to only onboard a service in SDC"
 
@@ -22,6 +21,7 @@ SERVICE_DETAILS = "Basic onboard service to only onboard a service in SDC"
 MODEL_YAML_TEMPLATE = None
 CLEANUP_FLAG = True
 SDC_CLEANUP = True
+VERIFY_DISTRIBUTION = True
 
 SERVICE_YAML_TEMPLATE = get_resource_location("templates/vnf-services/basic-onboard-service.yaml")
 generate_service_config_yaml_file(service_name="basic_onboard",  # noqa

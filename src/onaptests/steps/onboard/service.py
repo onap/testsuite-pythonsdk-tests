@@ -1,7 +1,10 @@
-from typing import Any, Dict
+import time
+from typing import Any, Dict, Iterator
+from urllib.parse import urlencode
 
+from onapsdk.aai.service_design_and_creation import Model
 from onapsdk.configuration import settings
-from onapsdk.exceptions import ResourceNotFound
+from onapsdk.exceptions import InvalidResponse, ResourceNotFound
 from onapsdk.sdc2.component_instance import (ComponentInstance,
                                              ComponentInstanceInput)
 from onapsdk.sdc2.pnf import Pnf
@@ -9,89 +12,15 @@ from onapsdk.sdc2.sdc_resource import LifecycleOperation, LifecycleState
 from onapsdk.sdc2.service import Service, ServiceInstantiationType
 from onapsdk.sdc2.vf import Vf
 from onapsdk.sdc2.vl import Vl
+from onapsdk.so.catalog_db_adapter import CatalogDbAdapter
 from yaml import SafeLoader, load
 
+import onaptests.utils.exceptions as onap_test_exceptions
+from onaptests.scenario.scenario_base import BaseScenarioStep
+
 from ..base import BaseStep, YamlTemplateBaseStep
-from .pnf import PnfOnboardStep, YamlTemplatePnfOnboardStep
-from .vf import VfOnboardStep, YamlTemplateVfOnboardStep
-
-
-class ServiceOnboardStep(BaseStep):
-    """Service onboard step."""
-
-    def __init__(self):
-        """Initialize step.
-
-        Substeps:
-            - VfOnboardStep.
-        """
-        super().__init__(cleanup=settings.CLEANUP_FLAG)
-        if settings.VF_NAME != "":
-            self.add_step(VfOnboardStep())
-        if settings.PNF_NAME != "":
-            self.add_step(PnfOnboardStep())
-
-    @property
-    def description(self) -> str:
-        """Step description."""
-        return "Onboard service in SDC."
-
-    @property
-    def component(self) -> str:
-        """Component name."""
-        return "SDC"
-
-    def check_preconditions(self, cleanup=False) -> bool:
-        if not super().check_preconditions(cleanup):
-            return False
-        if cleanup:
-            return settings.SDC_CLEANUP
-        return True
-
-    @BaseStep.store_state
-    def execute(self):
-        """Onboard service.
-
-        Use settings values:
-         - VL_NAME,
-         - VF_NAME,
-         - PNF_NAME,
-         - SERVICE_NAME,
-         - SERVICE_INSTANTIATION_TYPE.
-
-        """
-        super().execute()
-        try:
-            service: Service = Service.get_by_name(name=settings.SERVICE_NAME)
-            if service.distributed:
-                return
-        except ResourceNotFound:
-            service = Service.create(name=settings.SERVICE_NAME,
-                                     instantiation_type=settings.SERVICE_INSTANTIATION_TYPE)
-            if settings.VL_NAME != "":
-                vl: Vl = Vl(name=settings.VL_NAME)
-                service.add_resource(vl)
-            if settings.VF_NAME != "":
-                vf: Vf = Vf(name=settings.VF_NAME)
-                service.add_resource(vf)
-            if settings.PNF_NAME != "":
-                pnf: Pnf = Pnf(name=settings.PNF_NAME)
-                service.add_resource(pnf)
-        if service.lifecycle_state != LifecycleState.CERTIFIED:
-            service.lifecycle_operation(LifecycleOperation.CERTIFY)
-        service.distribute()
-
-    @BaseStep.store_state
-    def cleanup(self) -> None:
-        """Cleanup service onboard step."""
-        try:
-            service: Service = Service.get_by_name(name=settings.SERVICE_NAME)
-            if service.lifecycle_state == LifecycleState.CERTIFIED:
-                service.archive()
-            service.delete()
-        except ResourceNotFound:
-            self._logger.info(f"Service {settings.SERVICE_NAME} not found")
-        super().cleanup()
+from .pnf import YamlTemplatePnfOnboardStep
+from .vf import YamlTemplateVfOnboardStep
 
 
 class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
@@ -260,3 +189,206 @@ class YamlTemplateServiceOnboardStep(YamlTemplateBaseStep):
         except ResourceNotFound:
             self._logger.info(f"Service {self.service_name} not found")
         super().cleanup()
+
+
+class VerifyServiceDistributionStep(BaseScenarioStep):
+    """Service distribution check step."""
+
+    def __init__(self):
+        """Initialize step."""
+        super().__init__(cleanup=BaseStep.HAS_NO_CLEANUP)
+        self.add_step(ServiceDistributionWaitStep())
+        for notified_module in settings.SDC_SERVICE_DISTRIBUTION_COMPONENTS:
+            self.add_step(VerifyServiceDistributionStatusStep(
+                notified_module=notified_module))
+        self.add_step(VerifyServiceDistributionInSoStep())
+        self.add_step(VerifyServiceDistributionInAaiStep())
+
+    @property
+    def description(self) -> str:
+        """Step description."""
+        return "Verify complete status of distribution"
+
+    @property
+    def component(self) -> str:
+        """Component name."""
+        return "SDC"
+
+
+class BaseServiceDistributionComponentCheckStep(BaseStep):
+    """Service distribution check step."""
+
+    def __init__(self, component_name: str, break_on_error: bool = True):
+        """Initialize step.
+
+        Args:
+            component_name (str): Name of tested component
+            break_on_error (bool): If step breaks execution when failed
+        """
+        super().__init__(cleanup=BaseStep.HAS_NO_CLEANUP,
+                         break_on_error=break_on_error)
+        self.component_name = component_name
+        self.service: Service = None
+
+    @property
+    def description(self) -> str:
+        """Step description."""
+        return f"Check service distribution in {self.component_name}."
+
+    @property
+    def component(self) -> str:
+        """Component name."""
+        return self.component_name
+
+    def execute(self):
+        """Check service distribution status."""
+        super().execute()
+        self.service = Service.get_by_name(name=settings.SERVICE_NAME)
+
+
+class ServiceDistributionWaitStep(BaseServiceDistributionComponentCheckStep):
+    """Service distribution wait step."""
+
+    def __init__(self):
+        """Initialize step."""
+        super().__init__(component_name="SDC", break_on_error=False)
+
+    @BaseStep.store_state
+    def execute(self):
+        """Wait for service distribution."""
+        super().execute()
+        # Before instantiating, be sure that the service has been distributed
+        self._logger.info("******** Check Service Distribution *******")
+        distribution_completed = False
+        nb_try = 0
+        while distribution_completed is False and \
+                nb_try < settings.SERVICE_DISTRIBUTION_NUMBER_OF_TRIES:
+            distribution_completed = self.service.distributed
+            if distribution_completed is True:
+                self._logger.info(
+                    "Service Distribution for %s is sucessfully finished",
+                    self.service.name)
+                break
+            self._logger.info(
+                "Service Distribution for %s ongoing, Wait for %d s",
+                self.service.name, settings.SERVICE_DISTRIBUTION_SLEEP_TIME)
+            time.sleep(settings.SERVICE_DISTRIBUTION_SLEEP_TIME)
+            nb_try += 1
+
+        if distribution_completed is False:
+            msg = f"Service Distribution for {self.service.name} failed after timeout!!"
+            self._logger.error(msg)
+            raise onap_test_exceptions.ServiceDistributionException(msg)
+
+
+class VerifyServiceDistributionStatusStep(BaseServiceDistributionComponentCheckStep):
+    """Check service distribution in SO step."""
+
+    def __init__(self, notified_module: str):
+        """Initialize step.
+
+        Args:
+            notified_module (str): Name of notified module
+        """
+
+        component_name = notified_module.split("-")[0].upper()
+        super().__init__(component_name=component_name)
+        self.component_id = notified_module
+
+    @property
+    def description(self) -> str:
+        """Step description."""
+        return f"Check service distribution in {self.component_name} \
+{self.component_id}."
+
+    @BaseStep.store_state
+    def execute(self):
+        """Check service distribution status."""
+        super().execute()
+        if not self.service.distributed:
+            latest_distribution = self.service.latest_distribution
+            for status in latest_distribution.distribution_status_list:
+                if status.component_id == self.component_id and status.failed:
+                    msg = f"Service {self.service.name} is not \
+distributed into [{self.component_id}]: {status.error_reason}"
+                    self._logger.error(msg)
+                    raise onap_test_exceptions.ServiceDistributionException(msg)
+        msg = f"Service {self.service.name} is distributed in SO and {self.component_id}."
+        self._logger.info(msg)
+
+
+class VerifyServiceDistributionInSoStep(BaseServiceDistributionComponentCheckStep):
+    """Check service distribution in SO step."""
+
+    def __init__(self):
+        """Initialize step."""
+        super().__init__(component_name="SO")
+
+    @BaseStep.store_state
+    def execute(self):
+        """Check service distribution status."""
+        super().execute()
+        try:
+            CatalogDbAdapter.get_service_info(self.service.uuid)
+        except ResourceNotFound as e:
+            msg = f"Service {self.service.name} is missing in SO."
+            self._logger.error(msg)
+            raise onap_test_exceptions.ServiceDistributionException(msg) from e
+        except InvalidResponse:
+            # looks like json returned by SO catalog DB adapter returns wrong json
+            # but we don't care here. It is important to just know if service is there
+            pass
+
+
+class VerifyServiceDistributionInAaiStep(BaseServiceDistributionComponentCheckStep):
+    """Check service distribution in AAI step."""
+
+    class ModelWithGet(Model):
+        """"Workaround to fix """
+
+        @classmethod
+        def get_all(cls,
+                    invariant_id: str = None,
+                    resource_version: str = None) -> Iterator["Model"]:
+            """Get all models.
+
+            Args:
+                invariant_id (str): model invariant ID
+                resource_version (str): object resource version
+
+            Yields:
+                Model: Model object
+
+            """
+            filter_parameters: dict = cls.filter_none_key_values(
+                {"model-invariant-id": invariant_id,
+                 "resource-version": resource_version}
+            )
+            url: str = f"{cls.get_all_url()}?{urlencode(filter_parameters)}"
+            for model in cls.send_message_json("GET", "Get A&AI sdc models",
+                                               url).get("model", []):
+                yield Model(
+                    invariant_id=model.get("model-invariant-id"),
+                    model_type=model.get("model-type"),
+                    resource_version=model.get("resource-version")
+                )
+
+    def __init__(self):
+        """Initialize step."""
+        BaseServiceDistributionComponentCheckStep.__init__(
+            self, component_name="AAI")
+
+    @BaseStep.store_state
+    def execute(self):
+        """Check service distribution status."""
+        super().execute()
+        try:
+            aai_services = self.ModelWithGet.get_all(
+                invariant_id=self.service.invariant_uuid)
+            for aai_service in aai_services:
+                self._logger.info(
+                    f"Resolved {aai_service.invariant_id} aai service")
+        except ResourceNotFound as e:
+            msg = f"Service {self.service.name} is missing in AAI."
+            self._logger.error(msg)
+            raise onap_test_exceptions.ServiceDistributionException(msg) from e
