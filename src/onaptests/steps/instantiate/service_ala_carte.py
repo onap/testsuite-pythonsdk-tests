@@ -106,6 +106,10 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         super().execute()
         service = Service(self.service_name)
         self._load_customer_and_subscription()
+        try:
+            self._load_service_instance()
+        except ResourceNotFound:
+            self._logger.info("There is no leftover service instance in SO")
         cloud_region: CloudRegion = CloudRegion.get_by_id(
             cloud_owner=settings.CLOUD_REGION_CLOUD_OWNER,
             cloud_region_id=settings.CLOUD_REGION_ID,
@@ -117,6 +121,9 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         except ResourceNotFound:
             self._logger.info("Owning entity not found, create it")
             owning_entity = AaiOwningEntity.create(settings.OWNING_ENTITY)
+
+        # remove leftover
+        self._cleanup_logic()
 
         service_instantiation = ServiceInstantiation.instantiate_ala_carte(
             service,
@@ -139,16 +146,7 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
         self._load_customer_and_subscription(reload=True)
         self._load_service_instance()
 
-    @YamlTemplateBaseStep.store_state(cleanup=True)
-    def cleanup(self) -> None:
-        """Cleanup Service.
-
-        Raises:
-            Exception: Service cleaning failed
-
-        """
-        self._load_customer_and_subscription()
-        self._load_service_instance()
+    def _cleanup_logic(self) -> None:
         if self._service_instance:
             service_deletion = self._service_instance.delete(a_la_carte=True)
             try:
@@ -161,4 +159,16 @@ class YamlTemplateServiceAlaCarteInstantiateStep(YamlTemplateBaseStep):
             else:
                 self._logger.error("Service deletion %s failed", self._service_instance_name)
                 raise onap_test_exceptions.ServiceCleanupException
+
+    @YamlTemplateBaseStep.store_state(cleanup=True)
+    def cleanup(self) -> None:
+        """Cleanup Service.
+
+        Raises:
+            Exception: Service cleaning failed
+
+        """
+        self._load_customer_and_subscription()
+        self._load_service_instance()
+        self._cleanup_logic()
         super().cleanup()

@@ -136,6 +136,10 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
         super().execute()
         service = Service(self.service_name)
         self._load_customer_and_subscription()
+        try:
+            self._load_service_instance()
+        except ResourceNotFound:
+            self._logger.info("There is no leftover service instance in SO")
         if any(
                 filter(lambda x: x in self.yaml_template[self.service_name].keys(),
                        ["vnfs", "networks"])):
@@ -176,6 +180,36 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
                      for vf_module_data in vnf_data.get("vf_module_parameters", [])]
                 ))
 
+        try:
+            if settings.PNF_WITHOUT_VES:
+                skip_pnf_registration_event = True
+        except SDKException:
+            skip_pnf_registration_event = False
+        return (
+            service, self._customer, self._service_subscription, cloud_region,
+            tenant, owning_entity, so_service, skip_pnf_registration_event, vnf_params_list)
+
+
+class YamlTemplateServiceMacroInstantiateStep(YamlTemplateServiceMacroInstantiateBaseStep):
+    """Instantiate SO service."""
+
+    def __init__(self):
+        """Init YamlTemplateServiceMacroInstantiateStep."""
+        super().__init__(cleanup=settings.CLEANUP_FLAG)
+
+    @property
+    def description(self) -> str:
+        """Step description."""
+        return "Instantiate SO service"
+
+    @YamlTemplateBaseStep.store_state
+    def execute(self):
+        super().execute()
+        (service, _, _, cloud_region, tenant, owning_entity, so_service,
+            skip_pnf_registration_event, vnf_params_list) = self.base_execute()
+        # remove leftover
+        self._cleanup_logic()
+
         service_instantiation = ServiceInstantiation.instantiate_macro(
             sdc_service=service,
             customer=self._customer,
@@ -203,16 +237,7 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
         self._load_customer_and_subscription(reload=True)
         self._load_service_instance()
 
-    @YamlTemplateBaseStep.store_state(cleanup=True)
-    def cleanup(self) -> None:
-        """Cleanup Service.
-
-        Raises:
-            Exception: Service cleaning failed
-
-        """
-        self._load_customer_and_subscription()
-        self._load_service_instance()
+    def _cleanup_logic(self) -> None:
         if self._service_instance:
             service_deletion = self._service_instance.delete(a_la_carte=False)
             try:
@@ -225,4 +250,16 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
             else:
                 self._logger.error("Service deletion %s failed", self._service_instance_name)
                 raise onap_test_exceptions.ServiceCleanupException
+
+    @YamlTemplateBaseStep.store_state(cleanup=True)
+    def cleanup(self) -> None:
+        """Cleanup Service.
+
+        Raises:
+            Exception: Service cleaning failed
+
+        """
+        self._load_customer_and_subscription()
+        self._load_service_instance()
+        self._cleanup_logic()
         super().cleanup()
