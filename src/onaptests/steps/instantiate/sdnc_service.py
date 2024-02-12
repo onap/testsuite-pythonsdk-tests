@@ -42,7 +42,8 @@ class BaseSdncStep(BaseStep):
 class CheckSdncDbStep(BaseSdncStep):
     """Check MariaDB connection status."""
 
-    SDNC_QUERY = "SELECT * FROM svc_logic LIMIT 1;"
+    SDNC_QUERY_LOGIC = "SELECT * FROM svc_logic LIMIT 1;"
+    SDNC_QUERY_MODEL = "SELECT * FROM service_model LIMIT 1;"
     SDNC_DATABASE = "sdnctl"
     SDNC_DB_LOGIN = "login"
     SDNC_DB_PASSWORD = "password"
@@ -85,6 +86,13 @@ class CheckSdncDbStep(BaseSdncStep):
             self.password = None
             raise EnvironmentPreparationException("Error accessing secret") from e
 
+    def _check_query(self, conn, query):
+        cursor = conn.cursor()
+        cursor.execute(query)
+        for _ in cursor:
+            pass
+        cursor.close()
+
     @BaseStep.store_state
     def execute(self) -> None:
         """Check MariaDB connection."""
@@ -98,8 +106,11 @@ class CheckSdncDbStep(BaseSdncStep):
                 port=settings.SDNC_DB_PORT,
                 user=self.login,
                 password=self.password)
-            cursor = conn.cursor()
-            cursor.execute(self.SDNC_QUERY)
+            self._check_query(conn, self.SDNC_QUERY_LOGIC)
+            self._check_query(conn, self.SDNC_QUERY_MODEL)
+        except (mysql.errors.ProgrammingError,
+                mysql.errors.DatabaseError) as e:
+            raise OnapTestException(e) from e
         except Exception as e:
             raise OnapTestException("Cannot connect to SDNC Database") from e
         finally:
