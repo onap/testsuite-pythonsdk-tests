@@ -64,7 +64,7 @@ IN_CLUSTER = False
 VES_BASIC_AUTH = {'username': 'sample1', 'password': 'sample1'}
 IF_VALIDATION = False
 SDNC_SECRET_NAME = "onap-sdnc-db-secret"
-SDNC_DB_PRIMARY_HOST = "sdnc-db.onap.svc.cluster.local"
+SDNC_DB_PRIMARY_HOST = "mariadb-galera.onap.svc.cluster.local"
 SDNC_DB_PORT = 3306
 
 
