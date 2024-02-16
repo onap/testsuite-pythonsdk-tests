@@ -17,7 +17,8 @@ class BasicCnfMacroStep(YamlTemplateBaseScenarioStep):
 
         Substeps:
             - CbaPublishStep
-            - YamlTemplateServiceMacroInstantiateStep.
+            - YamlTemplateServiceMacroInstantiateStep
+            - CheckOnapVnfCr.
         """
         super().__init__(cleanup=BaseStep.HAS_NO_CLEANUP)
         self._yaml_template: dict = None

@@ -203,7 +203,8 @@ class VerifyServiceDistributionStep(BaseScenarioStep):
         for notified_module in settings.SDC_SERVICE_DISTRIBUTION_COMPONENTS:
             self.add_step(VerifyServiceDistributionStatusStep(
                 notified_module=notified_module))
-        self.add_step(VerifyServiceDistributionInSoStep())
+        if settings.IN_CLUSTER:
+            self.add_step(VerifyServiceDistributionInSoStep())
         self.add_step(VerifyServiceDistributionInAaiStep())
         self.add_step(VerifyServiceDistributionInSdncStep())
 
