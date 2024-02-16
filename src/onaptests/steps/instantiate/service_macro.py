@@ -7,7 +7,7 @@ from onapsdk.aai.business.owning_entity import OwningEntity
 from onapsdk.aai.cloud_infrastructure.cloud_region import CloudRegion
 from onapsdk.aai.cloud_infrastructure.tenant import Tenant
 from onapsdk.configuration import settings
-from onapsdk.exceptions import ResourceNotFound
+from onapsdk.exceptions import ResourceNotFound, SDKException
 from onapsdk.sdc.service import Service
 from onapsdk.so.instantiation import (InstantiationParameter,
                                       ServiceInstantiation, SoService,
@@ -25,10 +25,10 @@ from onaptests.steps.onboard.service import (VerifyServiceDistributionStep,
                                              YamlTemplateServiceOnboardStep)
 
 
-class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
+class YamlTemplateServiceMacroInstantiateBaseStep(YamlTemplateBaseStep):
     """Instantiate service a'la carte using YAML template."""
 
-    def __init__(self):
+    def __init__(self, cleanup=settings.CLEANUP_FLAG):
         """Initialize step.
 
         Substeps:
@@ -38,7 +38,7 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
             - VerifyServiceDistributionStep
             - TestSdncStep
         """
-        super().__init__(cleanup=settings.CLEANUP_FLAG)
+        super().__init__(cleanup=cleanup)
         self._yaml_template: dict = None
         self._model_yaml_template: dict = None
         self._service_instance_name: str = None
@@ -117,8 +117,7 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
             return self._service_instance_name
         return self.parent.service_instance_name
 
-    @YamlTemplateBaseStep.store_state
-    def execute(self):  # noqa
+    def base_execute(self):  # noqa
         """Instantiate service.
 
         Use settings values:
@@ -133,7 +132,6 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
             Exception: Service instantiation failed
 
         """
-        super().execute()
         service = Service(self.service_name)
         self._load_customer_and_subscription()
         try:
@@ -206,7 +204,7 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateServiceMacroInstantiat
     def execute(self):
         super().execute()
         (service, _, _, cloud_region, tenant, owning_entity, so_service,
-            skip_pnf_registration_event, vnf_params_list) = self.base_execute()
+            _, vnf_params_list) = self.base_execute()
         # remove leftover
         self._cleanup_logic()
 
