@@ -7,7 +7,7 @@ from onapsdk.aai.business.owning_entity import OwningEntity
 from onapsdk.aai.cloud_infrastructure.cloud_region import CloudRegion
 from onapsdk.aai.cloud_infrastructure.tenant import Tenant
 from onapsdk.configuration import settings
-from onapsdk.exceptions import ResourceNotFound
+from onapsdk.exceptions import ResourceNotFound, SDKException
 from onapsdk.sdc.service import Service
 from onapsdk.so.instantiation import (InstantiationParameter,
                                       ServiceInstantiation, SoService,
@@ -25,7 +25,7 @@ from onaptests.steps.onboard.service import (VerifyServiceDistributionStep,
                                              YamlTemplateServiceOnboardStep)
 
 
-class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
+class YamlTemplateServiceMacroInstantiateBaseStep(YamlTemplateBaseStep):
     """Instantiate service a'la carte using YAML template."""
 
     def __init__(self):
@@ -193,10 +193,6 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateBaseStep):
 class YamlTemplateServiceMacroInstantiateStep(YamlTemplateServiceMacroInstantiateBaseStep):
     """Instantiate SO service."""
 
-    def __init__(self):
-        """Init YamlTemplateServiceMacroInstantiateStep."""
-        super().__init__(cleanup=settings.CLEANUP_FLAG)
-
     @property
     def description(self) -> str:
         """Step description."""
@@ -206,7 +202,7 @@ class YamlTemplateServiceMacroInstantiateStep(YamlTemplateServiceMacroInstantiat
     def execute(self):
         super().execute()
         (service, _, _, cloud_region, tenant, owning_entity, so_service,
-            skip_pnf_registration_event, vnf_params_list) = self.base_execute()
+            _, vnf_params_list) = self.base_execute()
         # remove leftover
         self._cleanup_logic()
 
