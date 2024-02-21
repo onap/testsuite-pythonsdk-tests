@@ -327,7 +327,8 @@ class TestSdncStep(BaseScenarioStep):
             - GetSdncPreloadStep
         """
         super().__init__(cleanup=BaseStep.HAS_NO_CLEANUP)
-        self.add_step(CheckSdncDbStep())
+        if settings.IN_CLUSTER:
+            self.add_step(CheckSdncDbStep())
         self.add_step(CheckSdncHealthStep())
         if full:
             self.add_step(UpdateSdncService())

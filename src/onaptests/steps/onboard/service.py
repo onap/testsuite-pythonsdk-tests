@@ -205,8 +205,8 @@ class VerifyServiceDistributionStep(BaseScenarioStep):
                 notified_module=notified_module))
         if settings.IN_CLUSTER:
             self.add_step(VerifyServiceDistributionInSoStep())
+            self.add_step(VerifyServiceDistributionInSdncStep())
         self.add_step(VerifyServiceDistributionInAaiStep())
-        self.add_step(VerifyServiceDistributionInSdncStep())
 
     @property
     def description(self) -> str:
