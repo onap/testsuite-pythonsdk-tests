@@ -33,16 +33,16 @@ COMPLEX_DATA_CENTER_CODE = "1234-5"
 
 GLOBAL_CUSTOMER_ID = "basicvm-customer"
 
-# if not IF_VALIDATION:
-#     TEST_CLOUD = os.getenv('OS_TEST_CLOUD')
-#     cloud = openstack.connect(cloud=TEST_CLOUD)
-#     VIM_USERNAME = cloud.config.auth.get('username', 'Fill me')
-#     VIM_PASSWORD = cloud.config.auth.get('password', 'Fill me')
-#     VIM_SERVICE_URL = cloud.config.auth.get('auth_url', 'Fill me')
-#     TENANT_ID = cloud.config.auth.get('project_id', 'Fill me')
-#     TENANT_NAME = cloud.config.auth.get('project_name', 'Fill me')
-#     CLOUD_REGION_ID = cloud.config.auth.get('region_name', 'RegionOne')
-#     CLOUD_DOMAIN = cloud.config.auth.get('project_domain_name', 'Default')
+if not IF_VALIDATION:
+    TEST_CLOUD = os.getenv('OS_TEST_CLOUD')
+    cloud = openstack.connect(cloud=TEST_CLOUD)
+    VIM_USERNAME = cloud.config.auth.get('username', 'Fill me')
+    VIM_PASSWORD = cloud.config.auth.get('password', 'Fill me')
+    VIM_SERVICE_URL = cloud.config.auth.get('auth_url', 'Fill me')
+    TENANT_ID = cloud.config.auth.get('project_id', 'Fill me')
+    TENANT_NAME = cloud.config.auth.get('project_name', 'Fill me')
+    CLOUD_REGION_ID = cloud.config.auth.get('region_name', 'RegionOne')
+    CLOUD_DOMAIN = cloud.config.auth.get('project_domain_name', 'Default')
 
 OWNING_ENTITY = "basicvm-oe"
 PROJECT = "basicvm-project"
