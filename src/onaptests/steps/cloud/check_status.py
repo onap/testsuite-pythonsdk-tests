@@ -20,7 +20,7 @@ from onaptests.utils.exceptions import StatusCheckException
 from ..base import BaseStep
 from .resources import (ConfigMap, Container, DaemonSet, Deployment, Ingress,
                         Job, Pod, Pvc, ReplicaSet, Secret, Service,
-                        StatefulSet)
+                        StatefulSet, Node)
 
 
 class CheckK8sResourcesStep(BaseStep):
@@ -78,7 +78,7 @@ class CheckK8sResourcesStep(BaseStep):
         return []
 
     def _add_failing_resource(self, resource):
-        if (resource.labels and settings.EXCLUDED_LABELS
+        if (hasattr(resource, 'labels') and resource.labels and settings.EXCLUDED_LABELS
                 and (resource.labels.keys() and settings.EXCLUDED_LABELS.keys())):
             for label in resource.labels.items():
                 for waived_label in settings.EXCLUDED_LABELS.items():
@@ -199,6 +199,43 @@ class CheckK8sPvcsStep(CheckK8sResourcesStep):
         super().execute()
 
 
+class CheckK8sNodesStep(CheckK8sResourcesStep):
+    """Check of k8s nodes in the selected namespace."""
+
+    __logger = logging.getLogger(__name__)
+
+    def __init__(self, namespace: str):
+        """Init CheckK8sNodesStep."""
+        super().__init__(namespace=namespace, resource_type="node")
+
+    def _init_resources(self):
+        super()._init_resources()
+        self.k8s_resources = self.core.list_node().items
+
+    def _parse_resources(self):
+        """Parse the nodes.
+        Return a list of Nodes.
+        """
+        super()._parse_resources()
+        for k8s in self.k8s_resources:
+            node = Node(k8s=k8s)
+            for condition in k8s.status.conditions:
+                failing = False
+                if condition.status == 'False' and condition.type == 'Ready':
+                    failing = True
+                elif condition.status == 'True' and condition.type != 'Ready':
+                    failing = True
+                if failing:
+                    self._add_failing_resource(node)
+                    self.__logger.error(
+                        f"Node {node.name} {condition.type} status is {condition.status}")
+            self.all_resources.append(node)
+
+    @BaseStep.store_state
+    def execute(self):
+        super().execute()
+
+
 class CheckK8sResourcesUsingPodsStep(CheckK8sResourcesStep):
     """Check of k8s respurces with pods in the selected namespace."""
 
@@ -256,6 +293,7 @@ class CheckK8sJobsStep(CheckK8sResourcesUsingPodsStep):
         """
         super()._parse_resources()
         jobs_pods = []
+        cron_jobs = {}
         for k8s in self.k8s_resources:
             job = Job(k8s=k8s)
             job_pods = []
@@ -273,17 +311,34 @@ class CheckK8sJobsStep(CheckK8sResourcesUsingPodsStep):
             self.jinja_env.get_template('job.html.j2').stream(job=job).dump(
                 '{}/job-{}.html'.format(self.res_dir, job.name))
 
-            # timemout job
-            if not k8s.status.completion_time:
-                if not any(waiver_elt in job.name for waiver_elt in settings.WAIVER_LIST):
-                    self._add_failing_resource(job)
-            # completed job
             if not any(waiver_elt in job.name for waiver_elt in settings.WAIVER_LIST):
+                cron_job = self._get_cron_job_name(k8s)
+                if cron_job:
+                    if cron_job not in cron_jobs:
+                        cron_jobs[cron_job] = []
+                    cron_jobs[cron_job].append(job)
+                elif not k8s.status.completion_time:
+                    # timemout job
+                    self._add_failing_resource(job)
                 self.all_resources.append(job)
             else:
                 self.__logger.warning(
                     "Waiver pattern found in job, exclude %s", job.name)
             jobs_pods += job_pods
+        for cron_job, jobs in cron_jobs.items():
+            if len(jobs) > 1:
+                jobs = sorted(jobs,
+                              key=lambda job: job.k8s.metadata.creation_timestamp,
+                              reverse=True)
+            if not jobs[0].k8s.status.completion_time:
+                self._add_failing_resource(jobs[0])
+
+    def _get_cron_job_name(self, k8s):
+        if k8s.metadata.owner_references:
+            for owner in k8s.metadata.owner_references:
+                if owner.kind == "CronJob":
+                    return owner.name
+        return None
 
 
 class CheckK8sPodsStep(CheckK8sResourcesUsingPodsStep):
@@ -456,13 +511,11 @@ class CheckK8sPodsStep(CheckK8sResourcesUsingPodsStep):
         if init:
             prefix = "init "
             containers_list = pod.init_containers
-            if container.restart_count > pod.init_restart_count:
-                pod.init_restart_count = container.restart_count
+            pod.init_restart_count = max(pod.init_restart_count, container.restart_count)
             if not container.ready:
                 pod.init_done = False
         else:
-            if container.restart_count > pod.restart_count:
-                pod.restart_count = container.restart_count
+            pod.restart_count = max(pod.restart_count, container.restart_count)
         if settings.STORE_ARTIFACTS:
             try:
                 log_files = {}
@@ -733,6 +786,7 @@ class CheckNamespaceStatusStep(CheckK8sResourcesStep):
         self.secret_list_step = None
         self.ingress_list_step = None
         self.pvc_list_step = None
+        self.node_list_step = None
         if not settings.IF_VALIDATION:
             if settings.IN_CLUSTER:
                 config.load_incluster_config()
@@ -751,37 +805,53 @@ class CheckNamespaceStatusStep(CheckK8sResourcesStep):
         self.configmaps = []
         self.secrets = []
         self.ingresses = []
+        self.nodes = []
         self.failing_statefulsets = []
         self.failing_jobs = []
         self.failing_deployments = []
         self.failing_replicasets = []
         self.failing_daemonsets = []
         self.failing_pvcs = []
+        self.failing_nodes = []
 
     def _init_namespace_steps(self, namespace: str):
+        job_list_step = CheckK8sJobsStep(namespace)
+        pod_list_step = CheckK8sPodsStep(namespace, job_list_step)
+        service_list_step = CheckK8sServicesStep(namespace, pod_list_step)
+        deployment_list_step = CheckK8sDeploymentsStep(namespace, pod_list_step)
+        replicaset_list_step = CheckK8sReplicaSetsStep(namespace, pod_list_step)
+        statefulset_list_step = CheckK8sStatefulSetsStep(namespace, pod_list_step)
+        daemonset_list_step = CheckK8sDaemonSetsStep(namespace, pod_list_step)
+        configmap_list_step = CheckK8sConfigMapsStep(namespace)
+        secret_list_step = CheckK8sSecretsStep(namespace)
+        ingress_list_step = CheckK8sIngressesStep(namespace)
+        pvc_list_step = CheckK8sPvcsStep(namespace)
+        node_list_step = CheckK8sNodesStep(namespace)
         if namespace == settings.K8S_ONAP_NAMESPACE:
-            self.job_list_step = CheckK8sJobsStep(namespace)
-            self.pod_list_step = CheckK8sPodsStep(namespace, self.job_list_step)
-            self.service_list_step = CheckK8sServicesStep(namespace, self.pod_list_step)
-            self.deployment_list_step = CheckK8sDeploymentsStep(namespace, self.pod_list_step)
-            self.replicaset_list_step = CheckK8sReplicaSetsStep(namespace, self.pod_list_step)
-            self.statefulset_list_step = CheckK8sStatefulSetsStep(namespace, self.pod_list_step)
-            self.daemonset_list_step = CheckK8sDaemonSetsStep(namespace, self.pod_list_step)
-            self.configmap_list_step = CheckK8sConfigMapsStep(namespace)
-            self.secret_list_step = CheckK8sSecretsStep(namespace)
-            self.ingress_list_step = CheckK8sIngressesStep(namespace)
-            self.pvc_list_step = CheckK8sPvcsStep(namespace)
-        self.add_step(self.job_list_step)
-        self.add_step(self.pod_list_step)
-        self.add_step(self.service_list_step)
-        self.add_step(self.deployment_list_step)
-        self.add_step(self.replicaset_list_step)
-        self.add_step(self.statefulset_list_step)
-        self.add_step(self.daemonset_list_step)
-        self.add_step(self.configmap_list_step)
-        self.add_step(self.secret_list_step)
-        self.add_step(self.ingress_list_step)
-        self.add_step(self.pvc_list_step)
+            self.job_list_step = job_list_step
+            self.pod_list_step = pod_list_step
+            self.service_list_step = service_list_step
+            self.deployment_list_step = deployment_list_step
+            self.replicaset_list_step = replicaset_list_step
+            self.statefulset_list_step = statefulset_list_step
+            self.daemonset_list_step = daemonset_list_step
+            self.configmap_list_step = configmap_list_step
+            self.secret_list_step = secret_list_step
+            self.ingress_list_step = ingress_list_step
+            self.pvc_list_step = pvc_list_step
+            self.node_list_step = node_list_step
+            self.add_step(node_list_step)
+        self.add_step(job_list_step)
+        self.add_step(pod_list_step)
+        self.add_step(service_list_step)
+        self.add_step(deployment_list_step)
+        self.add_step(replicaset_list_step)
+        self.add_step(statefulset_list_step)
+        self.add_step(daemonset_list_step)
+        self.add_step(configmap_list_step)
+        self.add_step(secret_list_step)
+        self.add_step(ingress_list_step)
+        self.add_step(pvc_list_step)
 
     @property
     def description(self) -> str:
