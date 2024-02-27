@@ -1,15 +1,15 @@
 import os
-
-import openstack
 from pathlib import Path
 from uuid import uuid4
 
+import openstack
 from yaml import SafeLoader, load
 
 import onaptests.utils.exceptions as onap_test_exceptions
 from onaptests.utils.resources import get_resource_location
 
 from .settings import *  # noqa
+from .settings import IF_VALIDATION
 
 SERVICE_DETAILS = "Onboarding, distribution and instanitation of an Ubuntu VM using macro"
 
