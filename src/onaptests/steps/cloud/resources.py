@@ -164,3 +164,7 @@ class Secret(K8sResource):
 
 class Ingress(K8sResource):
     """Ingress class."""
+
+
+class Node(K8sResource):
+    """Node class."""
