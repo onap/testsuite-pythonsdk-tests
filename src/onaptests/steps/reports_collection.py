@@ -25,6 +25,7 @@ class Report:
     step_execution_status: ReportStepStatus
     step_execution_duration: float
     step_component: str
+    step_error_reason: List[str]
 
 
 class ReportsCollection:
@@ -103,7 +104,8 @@ class ReportsCollection:
                     'description': step_report.step_description,
                     'status': step_report.step_execution_status.value,
                     'duration': step_report.step_execution_duration,
-                    'component': step_report.step_component
+                    'component': step_report.step_component,
+                    'reason': step_report.step_error_reason
                 }
                 for step_report in reversed(self.report)
             ]

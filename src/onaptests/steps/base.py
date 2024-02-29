@@ -40,6 +40,7 @@ class StoreStateHandler(ABC):
             else:
                 self._state_execute = True
             initial_exception = None
+            error_reason = []
             try:
                 execution_status: Optional[ReportStepStatus] = ReportStepStatus.FAIL
                 if cleanup:
@@ -81,11 +82,16 @@ class StoreStateHandler(ABC):
                 if initial_exception:
                     substep_exc = OnapTestExceptionGroup("Cleanup Exceptions",
                                                          [initial_exception, substep_exc])
+                error_reason = substep_exc.root_cause
                 raise substep_exc
             except (OnapTestException, SDKException) as test_exc:
                 if initial_exception:
                     test_exc = OnapTestExceptionGroup("Cleanup Exceptions",
                                                       [initial_exception, test_exc])
+                if isinstance(test_exc, OnapTestException):
+                    error_reason = test_exc.root_cause
+                else:
+                    error_reason = [str(test_exc)]
                 raise test_exc
             finally:
                 if not cleanup:
@@ -95,7 +101,8 @@ class StoreStateHandler(ABC):
                         step_description=self._step_title(cleanup),
                         step_execution_status=execution_status,
                         step_execution_duration=time.time() - self._start_cleanup_time,
-                        step_component=self.component
+                        step_component=self.component,
+                        step_error_reason=error_reason
                     )
                 else:
                     if not self._start_execution_time:
@@ -110,7 +117,8 @@ class StoreStateHandler(ABC):
                         step_execution_status=(execution_status if execution_status else
                                                ReportStepStatus.FAIL),
                         step_execution_duration=time.time() - self._start_execution_time,
-                        step_component=self.component
+                        step_component=self.component,
+                        step_error_reason=error_reason
                     )
             wrapper._is_wrapped = True
         return wrapper
@@ -349,18 +357,19 @@ class BaseStep(StoreStateHandler, ABC):
         Override this method and remember to call `super().execute()` before.
 
         """
-        substep_error = False
+        substep_exceptions = []
         for step in self._steps:
             try:
                 step.execute()
             except (OnapTestException, SDKException) as substep_err:
-                substep_error = True
                 if step._break_on_error:
-                    raise SubstepExecutionException from substep_err
-                self._logger.exception(substep_err)
+                    raise SubstepExecutionException("", substep_err) # noqa: W0707
+                substep_exceptions.append(substep_err)
         if self._steps:
-            if substep_error and self._break_on_error:
-                raise SubstepExecutionException("Cannot continue due to failed substeps")
+            if len(substep_exceptions) > 0 and self._break_on_error:
+                if len(substep_exceptions) == 1:
+                    raise SubstepExecutionException("", substep_exceptions[0])
+                raise SubstepExecutionExceptionGroup("", substep_exceptions)
             self._log_execution_state("CONTINUE")
         self._substeps_executed = True
         self._start_execution_time = time.time()
@@ -381,13 +390,13 @@ class BaseStep(StoreStateHandler, ABC):
                     step._default_cleanup_handler()
             except (OnapTestException, SDKException) as substep_err:
                 try:
-                    raise SubstepExecutionException from substep_err
+                    raise SubstepExecutionException("", substep_err) # noqa: W0707
                 except Exception as e:
                     exceptions_to_raise.append(e)
         if len(exceptions_to_raise) > 0:
             if len(exceptions_to_raise) == 1:
                 raise exceptions_to_raise[0]
-            raise SubstepExecutionExceptionGroup("Substep Exceptions", exceptions_to_raise)
+            raise SubstepExecutionExceptionGroup("", exceptions_to_raise)
 
     def execute(self) -> None:
         """Step's execute.

@@ -47,14 +47,18 @@ class ScenarioBase(testcase.TestCase):
                     test_phase()
                     self.result += 50
                 except OnapTestException as exc:
-                    self.__logger.exception("%s on %s", exc.error_message, phase_name)
-                except SDKException:
-                    self.__logger.exception("SDK Exception on %s", phase_name)
-                except Exception as e:
-                    self.__logger.exception("General Exception on %s", phase_name)
+                    self.__logger.exception("Test Exception %s on %s", str(exc), phase_name)
+                    self.__logger.info("ROOT CAUSE")
+                    self.__logger.info(exc.root_cause)
+                except SDKException as exc:
+                    self.__logger.exception("SDK Exception %s on %s", str(exc), phase_name)
+                    self.__logger.info("ROOT CAUSE")
+                    self.__logger.info(str(exc))
+                except Exception as exc:
+                    self.__logger.exception("General Exception %s on %s", str(exc), phase_name)
                     if self.general_exception:
-                        e = ExceptionGroup("General Exceptions", [self.general_exception, e])  # noqa
-                    self.general_exception = e
+                        exc = ExceptionGroup("General Exceptions", [self.general_exception, exc])  # noqa
+                    self.general_exception = exc
         finally:
             self.stop_time = time.time()
             self.__logger.info(f"{self.scenario_name} Execution {self.result}% Completed")
