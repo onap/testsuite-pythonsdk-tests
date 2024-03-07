@@ -426,13 +426,13 @@ class VerifyServiceDistributionInSdncStep(BaseServiceDistributionComponentCheckS
                 password=password)
             cursor = conn.cursor()
             cursor.execute(
-                f"SELECT * FROM service_model WHERE service_uuid = '{self.service.uuid}'")
-            for _ in cursor:
-                pass
-            if cursor.rowcount == 0:
-                msg = f"Service {self.service.name} is missing in SDNC."
+                f"SELECT * FROM service_model WHERE service_uuid = '{self.service.uuid}';")
+            cursor.fetchall()
+            if cursor.rowcount <= 0:
+                msg = "Service model is missing in SDNC."
                 self._logger.error(msg)
                 raise onap_test_exceptions.ServiceDistributionException(msg)
+            self._logger.info("Service found in SDNC")
             cursor.close()
         except Exception as e:
             msg = f"Service {self.service.name} is missing in SDNC."
