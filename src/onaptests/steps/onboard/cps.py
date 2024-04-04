@@ -274,7 +274,7 @@ class CheckPostgressDataBaseConnectionStep(CpsBaseStep):
         api_instance = client.CoreV1Api()
         try:
             secret = api_instance.read_namespaced_secret(
-                settings.SECRET_NAME, settings.K8S_ONAP_NAMESPACE)
+                settings.SECRET_NAME, settings.K8S_TESTS_NAMESPACE)
             if secret.data:
                 if settings.DB_LOGIN in secret.data and settings.DB_PASSWORD in secret.data:
                     login_base64 = secret.data[settings.DB_LOGIN]
@@ -328,7 +328,7 @@ class CheckPostgressDataBaseConnectionStep(CpsBaseStep):
          - DB_PRIMARY_HOST,
          - DATABASE,
          - DB_PORT,
-         - K8S_ONAP_NAMESPACE,
+         - K8S_TESTS_NAMESPACE,
          - SECRET_NAME,
          - DB_LOGIN,
          - DB_PASSWORD.
