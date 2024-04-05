@@ -66,7 +66,7 @@ class CheckK8sResourcesStep(BaseStep):
     @property
     def is_primary(self) -> bool:
         """Does step analyses primary namespace."""
-        return self.namespace == settings.K8S_ONAP_NAMESPACE
+        return self.namespace == settings.K8S_TESTS_NAMESPACE
 
     def _init_resources(self):
         if self.resource_type != "":
@@ -772,7 +772,7 @@ class CheckNamespaceStatusStep(CheckK8sResourcesStep):
 
     def __init__(self):
         """Init CheckNamespaceStatusStep."""
-        super().__init__(namespace=settings.K8S_ONAP_NAMESPACE, resource_type="")
+        super().__init__(namespace=settings.K8S_TESTS_NAMESPACE, resource_type="")
         self.__logger.debug("K8s namespaces status test init started")
 
         self.job_list_step = None
@@ -792,7 +792,13 @@ class CheckNamespaceStatusStep(CheckK8sResourcesStep):
                 config.load_incluster_config()
             else:
                 config.load_kube_config(config_file=settings.K8S_CONFIG)
-        for namespace in ([self.namespace] + settings.EXTRA_NAMESPACE_LIST):
+        if settings.CHECK_ALL_NAMESPACES or settings.EXCLUDE_NAMESPACE_LIST:
+            self.namespaces_to_check_set = {namespace.metadata.name for namespace in
+                                            client.CoreV1Api().list_namespace().items} - set(
+                                                settings.EXCLUDE_NAMESPACE_LIST)
+        else:
+            self.namespaces_to_check_set = set([self.namespace] + settings.EXTRA_NAMESPACE_LIST)
+        for namespace in self.namespaces_to_check_set:
             self._init_namespace_steps(namespace)
         self.pods = []
         self.services = []
@@ -827,7 +833,7 @@ class CheckNamespaceStatusStep(CheckK8sResourcesStep):
         ingress_list_step = CheckK8sIngressesStep(namespace)
         pvc_list_step = CheckK8sPvcsStep(namespace)
         node_list_step = CheckK8sNodesStep(namespace)
-        if namespace == settings.K8S_ONAP_NAMESPACE:
+        if namespace == settings.K8S_TESTS_NAMESPACE:
             self.job_list_step = job_list_step
             self.pod_list_step = pod_list_step
             self.service_list_step = service_list_step
@@ -868,11 +874,10 @@ class CheckNamespaceStatusStep(CheckK8sResourcesStep):
         """Check status of all k8s resources in the selected namespaces.
 
         Use settings values:
-         - K8S_ONAP_NAMESPACE
+         - K8S_TESTS_NAMESPACE
          - STATUS_RESULTS_DIRECTORY
          - STORE_ARTIFACTS
          - CHECK_POD_VERSIONS
-         - EXTRA_NAMESPACE_LIST
          - IGNORE_EMPTY_REPLICAS
          - INCLUDE_ALL_RES_IN_DETAILS
         """
@@ -905,7 +910,7 @@ class CheckNamespaceStatusStep(CheckK8sResourcesStep):
                 self.res_dir))
 
         details = {"namespace": {
-            "all": settings.EXTRA_NAMESPACE_LIST,
+            "all": list(self.namespaces_to_check_set - set([self.namespace])),
             "resources": {}
         }}
 

@@ -69,7 +69,7 @@ class CheckSdncDbStep(BaseSdncStep):
         api_instance = client.CoreV1Api()
         try:
             secret = api_instance.read_namespaced_secret(
-                settings.SDNC_SECRET_NAME, settings.K8S_ONAP_NAMESPACE)
+                settings.SDNC_SECRET_NAME, settings.K8S_TESTS_NAMESPACE)
             if secret.data:
                 if (self.SDNC_DB_LOGIN in secret.data and self.SDNC_DB_PASSWORD in secret.data):
                     login_base64 = secret.data[self.SDNC_DB_LOGIN]

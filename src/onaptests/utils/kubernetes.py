@@ -22,7 +22,7 @@ class KubernetesHelper:
                                     secret_name: str,
                                     login_key: str,
                                     password_key: str,
-                                    namespace: str = settings.K8S_ONAP_NAMESPACE):
+                                    namespace: str = settings.K8S_TESTS_NAMESPACE):
         """Resolve SDNC datbase credentials from k8s secret.
 
         Args:

@@ -46,7 +46,7 @@ class ExposeServiceNodePortStep(BaseStep):
         try:
             service_data: Dict[str, Any] = self.k8s_client.read_namespaced_service(
                 self.service_name,
-                settings.K8S_ONAP_NAMESPACE
+                settings.K8S_TESTS_NAMESPACE
             )
             return service_data.spec.type == "NodePort"
         except ApiException as exc:
@@ -59,7 +59,7 @@ class ExposeServiceNodePortStep(BaseStep):
 
         Use settings values:
          - K8S_CONFIG,
-         - K8S_ONAP_NAMESPACE.
+         - K8S_TESTS_NAMESPACE.
          - EXPOSE_SERVICES_NODE_PORTS
 
         """
@@ -73,7 +73,7 @@ class ExposeServiceNodePortStep(BaseStep):
             try:
                 self.k8s_client.patch_namespaced_service(
                     self.service_name,
-                    settings.K8S_ONAP_NAMESPACE,
+                    settings.K8S_TESTS_NAMESPACE,
                     {"spec": {"ports": [{"port": self.port,
                                          "nodePort": self.node_port}],
                               "type": "NodePort"}}
@@ -98,7 +98,7 @@ class ExposeServiceNodePortStep(BaseStep):
             try:
                 self.k8s_client.patch_namespaced_service(
                     self.service_name,
-                    settings.K8S_ONAP_NAMESPACE,
+                    settings.K8S_TESTS_NAMESPACE,
                     [
                         {
                             "op": "remove",

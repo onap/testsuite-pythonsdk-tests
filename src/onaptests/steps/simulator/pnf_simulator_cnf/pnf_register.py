@@ -86,7 +86,7 @@ class PnfSimulatorCnfRegisterStep(BaseStep):
         k8s_client: "client.CoreV1Api" = client.CoreV1Api()
         try:
             for service in k8s_client.list_namespaced_service(
-                    namespace=settings.K8S_ONAP_NAMESPACE).items:
+                    namespace=settings.K8S_TESTS_NAMESPACE).items:
                 if service.metadata.name == settings.DCAE_VES_COLLECTOR_POD_NAME:
                     proto = "http"
                     if "443" in str(service.spec.ports[0].port):
