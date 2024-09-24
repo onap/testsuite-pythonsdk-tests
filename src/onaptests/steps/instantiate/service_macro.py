@@ -176,6 +176,7 @@ class YamlTemplateServiceMacroInstantiateBaseStep(YamlTemplateBaseStep):
                      for vf_module_data in vnf_data.get("vf_module_parameters", [])]
                 ))
 
+        skip_pnf_registration_event = False
         try:
             if settings.PNF_WITHOUT_VES:
                 skip_pnf_registration_event = True
