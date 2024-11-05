@@ -266,7 +266,7 @@ class CheckSdncHealthStep(BaseSdncStep, SdncElement):
         result = self.send_message_json(
             "POST",
             "SDNC SLI API Healthcheck",
-            f"{self.base_url}/restconf/operations/SLI-API:healthcheck")
+            f"{self.base_url}/rests/operations/SLI-API:healthcheck")
         message = ""
         if result and result["output"]:
             if result["output"]["response-code"] == "200":
