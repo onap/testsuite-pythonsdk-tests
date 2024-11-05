@@ -268,10 +268,10 @@ class CheckSdncHealthStep(BaseSdncStep, SdncElement):
             "SDNC SLI API Healthcheck",
             f"{self.base_url}/rests/operations/SLI-API:healthcheck")
         message = ""
-        if result and result["output"]:
-            if result["output"]["response-code"] == "200":
+        if result and result["SLI-API:output"]:
+            if result["SLI-API:output"]["response-code"] == "200":
                 return
-            message = result["output"]["response-message"]
+            message = result["SLI-API:output"]["response-message"]
         raise OnapTestException("SDNC is not healthy. %s" % message)
 
 
