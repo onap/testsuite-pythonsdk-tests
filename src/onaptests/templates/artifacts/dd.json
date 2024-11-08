@@ -30,7 +30,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vpg_int_pktgen_private_ip_0",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vpg_int_pktgen_private_ip_0",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -102,7 +102,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vpg_int_private1_ip_0",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vpg_int_private1_ip_0",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -193,7 +193,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vpg_onap_private_ip_0",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vpg_onap_private_ip_0",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -250,7 +250,7 @@
             "path": "",
             "payload": "{\n\"GENERIC-RESOURCE-API:param\": [\n{\n\"GENERIC-RESOURCE-API:name\": \"vdns_vf_module_id\",\n\"GENERIC-RESOURCE-API:value\": \"$vf-module-id\"\n}\n]\n}",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vdns_vf_module_id",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vdns_vf_module_id",
             "verb": "PUT"
           },
           "type": "source-rest"
@@ -322,7 +322,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vpg_onap_private_ip_0",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vpg_onap_private_ip_0",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -368,7 +368,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vdns_name_0",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vdns_name_0",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -414,7 +414,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vfw_name_0",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vfw_name_0",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -460,7 +460,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vlb_int_private_ip_0",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vlb_int_private_ip_0",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -506,7 +506,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/dcae_collector_ip",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/dcae_collector_ip",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -552,7 +552,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vfw_int_private2_ip_0",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vfw_int_private2_ip_0",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -598,7 +598,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vfw_onap_private_ip_0",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vfw_onap_private_ip_0",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -644,7 +644,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vfw_int_private1_ip_0",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vfw_int_private1_ip_0",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -690,7 +690,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vfw_int_private2_floating_ip",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vfw_int_private2_floating_ip",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -736,7 +736,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vsn_int_private2_ip_0",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vsn_int_private2_ip_0",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -782,7 +782,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vsn_onap_private_ip_0",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vsn_onap_private_ip_0",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -828,7 +828,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/dcae_collector_port",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/dcae_collector_port",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -874,7 +874,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/demo_artifacts_version",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/demo_artifacts_version",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -920,7 +920,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/install_script_version",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/install_script_version",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -966,7 +966,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/int_pktgen_private_net_id",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/int_pktgen_private_net_id",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -1012,7 +1012,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/int_pktgen_private_subnet_id",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/int_pktgen_private_subnet_id",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -1058,7 +1058,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/int_private_net_id",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/int_private_net_id",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -1104,7 +1104,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/int_private_subnet_id",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/int_private_subnet_id",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -1150,7 +1150,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/keypair",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/keypair",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -1196,7 +1196,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/nb_api_version",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/nb_api_version",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -1242,7 +1242,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/nexus_artifact_repo",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/nexus_artifact_repo",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -1288,7 +1288,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/onap_private_net_id",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/onap_private_net_id",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -1334,7 +1334,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/onap_private_subnet_id",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/onap_private_subnet_id",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -1380,7 +1380,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/pub_key",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/pub_key",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -1426,7 +1426,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/public_net_id",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/public_net_id",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -1472,7 +1472,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/sec_group",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/sec_group",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -1518,7 +1518,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vdns_flavor_name",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vdns_flavor_name",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -1564,7 +1564,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/flavor_name",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/flavor_name",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -1610,7 +1610,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vdns_image_name",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vdns_image_name",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -1697,7 +1697,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vdns_vf_module_id",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vdns_vf_module_id",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -1756,7 +1756,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vf-naming-policy",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vf-naming-policy",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -1802,7 +1802,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vlb_0_int_pktgen_private_port_0_mac",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vlb_0_int_pktgen_private_port_0_mac",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -1848,7 +1848,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vlb_flavor_name",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vlb_flavor_name",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -1894,7 +1894,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vlb_image_name",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vlb_image_name",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -1940,7 +1940,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vlb_private_net_id",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vlb_private_net_id",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -1986,7 +1986,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vpg_flavor_name",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vpg_flavor_name",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -2032,7 +2032,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vpg_image_name",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vpg_image_name",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -2078,7 +2078,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/image_name",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/image_name",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -2124,7 +2124,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/gre_ipaddr",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/gre_ipaddr",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -2170,7 +2170,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/pg_int",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/pg_int",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -2218,7 +2218,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vf-modules/vf-module/$vdns_vf_module_id/vf-module-data/vf-module-topology/vf-module-parameters/param/vdns_int_private_ip_0",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vf-modules/vf-module/$vdns_vf_module_id/vf-module-data/vf-module-topology/vf-module-parameters/param/vdns_int_private_ip_0",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -2266,7 +2266,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vf-modules/vf-module/$vdns_vf_module_id/vf-module-data/vf-module-topology/vf-module-parameters/param/vdns_onap_private_ip_0",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vf-modules/vf-module/$vdns_vf_module_id/vf-module-data/vf-module-topology/vf-module-parameters/param/vdns_onap_private_ip_0",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -2312,7 +2312,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vip",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vip",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -2358,7 +2358,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vlb_int_pktgen_private_ip_0",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vlb_int_pktgen_private_ip_0",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -2404,7 +2404,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/pktgen_private_net_id",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/pktgen_private_net_id",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -2450,7 +2450,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vnf-id",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vnf-id",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -2496,7 +2496,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vnf_name",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vnf_name",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -2542,7 +2542,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vnf_name",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vnf_name",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -2672,7 +2672,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vlb_name_0",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vlb_name_0",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -2718,7 +2718,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/key_name",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/key_name",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -2764,7 +2764,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vsn_name_0",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vsn_name_0",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -2810,7 +2810,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vpg_name_0",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vpg_name_0",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -3129,7 +3129,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/cloud_env",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/cloud_env",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -3186,7 +3186,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/pktgen_private_net_cidr",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/pktgen_private_net_cidr",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -3243,7 +3243,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/int_private2_net_cidr",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/int_private2_net_cidr",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -3300,7 +3300,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/int_private1_net_cidr",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/int_private1_net_cidr",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -3357,7 +3357,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/onap_private_net_cidr",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/onap_private_net_cidr",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -3414,7 +3414,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vlb_private_net_cidr",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vlb_private_net_cidr",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -3471,7 +3471,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/management-prefix-id",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/management-prefix-id",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -3528,7 +3528,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/private1-prefix-id",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/private1-prefix-id",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -3585,7 +3585,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/private2-prefix-id",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/private2-prefix-id",
             "verb": "GET"
           },
           "type": "source-rest"
@@ -3631,7 +3631,7 @@
             },
             "path": "/param/0/value",
             "type": "JSON",
-            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service/$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vlb_onap_private_ip_0",
+            "url-path": "/rests/data/GENERIC-RESOURCE-API:services/service=$service-instance-id/service-data/vnfs/vnf/$vnf-id/vnf-data/vnf-topology/vnf-parameters-data/param/vlb_onap_private_ip_0",
             "verb": "GET"
           },
           "type": "source-rest"
